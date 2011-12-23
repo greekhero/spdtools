@@ -15,7 +15,6 @@ import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
 import org.docx4j.wml.Document;
 
-import ua.org.tumakha.spd.template.model.ActModel;
 import ua.org.tumakha.spd.template.model.TemplateModel;
 
 /**
@@ -41,15 +40,6 @@ public class DocxTemplate {
 			return filename;
 		}
 
-	}
-
-	public TemplateModel getTemplateModel(Template template) {
-		switch (template) {
-		case ACT:
-			return new ActModel();
-		default:
-			throw new IllegalStateException("Unknown template");
-		}
 	}
 
 	public void saveReport(TemplateModel model) {
