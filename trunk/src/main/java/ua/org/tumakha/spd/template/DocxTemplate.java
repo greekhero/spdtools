@@ -24,7 +24,7 @@ public class DocxTemplate {
 
 	public static JAXBContext context = org.docx4j.jaxb.Context.jc;
 	private static final Log log = LogFactory.getLog(DocxTemplate.class);
-	private static final String TEMPLATES_DIRECTORY = "src/main/resources/templates";
+	private static final String TEMPLATES_DIRECTORY = "C:/Reports/templates";
 	private static final String REPORTS_DIRECTORY = "C:/Reports";
 
 	public enum Template {
