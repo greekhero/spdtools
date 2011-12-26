@@ -10,16 +10,7 @@ import ua.org.tumakha.spd.template.DocxTemplate.Template;
  */
 public abstract class TemplateModel {
 
-	private Template template;
 	private Date templateDate;
-
-	public Template getTemplate() {
-		return template;
-	}
-
-	public void setTemplate(Template template) {
-		this.template = template;
-	}
 
 	public Date getTemplateDate() {
 		return templateDate;
@@ -34,6 +25,6 @@ public abstract class TemplateModel {
 		return null;
 	}
 
-	public abstract String getOutputFilename();
+	public abstract String getOutputFilename(Template template);
 
 }

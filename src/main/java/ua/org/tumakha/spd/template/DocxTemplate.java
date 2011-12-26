@@ -28,7 +28,7 @@ public class DocxTemplate {
 	private static final String REPORTS_DIRECTORY = "C:/Reports";
 
 	public enum Template {
-		ACT("Act_PE.docx");
+		ACT("Act_PE.docx"), CONTRACT_AMENDMENT("Contract_PE_Amendment.docx");
 
 		private String filename;
 
@@ -43,18 +43,17 @@ public class DocxTemplate {
 	}
 
 	public void saveReport(TemplateModel model) {
-		Template template = model.getTemplate();
-		log.debug(template);// TODO:
+		log.debug(model.getClass());// TODO:
 	}
 
-	public void saveReports(List<? extends TemplateModel> listModel)
-			throws JAXBException, Docx4JException {
+	public void saveReports(Template template,
+			List<? extends TemplateModel> listModel) throws JAXBException,
+			Docx4JException {
 
 		if (listModel == null || listModel.size() == 0) {
 			log.debug("listModel is empty");
 			return;
 		}
-		Template template = listModel.get(0).getTemplate();
 		// Open a document from the file system
 		// 1. Load the Package
 		WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage
@@ -70,16 +69,18 @@ public class DocxTemplate {
 		String xml = XmlUtils.marshaltoString(wmlDocumentEl, true);
 
 		for (TemplateModel model : listModel) {
-			saveDocument(documentPart, wordMLPackage, xml, model);
+			saveDocument(documentPart, wordMLPackage, xml, model, template);
 		}
 
 	}
 
 	private static void saveDocument(MainDocumentPart documentPart,
 			WordprocessingMLPackage wordMLPackage, String xml,
-			TemplateModel model) throws JAXBException, Docx4JException {
+			TemplateModel model, Template template) throws JAXBException,
+			Docx4JException {
 		HashMap<String, String> mappings = model.getMappings();
-		String outputfilepath = REPORTS_DIRECTORY + model.getOutputFilename();
+		String outputfilepath = REPORTS_DIRECTORY
+				+ model.getOutputFilename(template);
 
 		Object obj = XmlUtils.unmarshallFromTemplate(xml, mappings);
 

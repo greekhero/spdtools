@@ -1,5 +1,7 @@
 package ua.org.tumakha.spd.services;
 
+import java.util.List;
+
 import ua.org.tumakha.spd.entity.User;
 
 /**
@@ -7,8 +9,12 @@ import ua.org.tumakha.spd.entity.User;
  */
 public interface UserService {
 
-    public void createUser(User user);
+	public void createUser(User user);
 
-    public void removeUser(User user);
+	public User updateUser(User user);
+
+	public User findUserById(Integer userId);
+
+	public List<User> findAllUsers();
 
 }

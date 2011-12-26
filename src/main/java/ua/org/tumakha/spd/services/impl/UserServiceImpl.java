@@ -1,5 +1,7 @@
 package ua.org.tumakha.spd.services.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Repository;
@@ -18,22 +20,36 @@ import ua.org.tumakha.spd.services.UserService;
 @Repository
 public class UserServiceImpl implements UserService {
 
-    private UserDao userDao;
+	private UserDao userDao;
 
-    @Required
-    @Autowired
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
+	@Required
+	@Autowired
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void createUser(User user) {
-        userDao.persist(user);
-    }
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void createUser(User user) {
+		userDao.persist(user);
+	}
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void removeUser(User user) {
-        userDao.remove(user);
-    }
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public User updateUser(User user) {
+		return userDao.merge(user);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public User findUserById(Integer userId) {
+		return userDao.find(userId);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public List<User> findAllUsers() {
+		return userDao.findAll();
+	}
 
 }
