@@ -11,4 +11,11 @@ import ua.org.tumakha.spd.entity.User;
 @Component("userDao")
 public class UserDaoJpaImpl extends AbstractJpaDao<User> implements UserDao {
 
+    @Override
+    public void remove(User user) {
+        // TODO only set flag removed
+        user = find(user.getUserId());
+        super.remove(user);
+    }
+
 }

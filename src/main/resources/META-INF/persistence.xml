@@ -5,11 +5,17 @@
         http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" version="1.0">
 
     <persistence-unit name="spd" transaction-type="RESOURCE_LOCAL">
-        <class>com.reuters.commerce.entity.User</class>
+        <class>ua.org.tumakha.spd.entity.User</class>
+        <class>ua.org.tumakha.spd.entity.Bank</class>
+        <class>ua.org.tumakha.spd.entity.Address</class>
+        <class>ua.org.tumakha.spd.entity.Contract</class>
+        <class>ua.org.tumakha.spd.entity.Act</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
         <properties>
+        <!-- 
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect"/>
+         -->
             <property name="hibernate.cache.use_second_level_cache" value="true"/>
             <property name="hibernate.bytecode.use_reflection_optimizer" value="true"/>
         </properties>
