@@ -13,4 +13,6 @@ public interface UserDao {
 
     public User merge(User user);
 
+    public void remove(User user);
+
 }

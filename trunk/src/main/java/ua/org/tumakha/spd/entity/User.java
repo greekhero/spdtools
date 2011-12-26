@@ -1,8 +1,16 @@
 package ua.org.tumakha.spd.entity;
 
+import java.util.Date;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -16,6 +24,10 @@ public class User {
     @GeneratedValue
     private Integer userId;
 
+    private boolean active;
+
+    private boolean removed;
+
     private String firstname;
 
     private String firstnameEn;
@@ -28,11 +40,24 @@ public class User {
 
     private String lastnameEn;
 
-    private String PIN;
+    @Column(unique = true, nullable = true)
+    private Long PIN;
 
     private String regNumber;
 
-    private String regDate;
+    private Date regDate;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Address address;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Bank bank;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Contract> contracts;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Act> acts;
 
     public Integer getUserId() {
         return userId;
@@ -40,6 +65,22 @@ public class User {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isRemoved() {
+        return removed;
+    }
+
+    public void setRemoved(boolean removed) {
+        this.removed = removed;
     }
 
     public String getFirstname() {
@@ -90,12 +131,12 @@ public class User {
         this.lastnameEn = lastnameEn;
     }
 
-    public String getPIN() {
+    public Long getPIN() {
         return PIN;
     }
 
-    public void setPIN(String pIN) {
-        PIN = pIN;
+    public void setPIN(Long PIN) {
+        this.PIN = PIN;
     }
 
     public String getRegNumber() {
@@ -106,12 +147,44 @@ public class User {
         this.regNumber = regNumber;
     }
 
-    public String getRegDate() {
+    public Date getRegDate() {
         return regDate;
     }
 
-    public void setRegDate(String regDate) {
+    public void setRegDate(Date regDate) {
         this.regDate = regDate;
+    }
+
+    public Set<Contract> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(Set<Contract> contracts) {
+        this.contracts = contracts;
+    }
+
+    public Set<Act> getActs() {
+        return acts;
+    }
+
+    public void setActs(Set<Act> acts) {
+        this.acts = acts;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public Bank getBank() {
+        return bank;
+    }
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
     }
 
 }

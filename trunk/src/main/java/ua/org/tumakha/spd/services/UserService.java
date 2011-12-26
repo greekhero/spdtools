@@ -9,4 +9,6 @@ public interface UserService {
 
     public void createUser(User user);
 
+    public void removeUser(User user);
+
 }

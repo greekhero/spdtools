@@ -9,13 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ua.org.tumakha.spd.dao.UserDao;
 import ua.org.tumakha.spd.entity.User;
+import ua.org.tumakha.spd.services.UserService;
 
 /**
  * @author Yuriy Tumakha
  */
 @Service("userService")
 @Repository
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService {
 
     private UserDao userDao;
 
@@ -28,6 +29,11 @@ public class UserServiceImpl {
     @Transactional(propagation = Propagation.REQUIRED)
     public void createUser(User user) {
         userDao.persist(user);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void removeUser(User user) {
+        userDao.remove(user);
     }
 
 }
