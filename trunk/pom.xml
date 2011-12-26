@@ -15,12 +15,34 @@
   			<configuration>
   				<source>1.6</source>
   				<target>1.6</target>
+  				<encoding>UTF-8</encoding>
+  			</configuration>
+  		</plugin>
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-resources-plugin</artifactId>
+  			<configuration>
+  				<encoding>UTF-8</encoding>
   			</configuration>
   		</plugin>
   	</plugins>
   </build>
 
   <dependencies>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-tx</artifactId>
+  		<version>${spring.version}</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.hibernate</groupId>
+  		<artifactId>hibernate-entitymanager</artifactId>
+  		<version>3.3.2.GA</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
   	<dependency>
   		<groupId>org.docx4j</groupId>
   		<artifactId>docx4j</artifactId>
@@ -32,5 +54,43 @@
   		<version>4.10</version>
   		<scope>test</scope>
   	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-test</artifactId>
+  		<version>${spring.version}</version>
+  		<type>jar</type>
+  		<scope>test</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.aspectj</groupId>
+  		<artifactId>aspectjrt</artifactId>
+  		<version>1.6.12</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.aspectj</groupId>
+  		<artifactId>aspectjweaver</artifactId>
+  		<version>1.6.12</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>mysql</groupId>
+  		<artifactId>mysql-connector-java</artifactId>
+  		<version>5.1.18</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-orm</artifactId>
+  		<version>${spring.version}</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
   </dependencies>
+  <properties>
+  	<spring.version>3.1.0.RELEASE</spring.version>
+  </properties>
 </project>

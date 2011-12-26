@@ -3,6 +3,7 @@ package ua.org.tumakha.spd.template.model;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
+import ua.org.tumakha.spd.entity.User;
 import ua.org.tumakha.spd.template.DocxTemplate.Template;
 
 /**
@@ -10,318 +11,320 @@ import ua.org.tumakha.spd.template.DocxTemplate.Template;
  */
 public class ActModel extends TemplateModel {
 
-	private static final SimpleDateFormat yearMonthFormat = new SimpleDateFormat(
-			"yyyy-MM");
+    private static final SimpleDateFormat yearMonthFormat = new SimpleDateFormat("yyyy-MM");
 
-	public ActModel() {
-		setTemplate(Template.ACT);
-	}
+    public ActModel() {
+        setTemplate(Template.ACT);
+    }
 
-	private String actNo;
-	private String contractNo;
-	private String contractDate;
-	private String contractDateEn;
-	private String date;
-	private String dateEn;
-	private String dateFrom;
-	private String dateFromEn;
-	private String dateTo;
-	private String dateToEn;
-	private String firstname;
-	private String firstnameEn;
-	private String middlename;
-	private String middlenameEn;
-	private String lastname;
-	private String lastnameEn;
-	private String amountDigit;
-	private String amountUa;
-	private String amountEn;
-	private String regNumber;
-	private String regDate;
-	private String regAddress;
-	private String regAddressEn;
-	private String PIN;
-	private String bankAccount;
-	private String bankName;
-	private String bankNameEn;
-	private String bankMFO;
-	private String bankSWIFT;
+    public ActModel(User user) {
+        this();
 
-	public String getActNo() {
-		return actNo;
-	}
+    }
 
-	public void setActNo(String actNo) {
-		this.actNo = actNo;
-	}
+    private String actNo;
+    private String contractNo;
+    private String contractDate;
+    private String contractDateEn;
+    private String date;
+    private String dateEn;
+    private String dateFrom;
+    private String dateFromEn;
+    private String dateTo;
+    private String dateToEn;
+    private String firstname;
+    private String firstnameEn;
+    private String middlename;
+    private String middlenameEn;
+    private String lastname;
+    private String lastnameEn;
+    private String amountDigit;
+    private String amountUa;
+    private String amountEn;
+    private String regNumber;
+    private String regDate;
+    private String regAddress;
+    private String regAddressEn;
+    private String PIN;
+    private String bankAccount;
+    private String bankName;
+    private String bankNameEn;
+    private String bankMFO;
+    private String bankSWIFT;
 
-	public String getContractNo() {
-		return contractNo;
-	}
+    public String getActNo() {
+        return actNo;
+    }
 
-	public void setContractNo(String contractNo) {
-		this.contractNo = contractNo;
-	}
+    public void setActNo(String actNo) {
+        this.actNo = actNo;
+    }
 
-	public String getContractDate() {
-		return contractDate;
-	}
+    public String getContractNo() {
+        return contractNo;
+    }
 
-	public void setContractDate(String contractDate) {
-		this.contractDate = contractDate;
-	}
+    public void setContractNo(String contractNo) {
+        this.contractNo = contractNo;
+    }
 
-	public String getContractDateEn() {
-		return contractDateEn;
-	}
+    public String getContractDate() {
+        return contractDate;
+    }
 
-	public void setContractDateEn(String contractDateEn) {
-		this.contractDateEn = contractDateEn;
-	}
+    public void setContractDate(String contractDate) {
+        this.contractDate = contractDate;
+    }
 
-	public String getDate() {
-		return date;
-	}
+    public String getContractDateEn() {
+        return contractDateEn;
+    }
 
-	public void setDate(String date) {
-		this.date = date;
-	}
+    public void setContractDateEn(String contractDateEn) {
+        this.contractDateEn = contractDateEn;
+    }
 
-	public String getDateEn() {
-		return dateEn;
-	}
+    public String getDate() {
+        return date;
+    }
 
-	public void setDateEn(String dateEn) {
-		this.dateEn = dateEn;
-	}
+    public void setDate(String date) {
+        this.date = date;
+    }
 
-	public String getDateFrom() {
-		return dateFrom;
-	}
+    public String getDateEn() {
+        return dateEn;
+    }
 
-	public void setDateFrom(String dateFrom) {
-		this.dateFrom = dateFrom;
-	}
+    public void setDateEn(String dateEn) {
+        this.dateEn = dateEn;
+    }
 
-	public String getDateFromEn() {
-		return dateFromEn;
-	}
+    public String getDateFrom() {
+        return dateFrom;
+    }
 
-	public void setDateFromEn(String dateFromEn) {
-		this.dateFromEn = dateFromEn;
-	}
+    public void setDateFrom(String dateFrom) {
+        this.dateFrom = dateFrom;
+    }
 
-	public String getDateTo() {
-		return dateTo;
-	}
+    public String getDateFromEn() {
+        return dateFromEn;
+    }
 
-	public void setDateTo(String dateTo) {
-		this.dateTo = dateTo;
-	}
+    public void setDateFromEn(String dateFromEn) {
+        this.dateFromEn = dateFromEn;
+    }
 
-	public String getDateToEn() {
-		return dateToEn;
-	}
+    public String getDateTo() {
+        return dateTo;
+    }
 
-	public void setDateToEn(String dateToEn) {
-		this.dateToEn = dateToEn;
-	}
+    public void setDateTo(String dateTo) {
+        this.dateTo = dateTo;
+    }
 
-	public String getFirstname() {
-		return firstname;
-	}
+    public String getDateToEn() {
+        return dateToEn;
+    }
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
+    public void setDateToEn(String dateToEn) {
+        this.dateToEn = dateToEn;
+    }
 
-	public String getFirstnameEn() {
-		return firstnameEn;
-	}
+    public String getFirstname() {
+        return firstname;
+    }
 
-	public void setFirstnameEn(String firstnameEn) {
-		this.firstnameEn = firstnameEn;
-	}
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
 
-	public String getMiddlename() {
-		return middlename;
-	}
+    public String getFirstnameEn() {
+        return firstnameEn;
+    }
 
-	public void setMiddlename(String middlename) {
-		this.middlename = middlename;
-	}
+    public void setFirstnameEn(String firstnameEn) {
+        this.firstnameEn = firstnameEn;
+    }
 
-	public String getMiddlenameEn() {
-		return middlenameEn;
-	}
+    public String getMiddlename() {
+        return middlename;
+    }
 
-	public void setMiddlenameEn(String middlenameEn) {
-		this.middlenameEn = middlenameEn;
-	}
+    public void setMiddlename(String middlename) {
+        this.middlename = middlename;
+    }
 
-	public String getLastname() {
-		return lastname;
-	}
+    public String getMiddlenameEn() {
+        return middlenameEn;
+    }
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
+    public void setMiddlenameEn(String middlenameEn) {
+        this.middlenameEn = middlenameEn;
+    }
 
-	public String getLastnameEn() {
-		return lastnameEn;
-	}
+    public String getLastname() {
+        return lastname;
+    }
 
-	public void setLastnameEn(String lastnameEn) {
-		this.lastnameEn = lastnameEn;
-	}
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
 
-	public String getAmountDigit() {
-		return amountDigit;
-	}
+    public String getLastnameEn() {
+        return lastnameEn;
+    }
 
-	public void setAmountDigit(String amountDigit) {
-		this.amountDigit = amountDigit;
-	}
+    public void setLastnameEn(String lastnameEn) {
+        this.lastnameEn = lastnameEn;
+    }
 
-	public String getAmountUa() {
-		return amountUa;
-	}
+    public String getAmountDigit() {
+        return amountDigit;
+    }
 
-	public void setAmountUa(String amountUa) {
-		this.amountUa = amountUa;
-	}
+    public void setAmountDigit(String amountDigit) {
+        this.amountDigit = amountDigit;
+    }
 
-	public String getAmountEn() {
-		return amountEn;
-	}
+    public String getAmountUa() {
+        return amountUa;
+    }
 
-	public void setAmountEn(String amountEn) {
-		this.amountEn = amountEn;
-	}
+    public void setAmountUa(String amountUa) {
+        this.amountUa = amountUa;
+    }
 
-	public String getRegNumber() {
-		return regNumber;
-	}
+    public String getAmountEn() {
+        return amountEn;
+    }
 
-	public void setRegNumber(String regNumber) {
-		this.regNumber = regNumber;
-	}
+    public void setAmountEn(String amountEn) {
+        this.amountEn = amountEn;
+    }
 
-	public String getRegDate() {
-		return regDate;
-	}
+    public String getRegNumber() {
+        return regNumber;
+    }
 
-	public void setRegDate(String regDate) {
-		this.regDate = regDate;
-	}
+    public void setRegNumber(String regNumber) {
+        this.regNumber = regNumber;
+    }
 
-	public String getRegAddress() {
-		return regAddress;
-	}
+    public String getRegDate() {
+        return regDate;
+    }
 
-	public void setRegAddress(String regAddress) {
-		this.regAddress = regAddress;
-	}
+    public void setRegDate(String regDate) {
+        this.regDate = regDate;
+    }
 
-	public String getRegAddressEn() {
-		return regAddressEn;
-	}
+    public String getRegAddress() {
+        return regAddress;
+    }
 
-	public void setRegAddressEn(String regAddressEn) {
-		this.regAddressEn = regAddressEn;
-	}
+    public void setRegAddress(String regAddress) {
+        this.regAddress = regAddress;
+    }
 
-	public String getPIN() {
-		return PIN;
-	}
+    public String getRegAddressEn() {
+        return regAddressEn;
+    }
 
-	public void setPIN(String pIN) {
-		PIN = pIN;
-	}
+    public void setRegAddressEn(String regAddressEn) {
+        this.regAddressEn = regAddressEn;
+    }
 
-	public String getBankAccount() {
-		return bankAccount;
-	}
+    public String getPIN() {
+        return PIN;
+    }
 
-	public void setBankAccount(String bankAccount) {
-		this.bankAccount = bankAccount;
-	}
+    public void setPIN(String pIN) {
+        PIN = pIN;
+    }
 
-	public String getBankName() {
-		return bankName;
-	}
+    public String getBankAccount() {
+        return bankAccount;
+    }
 
-	public void setBankName(String bankName) {
-		this.bankName = bankName;
-	}
+    public void setBankAccount(String bankAccount) {
+        this.bankAccount = bankAccount;
+    }
 
-	public String getBankNameEn() {
-		return bankNameEn;
-	}
+    public String getBankName() {
+        return bankName;
+    }
 
-	public void setBankNameEn(String bankNameEn) {
-		this.bankNameEn = bankNameEn;
-	}
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
 
-	public String getBankMFO() {
-		return bankMFO;
-	}
+    public String getBankNameEn() {
+        return bankNameEn;
+    }
 
-	public void setBankMFO(String bankMFO) {
-		this.bankMFO = bankMFO;
-	}
+    public void setBankNameEn(String bankNameEn) {
+        this.bankNameEn = bankNameEn;
+    }
 
-	public String getBankSWIFT() {
-		return bankSWIFT;
-	}
+    public String getBankMFO() {
+        return bankMFO;
+    }
 
-	public void setBankSWIFT(String bankSWIFT) {
-		this.bankSWIFT = bankSWIFT;
-	}
+    public void setBankMFO(String bankMFO) {
+        this.bankMFO = bankMFO;
+    }
 
-	@Override
-	public HashMap<String, String> getMappings() {
-		HashMap<String, String> mappings = new HashMap<String, String>();
-		mappings.put("actNo", getActNo());
-		mappings.put("contractNo", getContractNo());
-		mappings.put("contractDate", getContractDate());
-		mappings.put("contractDateEn", getContractDateEn());
-		mappings.put("date", getDate());
-		mappings.put("dateEn", getDateEn());
-		mappings.put("dateFrom", getDateFrom());
-		mappings.put("dateFromEn", getDateFromEn());
-		mappings.put("dateTo", getDateTo());
-		mappings.put("dateToEn", getDateToEn());
-		mappings.put("firstname", getFirstname());
-		mappings.put("firstnameEn", getFirstnameEn());
-		mappings.put("middlename", getMiddlename());
-		mappings.put("middlenameEn", getMiddlenameEn());
-		mappings.put("lastname", getLastname());
-		mappings.put("lastnameEn", getLastnameEn());
-		mappings.put("amountDigit", getAmountDigit());
-		mappings.put("amountUa", getAmountUa());
-		mappings.put("amountEn", getAmountEn());
-		mappings.put("regNumber", getRegNumber());
-		mappings.put("regDate", getRegDate());
-		mappings.put("regAddress", getRegAddress());
-		mappings.put("regAddressEn", getRegAddressEn());
-		mappings.put("PIN", getPIN());
-		mappings.put("bankAccount", getBankAccount());
-		mappings.put("bankName", getBankName());
-		mappings.put("bankNameEn", getBankNameEn());
-		mappings.put("bankMFO", getBankMFO());
-		mappings.put("bankSWIFT", getBankSWIFT());
-		return mappings;
-	}
+    public String getBankSWIFT() {
+        return bankSWIFT;
+    }
 
-	@Override
-	public String getOutputFilename() {
-		String month = yearMonthFormat.format(getTemplateDate());
-		return String.format("/%s/ICGU_%s_%s_%s", month,
-				firstnameEn.substring(0, 1) + middlenameEn.charAt(0)
-						+ lastnameEn.charAt(0), month.replace("-", "_"),
-				getTemplate().getFilename());
+    public void setBankSWIFT(String bankSWIFT) {
+        this.bankSWIFT = bankSWIFT;
+    }
 
-	}
+    @Override
+    public HashMap<String, String> getMappings() {
+        HashMap<String, String> mappings = new HashMap<String, String>();
+        mappings.put("actNo", getActNo());
+        mappings.put("contractNo", getContractNo());
+        mappings.put("contractDate", getContractDate());
+        mappings.put("contractDateEn", getContractDateEn());
+        mappings.put("date", getDate());
+        mappings.put("dateEn", getDateEn());
+        mappings.put("dateFrom", getDateFrom());
+        mappings.put("dateFromEn", getDateFromEn());
+        mappings.put("dateTo", getDateTo());
+        mappings.put("dateToEn", getDateToEn());
+        mappings.put("firstname", getFirstname());
+        mappings.put("firstnameEn", getFirstnameEn());
+        mappings.put("middlename", getMiddlename());
+        mappings.put("middlenameEn", getMiddlenameEn());
+        mappings.put("lastname", getLastname());
+        mappings.put("lastnameEn", getLastnameEn());
+        mappings.put("amountDigit", getAmountDigit());
+        mappings.put("amountUa", getAmountUa());
+        mappings.put("amountEn", getAmountEn());
+        mappings.put("regNumber", getRegNumber());
+        mappings.put("regDate", getRegDate());
+        mappings.put("regAddress", getRegAddress());
+        mappings.put("regAddressEn", getRegAddressEn());
+        mappings.put("PIN", getPIN());
+        mappings.put("bankAccount", getBankAccount());
+        mappings.put("bankName", getBankName());
+        mappings.put("bankNameEn", getBankNameEn());
+        mappings.put("bankMFO", getBankMFO());
+        mappings.put("bankSWIFT", getBankSWIFT());
+        return mappings;
+    }
+
+    @Override
+    public String getOutputFilename() {
+        String month = yearMonthFormat.format(getTemplateDate());
+        return String.format("/%s/ICGU_%s_%s_%s", month, firstnameEn.substring(0, 1) + middlenameEn.charAt(0)
+                + lastnameEn.charAt(0), month.replace("-", "_"), getTemplate().getFilename());
+
+    }
 
 }
