@@ -1,5 +1,7 @@
 package ua.org.tumakha.spd.dao;
 
+import java.util.List;
+
 import ua.org.tumakha.spd.entity.User;
 
 /**
@@ -7,12 +9,12 @@ import ua.org.tumakha.spd.entity.User;
  */
 public interface UserDao {
 
-    public User find(Object id);
+	public List<User> findAll();
 
-    public void persist(User user);
+	public User find(Object id);
 
-    public User merge(User user);
+	public void persist(User user);
 
-    public void remove(User user);
+	public User merge(User user);
 
 }
