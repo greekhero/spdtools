@@ -171,6 +171,14 @@ public class User {
         this.acts = acts;
     }
 
+    public Contract getLastContract() {
+        return (Contract) contracts.toArray()[0];
+    }
+
+    public Act getLastAct() {
+        return (Act) acts.toArray()[0];
+    }
+
     public Address getAddress() {
         return address;
     }

@@ -3,8 +3,13 @@ package ua.org.tumakha.spd.template.model;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
+import ua.org.tumakha.spd.entity.Act;
+import ua.org.tumakha.spd.entity.Address;
+import ua.org.tumakha.spd.entity.Bank;
+import ua.org.tumakha.spd.entity.Contract;
 import ua.org.tumakha.spd.entity.User;
 import ua.org.tumakha.spd.template.DocxTemplate.Template;
+import ua.org.tumakha.util.NumberUtil;
 
 /**
  * @author Yuriy Tumakha
@@ -19,7 +24,39 @@ public class ActModel extends TemplateModel {
 
     public ActModel(User user) {
         this();
-
+        Act lastAct = user.getLastAct();
+        Contract lastContract = user.getLastContract();
+        Bank bank = user.getBank();
+        Address address = user.getAddress();
+        actNo = lastAct.getNumber();
+        contractNo = lastContract.getNumber();
+        contractDate = "";
+        contractDateEn = "";
+        date = "";
+        dateEn = "";
+        dateFrom = "";
+        dateFromEn = "";
+        dateTo = "";
+        dateToEn = "";
+        firstname = user.getFirstname();
+        firstnameEn = user.getFirstnameEn();
+        middlename = user.getMiddlename();
+        middlenameEn = user.getMiddlenameEn();
+        lastname = user.getLastname();
+        lastnameEn = user.getLastnameEn();
+        amountDigit = lastAct.getAmount().toString(); // TODO: format float
+        amountUa = NumberUtil.numberInWordsUa(lastAct.getAmount().intValue()) + " долари"; // TODO
+        amountEn = NumberUtil.numberInWordsEn(lastAct.getAmount().intValue());
+        regNumber = user.getRegNumber();
+        regDate = "";
+        regAddress = "";
+        regAddressEn = "";
+        PIN = user.getPIN().toString();
+        bankAccount = bank.getAccountNumber().toString();
+        bankName = bank.getName();
+        bankNameEn = bank.getNameEn();
+        bankMFO = bank.getMFO().toString();
+        bankSWIFT = bank.getSWIFT();
     }
 
     private String actNo;
