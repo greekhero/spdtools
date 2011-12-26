@@ -20,179 +20,169 @@ import javax.persistence.Table;
 @Table(name = "user")
 public class User {
 
-    @Id
-    @GeneratedValue
-    private Integer userId;
+	@Id
+	@GeneratedValue
+	private Integer userId;
 
-    private boolean active;
+	private boolean active;
 
-    private boolean removed;
+	private String firstname;
 
-    private String firstname;
+	private String firstnameEn;
 
-    private String firstnameEn;
+	private String middlename;
 
-    private String middlename;
+	private String middlenameEn;
 
-    private String middlenameEn;
+	private String lastname;
 
-    private String lastname;
+	private String lastnameEn;
 
-    private String lastnameEn;
+	@Column(unique = true, nullable = true)
+	private Long PIN;
 
-    @Column(unique = true, nullable = true)
-    private Long PIN;
+	private String regNumber;
 
-    private String regNumber;
+	private Date regDate;
 
-    private Date regDate;
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private Address address;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Address address;
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private Bank bank;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Bank bank;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<Contract> contracts;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Contract> contracts;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<Act> acts;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Act> acts;
+	public Integer getUserId() {
+		return userId;
+	}
 
-    public Integer getUserId() {
-        return userId;
-    }
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+	public boolean isActive() {
+		return active;
+	}
 
-    public boolean isActive() {
-        return active;
-    }
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
+	public String getFirstname() {
+		return firstname;
+	}
 
-    public boolean isRemoved() {
-        return removed;
-    }
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
 
-    public void setRemoved(boolean removed) {
-        this.removed = removed;
-    }
+	public String getFirstnameEn() {
+		return firstnameEn;
+	}
 
-    public String getFirstname() {
-        return firstname;
-    }
+	public void setFirstnameEn(String firstnameEn) {
+		this.firstnameEn = firstnameEn;
+	}
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
+	public String getMiddlename() {
+		return middlename;
+	}
 
-    public String getFirstnameEn() {
-        return firstnameEn;
-    }
+	public void setMiddlename(String middlename) {
+		this.middlename = middlename;
+	}
 
-    public void setFirstnameEn(String firstnameEn) {
-        this.firstnameEn = firstnameEn;
-    }
+	public String getMiddlenameEn() {
+		return middlenameEn;
+	}
 
-    public String getMiddlename() {
-        return middlename;
-    }
+	public void setMiddlenameEn(String middlenameEn) {
+		this.middlenameEn = middlenameEn;
+	}
 
-    public void setMiddlename(String middlename) {
-        this.middlename = middlename;
-    }
+	public String getLastname() {
+		return lastname;
+	}
 
-    public String getMiddlenameEn() {
-        return middlenameEn;
-    }
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
 
-    public void setMiddlenameEn(String middlenameEn) {
-        this.middlenameEn = middlenameEn;
-    }
+	public String getLastnameEn() {
+		return lastnameEn;
+	}
 
-    public String getLastname() {
-        return lastname;
-    }
+	public void setLastnameEn(String lastnameEn) {
+		this.lastnameEn = lastnameEn;
+	}
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
+	public Long getPIN() {
+		return PIN;
+	}
 
-    public String getLastnameEn() {
-        return lastnameEn;
-    }
+	public void setPIN(Long PIN) {
+		this.PIN = PIN;
+	}
 
-    public void setLastnameEn(String lastnameEn) {
-        this.lastnameEn = lastnameEn;
-    }
+	public String getRegNumber() {
+		return regNumber;
+	}
 
-    public Long getPIN() {
-        return PIN;
-    }
+	public void setRegNumber(String regNumber) {
+		this.regNumber = regNumber;
+	}
 
-    public void setPIN(Long PIN) {
-        this.PIN = PIN;
-    }
+	public Date getRegDate() {
+		return regDate;
+	}
 
-    public String getRegNumber() {
-        return regNumber;
-    }
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}
 
-    public void setRegNumber(String regNumber) {
-        this.regNumber = regNumber;
-    }
+	public Set<Contract> getContracts() {
+		return contracts;
+	}
 
-    public Date getRegDate() {
-        return regDate;
-    }
+	public void setContracts(Set<Contract> contracts) {
+		this.contracts = contracts;
+	}
 
-    public void setRegDate(Date regDate) {
-        this.regDate = regDate;
-    }
+	public Set<Act> getActs() {
+		return acts;
+	}
 
-    public Set<Contract> getContracts() {
-        return contracts;
-    }
+	public void setActs(Set<Act> acts) {
+		this.acts = acts;
+	}
 
-    public void setContracts(Set<Contract> contracts) {
-        this.contracts = contracts;
-    }
+	public Contract getLastContract() {
+		return (Contract) contracts.toArray()[0];
+	}
 
-    public Set<Act> getActs() {
-        return acts;
-    }
+	public Act getLastAct() {
+		return (Act) acts.toArray()[0];
+	}
 
-    public void setActs(Set<Act> acts) {
-        this.acts = acts;
-    }
+	public Address getAddress() {
+		return address;
+	}
 
-    public Contract getLastContract() {
-        return (Contract) contracts.toArray()[0];
-    }
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
-    public Act getLastAct() {
-        return (Act) acts.toArray()[0];
-    }
+	public Bank getBank() {
+		return bank;
+	}
 
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public Bank getBank() {
-        return bank;
-    }
-
-    public void setBank(Bank bank) {
-        this.bank = bank;
-    }
+	public void setBank(Bank bank) {
+		this.bank = bank;
+	}
 
 }
