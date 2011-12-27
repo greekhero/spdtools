@@ -37,6 +37,8 @@ public class User {
 
     private Date regDate;
 
+    private String regDPI;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Address address;
 
@@ -139,6 +141,14 @@ public class User {
 
     public void setRegDate(Date regDate) {
         this.regDate = regDate;
+    }
+
+    public String getRegDPI() {
+        return regDPI;
+    }
+
+    public void setRegDPI(String regDPI) {
+        this.regDPI = regDPI;
     }
 
     public Set<Contract> getContracts() {
