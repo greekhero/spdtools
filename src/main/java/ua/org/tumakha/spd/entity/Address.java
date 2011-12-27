@@ -23,6 +23,7 @@ public class Address {
     private static final String REGION_SUFIX = " oбл.";
     private static final String REGION_SUFIX_EN = " region";
     private static final String STREET_PREFIX = "вул. ";
+    // TODO: use sufix " street"
     private static final String STREET_PREFIX_EN = "str. ";
     private static final String HOUSE_PREFIX = "б. ";
     private static final String HOUSE_PREFIX_EN = "";
