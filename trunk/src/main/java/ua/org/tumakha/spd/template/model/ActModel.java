@@ -84,7 +84,7 @@ public class ActModel extends TemplateModel {
         lastnameEn = user.getLastnameEn();
         int amount = lastAct.getAmount().intValue();
         amountDigit = "" + amount;
-        amountUa = NumberUtil.numberInWordsUa(amount) + " долари"; // TODO
+        amountUa = NumberUtil.numberInWordsUa(amount) + " " + NumberUtil.numberInDollarsUa(amount);
         amountEn = NumberUtil.numberInWordsEn(amount);
         regNumber = user.getRegNumber();
         regDate = regDateFormat.format(user.getRegDate());

@@ -3,7 +3,7 @@ package ua.org.tumakha.util;
 /**
  * @author Yuriy Tumakha
  */
-public class NumberUtilUa {
+public abstract class NumberUtilUa {
 
     public final static int DG_POWER = 6;
 
@@ -49,6 +49,8 @@ public class NumberUtilUa {
             { "сім ", "сім ", "сімнадцать ", "сімдесят ", "сімсот " },
             { "вісім ", "вісім ", "вісімнадцать ", "вісімдесят ", "вісімсот " },
             { "дев'ять ", "дев'ять ", "дев'ятнадцать ", "дев'яносто ", "дев'ятсот " } };
+
+    private final static String[] DOLLARS = new String[] { "долар", "долари", "доларів" };
 
     public static String toString(int sum) {
         int i, mny;
@@ -126,4 +128,31 @@ public class NumberUtilUa {
         return toString((int) number).trim();
     }
 
+    public static String numberInDollars(long number) {
+        String dollars;
+        number = Math.abs(number);
+        int one = 0;
+        int four = 1;
+        int many = 2;
+        int dec = (int) number % 100;
+        if (dec >= 11 && dec <= 14) {
+            number = 15;
+        }
+        int mny = (int) number % 10;
+        switch (mny) {
+        case 1:
+            dollars = DOLLARS[one];
+            break;
+        case 2:
+        case 3:
+        case 4:
+            dollars = DOLLARS[four];
+            break;
+        default:
+            dollars = DOLLARS[many];
+            break;
+        }
+        ;
+        return dollars;
+    }
 }
