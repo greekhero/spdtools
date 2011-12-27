@@ -40,7 +40,7 @@ public class GenerateReportsTest {
     }
 
     private List<ActModel> getActModelList() {
-        List<User> users = userService.findAllUsers();
+        List<User> users = userService.findActiveUsers();
         if (users != null && users.size() > 0) {
             List<ActModel> listModel = new ArrayList<ActModel>(users.size());
             for (User user : users) {

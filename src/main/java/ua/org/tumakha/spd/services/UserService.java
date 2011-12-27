@@ -9,12 +9,14 @@ import ua.org.tumakha.spd.entity.User;
  */
 public interface UserService {
 
-	public void createUser(User user);
+    public void createUser(User user);
 
-	public User updateUser(User user);
+    public User updateUser(User user);
 
-	public User findUserById(Integer userId);
+    public User findUserById(Integer userId);
 
-	public List<User> findAllUsers();
+    public List<User> findAllUsers();
+
+    public List<User> findActiveUsers();
 
 }
