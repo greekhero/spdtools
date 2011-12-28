@@ -17,41 +17,43 @@ import ua.org.tumakha.spd.template.model.ActModel;
  */
 public class GenerateReportsTest {
 
-    private static String[] CONFIG_LOCATIONS = { "classpath:datasource-test.xml", "classpath:persistenceContext.xml" };
-    private static ApplicationContext applicationContext;
-    private static UserService userService;
-    private final DocxTemplate docxTemplate = new DocxTemplate();
+	private static String[] CONFIG_LOCATIONS = {
+			"classpath:datasource-test.xml", "classpath:persistenceContext.xml" };
+	private static ApplicationContext applicationContext;
+	private static UserService userService;
+	private final DocxTemplate docxTemplate = new DocxTemplate();
 
-    @BeforeClass
-    public static void init() {
-        applicationContext = new ClassPathXmlApplicationContext(CONFIG_LOCATIONS);
-        userService = (UserService) applicationContext.getBean("userService");
+	@BeforeClass
+	public static void init() {
+		applicationContext = new ClassPathXmlApplicationContext(
+				CONFIG_LOCATIONS);
+		userService = (UserService) applicationContext.getBean("userService");
 
-    }
+	}
 
-    @Test
-    public void testGenerateReports() throws Exception {
-        List<ActModel> listModel = getActModelList();
-        docxTemplate.saveReports(Template.ACT, listModel);
-        docxTemplate.saveReports(Template.CONTRACT_AMENDMENT, listModel);
-        if (listModel != null) {
-            System.out.println("Generated report models: " + listModel.size());
-        }
-    }
+	@Test
+	public void testGenerateReports() throws Exception {
+		List<ActModel> listModel = getActModelList();
+		docxTemplate.saveReports(Template.ACT, listModel);
+		// docxTemplate.saveReports(Template.CONTRACT_AMENDMENT, listModel);
+		if (listModel != null) {
+			System.out.println("Generated report models: " + listModel.size());
+		}
+	}
 
-    private List<ActModel> getActModelList() {
-        List<User> users = userService.findActiveUsers();
-        if (users != null && users.size() > 0) {
-            List<ActModel> listModel = new ArrayList<ActModel>(users.size());
-            for (User user : users) {
-                if (user.getActs().size() == 1) {
-                    ActModel actModel = new ActModel(user);
-                    listModel.add(actModel);
-                }
-            }
-            return listModel;
-        }
-        return null;
-    }
+	private List<ActModel> getActModelList() {
+		List<User> users = userService.findActiveUsers();
+		if (users != null && users.size() > 0) {
+			List<ActModel> listModel = new ArrayList<ActModel>(users.size());
+			for (User user : users) {
+				if (user.getActs().size() == 1) {
+					ActModel actModel = new ActModel(user);
+					listModel.add(actModel);
+				}
+			}
+			return listModel;
+		}
+		return null;
+	}
 
 }
