@@ -22,10 +22,10 @@ public class ActModel extends TemplateModel {
     private static final SimpleDateFormat regDateFormat = new SimpleDateFormat("dd.MM.yyyy");
     private static final SimpleDateFormat contractDateFormat = new SimpleDateFormat("dd MMMMM yyyy", uaLocale);
     private static final SimpleDateFormat contractDateFormatEn = new SimpleDateFormat("dd MMMMM yyyy");
-    private static final SimpleDateFormat actDateFormat = new SimpleDateFormat("«dd»   MMMMM   yyyy р", uaLocale);
-    private static final SimpleDateFormat actDateFormatEn = new SimpleDateFormat("«dd»   MMMMM  yyyy");
+    private static final SimpleDateFormat actDateFormat = new SimpleDateFormat("«dd»  MMMMM  yyyy р", uaLocale);
+    private static final SimpleDateFormat actDateFormatEn = new SimpleDateFormat("«dd»  MMMMM  yyyy");
     private static final SimpleDateFormat actPeriodFormat = new SimpleDateFormat("dd MMMMM yyyy", uaLocale);
-    private static final SimpleDateFormat actPeriodFormatEn = new SimpleDateFormat("dd of MMMMM yyyy");
+    private static final SimpleDateFormat actPeriodFormatEn = new SimpleDateFormat("dd __ MMMMM yyyy");
 
     private String actNo;
     private String contractNo;
@@ -73,9 +73,9 @@ public class ActModel extends TemplateModel {
         date = actDateFormat.format(lastAct.getDateTo());
         dateEn = actDateFormatEn.format(lastAct.getDateTo());
         dateFrom = actPeriodFormat.format(lastAct.getDateFrom());
-        dateFromEn = actPeriodFormatEn.format(lastAct.getDateFrom());
+        dateFromEn = actPeriodFormatEn.format(lastAct.getDateFrom()).replace("__", "of");
         dateTo = actPeriodFormat.format(lastAct.getDateTo());
-        dateToEn = actPeriodFormatEn.format(lastAct.getDateTo());
+        dateToEn = actPeriodFormatEn.format(lastAct.getDateTo()).replace("__", "of");
         firstname = user.getFirstname();
         firstnameEn = user.getFirstnameEn();
         middlename = user.getMiddlename();
@@ -368,8 +368,8 @@ public class ActModel extends TemplateModel {
     @Override
     public String getOutputFilename(Template template) {
         String month = yearMonthFormat.format(getTemplateDate());
-        return String.format("/%s/ICGU_%s_%s_%s", month, firstnameEn.substring(0, 1) + middlenameEn.charAt(0)
-                + lastnameEn.charAt(0), month.replace("-", "_"), template.getFilename());
+        return String.format("/%s/ICGU_%s_%s_%s_%s", month, firstnameEn.substring(0, 1) + middlenameEn.charAt(0)
+                + lastnameEn.charAt(0), month.replace("-", "_"), lastnameEn, template.getFilename());
 
     }
 
