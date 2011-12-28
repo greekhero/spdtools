@@ -25,7 +25,7 @@ public class ActModel extends TemplateModel {
     private static final SimpleDateFormat actDateFormat = new SimpleDateFormat("«dd»  MMMMM  yyyy р", uaLocale);
     private static final SimpleDateFormat actDateFormatEn = new SimpleDateFormat("«dd»  MMMMM  yyyy");
     private static final SimpleDateFormat actPeriodFormat = new SimpleDateFormat("dd MMMMM yyyy", uaLocale);
-    private static final SimpleDateFormat actPeriodFormatEn = new SimpleDateFormat("dd __ MMMMM yyyy");
+    private static final SimpleDateFormat actPeriodFormatEn = new SimpleDateFormat("dd 'of' MMMMM yyyy");
 
     private String actNo;
     private String contractNo;
@@ -73,9 +73,9 @@ public class ActModel extends TemplateModel {
         date = actDateFormat.format(lastAct.getDateTo());
         dateEn = actDateFormatEn.format(lastAct.getDateTo());
         dateFrom = actPeriodFormat.format(lastAct.getDateFrom());
-        dateFromEn = actPeriodFormatEn.format(lastAct.getDateFrom()).replace("__", "of");
+        dateFromEn = actPeriodFormatEn.format(lastAct.getDateFrom());
         dateTo = actPeriodFormat.format(lastAct.getDateTo());
-        dateToEn = actPeriodFormatEn.format(lastAct.getDateTo()).replace("__", "of");
+        dateToEn = actPeriodFormatEn.format(lastAct.getDateTo());
         firstname = user.getFirstname();
         firstnameEn = user.getFirstnameEn();
         middlename = user.getMiddlename();
