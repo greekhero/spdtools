@@ -47,6 +47,7 @@ public class ActModel extends TemplateModel {
     private String amountUa;
     private String amountEn;
     private String regNumber;
+    private String regNumberEn;
     private String regDate;
     private String regAddress;
     private String regAddressEn;
@@ -87,6 +88,7 @@ public class ActModel extends TemplateModel {
         amountUa = NumberUtil.numberInWordsUa(amount) + " " + NumberUtil.numberInDollarsUa(amount);
         amountEn = NumberUtil.numberInWordsEn(amount);
         regNumber = user.getRegNumber();
+        regNumberEn = regNumber.replace("з", "z");
         regDate = regDateFormat.format(user.getRegDate());
         regAddress = address.getTextUa() + ", Україна";
         regAddressEn = address.getTextEn() + ", Ukraine";
@@ -258,6 +260,14 @@ public class ActModel extends TemplateModel {
         this.regNumber = regNumber;
     }
 
+    public String getRegNumberEn() {
+        return regNumberEn;
+    }
+
+    public void setRegNumberEn(String regNumberEn) {
+        this.regNumberEn = regNumberEn;
+    }
+
     public String getRegDate() {
         return regDate;
     }
@@ -353,6 +363,7 @@ public class ActModel extends TemplateModel {
         mappings.put("amountUa", getAmountUa());
         mappings.put("amountEn", getAmountEn());
         mappings.put("regNumber", getRegNumber());
+        mappings.put("regNumberEn", getRegNumberEn());
         mappings.put("regDate", getRegDate());
         mappings.put("regAddress", getRegAddress());
         mappings.put("regAddressEn", getRegAddressEn());
