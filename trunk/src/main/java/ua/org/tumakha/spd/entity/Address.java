@@ -80,7 +80,7 @@ public class Address {
 
     public String getTextUa() {
         StringBuffer buffer = new StringBuffer();
-        buffer.append(StrUtil.isFirstCharUpper(street) ? STREET_PREFIX + street : street);
+        buffer.append(StrUtil.isFirstCharUpperOrDigit(street) ? STREET_PREFIX + street : street);
         if (house != null) {
             buffer.append(DELIMITER + HOUSE_PREFIX + house);
             buffer.append(StringUtils.hasText(houseChar) ? "-" + houseChar : "");
@@ -91,7 +91,7 @@ public class Address {
             buffer.append(StringUtils.hasText(apartmentChar) ? apartmentChar : "");
         }
         buffer.append(DELIMITER);
-        buffer.append(StrUtil.isFirstCharUpper(city) ? CITY_PREFIX + city : city);
+        buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? CITY_PREFIX + city : city);
         buffer.append(StringUtils.hasText(district) ? DELIMITER + district + DISTRICT_SUFIX : "");
         buffer.append(StringUtils.hasText(region) ? DELIMITER + region + REGION_SUFIX : "");
         return buffer.toString();
@@ -99,7 +99,7 @@ public class Address {
 
     public String getTextEn() {
         StringBuffer buffer = new StringBuffer();
-        buffer.append(StrUtil.isFirstCharUpper(streetEn) ? STREET_PREFIX_EN + streetEn : streetEn);
+        buffer.append(StrUtil.isFirstCharUpperOrDigit(streetEn) ? STREET_PREFIX_EN + streetEn : streetEn);
         if (house != null) {
             buffer.append(DELIMITER + HOUSE_PREFIX_EN + house);
             buffer.append(StringUtils.hasText(houseCharEn) ? "-" + houseCharEn : "");
@@ -110,7 +110,7 @@ public class Address {
             buffer.append(StringUtils.hasText(apartmentCharEn) ? apartmentCharEn : "");
         }
         buffer.append(DELIMITER);
-        buffer.append(StrUtil.isFirstCharUpper(city) ? CITY_PREFIX_EN + cityEn : cityEn);
+        buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? CITY_PREFIX_EN + cityEn : cityEn);
         buffer.append(StringUtils.hasText(districtEn) ? DELIMITER + districtEn + DISTRICT_SUFIX_EN : "");
         buffer.append(StringUtils.hasText(regionEn) ? DELIMITER + regionEn + REGION_SUFIX_EN : "");
         return buffer.toString();
