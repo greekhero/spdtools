@@ -94,7 +94,7 @@ public class Address {
         buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? CITY_PREFIX + city : city);
         buffer.append(StringUtils.hasText(district) ? DELIMITER + district + DISTRICT_SUFIX : "");
         buffer.append(StringUtils.hasText(region) ? DELIMITER + region + REGION_SUFIX : "");
-        return buffer.toString();
+        return buffer.toString().trim();
     }
 
     public String getTextEn() {
@@ -113,7 +113,7 @@ public class Address {
         buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? CITY_PREFIX_EN + cityEn : cityEn);
         buffer.append(StringUtils.hasText(districtEn) ? DELIMITER + districtEn + DISTRICT_SUFIX_EN : "");
         buffer.append(StringUtils.hasText(regionEn) ? DELIMITER + regionEn + REGION_SUFIX_EN : "");
-        return buffer.toString();
+        return buffer.toString().trim();
     }
 
     public Integer getAddressId() {
