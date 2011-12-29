@@ -3,6 +3,7 @@ package ua.org.tumakha.spd.services.impl;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
+import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -34,9 +35,12 @@ public class UserServiceImplTest {
 
 	@Test
 	public void testFindUser() {
-		User user = userService.findUserById(1);
+		List<User> users = userService.findActiveUsers();
+		User user = users.get(0);
 		assertEquals(user.getActs().get(0), user.getLastAct());
-		assertEquals(user.getContracts().get(0), user.getLastContract());
+		assertEquals(user.getLastAct().getContract(), user.getLastAct()
+				.getContract());
+		// assertEquals(user.getLastContract(), user.getLastContract());
 	}
 
 	@Test

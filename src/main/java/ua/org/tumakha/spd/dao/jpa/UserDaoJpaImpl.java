@@ -13,16 +13,19 @@ import ua.org.tumakha.spd.entity.User;
 @Component("userDao")
 public class UserDaoJpaImpl extends AbstractJpaDao<User> implements UserDao {
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<User> findAll() {
-        return entityManager.createQuery("select u from User u").getResultList();
-    }
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> findAll() {
+		return entityManager.createQuery("SELECT u FROM User u")
+				.getResultList();
+	}
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<User> findActive() {
-        return entityManager.createQuery("select u from User u where u.active = 1").getResultList();
-    }
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> findActive() {
+		return entityManager.createQuery(
+				"SELECT u FROM User u JOIN FETCH u.acts WHERE u.active = 1")
+				.getResultList();
+	}
 
 }
