@@ -72,7 +72,7 @@ public class ActModel extends TemplateModel {
 
 	public ActModel(User user) {
 		Act lastAct = user.getLastAct();
-		Contract lastContract = user.getLastContract();
+		Contract lastContract = lastAct.getContract();
 		Bank bank = user.getBank();
 		Address address = user.getAddress();
 		setTemplateDate(lastAct.getDateTo());
