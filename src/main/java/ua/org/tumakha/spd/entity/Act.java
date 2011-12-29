@@ -9,90 +9,92 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * @author Yuriy Tumakha
  */
 @Entity
-@Table(name = "act")
+@Table(name = "act", uniqueConstraints = { @UniqueConstraint(columnNames = {
+		"number", "userId" }) })
 public class Act {
 
-    @Id
-    @GeneratedValue
-    private Integer actId;
+	@Id
+	@GeneratedValue
+	private Integer actId;
 
-    @ManyToOne
-    @JoinColumn(name = "contractId", nullable = false, updatable = false)
-    private Contract contract;
+	@ManyToOne
+	@JoinColumn(name = "contractId", nullable = false, updatable = false)
+	private Contract contract;
 
-    @ManyToOne
-    @JoinColumn(name = "userId", nullable = false, updatable = false)
-    private User user;
+	@ManyToOne
+	@JoinColumn(name = "userId", nullable = false, updatable = false)
+	private User user;
 
-    @Column(unique = true, nullable = false)
-    private String number;
+	@Column(nullable = false)
+	private String number;
 
-    private Date dateFrom;
+	private Date dateFrom;
 
-    private Date dateTo;
+	private Date dateTo;
 
-    @Column
-    private Float amount;
+	@Column
+	private Float amount;
 
-    public Integer getActId() {
-        return actId;
-    }
+	public Integer getActId() {
+		return actId;
+	}
 
-    public void setActId(Integer actId) {
-        this.actId = actId;
-    }
+	public void setActId(Integer actId) {
+		this.actId = actId;
+	}
 
-    public Contract getContract() {
-        return contract;
-    }
+	public Contract getContract() {
+		return contract;
+	}
 
-    public void setContract(Contract contract) {
-        this.contract = contract;
-    }
+	public void setContract(Contract contract) {
+		this.contract = contract;
+	}
 
-    public User getUser() {
-        return user;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    public String getNumber() {
-        return number;
-    }
+	public String getNumber() {
+		return number;
+	}
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
+	public void setNumber(String number) {
+		this.number = number;
+	}
 
-    public Date getDateFrom() {
-        return dateFrom;
-    }
+	public Date getDateFrom() {
+		return dateFrom;
+	}
 
-    public void setDateFrom(Date dateFrom) {
-        this.dateFrom = dateFrom;
-    }
+	public void setDateFrom(Date dateFrom) {
+		this.dateFrom = dateFrom;
+	}
 
-    public Date getDateTo() {
-        return dateTo;
-    }
+	public Date getDateTo() {
+		return dateTo;
+	}
 
-    public void setDateTo(Date dateTo) {
-        this.dateTo = dateTo;
-    }
+	public void setDateTo(Date dateTo) {
+		this.dateTo = dateTo;
+	}
 
-    public Float getAmount() {
-        return amount;
-    }
+	public Float getAmount() {
+		return amount;
+	}
 
-    public void setAmount(Float amount) {
-        this.amount = amount;
-    }
+	public void setAmount(Float amount) {
+		this.amount = amount;
+	}
 
 }
