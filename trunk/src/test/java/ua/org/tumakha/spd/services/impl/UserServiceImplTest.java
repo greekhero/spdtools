@@ -1,5 +1,7 @@
 package ua.org.tumakha.spd.services.impl;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Date;
 
 import org.junit.BeforeClass;
@@ -28,6 +30,13 @@ public class UserServiceImplTest {
 				CONFIG_LOCATIONS);
 		userService = (UserService) applicationContext.getBean("userService");
 
+	}
+
+	@Test
+	public void testFindUser() {
+		User user = userService.findUserById(1);
+		assertEquals(user.getActs().get(0), user.getLastAct());
+		assertEquals(user.getContracts().get(0), user.getLastContract());
 	}
 
 	@Test

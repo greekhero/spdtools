@@ -9,58 +9,60 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * @author Yuriy Tumakha
  */
 @Entity
-@Table(name = "contract")
+@Table(name = "contract", uniqueConstraints = { @UniqueConstraint(columnNames = {
+		"number", "userId" }) })
 public class Contract {
 
-    @Id
-    @GeneratedValue
-    private Integer contractId;
+	@Id
+	@GeneratedValue
+	private Integer contractId;
 
-    @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
-    private User user;
+	@ManyToOne
+	@JoinColumn(name = "userId", nullable = false)
+	private User user;
 
-    @Column(unique = true, nullable = false)
-    private String number;
+	@Column(nullable = false)
+	private String number;
 
-    @Column(nullable = false)
-    private Date date;
+	@Column(nullable = false)
+	private Date date;
 
-    public Integer getContractId() {
-        return contractId;
-    }
+	public Integer getContractId() {
+		return contractId;
+	}
 
-    public void setContractId(Integer contractId) {
-        this.contractId = contractId;
-    }
+	public void setContractId(Integer contractId) {
+		this.contractId = contractId;
+	}
 
-    public User getUser() {
-        return user;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    public String getNumber() {
-        return number;
-    }
+	public String getNumber() {
+		return number;
+	}
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
+	public void setNumber(String number) {
+		this.number = number;
+	}
 
-    public Date getDate() {
-        return date;
-    }
+	public Date getDate() {
+		return date;
+	}
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
 }

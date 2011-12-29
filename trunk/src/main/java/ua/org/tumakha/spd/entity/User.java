@@ -1,9 +1,22 @@
 package ua.org.tumakha.spd.entity;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+import javax.persistence.Version;
 
 /**
  * @author Yuriy Tumakha
@@ -12,191 +25,210 @@ import javax.persistence.*;
 @Table(name = "user")
 public class User {
 
-    @Id
-    @GeneratedValue
-    private Integer userId;
+	@Id
+	@GeneratedValue
+	private Integer userId;
 
-    private boolean active;
+	@Version
+	private Long version;
 
-    private String firstname;
+	private boolean active;
 
-    private String firstnameEn;
+	private String firstname;
 
-    private String middlename;
+	private String firstnameEn;
 
-    private String middlenameEn;
+	private String middlename;
 
-    private String lastname;
+	private String middlenameEn;
 
-    private String lastnameEn;
+	private String lastname;
 
-    @Column(unique = true, nullable = true)
-    private Long PIN;
+	private String lastnameEn;
 
-    private String regNumber;
+	@Column(unique = true, nullable = true)
+	private Long PIN;
 
-    private Date regDate;
+	private String regNumber;
 
-    private String regDPI;
+	private Date regDate;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Address address;
+	private String regDPI;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Bank bank;
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private Address address;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Contract> contracts;
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private Bank bank;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Act> acts;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OrderBy("date desc")
+	private List<Contract> contracts;
 
-    @ManyToMany
-    @JoinTable(name = "user_group_mapping", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"), inverseJoinColumns = @JoinColumn(name = "groupId", referencedColumnName = "groupId"))
-    private Set<Group> groups;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OrderBy("dateTo desc")
+	private List<Act> acts;
 
-    public Integer getUserId() {
-        return userId;
-    }
+	@ManyToMany
+	@JoinTable(name = "user_group_mapping", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"), inverseJoinColumns = @JoinColumn(name = "groupId", referencedColumnName = "groupId"))
+	private List<Group> groups;
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+	public Integer getUserId() {
+		return userId;
+	}
 
-    public boolean isActive() {
-        return active;
-    }
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
+	public Long getVersion() {
+		return version;
+	}
 
-    public String getFirstname() {
-        return firstname;
-    }
+	public void setVersion(Long version) {
+		this.version = version;
+	}
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
+	public boolean isActive() {
+		return active;
+	}
 
-    public String getFirstnameEn() {
-        return firstnameEn;
-    }
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
-    public void setFirstnameEn(String firstnameEn) {
-        this.firstnameEn = firstnameEn;
-    }
+	public String getFirstname() {
+		return firstname;
+	}
 
-    public String getMiddlename() {
-        return middlename;
-    }
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
 
-    public void setMiddlename(String middlename) {
-        this.middlename = middlename;
-    }
+	public String getFirstnameEn() {
+		return firstnameEn;
+	}
 
-    public String getMiddlenameEn() {
-        return middlenameEn;
-    }
+	public void setFirstnameEn(String firstnameEn) {
+		this.firstnameEn = firstnameEn;
+	}
 
-    public void setMiddlenameEn(String middlenameEn) {
-        this.middlenameEn = middlenameEn;
-    }
+	public String getMiddlename() {
+		return middlename;
+	}
 
-    public String getLastname() {
-        return lastname;
-    }
+	public void setMiddlename(String middlename) {
+		this.middlename = middlename;
+	}
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
+	public String getMiddlenameEn() {
+		return middlenameEn;
+	}
 
-    public String getLastnameEn() {
-        return lastnameEn;
-    }
+	public void setMiddlenameEn(String middlenameEn) {
+		this.middlenameEn = middlenameEn;
+	}
 
-    public void setLastnameEn(String lastnameEn) {
-        this.lastnameEn = lastnameEn;
-    }
+	public String getLastname() {
+		return lastname;
+	}
 
-    public Long getPIN() {
-        return PIN;
-    }
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
 
-    public void setPIN(Long PIN) {
-        this.PIN = PIN;
-    }
+	public String getLastnameEn() {
+		return lastnameEn;
+	}
 
-    public String getRegNumber() {
-        return regNumber;
-    }
+	public void setLastnameEn(String lastnameEn) {
+		this.lastnameEn = lastnameEn;
+	}
 
-    public void setRegNumber(String regNumber) {
-        this.regNumber = regNumber;
-    }
+	public Long getPIN() {
+		return PIN;
+	}
 
-    public Date getRegDate() {
-        return regDate;
-    }
+	public void setPIN(Long PIN) {
+		this.PIN = PIN;
+	}
 
-    public void setRegDate(Date regDate) {
-        this.regDate = regDate;
-    }
+	public String getRegNumber() {
+		return regNumber;
+	}
 
-    public String getRegDPI() {
-        return regDPI;
-    }
+	public void setRegNumber(String regNumber) {
+		this.regNumber = regNumber;
+	}
 
-    public void setRegDPI(String regDPI) {
-        this.regDPI = regDPI;
-    }
+	public Date getRegDate() {
+		return regDate;
+	}
 
-    public Set<Contract> getContracts() {
-        return contracts;
-    }
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}
 
-    public void setContracts(Set<Contract> contracts) {
-        this.contracts = contracts;
-    }
+	public String getRegDPI() {
+		return regDPI;
+	}
 
-    public Set<Act> getActs() {
-        return acts;
-    }
+	public void setRegDPI(String regDPI) {
+		this.regDPI = regDPI;
+	}
 
-    public void setActs(Set<Act> acts) {
-        this.acts = acts;
-    }
+	public List<Contract> getContracts() {
+		return contracts;
+	}
 
-    public Contract getLastContract() {
-        return (Contract) contracts.toArray()[0];
-    }
+	public void setContracts(List<Contract> contracts) {
+		this.contracts = contracts;
+	}
 
-    public Act getLastAct() {
-        return (Act) acts.toArray()[0];
-    }
+	public List<Act> getActs() {
+		return acts;
+	}
 
-    public Address getAddress() {
-        return address;
-    }
+	public void setActs(List<Act> acts) {
+		this.acts = acts;
+	}
 
-    public void setAddress(Address address) {
-        this.address = address;
-    }
+	public Contract getLastContract() {
+		if (contracts != null && contracts.size() > 0) {
+			return contracts.get(0);
+		}
+		return null;
+	}
 
-    public Bank getBank() {
-        return bank;
-    }
+	public Act getLastAct() {
+		if (acts != null && acts.size() > 0) {
+			return acts.get(0);
+		}
+		return null;
+	}
 
-    public void setBank(Bank bank) {
-        this.bank = bank;
-    }
+	public Address getAddress() {
+		return address;
+	}
 
-    public Set<Group> getGroups() {
-        return groups;
-    }
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
-    public void setGroups(Set<Group> groups) {
-        this.groups = groups;
-    }
+	public Bank getBank() {
+		return bank;
+	}
+
+	public void setBank(Bank bank) {
+		this.bank = bank;
+	}
+
+	public List<Group> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<Group> groups) {
+		this.groups = groups;
+	}
 
 }
