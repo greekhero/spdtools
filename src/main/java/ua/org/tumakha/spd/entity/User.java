@@ -61,6 +61,9 @@ public class User {
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private Bank bank;
 
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private ServiceType serviceType;
+
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@OrderBy("date desc")
 	private List<Contract> contracts;
@@ -221,6 +224,14 @@ public class User {
 
 	public void setBank(Bank bank) {
 		this.bank = bank;
+	}
+
+	public ServiceType getServiceType() {
+		return serviceType;
+	}
+
+	public void setServiceType(ServiceType serviceType) {
+		this.serviceType = serviceType;
 	}
 
 	public List<Group> getGroups() {

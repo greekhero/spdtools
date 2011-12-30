@@ -11,6 +11,7 @@
         <class>ua.org.tumakha.spd.entity.Contract</class>
         <class>ua.org.tumakha.spd.entity.Act</class>
         <class>ua.org.tumakha.spd.entity.Group</class>
+        <class>ua.org.tumakha.spd.entity.ServiceType</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
         <properties>
