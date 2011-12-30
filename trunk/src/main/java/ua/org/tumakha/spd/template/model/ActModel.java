@@ -82,6 +82,8 @@ public class ActModel extends TemplateModel {
 		contractNo = lastContract.getNumber();
 		contractDate = contractDateFormat.format(lastContract.getDate());
 		contractDateEn = contractDateFormatEn.format(lastContract.getDate());
+		serviceType = user.getServiceType().getName();
+		serviceTypeEn = user.getServiceType().getNameEn();
 		date = actDateFormat.format(lastAct.getDateTo());
 		dateEn = actDateFormatEn.format(lastAct.getDateTo());
 		dateFrom = actPeriodFormat.format(lastAct.getDateFrom());
