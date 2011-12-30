@@ -40,6 +40,8 @@ public class ActModel extends TemplateModel {
 	private String contractNo;
 	private String contractDate;
 	private String contractDateEn;
+	private String serviceType;
+	private String serviceTypeEn;
 	private String date;
 	private String dateEn;
 	private String dateFrom;
@@ -140,6 +142,22 @@ public class ActModel extends TemplateModel {
 
 	public void setContractDateEn(String contractDateEn) {
 		this.contractDateEn = contractDateEn;
+	}
+
+	public String getServiceType() {
+		return serviceType;
+	}
+
+	public void setServiceType(String serviceType) {
+		this.serviceType = serviceType;
+	}
+
+	public String getServiceTypeEn() {
+		return serviceTypeEn;
+	}
+
+	public void setServiceTypeEn(String serviceTypeEn) {
+		this.serviceTypeEn = serviceTypeEn;
 	}
 
 	public String getDate() {
@@ -357,6 +375,8 @@ public class ActModel extends TemplateModel {
 		mappings.put("contractNo", getContractNo());
 		mappings.put("contractDate", getContractDate());
 		mappings.put("contractDateEn", getContractDateEn());
+		mappings.put("serviceType", getServiceType());
+		mappings.put("serviceTypeEn", getServiceTypeEn());
 		mappings.put("date", getDate());
 		mappings.put("dateEn", getDateEn());
 		mappings.put("dateFrom", getDateFrom());
