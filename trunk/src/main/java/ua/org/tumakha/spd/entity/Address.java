@@ -107,21 +107,23 @@ public class Address {
 
 	public String getTextEn() {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append(StrUtil.isFirstCharUpperOrDigit(streetEn) ? STREET_PREFIX_EN
-				+ streetEn
-				: streetEn);
-		if (house != null) {
-			buffer.append(DELIMITER + HOUSE_PREFIX_EN + house);
-			buffer.append(StringUtils.hasText(houseCharEn) ? "-" + houseCharEn
+		if (StringUtils.hasText(streetEn)) {
+			buffer.append(StrUtil.isFirstCharUpperOrDigit(streetEn) ? STREET_PREFIX_EN
 					: "");
-			buffer.append(slashHouse != null ? "/" + slashHouse : "");
+			buffer.append(streetEn);
+			if (house != null) {
+				buffer.append(DELIMITER + HOUSE_PREFIX_EN + house);
+				buffer.append(StringUtils.hasText(houseCharEn) ? "-"
+						+ houseCharEn : "");
+				buffer.append(slashHouse != null ? "/" + slashHouse : "");
+			}
+			if (apartment != null) {
+				buffer.append(DELIMITER + APARTMENT_PREFIX_EN + apartment);
+				buffer.append(StringUtils.hasText(apartmentCharEn) ? apartmentCharEn
+						: "");
+			}
+			buffer.append(DELIMITER);
 		}
-		if (apartment != null) {
-			buffer.append(DELIMITER + APARTMENT_PREFIX_EN + apartment);
-			buffer.append(StringUtils.hasText(apartmentCharEn) ? apartmentCharEn
-					: "");
-		}
-		buffer.append(DELIMITER);
 		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? CITY_PREFIX_EN
 				+ cityEn : cityEn);
 		buffer.append(StringUtils.hasText(districtEn) ? DELIMITER + districtEn
