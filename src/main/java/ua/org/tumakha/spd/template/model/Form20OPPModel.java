@@ -52,7 +52,7 @@ public class Form20OPPModel extends TemplateModel {
 		}
 		Address address = user.getAddress();
 		if (address.getPostalCode() != null) {
-			postalCode = address.getPostalCode().toString();
+			postalCode = String.format("%5d", address.getPostalCode());
 		}
 		region = address.getRegion() != null ? address.getRegion() : "";
 		district = address.getDistrict() != null ? address.getDistrict() : "";
