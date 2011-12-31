@@ -73,30 +73,37 @@ public class ActModel extends TemplateModel {
 	}
 
 	public ActModel(User user) {
-		Act lastAct = user.getLastAct();
-		Contract lastContract = lastAct.getContract();
+		copyProperties(user, user.getLastAct());
+	}
+
+	public ActModel(Act act) {
+		copyProperties(act.getUser(), act);
+	}
+
+	public void copyProperties(User user, Act act) {
+		Contract contract = act.getContract();
 		Bank bank = user.getBank();
 		Address address = user.getAddress();
-		setTemplateDate(lastAct.getDateTo());
-		actNo = lastAct.getNumber();
-		contractNo = lastContract.getNumber();
-		contractDate = contractDateFormat.format(lastContract.getDate());
-		contractDateEn = contractDateFormatEn.format(lastContract.getDate());
+		setTemplateDate(act.getDateTo());
+		actNo = act.getNumber();
+		contractNo = contract.getNumber();
+		contractDate = contractDateFormat.format(contract.getDate());
+		contractDateEn = contractDateFormatEn.format(contract.getDate());
 		serviceType = user.getServiceType().getName();
 		serviceTypeEn = user.getServiceType().getNameEn();
-		date = actDateFormat.format(lastAct.getDateTo());
-		dateEn = actDateFormatEn.format(lastAct.getDateTo());
-		dateFrom = actPeriodFormat.format(lastAct.getDateFrom());
-		dateFromEn = actPeriodFormatEn.format(lastAct.getDateFrom());
-		dateTo = actPeriodFormat.format(lastAct.getDateTo());
-		dateToEn = actPeriodFormatEn.format(lastAct.getDateTo());
+		date = actDateFormat.format(act.getDateTo());
+		dateEn = actDateFormatEn.format(act.getDateTo());
+		dateFrom = actPeriodFormat.format(act.getDateFrom());
+		dateFromEn = actPeriodFormatEn.format(act.getDateFrom());
+		dateTo = actPeriodFormat.format(act.getDateTo());
+		dateToEn = actPeriodFormatEn.format(act.getDateTo());
 		firstname = user.getFirstname();
 		firstnameEn = user.getFirstnameEn();
 		middlename = user.getMiddlename();
 		middlenameEn = user.getMiddlenameEn();
 		lastname = user.getLastname();
 		lastnameEn = user.getLastnameEn();
-		int amount = lastAct.getAmount().intValue();
+		int amount = act.getAmount().intValue();
 		amountDigit = "" + amount;
 		amountUa = NumberUtil.numberInWordsUa(amount) + " "
 				+ NumberUtil.numberInDollarsUa(amount);
