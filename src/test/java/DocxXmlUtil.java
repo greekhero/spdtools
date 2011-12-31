@@ -18,44 +18,52 @@ import org.docx4j.wml.Document;
  */
 public class DocxXmlUtil {
 
-    private final File docxFile;
-    private final File xmlFile;
+	private final File docxFile;
+	private final File oldDocxFile;
+	private final File xmlFile;
 
-    public DocxXmlUtil(String filename) {
-        docxFile = new File(filename);
-        xmlFile = new File(filename.replace(".docx", ".xml"));
-        System.out.println(docxFile.getAbsolutePath());
-    }
+	public DocxXmlUtil(String filename) {
+		filename = filename.replace(".docx", "").replace(".xml", "");
+		docxFile = new File(filename + ".docx");
+		oldDocxFile = new File(filename + ".old.docx");
+		xmlFile = new File(filename + ".xml");
+		System.out.println(docxFile.getAbsolutePath());
+	}
 
-    public static void main(String[] args) throws Exception {
-        new DocxXmlUtil(args[0]).convert();
-    }
+	public static void main(String[] args) throws Exception {
+		new DocxXmlUtil(args[0]).convert();
+	}
 
-    public void convert() throws Docx4JException, FileNotFoundException, JAXBException, IOException {
-        // Open a document from the file system
-        // 1. Load the Package
-        WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(docxFile);
+	public void convert() throws Docx4JException, FileNotFoundException,
+			JAXBException, IOException {
+		File sourceFile = oldDocxFile.exists() ? oldDocxFile : docxFile;
+		File targetFile = oldDocxFile.exists() ? docxFile : oldDocxFile;
+		// Open a document from the file system
+		// 1. Load the Package
+		WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage
+				.load(sourceFile);
+		// 2. Fetch the document part
+		MainDocumentPart documentPart = wordMLPackage.getMainDocumentPart();
 
-        // 2. Fetch the document part
-        MainDocumentPart documentPart = wordMLPackage.getMainDocumentPart();
+		org.docx4j.wml.Document wmlDocumentEl = documentPart.getJaxbElement();
 
-        org.docx4j.wml.Document wmlDocumentEl = documentPart.getJaxbElement();
+		if (!xmlFile.exists()) {
+			// xml --> string --> file
+			String xml = XmlUtils.marshaltoString(wmlDocumentEl, true);
+			FileUtils.writeStringToFile(xmlFile, xml);
+			System.out.println("Saved XML output to: "
+					+ xmlFile.getAbsolutePath());
 
-        if (!xmlFile.exists()) {
-            // xml --> string --> file
-            String xml = XmlUtils.marshaltoString(wmlDocumentEl, true);
-            FileUtils.writeStringToFile(xmlFile, xml);
-            System.out.println("Saved XML output to: " + xmlFile.getAbsolutePath());
-        } else {
-            Object obj = XmlUtils.unmarshal(new FileInputStream(xmlFile));
-            // change JaxbElement
-            documentPart.setJaxbElement((Document) obj);
+		}
 
-            File newDocxFile = new File(docxFile.getAbsolutePath().replace(".docx", ".new.docx"));
-            SaveToZipFile saver = new SaveToZipFile(wordMLPackage);
-            saver.save(newDocxFile);
-            System.out.println("Saved DOCX output to: " + newDocxFile.getAbsolutePath());
-        }
-    }
+		Object obj = XmlUtils.unmarshal(new FileInputStream(xmlFile));
+		// change JaxbElement
+		documentPart.setJaxbElement((Document) obj);
+
+		SaveToZipFile saver = new SaveToZipFile(wordMLPackage);
+		saver.save(targetFile);
+		System.out.println("Saved DOCX output to: "
+				+ targetFile.getAbsolutePath());
+	}
 
 }
