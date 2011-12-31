@@ -11,6 +11,7 @@ import ua.org.tumakha.spd.services.UserService;
 import ua.org.tumakha.spd.template.DocxTemplate;
 import ua.org.tumakha.spd.template.DocxTemplate.Template;
 import ua.org.tumakha.spd.template.model.ActModel;
+import ua.org.tumakha.spd.template.model.Form20OPPModel;
 
 /**
  * @author Yuriy Tumakha
@@ -41,6 +42,15 @@ public class GenerateReportsTest {
 		}
 	}
 
+	@Test
+	public void testGenerateForm20OPP() throws Exception {
+		List<Form20OPPModel> listModel = getForm20OPPModelList();
+		docxTemplate.saveReports(Template.FORM_20_OPP, listModel);
+		if (listModel != null) {
+			System.out.println("Generated 20-OPP forms: " + listModel.size());
+		}
+	}
+
 	private List<ActModel> getActModelList() {
 		List<User> users = userService.findActiveUsers();
 		if (users != null && users.size() > 0) {
@@ -49,6 +59,22 @@ public class GenerateReportsTest {
 				if (user.getActs().size() == 1) {
 					ActModel actModel = new ActModel(user);
 					listModel.add(actModel);
+				}
+			}
+			return listModel;
+		}
+		return null;
+	}
+
+	private List<Form20OPPModel> getForm20OPPModelList() {
+		List<User> users = userService.findActiveUsers();
+		if (users != null && users.size() > 0) {
+			List<Form20OPPModel> listModel = new ArrayList<Form20OPPModel>(
+					users.size());
+			for (User user : users) {
+				if (user.getActs().size() == 1) {
+					Form20OPPModel form20OPPModel = new Form20OPPModel(user);
+					listModel.add(form20OPPModel);
 				}
 			}
 			return listModel;

@@ -30,7 +30,9 @@ public class DocxTemplate {
 	private static final String REPORTS_DIRECTORY = "C:/Reports";
 
 	public enum Template {
-		ACT("Act_PE.docx"), CONTRACT_AMENDMENT("Contract_PE_Amendment.docx");
+		ACT("Act_PE.docx"),
+		CONTRACT_AMENDMENT("Contract_PE_Amendment.docx"),
+		FORM_20_OPP("20-OPP.docx");
 
 		private String filename;
 
@@ -106,6 +108,7 @@ public class DocxTemplate {
 						.toString());
 			}
 		}
+		log.debug(mappings);
 		return mappings;
 	}
 
