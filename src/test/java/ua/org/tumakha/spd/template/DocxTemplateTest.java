@@ -1,7 +1,6 @@
 package ua.org.tumakha.spd.template;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -17,7 +16,6 @@ public class DocxTemplateTest {
 	@Test
 	public void test() throws Exception {
 		ActModel actModel = new ActModel();
-		actModel.setTemplateDate(new Date());
 		actModel.setActNo("YVT/2011-05-08");
 		actModel.setContractNo("YVT/2011-05");
 		actModel.setContractDate("18 травня 2011");

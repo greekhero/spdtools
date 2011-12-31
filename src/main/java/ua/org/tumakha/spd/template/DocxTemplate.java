@@ -2,10 +2,12 @@ package ua.org.tumakha.spd.template;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
+import org.apache.commons.collections.BeanMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.docx4j.XmlUtils;
@@ -78,7 +80,7 @@ public class DocxTemplate {
 			WordprocessingMLPackage wordMLPackage, String xml,
 			TemplateModel model, Template template) throws JAXBException,
 			Docx4JException {
-		HashMap<String, String> mappings = model.getMappings();
+		HashMap<String, String> mappings = getMappings(model);
 		String outputfilepath = REPORTS_DIRECTORY
 				+ model.getOutputFilename(template);
 
@@ -92,4 +94,19 @@ public class DocxTemplate {
 		log.debug("Saved output to: " + outputfilepath);
 
 	}
+
+	@SuppressWarnings("unchecked")
+	public static HashMap<String, String> getMappings(TemplateModel model) {
+		HashMap<String, String> mappings = new HashMap<String, String>();
+		BeanMap beanMap = new BeanMap(model);
+		for (Object o : beanMap.entrySet()) {
+			Map.Entry<Object, Object> entry = (Map.Entry<Object, Object>) o;
+			if (entry.getValue() != null) {
+				mappings.put(entry.getKey().toString(), entry.getValue()
+						.toString());
+			}
+		}
+		return mappings;
+	}
+
 }
