@@ -80,7 +80,7 @@ public class ActModel extends TemplateModel {
 		copyProperties(act.getUser(), act);
 	}
 
-	public void copyProperties(User user, Act act) {
+	private void copyProperties(User user, Act act) {
 		Contract contract = act.getContract();
 		Bank bank = user.getBank();
 		Address address = user.getAddress();
