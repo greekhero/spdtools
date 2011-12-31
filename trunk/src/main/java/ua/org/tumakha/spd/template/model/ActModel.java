@@ -1,7 +1,7 @@
 package ua.org.tumakha.spd.template.model;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.Locale;
 
 import ua.org.tumakha.spd.entity.Act;
@@ -84,7 +84,6 @@ public class ActModel extends TemplateModel {
 		Contract contract = act.getContract();
 		Bank bank = user.getBank();
 		Address address = user.getAddress();
-		setTemplateDate(act.getDateTo());
 		actNo = act.getNumber();
 		contractNo = contract.getNumber();
 		contractDate = contractDateFormat.format(contract.getDate());
@@ -378,46 +377,13 @@ public class ActModel extends TemplateModel {
 	}
 
 	@Override
-	public HashMap<String, String> getMappings() {
-		HashMap<String, String> mappings = new HashMap<String, String>();
-		mappings.put("actNo", getActNo());
-		mappings.put("contractNo", getContractNo());
-		mappings.put("contractDate", getContractDate());
-		mappings.put("contractDateEn", getContractDateEn());
-		mappings.put("serviceType", getServiceType());
-		mappings.put("serviceTypeEn", getServiceTypeEn());
-		mappings.put("date", getDate());
-		mappings.put("dateEn", getDateEn());
-		mappings.put("dateFrom", getDateFrom());
-		mappings.put("dateFromEn", getDateFromEn());
-		mappings.put("dateTo", getDateTo());
-		mappings.put("dateToEn", getDateToEn());
-		mappings.put("firstname", getFirstname());
-		mappings.put("firstnameEn", getFirstnameEn());
-		mappings.put("middlename", getMiddlename());
-		mappings.put("middlenameEn", getMiddlenameEn());
-		mappings.put("lastname", getLastname());
-		mappings.put("lastnameEn", getLastnameEn());
-		mappings.put("amountDigit", getAmountDigit());
-		mappings.put("amountUa", getAmountUa());
-		mappings.put("amountEn", getAmountEn());
-		mappings.put("regNumber", getRegNumber());
-		mappings.put("regNumberEn", getRegNumberEn());
-		mappings.put("regDate", getRegDate());
-		mappings.put("regAddress", getRegAddress());
-		mappings.put("regAddressEn", getRegAddressEn());
-		mappings.put("PIN", getPIN());
-		mappings.put("bankAccount", getBankAccount());
-		mappings.put("bankName", getBankName());
-		mappings.put("bankNameEn", getBankNameEn());
-		mappings.put("bankMFO", getBankMFO());
-		mappings.put("bankSWIFT", getBankSWIFT());
-		return mappings;
-	}
-
-	@Override
 	public String getOutputFilename(Template template) {
-		String month = yearMonthFormat.format(getTemplateDate());
+		String month = "";
+		try {
+			month = yearMonthFormat.format(actPeriodFormatEn.parse(dateToEn));
+		} catch (ParseException e) {
+			throw new IllegalStateException(e);
+		}
 		return String.format("/%s/ICGU_%s_%s_%s_%s", month,
 				firstnameEn.substring(0, 1) + middlenameEn.charAt(0)
 						+ lastnameEn.charAt(0), month.replace("-", "_"),
