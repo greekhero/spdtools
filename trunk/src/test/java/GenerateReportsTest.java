@@ -12,6 +12,7 @@ import ua.org.tumakha.spd.template.DocxTemplate;
 import ua.org.tumakha.spd.template.Template;
 import ua.org.tumakha.spd.template.model.ActModel;
 import ua.org.tumakha.spd.template.model.Form20OPPModel;
+import ua.org.tumakha.spd.template.model.TaxSystemStatementModel;
 
 /**
  * @author Yuriy Tumakha
@@ -51,6 +52,16 @@ public class GenerateReportsTest {
 		}
 	}
 
+	@Test
+	public void testGenerateTaxSystemStatement() throws Exception {
+		List<TaxSystemStatementModel> listModel = getTaxSystemStatementModelList(1);
+		docxTemplate.saveReports(Template.TAX_SYSTEM_STATEMENT, listModel);
+		if (listModel != null) {
+			System.out.println("Generated TaxSystem statements: "
+					+ listModel.size());
+		}
+	}
+
 	private List<ActModel> getActModelList() {
 		List<User> users = userService.findActiveUsers();
 		if (users != null && users.size() > 0) {
@@ -72,9 +83,25 @@ public class GenerateReportsTest {
 			List<Form20OPPModel> listModel = new ArrayList<Form20OPPModel>(
 					users.size());
 			for (User user : users) {
-				if (user.getActs().size() == 1) {
-					Form20OPPModel form20OPPModel = new Form20OPPModel(user);
-					listModel.add(form20OPPModel);
+				Form20OPPModel form20OPPModel = new Form20OPPModel(user);
+				listModel.add(form20OPPModel);
+			}
+			return listModel;
+		}
+		return null;
+	}
+
+	private List<TaxSystemStatementModel> getTaxSystemStatementModelList(
+			Integer groupId) {
+		List<User> users = userService.findUsersByGroup(groupId);
+		if (users != null && users.size() > 0) {
+			List<TaxSystemStatementModel> listModel = new ArrayList<TaxSystemStatementModel>(
+					users.size());
+			for (User user : users) {
+				if (user.getRegDate() != null) {
+					TaxSystemStatementModel taxSystemStatementModel = new TaxSystemStatementModel(
+							user);
+					listModel.add(taxSystemStatementModel);
 				}
 			}
 			return listModel;
