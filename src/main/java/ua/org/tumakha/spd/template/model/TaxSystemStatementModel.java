@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import org.apache.commons.lang.StringUtils;
+
 import ua.org.tumakha.spd.entity.Address;
 import ua.org.tumakha.spd.entity.User;
 import ua.org.tumakha.spd.template.Template;
@@ -36,6 +38,7 @@ public class TaxSystemStatementModel extends TemplateModel {
 	private String startDate;
 	private String postalCode;
 	private String address;
+	private String addressSpace;
 	private String region;
 	private String district;
 	private String city;
@@ -90,6 +93,7 @@ public class TaxSystemStatementModel extends TemplateModel {
 			postalCode = String.format("%05d", adr.getPostalCode());
 		}
 		address = adr.getTextReversedUa();
+		addressSpace = StringUtils.repeat("_", 96 - address.length());
 		region = adr.getRegion() != null ? adr.getRegion() : "";
 		district = adr.getDistrict() != null ? adr.getDistrict() : "";
 		city = adr.getCity();
@@ -380,6 +384,14 @@ public class TaxSystemStatementModel extends TemplateModel {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getAddressSpace() {
+		return addressSpace;
+	}
+
+	public void setAddressSpace(String addressSpace) {
+		this.addressSpace = addressSpace;
 	}
 
 	public String getRegion() {
