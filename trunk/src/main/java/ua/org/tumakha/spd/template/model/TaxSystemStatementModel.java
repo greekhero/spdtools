@@ -35,7 +35,6 @@ public class TaxSystemStatementModel extends TemplateModel {
 	private String regDate;
 	private String startDate;
 	private String postalCode;
-	private String postalCodeWithComa;
 	private String address;
 	private String region;
 	private String district;
@@ -89,9 +88,8 @@ public class TaxSystemStatementModel extends TemplateModel {
 		Address adr = user.getAddress();
 		if (adr.getPostalCode() != null) {
 			postalCode = String.format("%05d", adr.getPostalCode());
-			postalCodeWithComa = postalCode + ", ";
 		}
-		address = adr.getTextUa();
+		address = adr.getTextReversedUa();
 		region = adr.getRegion() != null ? adr.getRegion() : "";
 		district = adr.getDistrict() != null ? adr.getDistrict() : "";
 		city = adr.getCity();
@@ -374,14 +372,6 @@ public class TaxSystemStatementModel extends TemplateModel {
 
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
-	}
-
-	public String getPostalCodeWithComa() {
-		return postalCodeWithComa;
-	}
-
-	public void setPostalCodeWithComa(String postalCodeWithComa) {
-		this.postalCodeWithComa = postalCodeWithComa;
 	}
 
 	public String getAddress() {

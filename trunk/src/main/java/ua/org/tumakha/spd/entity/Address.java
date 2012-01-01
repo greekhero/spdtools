@@ -105,6 +105,36 @@ public class Address {
 		return buffer.toString().trim();
 	}
 
+	public String getTextReversedUa() {
+		StringBuffer buffer = new StringBuffer();
+		if (postalCode != null) {
+			buffer.append(String.format("%05d", postalCode));
+		}
+		buffer.append(StringUtils.hasText(region) ? DELIMITER + region
+				+ REGION_SUFIX : "");
+		buffer.append(StringUtils.hasText(district) ? DELIMITER + district
+				+ DISTRICT_SUFIX : "");
+		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? DELIMITER
+				+ CITY_PREFIX + city : city);
+		if (StringUtils.hasText(street)) {
+			buffer.append(StrUtil.isFirstCharUpperOrDigit(street) ? DELIMITER
+					+ STREET_PREFIX : "");
+			buffer.append(street);
+			if (house != null) {
+				buffer.append(DELIMITER + HOUSE_PREFIX + house);
+				buffer.append(StringUtils.hasText(houseChar) ? "-" + houseChar
+						: "");
+				buffer.append(slashHouse != null ? "/" + slashHouse : "");
+			}
+			if (apartment != null) {
+				buffer.append(DELIMITER + APARTMENT_PREFIX + apartment);
+				buffer.append(StringUtils.hasText(apartmentChar) ? apartmentChar
+						: "");
+			}
+		}
+		return buffer.toString().trim();
+	}
+
 	public String getTextEn() {
 		StringBuffer buffer = new StringBuffer();
 		if (StringUtils.hasText(streetEn)) {
