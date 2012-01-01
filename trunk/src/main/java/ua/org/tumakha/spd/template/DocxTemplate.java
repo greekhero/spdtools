@@ -29,23 +29,6 @@ public class DocxTemplate {
 	private static final String TEMPLATES_DIRECTORY = "C:/Reports/templates";
 	private static final String REPORTS_DIRECTORY = "C:/Reports";
 
-	public enum Template {
-		ACT("Act_PE.docx"),
-		CONTRACT_AMENDMENT("Contract_PE_Amendment.docx"),
-		FORM_20_OPP("20-OPP.docx");
-
-		private String filename;
-
-		private Template(String filename) {
-			this.filename = filename;
-		}
-
-		public String getFilename() {
-			return filename;
-		}
-
-	}
-
 	public void saveReport(TemplateModel model) {
 		log.debug(model.getClass());// TODO:
 	}
@@ -98,15 +81,15 @@ public class DocxTemplate {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static HashMap<String, String> getMappings(TemplateModel model) {
+	private static HashMap<String, String> getMappings(TemplateModel model) {
 		HashMap<String, String> mappings = new HashMap<String, String>();
 		BeanMap beanMap = new BeanMap(model);
 		for (Object o : beanMap.entrySet()) {
 			Map.Entry<Object, Object> entry = (Map.Entry<Object, Object>) o;
-			if (entry.getValue() != null) {
-				mappings.put(entry.getKey().toString(), entry.getValue()
-						.toString());
+			if (entry.getValue() == null) {
+				entry.setValue("");
 			}
+			mappings.put(entry.getKey().toString(), entry.getValue().toString());
 		}
 		log.debug(mappings);
 		return mappings;

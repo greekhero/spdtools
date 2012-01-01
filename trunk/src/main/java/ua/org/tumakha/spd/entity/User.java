@@ -55,6 +55,10 @@ public class User {
 
 	private String regDPI;
 
+	private Long phone;
+
+	private String email;
+
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private Address address;
 
@@ -178,6 +182,22 @@ public class User {
 
 	public void setRegDPI(String regDPI) {
 		this.regDPI = regDPI;
+	}
+
+	public Long getPhone() {
+		return phone;
+	}
+
+	public void setPhone(Long phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public List<Contract> getContracts() {
