@@ -1,15 +1,15 @@
 package ua.org.tumakha.spd.template.model;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 import ua.org.tumakha.spd.entity.Act;
 import ua.org.tumakha.spd.entity.Address;
 import ua.org.tumakha.spd.entity.Bank;
 import ua.org.tumakha.spd.entity.Contract;
 import ua.org.tumakha.spd.entity.User;
-import ua.org.tumakha.spd.template.DocxTemplate.Template;
+import ua.org.tumakha.spd.template.Template;
 import ua.org.tumakha.util.NumberUtil;
 
 /**
@@ -17,23 +17,21 @@ import ua.org.tumakha.util.NumberUtil;
  */
 public class ActModel extends TemplateModel {
 
-	private static final Locale uaLocale = new Locale("uk", "UA");
-	private static final Locale enLocale = Locale.ENGLISH;
-	private static final SimpleDateFormat yearMonthFormat = new SimpleDateFormat(
+	private static final DateFormat yearMonthFormat = new SimpleDateFormat(
 			"yyyy-MM");
-	private static final SimpleDateFormat regDateFormat = new SimpleDateFormat(
+	private static final DateFormat regDateFormat = new SimpleDateFormat(
 			"dd.MM.yyyy");
-	private static final SimpleDateFormat contractDateFormat = new SimpleDateFormat(
+	private static final DateFormat contractDateFormat = new SimpleDateFormat(
 			"dd MMMMM yyyy", uaLocale);
-	private static final SimpleDateFormat contractDateFormatEn = new SimpleDateFormat(
+	private static final DateFormat contractDateFormatEn = new SimpleDateFormat(
 			"dd MMMMM yyyy", enLocale);
-	private static final SimpleDateFormat actDateFormat = new SimpleDateFormat(
+	private static final DateFormat actDateFormat = new SimpleDateFormat(
 			"«dd»  MMMMM  yyyy р", uaLocale);
-	private static final SimpleDateFormat actDateFormatEn = new SimpleDateFormat(
+	private static final DateFormat actDateFormatEn = new SimpleDateFormat(
 			"«dd»  MMMMM  yyyy", enLocale);
-	private static final SimpleDateFormat actPeriodFormat = new SimpleDateFormat(
+	private static final DateFormat actPeriodFormat = new SimpleDateFormat(
 			"dd MMMMM yyyy", uaLocale);
-	private static final SimpleDateFormat actPeriodFormatEn = new SimpleDateFormat(
+	private static final DateFormat actPeriodFormatEn = new SimpleDateFormat(
 			"dd 'of' MMMMM yyyy", enLocale);
 
 	private String actNo;

@@ -9,7 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ua.org.tumakha.spd.entity.User;
 import ua.org.tumakha.spd.services.UserService;
 import ua.org.tumakha.spd.template.DocxTemplate;
-import ua.org.tumakha.spd.template.DocxTemplate.Template;
+import ua.org.tumakha.spd.template.Template;
 import ua.org.tumakha.spd.template.model.ActModel;
 import ua.org.tumakha.spd.template.model.Form20OPPModel;
 
