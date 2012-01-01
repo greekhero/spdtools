@@ -2,6 +2,7 @@ package ua.org.tumakha.spd.template.model;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import ua.org.tumakha.spd.entity.Address;
@@ -83,7 +84,7 @@ public class TaxSystemStatementModel extends TemplateModel {
 		regDate = regDateFormat.format(user.getRegDate());
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.clear();
-		cal.set(2012, 1, 1);
+		cal.set(2012, Calendar.JANUARY, 1);
 		startDate = startDateFormat.format(cal.getTime());
 		Address adr = user.getAddress();
 		if (adr.getPostalCode() != null) {
