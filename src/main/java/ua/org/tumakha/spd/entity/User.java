@@ -55,6 +55,10 @@ public class User {
 
 	private String regDPI;
 
+	private Integer regNumberDPI;
+
+	private Date regDateDPI;
+
 	private Long phone;
 
 	private String email;
@@ -182,6 +186,22 @@ public class User {
 
 	public void setRegDPI(String regDPI) {
 		this.regDPI = regDPI;
+	}
+
+	public Integer getRegNumberDPI() {
+		return regNumberDPI;
+	}
+
+	public void setRegNumberDPI(Integer regNumberDPI) {
+		this.regNumberDPI = regNumberDPI;
+	}
+
+	public Date getRegDateDPI() {
+		return regDateDPI;
+	}
+
+	public void setRegDateDPI(Date regDateDPI) {
+		this.regDateDPI = regDateDPI;
 	}
 
 	public Long getPhone() {

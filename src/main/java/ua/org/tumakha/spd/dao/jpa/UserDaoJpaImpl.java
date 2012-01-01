@@ -28,4 +28,13 @@ public class UserDaoJpaImpl extends AbstractJpaDao<User> implements UserDao {
 				.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> findByGroup(Integer groupId) {
+		return entityManager
+				.createQuery(
+						"SELECT u FROM User u JOIN u.groups g WHERE g.id = ?")
+				.setParameter(1, groupId).getResultList();
+	}
+
 }

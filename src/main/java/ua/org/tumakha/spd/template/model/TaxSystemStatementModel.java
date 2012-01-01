@@ -15,6 +15,8 @@ public class TaxSystemStatementModel extends TemplateModel {
 
 	private static final DateFormat regDateFormat = new SimpleDateFormat(
 			"dd.MM.yyyy");
+	private static final DateFormat regDateDPIFormat = new SimpleDateFormat(
+			"ddMMyyyy");
 	private static final DateFormat startDateFormat = new SimpleDateFormat(
 			"«dd»  MMMMM  yyyy", uaLocale);
 
@@ -25,11 +27,15 @@ public class TaxSystemStatementModel extends TemplateModel {
 	private String lastnameEn;
 	private String PIN;
 	private String regDPI;
+	private String regNumberDPI;
+	private String regDateDPI;
 	private String regDocumentName;
 	private String regNumber;
 	private String regDate;
 	private String startDate;
 	private String postalCode;
+	private String postalCodeWithComa;
+	private String address;
 	private String region;
 	private String district;
 	private String city;
@@ -39,6 +45,16 @@ public class TaxSystemStatementModel extends TemplateModel {
 	private String apartment;
 	private String phone;
 	private String email;
+	private String kvedCode1;
+	private String kvedCode2;
+	private String kvedCode3;
+	private String kvedCode4;
+	private String kvedCode5;
+	private String kvedName1;
+	private String kvedName2;
+	private String kvedName3;
+	private String kvedName4;
+	private String kvedName5;
 
 	public TaxSystemStatementModel() {
 	}
@@ -57,6 +73,10 @@ public class TaxSystemStatementModel extends TemplateModel {
 		if (user.getRegDPI() != null) {
 			regDPI = user.getRegDPI();
 		}
+		regNumberDPI = user.getRegNumberDPI() != null ? user.getRegNumberDPI()
+				.toString() : "";
+		regDateDPI = user.getRegDateDPI() != null ? regDateDPIFormat
+				.format(user.getRegDateDPI()) : "";
 		regDocumentName = 1 != 1 ? "Виписка з єдиного державного реєстру юридичних осіб та фізичних осіб-підприємців"
 				: "Свідоцтво про державну реєстрацію";
 		regNumber = user.getRegNumber();
@@ -65,26 +85,28 @@ public class TaxSystemStatementModel extends TemplateModel {
 		cal.clear();
 		cal.set(2012, 1, 1);
 		startDate = startDateFormat.format(cal.getTime());
-		Address address = user.getAddress();
-		if (address.getPostalCode() != null) {
-			postalCode = String.format("%5d", address.getPostalCode());
+		Address adr = user.getAddress();
+		if (adr.getPostalCode() != null) {
+			postalCode = String.format("%05d", adr.getPostalCode());
+			postalCodeWithComa = postalCode + ", ";
 		}
-		region = address.getRegion() != null ? address.getRegion() : "";
-		district = address.getDistrict() != null ? address.getDistrict() : "";
-		city = address.getCity();
-		street = address.getStreet() != null ? address.getStreet() : "";
-		if (address.getHouse() != null) {
-			house = "" + address.getHouse();
-			if (address.getHouseChar() != null) {
-				house += "-" + address.getHouseChar();
+		address = adr.getTextUa();
+		region = adr.getRegion() != null ? adr.getRegion() : "";
+		district = adr.getDistrict() != null ? adr.getDistrict() : "";
+		city = adr.getCity();
+		street = adr.getStreet() != null ? adr.getStreet() : "";
+		if (adr.getHouse() != null) {
+			house = "" + adr.getHouse();
+			if (adr.getHouseChar() != null) {
+				house += "-" + adr.getHouseChar();
 			}
 		}
-		slashHouse = address.getSlashHouse() != null ? ""
-				+ address.getSlashHouse() : "";
-		if (address.getApartment() != null) {
-			apartment = "" + address.getApartment();
-			if (address.getApartmentChar() != null) {
-				apartment += "-" + address.getApartmentChar();
+		slashHouse = adr.getSlashHouse() != null ? "" + adr.getSlashHouse()
+				: "";
+		if (adr.getApartment() != null) {
+			apartment = "" + adr.getApartment();
+			if (adr.getApartmentChar() != null) {
+				apartment += "-" + adr.getApartmentChar();
 			}
 		}
 		phone = user.getPhone() != null ? user.getPhone().toString() : "";
@@ -102,8 +124,24 @@ public class TaxSystemStatementModel extends TemplateModel {
 	}
 
 	private String postalCodeAt(int index) {
-		if (postalCode != null) {
+		if (postalCode != null && postalCode.length() > index) {
 			return "" + postalCode.charAt(index);
+		} else {
+			return "";
+		}
+	}
+
+	private String regNumberDPIAt(int index) {
+		if (regNumberDPI != null && regNumberDPI.length() > index) {
+			return "" + regNumberDPI.charAt(index);
+		} else {
+			return "";
+		}
+	}
+
+	private String regDateDPIAt(int index) {
+		if (regDateDPI != null && regDateDPI.length() > index) {
+			return "" + regDateDPI.charAt(index);
 		} else {
 			return "";
 		}
@@ -169,6 +207,62 @@ public class TaxSystemStatementModel extends TemplateModel {
 		return postalCodeAt(4);
 	}
 
+	public String getNum0() {
+		return regNumberDPIAt(0);
+	}
+
+	public String getNum1() {
+		return regNumberDPIAt(1);
+	}
+
+	public String getNum2() {
+		return regNumberDPIAt(2);
+	}
+
+	public String getNum3() {
+		return regNumberDPIAt(3);
+	}
+
+	public String getNum4() {
+		return regNumberDPIAt(4);
+	}
+
+	public String getNum5() {
+		return regNumberDPIAt(5);
+	}
+
+	public String getDate0() {
+		return regDateDPIAt(0);
+	}
+
+	public String getDate1() {
+		return regDateDPIAt(1);
+	}
+
+	public String getDate2() {
+		return regDateDPIAt(2);
+	}
+
+	public String getDate3() {
+		return regDateDPIAt(3);
+	}
+
+	public String getDate4() {
+		return regDateDPIAt(4);
+	}
+
+	public String getDate5() {
+		return regDateDPIAt(5);
+	}
+
+	public String getDate6() {
+		return regDateDPIAt(6);
+	}
+
+	public String getDate7() {
+		return regDateDPIAt(7);
+	}
+
 	public String getFirstname() {
 		return firstname;
 	}
@@ -225,6 +319,22 @@ public class TaxSystemStatementModel extends TemplateModel {
 		this.regDPI = regDPI;
 	}
 
+	public String getRegNumberDPI() {
+		return regNumberDPI;
+	}
+
+	public void setRegNumberDPI(String regNumberDPI) {
+		this.regNumberDPI = regNumberDPI;
+	}
+
+	public String getRegDateDPI() {
+		return regDateDPI;
+	}
+
+	public void setRegDateDPI(String regDateDPI) {
+		this.regDateDPI = regDateDPI;
+	}
+
 	public String getRegDocumentName() {
 		return regDocumentName;
 	}
@@ -249,12 +359,36 @@ public class TaxSystemStatementModel extends TemplateModel {
 		this.regDate = regDate;
 	}
 
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
 	public String getPostalCode() {
 		return postalCode;
 	}
 
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
+	}
+
+	public String getPostalCodeWithComa() {
+		return postalCodeWithComa;
+	}
+
+	public void setPostalCodeWithComa(String postalCodeWithComa) {
+		this.postalCodeWithComa = postalCodeWithComa;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public String getRegion() {
@@ -327,6 +461,86 @@ public class TaxSystemStatementModel extends TemplateModel {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getKvedCode1() {
+		return kvedCode1;
+	}
+
+	public void setKvedCode1(String kvedCode1) {
+		this.kvedCode1 = kvedCode1;
+	}
+
+	public String getKvedCode2() {
+		return kvedCode2;
+	}
+
+	public void setKvedCode2(String kvedCode2) {
+		this.kvedCode2 = kvedCode2;
+	}
+
+	public String getKvedCode3() {
+		return kvedCode3;
+	}
+
+	public void setKvedCode3(String kvedCode3) {
+		this.kvedCode3 = kvedCode3;
+	}
+
+	public String getKvedCode4() {
+		return kvedCode4;
+	}
+
+	public void setKvedCode4(String kvedCode4) {
+		this.kvedCode4 = kvedCode4;
+	}
+
+	public String getKvedCode5() {
+		return kvedCode5;
+	}
+
+	public void setKvedCode5(String kvedCode5) {
+		this.kvedCode5 = kvedCode5;
+	}
+
+	public String getKvedName1() {
+		return kvedName1;
+	}
+
+	public void setKvedName1(String kvedName1) {
+		this.kvedName1 = kvedName1;
+	}
+
+	public String getKvedName2() {
+		return kvedName2;
+	}
+
+	public void setKvedName2(String kvedName2) {
+		this.kvedName2 = kvedName2;
+	}
+
+	public String getKvedName3() {
+		return kvedName3;
+	}
+
+	public void setKvedName3(String kvedName3) {
+		this.kvedName3 = kvedName3;
+	}
+
+	public String getKvedName4() {
+		return kvedName4;
+	}
+
+	public void setKvedName4(String kvedName4) {
+		this.kvedName4 = kvedName4;
+	}
+
+	public String getKvedName5() {
+		return kvedName5;
+	}
+
+	public void setKvedName5(String kvedName5) {
+		this.kvedName5 = kvedName5;
 	}
 
 }
