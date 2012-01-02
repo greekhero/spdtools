@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,6 +19,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Version;
+
+import ua.org.tumakha.spd.enums.RegDocumentType;
 
 /**
  * @author Yuriy Tumakha
@@ -48,6 +52,9 @@ public class User {
 
 	@Column(unique = true, nullable = true)
 	private Long PIN;
+
+	@Enumerated(EnumType.ORDINAL)
+	private RegDocumentType regDocumentType;
 
 	private String regNumber;
 
@@ -186,6 +193,14 @@ public class User {
 
 	public void setRegDPI(String regDPI) {
 		this.regDPI = regDPI;
+	}
+
+	public RegDocumentType getRegDocumentType() {
+		return regDocumentType;
+	}
+
+	public void setRegDocumentType(RegDocumentType regDocumentType) {
+		this.regDocumentType = regDocumentType;
 	}
 
 	public Integer getRegNumberDPI() {
