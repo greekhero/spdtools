@@ -80,8 +80,8 @@ public class TaxSystemStatementModel extends TemplateModel {
 				.toString() : "";
 		regDateDPI = user.getRegDateDPI() != null ? regDateDPIFormat
 				.format(user.getRegDateDPI()) : "";
-		regDocumentName = 1 != 1 ? "Виписка з єдиного державного реєстру юридичних осіб та фізичних осіб-підприємців"
-				: "Свідоцтво про державну реєстрацію";
+		regDocumentName = user.getRegDocumentType() != null ? user
+				.getRegDocumentType().getDescription() : "";
 		regNumber = user.getRegNumber();
 		regDate = regDateFormat.format(user.getRegDate());
 		GregorianCalendar cal = new GregorianCalendar();
