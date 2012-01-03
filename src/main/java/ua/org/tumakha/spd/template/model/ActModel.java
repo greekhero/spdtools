@@ -1,6 +1,7 @@
 package ua.org.tumakha.spd.template.model;
 
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -33,6 +34,8 @@ public class ActModel extends TemplateModel {
 			"dd MMMMM yyyy", uaLocale);
 	private static final DateFormat actPeriodFormatEn = new SimpleDateFormat(
 			"dd 'of' MMMMM yyyy", enLocale);
+	private static final NumberFormat amountFormat = NumberFormat
+			.getNumberInstance(enLocale);
 
 	private String actNo;
 	private String contractNo;
@@ -104,7 +107,7 @@ public class ActModel extends TemplateModel {
 		lastname = user.getLastname();
 		lastnameEn = user.getLastnameEn();
 		int amount = act.getAmount().intValue();
-		amountDigit = "" + amount;
+		amountDigit = amountFormat.format(amount);
 		amountUa = NumberUtil.numberInWordsUa(amount) + " "
 				+ NumberUtil.numberInDollarsUa(amount);
 		amountEn = NumberUtil.numberInWordsEn(amount);
