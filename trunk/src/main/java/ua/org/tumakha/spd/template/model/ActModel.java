@@ -42,6 +42,7 @@ public class ActModel extends TemplateModel {
 	private String contractDate;
 	private String contractDateEn;
 	private String serviceType;
+	private String serviceTypeVOrudnomu;
 	private String serviceTypeEn;
 	private String date;
 	private String dateEn;
@@ -95,6 +96,7 @@ public class ActModel extends TemplateModel {
 		contractDate = contractDateFormat.format(contract.getDate());
 		contractDateEn = contractDateFormatEn.format(contract.getDate());
 		serviceType = user.getServiceType().getName();
+		serviceTypeVOrudnomu = user.getServiceType().getNameVOrudnomu();
 		serviceTypeEn = user.getServiceType().getNameEn();
 		date = actDateFormat.format(act.getDateTo());
 		dateEn = actDateFormatEn.format(act.getDateTo());
@@ -132,6 +134,10 @@ public class ActModel extends TemplateModel {
 		bankNameEn = bank.getNameEn();
 		bankMFO = bank.getMFO().toString();
 		bankSWIFT = bank.getSWIFT();
+	}
+
+	public String getN() {
+		return "" + Integer.parseInt(actNo.substring(actNo.length() - 3));
 	}
 
 	public String getActNo() {
@@ -172,6 +178,14 @@ public class ActModel extends TemplateModel {
 
 	public void setServiceType(String serviceType) {
 		this.serviceType = serviceType;
+	}
+
+	public String getServiceTypeVOrudnomu() {
+		return serviceTypeVOrudnomu;
+	}
+
+	public void setServiceTypeVOrudnomu(String serviceTypeVOrudnomu) {
+		this.serviceTypeVOrudnomu = serviceTypeVOrudnomu;
 	}
 
 	public String getServiceTypeEn() {

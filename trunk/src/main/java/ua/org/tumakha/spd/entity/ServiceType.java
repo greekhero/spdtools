@@ -42,6 +42,11 @@ public class ServiceType {
 		this.user = user;
 	}
 
+	public String getNameVOrudnomu() {
+		return name.replace("послуги ", "послуг ").replace("комерційні ",
+				"комерційних ");
+	}
+
 	public String getName() {
 		return name;
 	}
