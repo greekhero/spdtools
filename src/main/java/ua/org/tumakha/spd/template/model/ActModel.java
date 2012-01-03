@@ -137,7 +137,7 @@ public class ActModel extends TemplateModel {
 	}
 
 	public String getN() {
-		return "" + Integer.parseInt(actNo.substring(actNo.length() - 3));
+		return "" + Integer.parseInt(actNo.substring(actNo.length() - 2));
 	}
 
 	public String getActNo() {
