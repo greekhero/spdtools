@@ -55,6 +55,9 @@ public class ActModel extends TemplateModel {
 	private String amountDigit;
 	private String amountUa;
 	private String amountEn;
+	private String regDocumentName;
+	private String regDocumentNameVOrudnomu;
+	private String regDocumentNameEn;
 	private String regNumber;
 	private String regNumberEn;
 	private String regDate;
@@ -105,6 +108,12 @@ public class ActModel extends TemplateModel {
 		amountUa = NumberUtil.numberInWordsUa(amount) + " "
 				+ NumberUtil.numberInDollarsUa(amount);
 		amountEn = NumberUtil.numberInWordsEn(amount);
+		if (user.getRegDocumentType() != null) {
+			regDocumentName = user.getRegDocumentType().getDescription();
+			regDocumentNameVOrudnomu = user.getRegDocumentType()
+					.getDescriptionVOrudnomu();
+			regDocumentNameEn = user.getRegDocumentType().getDescriptionEn();
+		}
 		regNumber = user.getRegNumber();
 		regNumberEn = regNumber.replace("з", "z");
 		regDate = regDateFormat.format(user.getRegDate());
@@ -284,6 +293,30 @@ public class ActModel extends TemplateModel {
 
 	public void setAmountEn(String amountEn) {
 		this.amountEn = amountEn;
+	}
+
+	public String getRegDocumentName() {
+		return regDocumentName;
+	}
+
+	public void setRegDocumentName(String regDocumentName) {
+		this.regDocumentName = regDocumentName;
+	}
+
+	public String getRegDocumentNameVOrudnomu() {
+		return regDocumentNameVOrudnomu;
+	}
+
+	public void setRegDocumentNameVOrudnomu(String regDocumentNameVOrudnomu) {
+		this.regDocumentNameVOrudnomu = regDocumentNameVOrudnomu;
+	}
+
+	public String getRegDocumentNameEn() {
+		return regDocumentNameEn;
+	}
+
+	public void setRegDocumentNameEn(String regDocumentNameEn) {
+		this.regDocumentNameEn = regDocumentNameEn;
 	}
 
 	public String getRegNumber() {
