@@ -47,8 +47,10 @@ public class ActModel extends TemplateModel {
 	private String dateEn;
 	private String dateFrom;
 	private String dateFromEn;
+	private String dateFromDigit;
 	private String dateTo;
 	private String dateToEn;
+	private String dateToDigit;
 	private String firstname;
 	private String firstnameEn;
 	private String middlename;
@@ -98,8 +100,10 @@ public class ActModel extends TemplateModel {
 		dateEn = actDateFormatEn.format(act.getDateTo());
 		dateFrom = actPeriodFormat.format(act.getDateFrom());
 		dateFromEn = actPeriodFormatEn.format(act.getDateFrom());
+		dateFromDigit = regDateFormat.format(act.getDateFrom());
 		dateTo = actPeriodFormat.format(act.getDateTo());
 		dateToEn = actPeriodFormatEn.format(act.getDateTo());
+		dateToDigit = regDateFormat.format(act.getDateTo());
 		firstname = user.getFirstname();
 		firstnameEn = user.getFirstnameEn();
 		middlename = user.getMiddlename();
@@ -210,6 +214,14 @@ public class ActModel extends TemplateModel {
 		this.dateFromEn = dateFromEn;
 	}
 
+	public String getDateFromDigit() {
+		return dateFromDigit;
+	}
+
+	public void setDateFromDigit(String dateFromDigit) {
+		this.dateFromDigit = dateFromDigit;
+	}
+
 	public String getDateTo() {
 		return dateTo;
 	}
@@ -224,6 +236,14 @@ public class ActModel extends TemplateModel {
 
 	public void setDateToEn(String dateToEn) {
 		this.dateToEn = dateToEn;
+	}
+
+	public String getDateToDigit() {
+		return dateToDigit;
+	}
+
+	public void setDateToDigit(String dateToDigit) {
+		this.dateToDigit = dateToDigit;
 	}
 
 	public String getFirstname() {
