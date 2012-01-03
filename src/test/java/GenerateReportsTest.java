@@ -37,7 +37,7 @@ public class GenerateReportsTest {
 	public void testGenerateReports() throws Exception {
 		List<ActModel> listModel = getActModelList();
 		docxTemplate.saveReports(Template.ACT, listModel);
-		// docxTemplate.saveReports(Template.CONTRACT_AMENDMENT, listModel);
+		docxTemplate.saveReports(Template.CONTRACT_AMENDMENT, listModel);
 		if (listModel != null) {
 			System.out.println("Generated report models: " + listModel.size());
 		}
