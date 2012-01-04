@@ -67,9 +67,14 @@ public class GenerateReportsTest {
 		if (users != null && users.size() > 0) {
 			List<ActModel> listModel = new ArrayList<ActModel>(users.size());
 			for (User user : users) {
-				if (user.getActs().size() == 1) {
-					ActModel actModel = new ActModel(user);
-					listModel.add(actModel);
+				try {
+					if (user.getActs().size() == 1) {
+						ActModel actModel = new ActModel(user);
+						listModel.add(actModel);
+					}
+				} catch (Exception e) {
+					new RuntimeException(user.getLastname() + ": "
+							+ e.getMessage());
 				}
 			}
 			return listModel;
