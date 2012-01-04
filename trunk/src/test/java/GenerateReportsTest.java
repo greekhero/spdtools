@@ -71,7 +71,7 @@ public class GenerateReportsTest {
 					ActModel actModel = new ActModel(user);
 					listModel.add(actModel);
 				} catch (Exception e) {
-					new RuntimeException(user.getLastname() + ": "
+					throw new RuntimeException(user.getLastname() + ": "
 							+ e.getMessage());
 				}
 			}
