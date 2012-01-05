@@ -20,8 +20,8 @@ import ua.org.tumakha.util.StrUtil;
 public class Address {
 
 	private static final String DELIMITER = ", ";
-	private static final String REGION_SUFIX = " oбл.";
-	private static final String REGION_SUFIX_EN = " region";
+	private static final String REGION_SUFFIX = " oбл.";
+	private static final String REGION_SUFFIX_EN = " region";
 	private static final String STREET_PREFIX = "вул. ";
 	private static final String STREET_PREFIX_EN = "str. ";
 	private static final String HOUSE_PREFIX = "б. ";
@@ -30,8 +30,8 @@ public class Address {
 	private static final String CITY_PREFIX_EN = "";
 	private static final String APARTMENT_PREFIX = "кв. ";
 	private static final String APARTMENT_PREFIX_EN = "ap. ";
-	private static final String DISTRICT_SUFIX = " р-н.";
-	private static final String DISTRICT_SUFIX_EN = " distr.";
+	private static final String DISTRICT_SUFFIX = " р-н.";
+	private static final String DISTRICT_SUFFIX_EN = " distr.";
 
 	@Id
 	@GeneratedValue
@@ -99,9 +99,9 @@ public class Address {
 		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? CITY_PREFIX
 				+ city : city);
 		buffer.append(StringUtils.hasText(district) ? DELIMITER + district
-				+ DISTRICT_SUFIX : "");
+				+ DISTRICT_SUFFIX : "");
 		buffer.append(StringUtils.hasText(region) ? DELIMITER + region
-				+ REGION_SUFIX : "");
+				+ REGION_SUFFIX : "");
 		return buffer.toString().trim();
 	}
 
@@ -111,9 +111,9 @@ public class Address {
 			buffer.append(String.format("%05d", postalCode));
 		}
 		buffer.append(StringUtils.hasText(region) ? DELIMITER + region
-				+ REGION_SUFIX : "");
+				+ REGION_SUFFIX : "");
 		buffer.append(StringUtils.hasText(district) ? DELIMITER + district
-				+ DISTRICT_SUFIX : "");
+				+ DISTRICT_SUFFIX : "");
 		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? DELIMITER
 				+ CITY_PREFIX + city : city);
 		if (StringUtils.hasText(street)) {
@@ -157,9 +157,9 @@ public class Address {
 		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? CITY_PREFIX_EN
 				+ cityEn : cityEn);
 		buffer.append(StringUtils.hasText(districtEn) ? DELIMITER + districtEn
-				+ DISTRICT_SUFIX_EN : "");
+				+ DISTRICT_SUFFIX_EN : "");
 		buffer.append(StringUtils.hasText(regionEn) ? DELIMITER + regionEn
-				+ REGION_SUFIX_EN : "");
+				+ REGION_SUFFIX_EN : "");
 		return buffer.toString().trim();
 	}
 
