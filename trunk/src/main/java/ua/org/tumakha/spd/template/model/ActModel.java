@@ -46,6 +46,8 @@ public class ActModel extends TemplateModel {
 	private String serviceTypeEn;
 	private String date;
 	private String dateEn;
+	private String startDate;
+	private String startDateEn;
 	private String dateFrom;
 	private String dateFromEn;
 	private String dateFromDigit;
@@ -100,6 +102,8 @@ public class ActModel extends TemplateModel {
 		serviceTypeEn = user.getServiceType().getNameEn();
 		date = actDateFormat.format(act.getDateTo());
 		dateEn = actDateFormatEn.format(act.getDateTo());
+		startDate = actDateFormat.format(act.getDateFrom());
+		startDateEn = actDateFormatEn.format(act.getDateFrom());
 		dateFrom = actPeriodFormat.format(act.getDateFrom());
 		dateFromEn = actPeriodFormatEn.format(act.getDateFrom());
 		dateFromDigit = regDateFormat.format(act.getDateFrom());
@@ -211,6 +215,22 @@ public class ActModel extends TemplateModel {
 
 	public void setDateEn(String dateEn) {
 		this.dateEn = dateEn;
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getStartDateEn() {
+		return startDateEn;
+	}
+
+	public void setStartDateEn(String startDateEn) {
+		this.startDateEn = startDateEn;
 	}
 
 	public String getDateFrom() {
