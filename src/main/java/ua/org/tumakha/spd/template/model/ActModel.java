@@ -124,15 +124,16 @@ public class ActModel extends TemplateModel {
 			regDocumentNameEn = user.getRegDocumentType().getDescriptionEn();
 		}
 		regNumber = user.getRegNumber();
-		regNumberEn = regNumber.replace("з", "z");
-		regDate = regDateFormat.format(user.getRegDate());
+		regNumberEn = regNumber != null ? regNumber.replace("з", "z") : "";
+		regDate = regDate != null ? regDateFormat.format(user.getRegDate())
+				: "";
 		regAddress = address.getTextUa() + ", Україна";
 		regAddressEn = address.getTextEn() + ", Ukraine";
 		PIN = user.getPIN().toString();
 		bankAccount = bank.getAccountNumber().toString();
 		bankName = bank.getName();
 		bankNameEn = bank.getNameEn();
-		bankMFO = bank.getMFO().toString();
+		bankMFO = bank.getMFO() != null ? bank.getMFO().toString() : "";
 		bankSWIFT = bank.getSWIFT();
 	}
 
