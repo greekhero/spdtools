@@ -125,8 +125,8 @@ public class ActModel extends TemplateModel {
 		}
 		regNumber = user.getRegNumber();
 		regNumberEn = regNumber != null ? regNumber.replace("з", "z") : "";
-		regDate = regDate != null ? regDateFormat.format(user.getRegDate())
-				: "";
+		regDate = user.getRegDate() != null ? regDateFormat.format(user
+				.getRegDate()) : "";
 		regAddress = address.getTextUa() + ", Україна";
 		regAddressEn = address.getTextEn() + ", Ukraine";
 		PIN = user.getPIN().toString();
