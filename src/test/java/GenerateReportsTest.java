@@ -103,7 +103,7 @@ public class GenerateReportsTest {
 			List<TaxSystemStatementModel> listModel = new ArrayList<TaxSystemStatementModel>(
 					users.size());
 			for (User user : users) {
-				if (user.getRegDate() != null) {
+				if (user.isActive()) {
 					TaxSystemStatementModel taxSystemStatementModel = new TaxSystemStatementModel(
 							user);
 					listModel.add(taxSystemStatementModel);

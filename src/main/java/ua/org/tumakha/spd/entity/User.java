@@ -36,7 +36,7 @@ public class User {
 	@Version
 	private Long version;
 
-	private boolean active;
+	private Boolean active;
 
 	private String firstname;
 
@@ -108,7 +108,10 @@ public class User {
 	}
 
 	public boolean isActive() {
-		return active;
+		if (active != null) {
+			return active;
+		}
+		return false;
 	}
 
 	public void setActive(boolean active) {
