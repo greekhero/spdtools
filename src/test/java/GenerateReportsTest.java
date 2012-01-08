@@ -12,6 +12,7 @@ import ua.org.tumakha.spd.template.DocxTemplate;
 import ua.org.tumakha.spd.template.Template;
 import ua.org.tumakha.spd.template.model.ActModel;
 import ua.org.tumakha.spd.template.model.Form20OPPModel;
+import ua.org.tumakha.spd.template.model.IncomeCalculationModel;
 import ua.org.tumakha.spd.template.model.TaxSystemStatementModel;
 
 /**
@@ -56,9 +57,13 @@ public class GenerateReportsTest {
 	public void testGenerateTaxSystemStatement() throws Exception {
 		List<TaxSystemStatementModel> listModel = getTaxSystemStatementModelList(1);
 		docxTemplate.saveReports(Template.TAX_SYSTEM_STATEMENT, listModel);
+		List<IncomeCalculationModel> models = getIncomeCalculationModelModelList(1);
+		docxTemplate.saveReports(Template.INCOME_CALCULATION, models);
 		if (listModel != null) {
 			System.out.println("Generated TaxSystem statements: "
 					+ listModel.size());
+			System.out.println("Generated Income calculations: "
+					+ models.size());
 		}
 	}
 
@@ -107,6 +112,24 @@ public class GenerateReportsTest {
 					TaxSystemStatementModel taxSystemStatementModel = new TaxSystemStatementModel(
 							user);
 					listModel.add(taxSystemStatementModel);
+				}
+			}
+			return listModel;
+		}
+		return null;
+	}
+
+	private List<IncomeCalculationModel> getIncomeCalculationModelModelList(
+			Integer groupId) {
+		List<User> users = userService.findUsersByGroup(groupId);
+		if (users != null && users.size() > 0) {
+			List<IncomeCalculationModel> listModel = new ArrayList<IncomeCalculationModel>(
+					users.size());
+			for (User user : users) {
+				if (user.isActive()) {
+					IncomeCalculationModel model = new IncomeCalculationModel(
+							user);
+					listModel.add(model);
 				}
 			}
 			return listModel;

@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 
 import ua.org.tumakha.spd.entity.User;
 import ua.org.tumakha.spd.template.Template;
+import ua.org.tumakha.util.NumberUtil;
 
 /**
  * @author Yuriy Tumakha
@@ -21,6 +22,7 @@ public class TaxSystemStatementModel extends TemplateModel {
 	private String startDate;
 	private String address;
 	private String addressSpace;
+	private String incomeUa;
 	private String kvedCode1;
 	private String kvedCode2;
 	private String kvedCode3;
@@ -47,6 +49,8 @@ public class TaxSystemStatementModel extends TemplateModel {
 		startDate = startDateFormat.format(cal.getTime());
 		address = "Україна, на замовлення";
 		addressSpace = StringUtils.repeat("_", 90 - address.length());
+		incomeUa = user.getIncome2011() != null ? NumberUtil
+				.numberInWordsUa(user.getIncome2011()) : "";
 	}
 
 	@Override
@@ -77,6 +81,14 @@ public class TaxSystemStatementModel extends TemplateModel {
 
 	public void setAddressSpace(String addressSpace) {
 		this.addressSpace = addressSpace;
+	}
+
+	public String getIncomeUa() {
+		return incomeUa;
+	}
+
+	public void setIncomeUa(String incomeUa) {
+		this.incomeUa = incomeUa;
 	}
 
 	public String getKvedCode1() {
