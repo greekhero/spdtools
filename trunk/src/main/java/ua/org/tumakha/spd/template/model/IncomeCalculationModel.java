@@ -1,5 +1,7 @@
 package ua.org.tumakha.spd.template.model;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 
 import ua.org.tumakha.spd.entity.User;
@@ -10,8 +12,7 @@ import ua.org.tumakha.spd.template.Template;
  */
 public class IncomeCalculationModel extends TemplateModel {
 
-	private static final NumberFormat incomeFormat = NumberFormat
-			.getInstance(uaLocale);
+	private static final NumberFormat incomeFormat = getDecimalFormat();
 
 	private String income;
 	private String primaryReg;
@@ -22,8 +23,8 @@ public class IncomeCalculationModel extends TemplateModel {
 
 	public IncomeCalculationModel(User user) {
 		super(user);
-		income = user.getIncome2011() != null ? incomeFormat.format(
-				user.getIncome2011()).replace(".", " ") : "";
+		income = user.getIncome2011() != null ? incomeFormat.format(user
+				.getIncome2011()) : "";
 		primaryReg = "+";
 		secondReg = "";
 	}
@@ -32,6 +33,12 @@ public class IncomeCalculationModel extends TemplateModel {
 	public String getOutputFilename(Template template) {
 		return String.format("/Tax_System_Statement/%s_%s_%s", getLastnameEn(),
 				getFirstnameEn(), template.getFilename());
+	}
+
+	public static NumberFormat getDecimalFormat() {
+		DecimalFormatSymbols forSpace = new DecimalFormatSymbols();
+		forSpace.setGroupingSeparator(' ');
+		return new DecimalFormat("###,###,###", forSpace);
 	}
 
 	public String getIncome() {
