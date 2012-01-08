@@ -6,8 +6,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import ua.org.tumakha.spd.entity.Act;
-import ua.org.tumakha.spd.entity.Address;
-import ua.org.tumakha.spd.entity.Bank;
 import ua.org.tumakha.spd.entity.Contract;
 import ua.org.tumakha.spd.entity.User;
 import ua.org.tumakha.spd.template.Template;
@@ -20,8 +18,6 @@ public class ActModel extends TemplateModel {
 
 	private static final DateFormat yearMonthFormat = new SimpleDateFormat(
 			"yyyy-MM");
-	private static final DateFormat regDateFormat = new SimpleDateFormat(
-			"dd.MM.yyyy");
 	private static final DateFormat contractDateFormat = new SimpleDateFormat(
 			"dd MMMMM yyyy", uaLocale);
 	private static final DateFormat contractDateFormatEn = new SimpleDateFormat(
@@ -54,45 +50,25 @@ public class ActModel extends TemplateModel {
 	private String dateTo;
 	private String dateToEn;
 	private String dateToDigit;
-	private String firstname;
-	private String firstnameEn;
-	private String middlename;
-	private String middlenameEn;
-	private String lastname;
-	private String lastnameEn;
 	private String amountDigit;
 	private String amountUa;
 	private String amountEn;
-	private String regDocumentName;
-	private String regDocumentNameVOrudnomu;
-	private String regDocumentNameEn;
-	private String regNumber;
-	private String regNumberEn;
-	private String regDate;
-	private String regAddress;
-	private String regAddressEn;
-	private String PIN;
-	private String bankAccount;
-	private String bankName;
-	private String bankNameEn;
-	private String bankMFO;
-	private String bankSWIFT;
 
 	public ActModel() {
 	}
 
 	public ActModel(User user) {
+		super(user);
 		copyProperties(user, user.getLastAct());
 	}
 
 	public ActModel(Act act) {
+		super(act.getUser());
 		copyProperties(act.getUser(), act);
 	}
 
 	private void copyProperties(User user, Act act) {
 		Contract contract = act.getContract();
-		Bank bank = user.getBank();
-		Address address = user.getAddress();
 		actNo = act.getNumber();
 		contractNo = contract.getNumber();
 		contractDate = contractDateFormat.format(contract.getDate());
@@ -106,39 +82,15 @@ public class ActModel extends TemplateModel {
 		startDateEn = actDateFormatEn.format(act.getDateFrom());
 		dateFrom = actPeriodFormat.format(act.getDateFrom());
 		dateFromEn = actPeriodFormatEn.format(act.getDateFrom());
-		dateFromDigit = regDateFormat.format(act.getDateFrom());
+		dateFromDigit = uaDateFormat.format(act.getDateFrom());
 		dateTo = actPeriodFormat.format(act.getDateTo());
 		dateToEn = actPeriodFormatEn.format(act.getDateTo());
-		dateToDigit = regDateFormat.format(act.getDateTo());
-		firstname = user.getFirstname();
-		firstnameEn = user.getFirstnameEn();
-		middlename = user.getMiddlename();
-		middlenameEn = user.getMiddlenameEn();
-		lastname = user.getLastname();
-		lastnameEn = user.getLastnameEn();
+		dateToDigit = uaDateFormat.format(act.getDateTo());
 		int amount = act.getAmount().intValue();
 		amountDigit = amountFormat.format(amount);
 		amountUa = NumberUtil.numberInWordsUa(amount) + " "
 				+ NumberUtil.numberInDollarsUa(amount);
 		amountEn = NumberUtil.numberInWordsEn(amount);
-		if (user.getRegDocumentType() != null) {
-			regDocumentName = user.getRegDocumentType().getDescription();
-			regDocumentNameVOrudnomu = user.getRegDocumentType()
-					.getDescriptionVOrudnomu();
-			regDocumentNameEn = user.getRegDocumentType().getDescriptionEn();
-		}
-		regNumber = user.getRegNumber();
-		regNumberEn = regNumber != null ? regNumber.replace("з", "z") : "";
-		regDate = user.getRegDate() != null ? regDateFormat.format(user
-				.getRegDate()) : "";
-		regAddress = address.getTextUa() + ", Україна";
-		regAddressEn = address.getTextEn() + ", Ukraine";
-		PIN = user.getPIN().toString();
-		bankAccount = bank.getAccountNumber().toString();
-		bankName = bank.getName();
-		bankNameEn = bank.getNameEn();
-		bankMFO = bank.getMFO() != null ? bank.getMFO().toString() : "";
-		bankSWIFT = bank.getSWIFT();
 	}
 
 	public String getN() {
@@ -281,54 +233,6 @@ public class ActModel extends TemplateModel {
 		this.dateToDigit = dateToDigit;
 	}
 
-	public String getFirstname() {
-		return firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getFirstnameEn() {
-		return firstnameEn;
-	}
-
-	public void setFirstnameEn(String firstnameEn) {
-		this.firstnameEn = firstnameEn;
-	}
-
-	public String getMiddlename() {
-		return middlename;
-	}
-
-	public void setMiddlename(String middlename) {
-		this.middlename = middlename;
-	}
-
-	public String getMiddlenameEn() {
-		return middlenameEn;
-	}
-
-	public void setMiddlenameEn(String middlenameEn) {
-		this.middlenameEn = middlenameEn;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-
-	public String getLastnameEn() {
-		return lastnameEn;
-	}
-
-	public void setLastnameEn(String lastnameEn) {
-		this.lastnameEn = lastnameEn;
-	}
-
 	public String getAmountDigit() {
 		return amountDigit;
 	}
@@ -353,118 +257,6 @@ public class ActModel extends TemplateModel {
 		this.amountEn = amountEn;
 	}
 
-	public String getRegDocumentName() {
-		return regDocumentName;
-	}
-
-	public void setRegDocumentName(String regDocumentName) {
-		this.regDocumentName = regDocumentName;
-	}
-
-	public String getRegDocumentNameVOrudnomu() {
-		return regDocumentNameVOrudnomu;
-	}
-
-	public void setRegDocumentNameVOrudnomu(String regDocumentNameVOrudnomu) {
-		this.regDocumentNameVOrudnomu = regDocumentNameVOrudnomu;
-	}
-
-	public String getRegDocumentNameEn() {
-		return regDocumentNameEn;
-	}
-
-	public void setRegDocumentNameEn(String regDocumentNameEn) {
-		this.regDocumentNameEn = regDocumentNameEn;
-	}
-
-	public String getRegNumber() {
-		return regNumber;
-	}
-
-	public void setRegNumber(String regNumber) {
-		this.regNumber = regNumber;
-	}
-
-	public String getRegNumberEn() {
-		return regNumberEn;
-	}
-
-	public void setRegNumberEn(String regNumberEn) {
-		this.regNumberEn = regNumberEn;
-	}
-
-	public String getRegDate() {
-		return regDate;
-	}
-
-	public void setRegDate(String regDate) {
-		this.regDate = regDate;
-	}
-
-	public String getRegAddress() {
-		return regAddress;
-	}
-
-	public void setRegAddress(String regAddress) {
-		this.regAddress = regAddress;
-	}
-
-	public String getRegAddressEn() {
-		return regAddressEn;
-	}
-
-	public void setRegAddressEn(String regAddressEn) {
-		this.regAddressEn = regAddressEn;
-	}
-
-	public String getPIN() {
-		return PIN;
-	}
-
-	public void setPIN(String pIN) {
-		PIN = pIN;
-	}
-
-	public String getBankAccount() {
-		return bankAccount;
-	}
-
-	public void setBankAccount(String bankAccount) {
-		this.bankAccount = bankAccount;
-	}
-
-	public String getBankName() {
-		return bankName;
-	}
-
-	public void setBankName(String bankName) {
-		this.bankName = bankName;
-	}
-
-	public String getBankNameEn() {
-		return bankNameEn;
-	}
-
-	public void setBankNameEn(String bankNameEn) {
-		this.bankNameEn = bankNameEn;
-	}
-
-	public String getBankMFO() {
-		return bankMFO;
-	}
-
-	public void setBankMFO(String bankMFO) {
-		this.bankMFO = bankMFO;
-	}
-
-	public String getBankSWIFT() {
-		return bankSWIFT;
-	}
-
-	public void setBankSWIFT(String bankSWIFT) {
-		this.bankSWIFT = bankSWIFT;
-	}
-
 	@Override
 	public String getOutputFilename(Template template) {
 		String month = "";
@@ -473,10 +265,11 @@ public class ActModel extends TemplateModel {
 		} catch (ParseException e) {
 			throw new IllegalStateException(e);
 		}
-		return String.format("/%s/ICGU_%s_%s_%s_%s", month,
-				firstnameEn.substring(0, 1) + middlenameEn.charAt(0)
-						+ lastnameEn.charAt(0), month.replace("-", "_"),
-				lastnameEn, template.getFilename());
+		return String.format("/%s/%s/%s_%s_%s_%s", month, getLastname(),
+				getLastnameEn(),
+				getFirstnameEn().substring(0, 1) + getMiddlenameEn().charAt(0)
+						+ getLastnameEn().charAt(0), month.replace("-", "_"),
+				template.getFilename());
 
 	}
 
