@@ -7,6 +7,7 @@ public enum Template {
 	ACT("Act_PE.docx"),
 	CONTRACT_AMENDMENT("Contract_PE_Amendment.docx"),
 	TAX_SYSTEM_STATEMENT("Tax_System_Statement.docx"),
+	INCOME_CALCULATION("Income_Calculation.docx"),
 	FORM_20_OPP("20-OPP.docx");
 
 	private String filename;

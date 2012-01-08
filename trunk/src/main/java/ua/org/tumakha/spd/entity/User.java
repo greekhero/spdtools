@@ -91,6 +91,9 @@ public class User {
 	@JoinTable(name = "user_group_mapping", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"), inverseJoinColumns = @JoinColumn(name = "groupId", referencedColumnName = "groupId"))
 	private List<Group> groups;
 
+	@Column
+	private Integer income2011;
+
 	public Integer getUserId() {
 		return userId;
 	}
@@ -298,6 +301,14 @@ public class User {
 
 	public void setGroups(List<Group> groups) {
 		this.groups = groups;
+	}
+
+	public Integer getIncome2011() {
+		return income2011;
+	}
+
+	public void setIncome2011(Integer income2011) {
+		this.income2011 = income2011;
 	}
 
 }
