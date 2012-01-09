@@ -12,6 +12,7 @@
         <class>ua.org.tumakha.spd.entity.Act</class>
         <class>ua.org.tumakha.spd.entity.Group</class>
         <class>ua.org.tumakha.spd.entity.ServiceType</class>
+        <class>ua.org.tumakha.spd.entity.Kved</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
         <properties>

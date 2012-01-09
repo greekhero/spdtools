@@ -24,8 +24,7 @@ public class UserDaoJpaImpl extends AbstractJpaDao<User> implements UserDao {
 	@Override
 	public List<User> findActive() {
 		return entityManager.createQuery(
-				"SELECT u FROM User u JOIN FETCH u.acts WHERE u.active = 1")
-				.getResultList();
+				"SELECT u FROM User u WHERE u.active = 1").getResultList();
 	}
 
 	@SuppressWarnings("unchecked")

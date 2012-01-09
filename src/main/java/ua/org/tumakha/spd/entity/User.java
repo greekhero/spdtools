@@ -2,6 +2,7 @@ package ua.org.tumakha.spd.entity;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -89,7 +90,12 @@ public class User {
 
 	@ManyToMany
 	@JoinTable(name = "user_group_mapping", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"), inverseJoinColumns = @JoinColumn(name = "groupId", referencedColumnName = "groupId"))
-	private List<Group> groups;
+	private Set<Group> groups;
+
+	@ManyToMany
+	@JoinTable(name = "user_kved_mapping", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"), inverseJoinColumns = @JoinColumn(name = "kvedId", referencedColumnName = "kvedId"))
+	@OrderBy("code")
+	private List<Kved> kveds;
 
 	@Column
 	private Integer income2011;
@@ -295,12 +301,20 @@ public class User {
 		this.serviceType = serviceType;
 	}
 
-	public List<Group> getGroups() {
+	public Set<Group> getGroups() {
 		return groups;
 	}
 
-	public void setGroups(List<Group> groups) {
+	public void setGroups(Set<Group> groups) {
 		this.groups = groups;
+	}
+
+	public List<Kved> getKveds() {
+		return kveds;
+	}
+
+	public void setKveds(List<Kved> kveds) {
+		this.kveds = kveds;
 	}
 
 	public Integer getIncome2011() {

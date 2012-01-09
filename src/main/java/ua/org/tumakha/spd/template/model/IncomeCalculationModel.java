@@ -35,7 +35,7 @@ public class IncomeCalculationModel extends TemplateModel {
 				getFirstnameEn(), template.getFilename());
 	}
 
-	public static NumberFormat getDecimalFormat() {
+	private static NumberFormat getDecimalFormat() {
 		DecimalFormatSymbols forSpace = new DecimalFormatSymbols();
 		forSpace.setGroupingSeparator(' ');
 		return new DecimalFormat("###,###,###", forSpace);
