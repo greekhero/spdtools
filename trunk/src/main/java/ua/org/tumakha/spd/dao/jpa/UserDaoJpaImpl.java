@@ -16,7 +16,8 @@ public class UserDaoJpaImpl extends AbstractJpaDao<User> implements UserDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> findAll() {
-		return entityManager.createQuery("SELECT u FROM User u")
+		return entityManager.createQuery(
+				"SELECT u FROM User u WHERE u.active = 1 OR u.active = 0")
 				.getResultList();
 	}
 
