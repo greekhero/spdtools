@@ -54,38 +54,29 @@ public class TaxSystemStatementModel extends TemplateModel {
 		incomeUa = user.getIncome2011() != null ? NumberUtil
 				.numberInWordsUa(user.getIncome2011()) : "";
 		List<Kved> kveds = user.getKveds();
-		Kved kved0 = extractKved(kveds, 0);
-		Kved kved1 = extractKved(kveds, 1);
-		Kved kved2 = extractKved(kveds, 2);
-		Kved kved3 = extractKved(kveds, 3);
-		Kved kved4 = extractKved(kveds, 4);
-		if (kved0 != null) {
-			kvedCode1 = kved0.getCode();
-			kvedName1 = kved0.getName();
+		Kved kved = null;
+		switch (kveds.size()) {
+		case 5:
+			kved = kveds.get(4);
+			kvedCode5 = kved.getCode();
+			kvedName5 = kved.getName();
+		case 4:
+			kved = kveds.get(3);
+			kvedCode4 = kved.getCode();
+			kvedName4 = kved.getName();
+		case 3:
+			kved = kveds.get(2);
+			kvedCode3 = kved.getCode();
+			kvedName3 = kved.getName();
+		case 2:
+			kved = kveds.get(1);
+			kvedCode2 = kved.getCode();
+			kvedName2 = kved.getName();
+		case 1:
+			kved = kveds.get(0);
+			kvedCode1 = kved.getCode();
+			kvedName1 = kved.getName();
 		}
-		if (kved1 != null) {
-			kvedCode2 = kved1.getCode();
-			kvedName2 = kved1.getName();
-		}
-		if (kved2 != null) {
-			kvedCode3 = kved2.getCode();
-			kvedName3 = kved2.getName();
-		}
-		if (kved3 != null) {
-			kvedCode4 = kved3.getCode();
-			kvedName4 = kved3.getName();
-		}
-		if (kved4 != null) {
-			kvedCode5 = kved4.getCode();
-			kvedName5 = kved4.getName();
-		}
-	}
-
-	private Kved extractKved(List<Kved> kveds, int index) {
-		if (kveds.size() > index) {
-			return kveds.get(index);
-		}
-		return null;
 	}
 
 	@Override
