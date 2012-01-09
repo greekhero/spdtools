@@ -127,6 +127,16 @@ public class User {
 		this.active = active;
 	}
 
+	public boolean isRemoved() {
+		return active == null;
+	}
+
+	public void setRemoved(boolean removed) {
+		if (removed) {
+			active = null;
+		}
+	}
+
 	public String getFirstname() {
 		return firstname;
 	}
