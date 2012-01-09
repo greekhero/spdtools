@@ -4,9 +4,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
+import ua.org.tumakha.spd.entity.Kved;
 import ua.org.tumakha.spd.entity.User;
 import ua.org.tumakha.spd.template.Template;
 import ua.org.tumakha.util.NumberUtil;
@@ -51,6 +53,39 @@ public class TaxSystemStatementModel extends TemplateModel {
 		addressSpace = StringUtils.repeat("_", 90 - address.length());
 		incomeUa = user.getIncome2011() != null ? NumberUtil
 				.numberInWordsUa(user.getIncome2011()) : "";
+		List<Kved> kveds = user.getKveds();
+		Kved kved0 = extractKved(kveds, 0);
+		Kved kved1 = extractKved(kveds, 1);
+		Kved kved2 = extractKved(kveds, 2);
+		Kved kved3 = extractKved(kveds, 3);
+		Kved kved4 = extractKved(kveds, 4);
+		if (kved0 != null) {
+			kvedCode1 = kved0.getCode();
+			kvedName1 = kved0.getName();
+		}
+		if (kved1 != null) {
+			kvedCode2 = kved1.getCode();
+			kvedName2 = kved1.getName();
+		}
+		if (kved2 != null) {
+			kvedCode3 = kved2.getCode();
+			kvedName3 = kved2.getName();
+		}
+		if (kved3 != null) {
+			kvedCode4 = kved3.getCode();
+			kvedName4 = kved3.getName();
+		}
+		if (kved4 != null) {
+			kvedCode5 = kved4.getCode();
+			kvedName5 = kved4.getName();
+		}
+	}
+
+	private Kved extractKved(List<Kved> kveds, int index) {
+		if (kveds.size() > index) {
+			return kveds.get(index);
+		}
+		return null;
 	}
 
 	@Override
