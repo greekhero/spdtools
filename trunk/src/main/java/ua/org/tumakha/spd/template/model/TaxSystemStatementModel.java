@@ -41,6 +41,7 @@ public class TaxSystemStatementModel extends TemplateModel {
 
 	public TaxSystemStatementModel(User user) {
 		super(user);
+		setPhone("+380976884343");
 		copyProperties(user);
 	}
 
