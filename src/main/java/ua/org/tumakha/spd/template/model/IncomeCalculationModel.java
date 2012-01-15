@@ -25,7 +25,7 @@ public class IncomeCalculationModel extends TemplateModel {
 		super(user);
 		income = user.getIncome2011() != null ? incomeFormat.format(user
 				.getIncome2011()) : "";
-		primaryReg = "";
+		primaryReg = "+";
 		secondReg = "";
 	}
 
