@@ -35,7 +35,7 @@ public class User {
 	private Integer userId;
 
 	@Version
-	private Long version;
+	private Integer version;
 
 	private Boolean active;
 
