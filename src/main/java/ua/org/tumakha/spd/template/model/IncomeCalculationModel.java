@@ -5,7 +5,7 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 
 import ua.org.tumakha.spd.entity.User;
-import ua.org.tumakha.spd.template.Template;
+import ua.org.tumakha.spd.template.DocxTemplate;
 
 /**
  * @author Yuriy Tumakha
@@ -30,7 +30,7 @@ public class IncomeCalculationModel extends TemplateModel {
 	}
 
 	@Override
-	public String getOutputFilename(Template template) {
+	public String getOutputFilename(DocxTemplate template) {
 		return String.format("/Tax_System_Statement/%s_%s_%s", getLastnameEn(),
 				getFirstnameEn(), template.getFilename());
 	}

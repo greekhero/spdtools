@@ -4,7 +4,7 @@ import org.apache.commons.lang.StringUtils;
 
 import ua.org.tumakha.spd.entity.Address;
 import ua.org.tumakha.spd.entity.User;
-import ua.org.tumakha.spd.template.Template;
+import ua.org.tumakha.spd.template.DocxTemplate;
 
 /**
  * @author Yuriy Tumakha
@@ -42,9 +42,7 @@ public class Form20OPPModel extends TemplateModel {
 		middlename = user.getMiddlename();
 		lastname = user.getLastname();
 		lastnameEn = user.getLastnameEn();
-		lastnameFirstMiddle = String.format("%s   %s. %s.", user.getLastname(),
-				user.getFirstname().substring(0, 1), user.getMiddlename()
-						.substring(0, 1));
+		lastnameFirstMiddle = user.getLastnameFirstMiddle();
 		PIN = user.getPIN().toString();
 		if (user.getRegDPI() != null) {
 			regDPI = user.getRegDPI();
@@ -75,7 +73,7 @@ public class Form20OPPModel extends TemplateModel {
 	}
 
 	@Override
-	public String getOutputFilename(Template template) {
+	public String getOutputFilename(DocxTemplate template) {
 		return String.format("/20-OPP/%s_%s_%s", lastnameEn, firstnameEn,
 				template.getFilename());
 	}
@@ -124,42 +122,52 @@ public class Form20OPPModel extends TemplateModel {
 		return pinAt(9);
 	}
 
+	@Override
 	public String getFirstname() {
 		return firstname;
 	}
 
+	@Override
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
 
+	@Override
 	public String getMiddlename() {
 		return middlename;
 	}
 
+	@Override
 	public void setMiddlename(String middlename) {
 		this.middlename = middlename;
 	}
 
+	@Override
 	public String getLastname() {
 		return lastname;
 	}
 
+	@Override
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
 
+	@Override
 	public String getFirstnameEn() {
 		return firstnameEn;
 	}
 
+	@Override
 	public void setFirstnameEn(String firstnameEn) {
 		this.firstnameEn = firstnameEn;
 	}
 
+	@Override
 	public String getLastnameEn() {
 		return lastnameEn;
 	}
 
+	@Override
 	public void setLastnameEn(String lastnameEn) {
 		this.lastnameEn = lastnameEn;
 	}
@@ -172,18 +180,22 @@ public class Form20OPPModel extends TemplateModel {
 		this.lastnameFirstMiddle = lastnameFirstMiddle;
 	}
 
+	@Override
 	public String getPIN() {
 		return PIN;
 	}
 
+	@Override
 	public void setPIN(String pIN) {
 		PIN = pIN;
 	}
 
+	@Override
 	public String getRegDPI() {
 		return regDPI;
 	}
 
+	@Override
 	public void setRegDPI(String regDPI) {
 		this.regDPI = regDPI;
 	}
@@ -196,66 +208,82 @@ public class Form20OPPModel extends TemplateModel {
 		this.regDPIspace = regDPIspace;
 	}
 
+	@Override
 	public String getPostalCode() {
 		return postalCode;
 	}
 
+	@Override
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
 
+	@Override
 	public String getRegion() {
 		return region;
 	}
 
+	@Override
 	public void setRegion(String region) {
 		this.region = region;
 	}
 
+	@Override
 	public String getDistrict() {
 		return district;
 	}
 
+	@Override
 	public void setDistrict(String district) {
 		this.district = district;
 	}
 
+	@Override
 	public String getCity() {
 		return city;
 	}
 
+	@Override
 	public void setCity(String city) {
 		this.city = city;
 	}
 
+	@Override
 	public String getStreet() {
 		return street;
 	}
 
+	@Override
 	public void setStreet(String street) {
 		this.street = street;
 	}
 
+	@Override
 	public String getHouse() {
 		return house;
 	}
 
+	@Override
 	public void setHouse(String house) {
 		this.house = house;
 	}
 
+	@Override
 	public String getSlashHouse() {
 		return slashHouse;
 	}
 
+	@Override
 	public void setSlashHouse(String slashHouse) {
 		this.slashHouse = slashHouse;
 	}
 
+	@Override
 	public String getApartment() {
 		return apartment;
 	}
 
+	@Override
 	public void setApartment(String apartment) {
 		this.apartment = apartment;
 	}

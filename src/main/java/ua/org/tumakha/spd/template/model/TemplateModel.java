@@ -7,7 +7,7 @@ import java.util.Locale;
 import ua.org.tumakha.spd.entity.Address;
 import ua.org.tumakha.spd.entity.Bank;
 import ua.org.tumakha.spd.entity.User;
-import ua.org.tumakha.spd.template.Template;
+import ua.org.tumakha.spd.template.DocxTemplate;
 import ua.org.tumakha.util.StrUtil;
 
 /**
@@ -118,7 +118,7 @@ public abstract class TemplateModel {
 		bankSWIFT = bank.getSWIFT();
 	}
 
-	public abstract String getOutputFilename(Template template);
+	public abstract String getOutputFilename(DocxTemplate template);
 
 	private String pinAt(int index) {
 		return StrUtil.charAt(PIN, index);

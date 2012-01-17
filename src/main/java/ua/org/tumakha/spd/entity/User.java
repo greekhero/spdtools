@@ -100,6 +100,15 @@ public class User {
 	@Column
 	private Integer income2011;
 
+	public char[] getPinArray() {
+		return getPIN().toString().toCharArray();
+	}
+
+	public String getLastnameFirstMiddle() {
+		return String.format("%s  %s. %s.", getLastname(), getFirstname()
+				.substring(0, 1), getMiddlename().substring(0, 1));
+	}
+
 	public Integer getUserId() {
 		return userId;
 	}

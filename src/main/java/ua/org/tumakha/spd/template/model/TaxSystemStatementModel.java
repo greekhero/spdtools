@@ -10,7 +10,7 @@ import org.apache.commons.lang.StringUtils;
 
 import ua.org.tumakha.spd.entity.Kved;
 import ua.org.tumakha.spd.entity.User;
-import ua.org.tumakha.spd.template.Template;
+import ua.org.tumakha.spd.template.DocxTemplate;
 import ua.org.tumakha.util.NumberUtil;
 
 /**
@@ -81,7 +81,7 @@ public class TaxSystemStatementModel extends TemplateModel {
 	}
 
 	@Override
-	public String getOutputFilename(Template template) {
+	public String getOutputFilename(DocxTemplate template) {
 		return String.format("/Tax_System_Statement/%s_%s_%s", getLastnameEn(),
 				getFirstnameEn(), template.getFilename());
 	}
