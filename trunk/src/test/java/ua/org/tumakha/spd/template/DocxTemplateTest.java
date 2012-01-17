@@ -10,7 +10,7 @@ import ua.org.tumakha.util.NumberUtil;
 
 public class DocxTemplateTest {
 
-	DocxTemplate docxTemplate = new DocxTemplate();
+	DocxProcessor docxTemplate = new DocxProcessor();
 
 	@Test
 	public void test() throws Exception {
@@ -46,7 +46,7 @@ public class DocxTemplateTest {
 		actModel.setBankSWIFT("AVALAUK");
 		List<ActModel> listModel = new ArrayList<ActModel>(100);
 		listModel.add(actModel);
-		docxTemplate.saveReports(Template.ACT, listModel);
+		docxTemplate.saveReports(DocxTemplate.ACT, listModel);
 	}
 
 }

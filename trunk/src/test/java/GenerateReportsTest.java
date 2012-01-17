@@ -1,14 +1,19 @@
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import ua.org.tumakha.spd.entity.User;
 import ua.org.tumakha.spd.services.TemplateService;
 import ua.org.tumakha.spd.services.UserService;
+import ua.org.tumakha.spd.template.DocxProcessor;
 import ua.org.tumakha.spd.template.DocxTemplate;
-import ua.org.tumakha.spd.template.Template;
+import ua.org.tumakha.spd.template.XlsProcessor;
+import ua.org.tumakha.spd.template.XlsTemplate;
 import ua.org.tumakha.spd.template.model.ActModel;
 import ua.org.tumakha.spd.template.model.Form20OPPModel;
 import ua.org.tumakha.spd.template.model.IncomeCalculationModel;
@@ -24,7 +29,8 @@ public class GenerateReportsTest {
 	private static ApplicationContext applicationContext;
 	private static UserService userService;
 	private static TemplateService templateService;
-	private final DocxTemplate docxTemplate = new DocxTemplate();
+	private final DocxProcessor docxProcessor = new DocxProcessor();
+	private final XlsProcessor xlsProcessor = new XlsProcessor();
 
 	@BeforeClass
 	public static void init() {
@@ -39,8 +45,8 @@ public class GenerateReportsTest {
 	@Test
 	public void testGenerateReports() throws Exception {
 		List<ActModel> listModel = templateService.getActModelList();
-		docxTemplate.saveReports(Template.ACT, listModel);
-		docxTemplate.saveReports(Template.CONTRACT_AMENDMENT, listModel);
+		docxProcessor.saveReports(DocxTemplate.ACT, listModel);
+		docxProcessor.saveReports(DocxTemplate.CONTRACT_AMENDMENT, listModel);
 		if (listModel != null) {
 			System.out.println("Generated report models: " + listModel.size());
 		}
@@ -50,7 +56,7 @@ public class GenerateReportsTest {
 	public void testGenerateForm20OPP() throws Exception {
 		List<Form20OPPModel> listModel = templateService
 				.getForm20OPPModelList();
-		docxTemplate.saveReports(Template.FORM_20_OPP, listModel);
+		docxProcessor.saveReports(DocxTemplate.FORM_20_OPP, listModel);
 		if (listModel != null) {
 			System.out.println("Generated 20-OPP forms: " + listModel.size());
 		}
@@ -60,10 +66,10 @@ public class GenerateReportsTest {
 	public void testGenerateTaxSystemStatement() throws Exception {
 		List<TaxSystemStatementModel> listModel = templateService
 				.getTaxSystemStatementModelList(1);
-		docxTemplate.saveReports(Template.TAX_SYSTEM_STATEMENT, listModel);
+		docxProcessor.saveReports(DocxTemplate.TAX_SYSTEM_STATEMENT, listModel);
 		List<IncomeCalculationModel> models = templateService
 				.getIncomeCalculationModelList(1);
-		docxTemplate.saveReports(Template.INCOME_CALCULATION, models);
+		docxProcessor.saveReports(DocxTemplate.INCOME_CALCULATION, models);
 		if (listModel != null) {
 			System.out.println("Generated TaxSystem statements: "
 					+ listModel.size());
@@ -72,4 +78,17 @@ public class GenerateReportsTest {
 		}
 	}
 
+	@Test
+	public void testXlsEsvD5() throws Exception {
+		List<User> users = userService.findUsersByGroup(1);
+		if (users != null) {
+			for (User user : users) {
+				Map<String, Object> beans = new HashMap<String, Object>();
+				String outputFilename = String.format("/ESV_d5/%s_%s_",
+						user.getLastnameEn(), user.getFirstnameEn());
+				xlsProcessor.saveReport(XlsTemplate.ESV_D5, outputFilename,
+						beans);
+			}
+		}
+	}
 }

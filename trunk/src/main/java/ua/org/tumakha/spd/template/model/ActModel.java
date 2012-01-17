@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import ua.org.tumakha.spd.entity.Act;
 import ua.org.tumakha.spd.entity.Contract;
 import ua.org.tumakha.spd.entity.User;
-import ua.org.tumakha.spd.template.Template;
+import ua.org.tumakha.spd.template.DocxTemplate;
 import ua.org.tumakha.util.NumberUtil;
 
 /**
@@ -258,7 +258,7 @@ public class ActModel extends TemplateModel {
 	}
 
 	@Override
-	public String getOutputFilename(Template template) {
+	public String getOutputFilename(DocxTemplate template) {
 		String month = "";
 		try {
 			month = yearMonthFormat.format(actPeriodFormatEn.parse(dateToEn));

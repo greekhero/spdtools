@@ -91,6 +91,11 @@
   		<version>${spring.version}</version>
   		<scope>test</scope>
   	</dependency>
+  	<dependency>
+  		<groupId>net.sf.jxls</groupId>
+  		<artifactId>jxls-core</artifactId>
+  		<version>1.0</version>
+  	</dependency>
   </dependencies>
   <properties>
   	<spring.version>3.1.0.RELEASE</spring.version>
