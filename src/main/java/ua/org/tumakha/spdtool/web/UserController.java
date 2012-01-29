@@ -21,15 +21,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
 
-import ua.org.tumakha.spd.entity.Act;
-import ua.org.tumakha.spd.entity.Address;
-import ua.org.tumakha.spd.entity.Bank;
-import ua.org.tumakha.spd.entity.Contract;
-import ua.org.tumakha.spd.entity.Group;
-import ua.org.tumakha.spd.entity.Kved;
-import ua.org.tumakha.spd.entity.ServiceType;
-import ua.org.tumakha.spd.entity.User;
-import ua.org.tumakha.spd.services.UserService;
+import ua.org.tumakha.spdtool.entity.Act;
+import ua.org.tumakha.spdtool.entity.Address;
+import ua.org.tumakha.spdtool.entity.Bank;
+import ua.org.tumakha.spdtool.entity.Contract;
+import ua.org.tumakha.spdtool.entity.Group;
+import ua.org.tumakha.spdtool.entity.Kved;
+import ua.org.tumakha.spdtool.entity.ServiceType;
+import ua.org.tumakha.spdtool.entity.User;
+import ua.org.tumakha.spdtool.services.UserService;
 
 @RequestMapping("/users")
 @Controller
