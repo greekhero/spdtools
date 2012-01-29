@@ -15,6 +15,10 @@ public interface UserDao {
 
 	public User merge(User user);
 
+	public long countUsers();
+
+	public List<User> findUserEntries(int firstResult, int maxResults);
+
 	public List<User> findAll();
 
 	public List<User> findActive();

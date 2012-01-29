@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_ua_org_tumakha_spdtool_User" items="${users}">
+        <table:table data="${users}" id="l_ua_org_tumakha_spdtool_User" path="/users" typeIdFieldName="userId">
+            <table:column id="c_ua_org_tumakha_spdtool_User_pin" property="pin"/>
+            <table:column id="c_ua_org_tumakha_spdtool_User_lastname" property="lastname"/>
+            <table:column id="c_ua_org_tumakha_spdtool_User_firstname" property="firstname"/>
+            <table:column id="c_ua_org_tumakha_spdtool_User_firstnameEn" property="firstnameEn"/>
+            <table:column id="c_ua_org_tumakha_spdtool_User_lastnameEn" property="lastnameEn"/>
+        </table:table>
+    </page:list>
+</div>

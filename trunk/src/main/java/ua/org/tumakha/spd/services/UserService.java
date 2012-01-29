@@ -13,7 +13,13 @@ public interface UserService {
 
 	public User updateUser(User user);
 
-	public User findUserById(Integer userId);
+	public void deleteUser(Integer userId);
+
+	public User findUser(Integer userId);
+
+	public long countUsers();
+
+	public List<User> findUserEntries(int firstResult, int maxResults);
 
 	public List<User> findAllUsers();
 

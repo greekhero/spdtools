@@ -41,9 +41,28 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void deleteUser(Integer userId) {
+		User user = findUser(userId);
+		user.setDeleted(true);
+		userDao.merge(user);
+	}
+
+	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public User findUserById(Integer userId) {
+	public User findUser(Integer userId) {
 		return userDao.find(userId);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public long countUsers() {
+		return userDao.countUsers();
+	}
+
+	@Override
+	public List<User> findUserEntries(int firstResult, int maxResults) {
+		return userDao.findUserEntries(firstResult, maxResults);
 	}
 
 	@Override
