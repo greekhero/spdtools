@@ -1,5 +1,6 @@
 package ua.org.tumakha.spd.template;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,8 +9,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
 import org.apache.commons.collections.BeanMap;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.docx4j.XmlUtils;
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.openpackaging.io.SaveToZipFile;
@@ -25,7 +25,7 @@ import ua.org.tumakha.spd.template.model.TemplateModel;
 public class DocxProcessor {
 
 	public static JAXBContext context = org.docx4j.jaxb.Context.jc;
-	private static final Log log = LogFactory.getLog(DocxProcessor.class);
+	private static final Logger log = Logger.getLogger(DocxProcessor.class);
 	private static final String TEMPLATES_DIRECTORY = "C:/Reports/templates";
 	private static final String REPORTS_DIRECTORY = "C:/Reports";
 
@@ -74,10 +74,13 @@ public class DocxProcessor {
 		// change JaxbElement
 		documentPart.setJaxbElement((Document) obj);
 
+		File outputFile = new File(outputfilepath);
+		if (outputFile.getParentFile().mkdirs()) {
+			log.debug("Created directory: " + outputFile.getParentFile());
+		}
 		SaveToZipFile saver = new SaveToZipFile(wordMLPackage);
 		saver.save(outputfilepath);
 		log.debug("Saved output to: " + outputfilepath);
-
 	}
 
 	@SuppressWarnings("unchecked")
