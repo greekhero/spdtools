@@ -15,44 +15,40 @@ public class UserDaoJpaImpl extends AbstractJpaDao<User> implements UserDao {
 
 	@Override
 	public long countUsers() {
-		return (Long) entityManager
-				.createQuery(
-						"SELECT COUNT(u) FROM User u WHERE u.active = 1 OR u.active = 0")
-				.getSingleResult();
+		return entityManager.createQuery(
+				"SELECT COUNT(u) FROM User u WHERE u.active != NULL",
+				Long.class).getSingleResult();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> findUserEntries(int firstResult, int maxResults) {
 		return entityManager
-				.createQuery(
-						"SELECT u FROM User u WHERE u.active = 1 OR u.active = 0")
-				.setFirstResult(firstResult).setMaxResults(maxResults)
-				.getResultList();
+				.createQuery("SELECT u FROM User u WHERE u.active != NULL",
+						User.class).setFirstResult(firstResult)
+				.setMaxResults(maxResults).getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> findAll() {
 		return entityManager.createQuery(
-				"SELECT u FROM User u WHERE u.active = 1 OR u.active = 0")
+				"SELECT u FROM User u WHERE u.active != NULL", User.class)
 				.getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> findActive() {
-		return entityManager.createQuery(
-				"SELECT u FROM User u WHERE u.active = 1").getResultList();
+		return entityManager
+				.createQuery(
+						"SELECT DISTINCT u FROM User u JOIN FETCH u.acts WHERE u.active = 1",
+						User.class).getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> findByGroup(Integer groupId) {
 		return entityManager
 				.createQuery(
-						"SELECT u FROM User u JOIN u.groups g WHERE g.id = ?")
-				.setParameter(1, groupId).getResultList();
+						"SELECT DISTINCT u FROM User u JOIN u.groups g JOIN FETCH u.kveds WHERE u.active != NULL AND g.id = ?",
+						User.class).setParameter(1, groupId).getResultList();
 	}
 
 }
