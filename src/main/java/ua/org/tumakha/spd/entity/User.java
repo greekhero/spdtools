@@ -11,6 +11,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -19,7 +20,18 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import ua.org.tumakha.spd.enums.RegDocumentType;
 
@@ -31,7 +43,7 @@ import ua.org.tumakha.spd.enums.RegDocumentType;
 public class User {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer userId;
 
 	@Version
@@ -39,19 +51,38 @@ public class User {
 
 	private Boolean active;
 
+	@Column(length = 255)
+	@NotNull
+	@Size(max = 255)
 	private String firstname;
 
+	@Column(length = 255)
+	@NotNull
+	@Size(max = 255)
 	private String firstnameEn;
 
+	@Column(length = 255)
+	@Size(max = 255)
 	private String middlename;
 
+	@Column(length = 255)
+	@Size(max = 255)
 	private String middlenameEn;
 
+	@Column(length = 255)
+	@NotNull
+	@Size(min = 3, max = 255)
 	private String lastname;
 
+	@Column(length = 255)
+	@NotNull
+	@Size(min = 3, max = 255)
 	private String lastnameEn;
 
-	@Column(unique = true, nullable = true)
+	@Column(name = "PIN", unique = true, nullable = true)
+	@Digits(integer = 10, fraction = 0)
+	@Min(1000000000)
+	@Max(9999999999L)
 	private Long pin;
 
 	@Enumerated(EnumType.ORDINAL)
@@ -59,16 +90,27 @@ public class User {
 
 	private String regNumber;
 
+	@Column(name = "regDate", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(style = "M-")
+	@Past
 	private Date regDate;
 
+	@Column(name = "regDPI", length = 255)
 	private String regDpi;
 
+	@Column(name = "regNumberDPI")
 	private Integer regNumberDpi;
 
+	@Column(name = "regDateDPI", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(style = "M-")
+	@Past
 	private Date regDateDpi;
 
 	private Long phone;
 
+	@Email
 	private String email;
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
