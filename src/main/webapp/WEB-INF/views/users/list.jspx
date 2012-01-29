@@ -9,6 +9,7 @@
             <table:column id="c_ua_org_tumakha_spdtool_User_firstname" property="firstname"/>
             <table:column id="c_ua_org_tumakha_spdtool_User_firstnameEn" property="firstnameEn"/>
             <table:column id="c_ua_org_tumakha_spdtool_User_lastnameEn" property="lastnameEn"/>
+            <table:column id="c_ua_org_tumakha_spdtool_User_active" property="active"/>
         </table:table>
     </page:list>
 </div>
