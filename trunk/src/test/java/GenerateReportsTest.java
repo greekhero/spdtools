@@ -7,17 +7,17 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import ua.org.tumakha.spd.entity.User;
-import ua.org.tumakha.spd.services.TemplateService;
-import ua.org.tumakha.spd.services.UserService;
-import ua.org.tumakha.spd.template.DocxProcessor;
-import ua.org.tumakha.spd.template.DocxTemplate;
-import ua.org.tumakha.spd.template.XlsProcessor;
-import ua.org.tumakha.spd.template.XlsTemplate;
-import ua.org.tumakha.spd.template.model.ActModel;
-import ua.org.tumakha.spd.template.model.Form20OPPModel;
-import ua.org.tumakha.spd.template.model.IncomeCalculationModel;
-import ua.org.tumakha.spd.template.model.TaxSystemStatementModel;
+import ua.org.tumakha.spdtool.entity.User;
+import ua.org.tumakha.spdtool.services.TemplateService;
+import ua.org.tumakha.spdtool.services.UserService;
+import ua.org.tumakha.spdtool.template.DocxProcessor;
+import ua.org.tumakha.spdtool.template.DocxTemplate;
+import ua.org.tumakha.spdtool.template.XlsProcessor;
+import ua.org.tumakha.spdtool.template.XlsTemplate;
+import ua.org.tumakha.spdtool.template.model.ActModel;
+import ua.org.tumakha.spdtool.template.model.Form20OPPModel;
+import ua.org.tumakha.spdtool.template.model.IncomeCalculationModel;
+import ua.org.tumakha.spdtool.template.model.TaxSystemStatementModel;
 
 /**
  * @author Yuriy Tumakha
