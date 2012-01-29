@@ -265,8 +265,7 @@ public class ActModel extends TemplateModel {
 		} catch (ParseException e) {
 			throw new IllegalStateException(e);
 		}
-		return String.format("/%s/%s/%s_%s_%s_%s", month, getLastname(),
-				getLastnameEn(),
+		return String.format("/%s/%s/ICGU_%s_%s_%s", month, getLastname(),
 				getFirstnameEn().substring(0, 1) + getMiddlenameEn().charAt(0)
 						+ getLastnameEn().charAt(0), month.replace("-", "_"),
 				template.getFilename());
