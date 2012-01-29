@@ -24,9 +24,6 @@ public class Kved {
 	private String name;
 
 	// @ManyToMany(mappedBy = "kveds")
-	// @JoinTable(name = "user_kved_mapping", joinColumns = @JoinColumn(name =
-	// "kvedId", referencedColumnName = "kvedId"), inverseJoinColumns =
-	// @JoinColumn(name = "userId", referencedColumnName = "userId"))
 	// private Set<User> users;
 
 	public Integer getKvedId() {
