@@ -13,6 +13,24 @@ import ua.org.tumakha.spd.entity.User;
 @Component("userDao")
 public class UserDaoJpaImpl extends AbstractJpaDao<User> implements UserDao {
 
+	@Override
+	public long countUsers() {
+		return (Long) entityManager
+				.createQuery(
+						"SELECT COUNT(u) FROM User u WHERE u.active = 1 OR u.active = 0")
+				.getSingleResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> findUserEntries(int firstResult, int maxResults) {
+		return entityManager
+				.createQuery(
+						"SELECT u FROM User u WHERE u.active = 1 OR u.active = 0")
+				.setFirstResult(firstResult).setMaxResults(maxResults)
+				.getResultList();
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> findAll() {

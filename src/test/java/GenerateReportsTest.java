@@ -25,7 +25,8 @@ import ua.org.tumakha.spd.template.model.TaxSystemStatementModel;
 public class GenerateReportsTest {
 
 	private static String[] CONFIG_LOCATIONS = {
-			"classpath:datasource-test.xml", "classpath:persistenceContext.xml" };
+			"classpath:datasource-test.xml",
+			"classpath:META-INF/spring/applicationContext.xml" };
 	private static ApplicationContext applicationContext;
 	private static UserService userService;
 	private static TemplateService templateService;

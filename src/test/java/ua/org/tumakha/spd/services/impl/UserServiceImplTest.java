@@ -19,7 +19,8 @@ import ua.org.tumakha.spd.services.UserService;
 public class UserServiceImplTest {
 
 	private static String[] CONFIG_LOCATIONS = {
-			"classpath:datasource-test.xml", "classpath:persistenceContext.xml" };
+			"classpath:datasource-test.xml",
+			"classpath:META-INF/spring/applicationContext.xml" };
 	private static ApplicationContext applicationContext;
 	private static UserService userService;
 
@@ -48,7 +49,7 @@ public class UserServiceImplTest {
 	public void testCreateUser() {
 		User user = new User();
 		user.setActive(true);
-		user.setPIN(1122334455L);
+		user.setPin(1122334455L);
 		user.setFirstname("Юрій");
 		user.setFirstnameEn("Yuriy");
 		user.setMiddlename("Володимирович");

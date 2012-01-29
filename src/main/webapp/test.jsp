@@ -16,7 +16,14 @@ select * from user order by userId
 <h2>Users</h2>
   
 <c:forEach var="row" items="${rs.rows}">
-	${row.userId}. ${row.lastname} ${row.firstname}<br/>
+	${row.userId}. ${row.lastname} ${row.firstname}
+	<span style="color: red;">
+		<c:choose>
+			<c:when test="${row.active eq null}">(deleted)</c:when>
+			<c:when test="${!row.active}">(not active)</c:when>
+		</c:choose>
+	</span>
+	<br/>
 </c:forEach>
 
 </body>

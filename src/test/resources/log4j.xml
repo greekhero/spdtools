@@ -3,7 +3,7 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"	debug="true">
 
 	<appender name="RollingFile" class="org.apache.log4j.RollingFileAppender">
-		<param name="File" value="./target/spd-tools.log" />
+		<param name="File" value="./target/spdtools.log" />
 		<param name="MaxFileSize" value="50MB" />
 		<param name="MaxBackupIndex" value="5" />
 		<layout class="org.apache.log4j.PatternLayout">
@@ -26,7 +26,7 @@
 		<level value="DEBUG" />
 	</logger>
 
-	<logger name="org.springframework.jdbc.core">
+	<logger name="org.apache.tiles">
 		<level value="DEBUG" />
 	</logger>
 

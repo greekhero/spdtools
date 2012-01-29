@@ -3,6 +3,8 @@ package ua.org.tumakha.spd.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Repository;
@@ -25,6 +27,7 @@ import ua.org.tumakha.spd.template.model.TaxSystemStatementModel;
 @Repository
 public class TemplateServiceImpl implements TemplateService {
 
+	private static final Log log = LogFactory.getLog(TemplateServiceImpl.class);
 	private UserService userService;
 
 	@Required
@@ -39,17 +42,25 @@ public class TemplateServiceImpl implements TemplateService {
 		List<User> users = userService.findActiveUsers();
 		if (users != null && users.size() > 0) {
 			List<ActModel> listModel = new ArrayList<ActModel>(users.size());
-			for (User user : users) {
-				// try {
-				ActModel actModel = new ActModel(user);
-				listModel.add(actModel);
-				// } catch (Exception e) {
-				// System.out.println(user.getLastname() + ": "
-				// + e.getMessage());
-				// System.out.println(e);
-				// throw new RuntimeException(e);
-				// }
+			User lastUser = null;
+			try {
+				for (User user : users) {
+					lastUser = user;
+					ActModel actModel = new ActModel(user);
+					listModel.add(actModel);
+
+					// } catch (Exception e) {
+					// System.out.println(user.getLastname() + ": "
+					// + e.getMessage());
+					// System.out.println(e);
+					// throw new RuntimeException(e);
+					// }
+				}
+			} finally {
+				log.debug("Last User: " + lastUser.getUserId() + " "
+						+ lastUser.getLastnameEn());
 			}
+
 			return listModel;
 		}
 		return null;

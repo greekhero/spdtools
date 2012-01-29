@@ -78,13 +78,13 @@ public abstract class TemplateModel {
 		regNumberEn = regNumber != null ? regNumber.replace("з", "z") : "";
 		regDate = user.getRegDate() != null ? uaDateFormat.format(user
 				.getRegDate()) : "";
-		if (user.getRegDPI() != null) {
-			regDPI = user.getRegDPI();
+		if (user.getRegDpi() != null) {
+			regDPI = user.getRegDpi();
 		}
-		regNumberDPI = user.getRegNumberDPI() != null ? user.getRegNumberDPI()
+		regNumberDPI = user.getRegNumberDpi() != null ? user.getRegNumberDpi()
 				.toString() : "";
-		regDateDPI = user.getRegDateDPI() != null ? regDateDPIFormat
-				.format(user.getRegDateDPI()) : "";
+		regDateDPI = user.getRegDateDpi() != null ? regDateDPIFormat
+				.format(user.getRegDateDpi()) : "";
 		regAddress = address.getTextUa() + ", Україна";
 		regAddressEn = address.getTextEn() + ", Ukraine";
 		if (address.getPostalCode() != null) {
@@ -110,7 +110,7 @@ public abstract class TemplateModel {
 		}
 		phone = user.getPhone() != null ? user.getPhone().toString() : "";
 		email = user.getEmail() != null ? user.getEmail() : "";
-		PIN = user.getPIN().toString();
+		PIN = user.getPin().toString();
 		bankAccount = bank.getAccountNumber().toString();
 		bankName = bank.getName();
 		bankNameEn = bank.getNameEn();

@@ -52,7 +52,7 @@ public class User {
 	private String lastnameEn;
 
 	@Column(unique = true, nullable = true)
-	private Long PIN;
+	private Long pin;
 
 	@Enumerated(EnumType.ORDINAL)
 	private RegDocumentType regDocumentType;
@@ -61,11 +61,11 @@ public class User {
 
 	private Date regDate;
 
-	private String regDPI;
+	private String regDpi;
 
-	private Integer regNumberDPI;
+	private Integer regNumberDpi;
 
-	private Date regDateDPI;
+	private Date regDateDpi;
 
 	private Long phone;
 
@@ -101,7 +101,7 @@ public class User {
 	private Integer income2011;
 
 	public char[] getPinArray() {
-		return getPIN().toString().toCharArray();
+		return getPin().toString().toCharArray();
 	}
 
 	public String getLastnameFirstMiddle() {
@@ -136,12 +136,12 @@ public class User {
 		this.active = active;
 	}
 
-	public boolean isRemoved() {
+	public boolean isDeleted() {
 		return active == null;
 	}
 
-	public void setRemoved(boolean removed) {
-		if (removed) {
+	public void setDeleted(boolean deleted) {
+		if (deleted) {
 			active = null;
 		}
 	}
@@ -194,12 +194,12 @@ public class User {
 		this.lastnameEn = lastnameEn;
 	}
 
-	public Long getPIN() {
-		return PIN;
+	public Long getPin() {
+		return pin;
 	}
 
-	public void setPIN(Long PIN) {
-		this.PIN = PIN;
+	public void setPin(Long pin) {
+		this.pin = pin;
 	}
 
 	public String getRegNumber() {
@@ -218,12 +218,12 @@ public class User {
 		this.regDate = regDate;
 	}
 
-	public String getRegDPI() {
-		return regDPI;
+	public String getRegDpi() {
+		return regDpi;
 	}
 
-	public void setRegDPI(String regDPI) {
-		this.regDPI = regDPI;
+	public void setRegDpi(String regDpi) {
+		this.regDpi = regDpi;
 	}
 
 	public RegDocumentType getRegDocumentType() {
@@ -234,20 +234,20 @@ public class User {
 		this.regDocumentType = regDocumentType;
 	}
 
-	public Integer getRegNumberDPI() {
-		return regNumberDPI;
+	public Integer getRegNumberDpi() {
+		return regNumberDpi;
 	}
 
-	public void setRegNumberDPI(Integer regNumberDPI) {
-		this.regNumberDPI = regNumberDPI;
+	public void setRegNumberDpi(Integer regNumberDpi) {
+		this.regNumberDpi = regNumberDpi;
 	}
 
-	public Date getRegDateDPI() {
-		return regDateDPI;
+	public Date getRegDateDpi() {
+		return regDateDpi;
 	}
 
-	public void setRegDateDPI(Date regDateDPI) {
-		this.regDateDPI = regDateDPI;
+	public void setRegDateDpi(Date regDateDpi) {
+		this.regDateDpi = regDateDpi;
 	}
 
 	public Long getPhone() {

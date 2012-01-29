@@ -43,9 +43,9 @@ public class Form20OPPModel extends TemplateModel {
 		lastname = user.getLastname();
 		lastnameEn = user.getLastnameEn();
 		lastnameFirstMiddle = user.getLastnameFirstMiddle();
-		PIN = user.getPIN().toString();
-		if (user.getRegDPI() != null) {
-			regDPI = user.getRegDPI();
+		PIN = user.getPin().toString();
+		if (user.getRegDpi() != null) {
+			regDPI = user.getRegDpi();
 			regDPIspace = StringUtils.repeat("_", (49 - regDPI.length()) / 2);
 		}
 		Address address = user.getAddress();
