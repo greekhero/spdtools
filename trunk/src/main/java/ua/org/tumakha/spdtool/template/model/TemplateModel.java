@@ -26,6 +26,7 @@ public abstract class TemplateModel {
 	private String firstnameEn;
 	private String middlename;
 	private String middlenameEn;
+	private String middlenameBankEn;
 	private String lastname;
 	private String lastnameEn;
 	private String regDocumentName;
@@ -55,6 +56,8 @@ public abstract class TemplateModel {
 	private String bankNameEn;
 	private String bankMFO;
 	private String bankSWIFT;
+	private String correspondentBank;
+	private String correspondentBankEn;
 
 	public TemplateModel() {
 	}
@@ -66,6 +69,8 @@ public abstract class TemplateModel {
 		firstnameEn = user.getFirstnameEn();
 		middlename = user.getMiddlename();
 		middlenameEn = user.getMiddlenameEn();
+		middlenameBankEn = bank.isUsedMiddlename() ? user.getMiddlenameEn()
+				: "";
 		lastname = user.getLastname();
 		lastnameEn = user.getLastnameEn();
 		if (user.getRegDocumentType() != null) {
@@ -116,6 +121,8 @@ public abstract class TemplateModel {
 		bankNameEn = bank.getNameEn();
 		bankMFO = bank.getMFO() != null ? bank.getMFO().toString() : "";
 		bankSWIFT = bank.getSWIFT();
+		correspondentBank = bank.getCorrespondentBank();
+		correspondentBankEn = bank.getCorrespondentBankEn();
 	}
 
 	public abstract String getOutputFilename(DocxTemplate template);
@@ -166,6 +173,14 @@ public abstract class TemplateModel {
 
 	public void setMiddlenameEn(String middlenameEn) {
 		this.middlenameEn = middlenameEn;
+	}
+
+	public String getMiddlenameBankEn() {
+		return middlenameBankEn;
+	}
+
+	public void setMiddlenameBankEn(String middlenameBankEn) {
+		this.middlenameBankEn = middlenameBankEn;
 	}
 
 	public String getLastname() {
@@ -318,6 +333,22 @@ public abstract class TemplateModel {
 
 	public void setBankSWIFT(String bankSWIFT) {
 		this.bankSWIFT = bankSWIFT;
+	}
+
+	public String getCorrespondentBank() {
+		return correspondentBank;
+	}
+
+	public void setCorrespondentBank(String correspondentBank) {
+		this.correspondentBank = correspondentBank;
+	}
+
+	public String getCorrespondentBankEn() {
+		return correspondentBankEn;
+	}
+
+	public void setCorrespondentBankEn(String correspondentBankEn) {
+		this.correspondentBankEn = correspondentBankEn;
 	}
 
 	public String getPin0() {
