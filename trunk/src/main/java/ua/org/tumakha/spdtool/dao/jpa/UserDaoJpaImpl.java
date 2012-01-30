@@ -37,17 +37,16 @@ public class UserDaoJpaImpl extends AbstractJpaDao<User> implements UserDao {
 
 	@Override
 	public List<User> findActive() {
-		return entityManager
-				.createQuery(
-						"SELECT DISTINCT u FROM User u JOIN FETCH u.acts WHERE u.active = 1",
-						User.class).getResultList();
+		return entityManager.createQuery(
+				"SELECT u FROM User u WHERE u.active = 1", User.class)
+				.getResultList();
 	}
 
 	@Override
 	public List<User> findByGroup(Integer groupId) {
 		return entityManager
 				.createQuery(
-						"SELECT DISTINCT u FROM User u JOIN u.groups g JOIN FETCH u.kveds WHERE u.active != NULL AND g.id = ?",
+						"SELECT u FROM User u JOIN u.groups g WHERE u.active != NULL AND g.id = ?",
 						User.class).setParameter(1, groupId).getResultList();
 	}
 

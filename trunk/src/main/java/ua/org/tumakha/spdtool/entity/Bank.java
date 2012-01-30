@@ -35,6 +35,12 @@ public class Bank {
 
 	private String SWIFT;
 
+	@Column(length = 1024)
+	private String correspondentBank;
+
+	@Column(length = 1024)
+	private String correspondentBankEn;
+
 	public Integer getBankId() {
 		return bankId;
 	}
@@ -89,6 +95,22 @@ public class Bank {
 
 	public void setSWIFT(String sWIFT) {
 		SWIFT = sWIFT;
+	}
+
+	public String getCorrespondentBank() {
+		return correspondentBank;
+	}
+
+	public void setCorrespondentBank(String correspondentBank) {
+		this.correspondentBank = correspondentBank;
+	}
+
+	public String getCorrespondentBankEn() {
+		return correspondentBankEn;
+	}
+
+	public void setCorrespondentBankEn(String correspondentBankEn) {
+		this.correspondentBankEn = correspondentBankEn;
 	}
 
 }
