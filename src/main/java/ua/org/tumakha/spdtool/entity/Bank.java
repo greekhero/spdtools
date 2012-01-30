@@ -41,6 +41,8 @@ public class Bank {
 	@Column(length = 1024)
 	private String correspondentBankEn;
 
+	private boolean usedMiddlename;
+
 	public Integer getBankId() {
 		return bankId;
 	}
@@ -111,6 +113,14 @@ public class Bank {
 
 	public void setCorrespondentBankEn(String correspondentBankEn) {
 		this.correspondentBankEn = correspondentBankEn;
+	}
+
+	public boolean isUsedMiddlename() {
+		return usedMiddlename;
+	}
+
+	public void setUsedMiddlename(boolean usedMiddlename) {
+		this.usedMiddlename = usedMiddlename;
 	}
 
 }
