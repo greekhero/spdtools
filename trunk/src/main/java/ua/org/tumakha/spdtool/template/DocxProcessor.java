@@ -68,23 +68,23 @@ public class DocxProcessor {
 		String xml = XmlUtils.marshaltoString(wmlDocumentEl, true);
 
 		for (TemplateModel model : listModel) {
-			saveDocument(documentPart, wordMLPackage, xml, model, template);
+			saveDocument(wordMLPackage, xml, model, template);
 		}
 
 	}
 
-	private static void saveDocument(MainDocumentPart documentPart,
-			WordprocessingMLPackage wordMLPackage, String xml,
-			TemplateModel model, DocxTemplate template) throws JAXBException,
-			Docx4JException, TemplateException, IOException {
+	private static void saveDocument(WordprocessingMLPackage wordMLPackage,
+			String xml, TemplateModel model, DocxTemplate template)
+			throws JAXBException, Docx4JException, TemplateException,
+			IOException {
 		HashMap<String, String> mappings = getMappings(model);
 		String outputfilepath = REPORTS_DIRECTORY
 				+ model.getOutputFilename(template);
 		Object obj = null;
 		if (template.isFreemarker()) {
 			// process as FreeMarker template
-			xml = FREE_MARKER_PROCCESSOR.processTemplate(
-					template.getFilename(), mappings);
+			xml = FREE_MARKER_PROCCESSOR.processTemplate(template.getFilename()
+					.replace(".docx", ".xml"), mappings);
 			obj = XmlUtils.unmarshalString(xml);
 		} else {
 			// simple replace mappings
@@ -92,7 +92,7 @@ public class DocxProcessor {
 		}
 
 		// change JaxbElement
-		documentPart.setJaxbElement((Document) obj);
+		wordMLPackage.getMainDocumentPart().setJaxbElement((Document) obj);
 
 		File outputFile = new File(outputfilepath);
 		if (outputFile.getParentFile().mkdirs()) {

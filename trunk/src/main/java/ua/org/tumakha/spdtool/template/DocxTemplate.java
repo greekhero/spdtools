@@ -17,6 +17,7 @@ public enum DocxTemplate {
 
 	private DocxTemplate(String filename, boolean freemarker) {
 		this.filename = filename;
+		this.freemarker = freemarker;
 	}
 
 	public String getFilename() {
