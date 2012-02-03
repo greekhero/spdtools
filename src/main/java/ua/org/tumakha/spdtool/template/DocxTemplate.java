@@ -5,21 +5,26 @@ package ua.org.tumakha.spdtool.template;
  */
 public enum DocxTemplate {
 	
-	ACT("Act_PE.docx"),
-	CONTRACT_AMENDMENT("Contract_PE_Amendment.docx"),
-	CONTRACT("Contract_PE.docx"),
-	TAX_SYSTEM_STATEMENT("Tax_System_Statement.docx"),
-	INCOME_CALCULATION("Income_Calculation.docx"),
-	FORM_20_OPP("20-OPP.docx");
+	ACT("Act_PE.docx", true),
+	CONTRACT_AMENDMENT("Contract_PE_Amendment.docx", true),
+	CONTRACT("Contract_PE.docx", true),
+	TAX_SYSTEM_STATEMENT("Tax_System_Statement.docx", false),
+	INCOME_CALCULATION("Income_Calculation.docx", false),
+	FORM_20_OPP("20-OPP.docx", false);
 
 	private String filename;
+	private boolean freemarker;
 
-	private DocxTemplate(String filename) {
+	private DocxTemplate(String filename, boolean freemarker) {
 		this.filename = filename;
 	}
 
 	public String getFilename() {
 		return filename;
+	}
+
+	public boolean isFreemarker() {
+		return freemarker;
 	}
 
 }
