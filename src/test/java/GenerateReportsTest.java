@@ -40,7 +40,6 @@ public class GenerateReportsTest {
 		userService = (UserService) applicationContext.getBean("userService");
 		templateService = (TemplateService) applicationContext
 				.getBean("templateService");
-
 	}
 
 	@Test
@@ -93,4 +92,5 @@ public class GenerateReportsTest {
 			}
 		}
 	}
+
 }
