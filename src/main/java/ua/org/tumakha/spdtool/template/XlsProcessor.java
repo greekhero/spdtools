@@ -15,7 +15,7 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 public class XlsProcessor {
 
 	private static final Log log = LogFactory.getLog(XlsProcessor.class);
-	private static final String TEMPLATES_DIRECTORY = "C:/Reports/templates/xls";
+	private static final String TEMPLATES_DIRECTORY = "C:/spdtool-data/templates/xls";
 	private static final String REPORTS_DIRECTORY = "C:/Reports/xls";
 	private XLSTransformer transformer = new XLSTransformer();
 
