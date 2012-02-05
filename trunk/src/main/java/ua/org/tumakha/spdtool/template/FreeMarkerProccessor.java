@@ -23,8 +23,8 @@ public class FreeMarkerProccessor {
 		cfg.setObjectWrapper(new DefaultObjectWrapper());
 	}
 
-	public String processTemplate(String templateName,
-			Map<String, String> rootMap) throws IOException, TemplateException {
+	public String processTemplate(String templateName, Map<String, ?> rootMap)
+			throws IOException, TemplateException {
 		/* Get or create a template */
 		Template temp = cfg.getTemplate(templateName);
 

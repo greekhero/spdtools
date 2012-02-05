@@ -77,17 +77,18 @@ public class DocxProcessor {
 			String xml, TemplateModel model, DocxTemplate template)
 			throws JAXBException, Docx4JException, TemplateException,
 			IOException {
-		HashMap<String, String> mappings = getMappings(model);
 		String outputfilepath = REPORTS_DIRECTORY
 				+ model.getOutputFilename(template);
 		Object obj = null;
 		if (template.isFreemarker()) {
 			// process as FreeMarker template
+			Map<String, ?> mappings = getMappings(model);
 			xml = FREE_MARKER_PROCCESSOR.processTemplate(template.getFilename()
 					.replace(".docx", ".xml"), mappings);
 			obj = XmlUtils.unmarshalString(xml);
 		} else {
 			// simple replace mappings
+			HashMap<String, String> mappings = getStringMappings(model);
 			obj = XmlUtils.unmarshallFromTemplate(xml, mappings);
 		}
 
@@ -104,15 +105,32 @@ public class DocxProcessor {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static HashMap<String, String> getMappings(TemplateModel model) {
+	private static HashMap<String, String> getStringMappings(TemplateModel model) {
 		HashMap<String, String> mappings = new HashMap<String, String>();
 		BeanMap beanMap = new BeanMap(model);
 		for (Object o : beanMap.entrySet()) {
 			Map.Entry<Object, Object> entry = (Map.Entry<Object, Object>) o;
-			if (entry.getValue() == null) {
-				entry.setValue("");
+			String value = "";
+			if (entry.getValue() != null) {
+				value = entry.getValue().toString();
 			}
-			mappings.put(entry.getKey().toString(), entry.getValue().toString());
+			mappings.put(entry.getKey().toString(), value);
+		}
+		log.debug(mappings);
+		return mappings;
+	}
+
+	@SuppressWarnings("unchecked")
+	private static Map<String, ?> getMappings(TemplateModel model) {
+		HashMap<String, Object> mappings = new HashMap<String, Object>();
+		BeanMap beanMap = new BeanMap(model);
+		for (Object o : beanMap.entrySet()) {
+			Map.Entry<Object, Object> entry = (Map.Entry<Object, Object>) o;
+			Object value = "";
+			if (entry.getValue() != null) {
+				value = entry.getValue();
+			}
+			mappings.put(entry.getKey().toString(), value);
 		}
 		log.debug(mappings);
 		return mappings;

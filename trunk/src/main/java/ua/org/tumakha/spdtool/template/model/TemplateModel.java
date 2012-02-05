@@ -2,6 +2,8 @@ package ua.org.tumakha.spdtool.template.model;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import ua.org.tumakha.spdtool.entity.Address;
@@ -343,12 +345,26 @@ public abstract class TemplateModel {
 		this.correspondentBank = correspondentBank;
 	}
 
+	public List<String> getCorrespondentBankLines() {
+		if (correspondentBank != null) {
+			return Arrays.asList(correspondentBank.split("\n"));
+		}
+		return null;
+	}
+
 	public String getCorrespondentBankEn() {
 		return correspondentBankEn;
 	}
 
 	public void setCorrespondentBankEn(String correspondentBankEn) {
 		this.correspondentBankEn = correspondentBankEn;
+	}
+
+	public List<String> getCorrespondentBankEnLines() {
+		if (correspondentBankEn != null) {
+			return Arrays.asList(correspondentBankEn.split("\n"));
+		}
+		return null;
 	}
 
 	public String getPin0() {
