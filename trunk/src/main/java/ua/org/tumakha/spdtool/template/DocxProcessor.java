@@ -28,8 +28,8 @@ public class DocxProcessor {
 
 	public static JAXBContext context = org.docx4j.jaxb.Context.jc;
 	private static final Logger log = Logger.getLogger(DocxProcessor.class);
-	private static final String TEMPLATES_DIRECTORY = "C:/Reports/templates";
-	private static final String REPORTS_DIRECTORY = "C:/Reports";
+	private static final String TEMPLATES_DIRECTORY = "C:/spdtool-data/templates/docx";
+	private static final String REPORTS_DIRECTORY = "C:/Reports/docx";
 	private static final FreeMarkerProccessor FREE_MARKER_PROCCESSOR = getFreeMarkerProccessor();
 
 	private static FreeMarkerProccessor getFreeMarkerProccessor() {
