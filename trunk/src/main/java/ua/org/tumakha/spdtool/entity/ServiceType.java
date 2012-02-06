@@ -44,8 +44,9 @@ public class ServiceType {
 	}
 
 	public String getNameVOrudnomu() {
-		return name.replace("послуги ", "послуг ").replace("комерційні ",
-				"комерційних ");
+		return name.replace("послуги ", "послуг ")
+				.replace("комерційні ", "комерційних ")
+				.replace("секретарські ", "секретарських ");
 	}
 
 	public String getName() {
