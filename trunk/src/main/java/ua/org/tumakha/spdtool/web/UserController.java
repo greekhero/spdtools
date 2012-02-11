@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
 
+import ua.org.tumakha.spdtool.AppConfig;
 import ua.org.tumakha.spdtool.entity.Act;
 import ua.org.tumakha.spdtool.entity.Address;
 import ua.org.tumakha.spdtool.entity.Bank;
@@ -29,19 +30,26 @@ import ua.org.tumakha.spdtool.entity.Group;
 import ua.org.tumakha.spdtool.entity.Kved;
 import ua.org.tumakha.spdtool.entity.ServiceType;
 import ua.org.tumakha.spdtool.entity.User;
+import ua.org.tumakha.spdtool.services.KvedService;
 import ua.org.tumakha.spdtool.services.UserService;
 
 @RequestMapping("/users")
 @Controller
-public class UserController {
+public class UserController implements AppConfig {
 
+	private KvedService kvedService;
 	private UserService userService;
-	private static final int DEFAULT_PAGE_SIZE = 25;
 
 	@Required
 	@Autowired
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+
+	@Required
+	@Autowired
+	public void setKvedService(KvedService kvedService) {
+		this.kvedService = kvedService;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -157,8 +165,7 @@ public class UserController {
 
 	@ModelAttribute("kveds")
 	public Collection<Kved> populateKveds() {
-		// return Kved.findAllKveds();
-		return null;
+		return kvedService.findAllKveds();
 	}
 
 	@ModelAttribute("servicetypes")
