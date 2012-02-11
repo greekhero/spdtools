@@ -61,6 +61,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<User> findUserEntries(int firstResult, int maxResults) {
 		return userDao.findUserEntries(firstResult, maxResults);
 	}
@@ -78,6 +79,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<User> findUsersByGroup(Integer groupId) {
 		return userDao.findByGroup(groupId);
 	}

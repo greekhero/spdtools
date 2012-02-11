@@ -5,11 +5,6 @@
     <form:update id="fu_ua_org_tumakha_spdtool_User" idField="userId" modelAttribute="user" path="/users" versionField="Version" z="bqT8Bu5SSQXxb8Gzl6hsXHDZWnE=">
         <field:select field="userGroups" id="c_ua_org_tumakha_spdtool_User_userGroups" itemValue="groupId" items="${usergroups}" multiple="true" path="/usergroups" z="F0tbr39pnYraL6YRr7tCyz+F004="/>
         <field:select field="kveds" id="c_ua_org_tumakha_spdtool_User_kveds" itemValue="kvedId" items="${kveds}" multiple="true" path="/kveds" z="ERqiXqrwi/D1kJW5gc0utNzKY+k="/>
-        <field:simple field="acts" id="c_ua_org_tumakha_spdtool_User_acts" messageCode="entity_reference_not_managed" messageCodeAttribute="Act" z="tSL1EDheNCJy15xPDA9BpQEJf0w="/>
-        <field:simple field="addresses" id="c_ua_org_tumakha_spdtool_User_addresses" messageCode="entity_reference_not_managed" messageCodeAttribute="Address" z="QHDI2c5t+FIENDUbq+q6icRePEI="/>
-        <field:simple field="banks" id="c_ua_org_tumakha_spdtool_User_banks" messageCode="entity_reference_not_managed" messageCodeAttribute="Bank" z="E0cyCd5T4o6utZdmtwcTfwazrVA="/>
-        <field:simple field="contracts" id="c_ua_org_tumakha_spdtool_User_contracts" messageCode="entity_reference_not_managed" messageCodeAttribute="Contract" z="lUpoMT0n5MctvpSXlrgC4hHK3eQ="/>
-        <field:simple field="serviceTypes" id="c_ua_org_tumakha_spdtool_User_serviceTypes" messageCode="entity_reference_not_managed" messageCodeAttribute="Service Type" z="IKzItHbpMG1zZx+OWAIqwk4bZdw="/>
         <field:input field="pin" id="c_ua_org_tumakha_spdtool_User_pin" validationMessageCode="field_invalid_integer" z="ITpvrxzSq1cDR/pH37o8j0IA4mI="/>
         <field:checkbox field="active" id="c_ua_org_tumakha_spdtool_User_active" z="IMVanJ3Y3wkGS5TfryvpXxQXo4M="/>
         <field:input field="firstname" id="c_ua_org_tumakha_spdtool_User_firstname" z="VJi0O0fapTNgBmPUdxjzJhqFKZU="/>

@@ -50,4 +50,10 @@ public class Kved {
 		this.name = name;
 	}
 
+	@Override
+	public String toString() {
+		return "Kved [kvedId=" + kvedId + ", code=" + code + ", name=" + name
+				+ "]";
+	}
+
 }
