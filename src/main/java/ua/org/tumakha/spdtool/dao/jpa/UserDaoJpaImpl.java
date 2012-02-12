@@ -17,7 +17,7 @@ public class UserDaoJpaImpl extends AbstractJpaDao<User> implements UserDao {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public long countUsers() {
+	public long countEntries() {
 		return entityManager.createQuery(
 				"SELECT COUNT(u) FROM User u WHERE u.active != NULL",
 				Long.class).getSingleResult();
@@ -25,7 +25,7 @@ public class UserDaoJpaImpl extends AbstractJpaDao<User> implements UserDao {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<User> findUserEntries(int firstResult, int maxResults) {
+	public List<User> findEntries(int firstResult, int maxResults) {
 		return entityManager
 				.createQuery("SELECT u FROM User u WHERE u.active != NULL",
 						User.class).setFirstResult(firstResult)

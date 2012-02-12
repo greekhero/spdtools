@@ -6,13 +6,17 @@
         <menu:category id="c_flows" z="5igpkb/e+HPIN8iUErvmM38Eqqk=">
             <menu:item id="i_flows_sampleflow" messageCode="webflow_menu_enter" url="/sampleflow" z="JMM+dAVQySYHXliwJ5d5AQocPfk="/>
         </menu:category>
-        <menu:category id="c_user" z="uoTSf/uIZ821ZppidzS9aO776yk=">
-            <menu:item id="i_user_new" messageCode="global_menu_new" url="/users?form" z="Zv1m8u2rG+JFKcvJ+AHVVK0ey24="/>
-            <menu:item id="i_user_list" messageCode="global_menu_list" url="/users?page=1&amp;size=${empty param.size ? 25 : param.size}" z="4MY4uybxa60Q1G2rlI5bOwg+sm0="/>
+        <menu:category id="c_user">
+            <menu:item id="i_user_new" messageCode="global_menu_new" url="/users?form"/>
+            <menu:item id="i_user_list" messageCode="global_menu_list" url="/users?page=1&amp;size=${empty param.size ? 25 : param.size}"/>
         </menu:category>
         <menu:category id="c_kved">
             <menu:item id="i_kved_new" messageCode="global_menu_new" url="/kveds?form"/>
             <menu:item id="i_kved_list" messageCode="global_menu_list" url="/kveds?page=1&amp;size=${empty param.size ? 25 : param.size}"/>
+        </menu:category>
+        <menu:category id="c_usergroup">
+            <menu:item id="i_usergroup_new" messageCode="global_menu_new" url="/groups?form"/>
+            <menu:item id="i_usergroup_list" messageCode="global_menu_list" url="/groups?page=1&amp;size=${empty param.size ? 25 : param.size}"/>
         </menu:category>
     </menu:menu>
 </div>

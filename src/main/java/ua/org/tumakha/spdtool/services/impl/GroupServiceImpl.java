@@ -9,66 +9,66 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import ua.org.tumakha.spdtool.dao.KvedDao;
-import ua.org.tumakha.spdtool.entity.Kved;
-import ua.org.tumakha.spdtool.services.KvedService;
+import ua.org.tumakha.spdtool.dao.GroupDao;
+import ua.org.tumakha.spdtool.entity.Group;
+import ua.org.tumakha.spdtool.services.GroupService;
 
 /**
  * @author Yuriy Tumakha
  */
-@Service("kvedService")
+@Service("groupService")
 @Repository
-public class KvedServiceImpl implements KvedService {
+public class GroupServiceImpl implements GroupService {
 
-	private KvedDao kvedDao;
+	private GroupDao groupDao;
 
 	@Required
 	@Autowired
-	public void setKvedDao(KvedDao kvedDao) {
-		this.kvedDao = kvedDao;
+	public void setGroupDao(GroupDao groupDao) {
+		this.groupDao = groupDao;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void createKved(Kved kved) {
-		kvedDao.persist(kved);
+	public void createGroup(Group group) {
+		groupDao.persist(group);
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public Kved updateKved(Kved kved) {
-		return kvedDao.merge(kved);
+	public Group updateGroup(Group group) {
+		return groupDao.merge(group);
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void deleteKved(Integer kvedId) {
-		Kved kved = findKved(kvedId);
-		kvedDao.remove(kved);
+	public void deleteGroup(Integer groupId) {
+		Group group = findGroup(groupId);
+		groupDao.remove(group);
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public Kved findKved(Integer kvedId) {
-		return kvedDao.find(kvedId);
+	public Group findGroup(Integer groupId) {
+		return groupDao.find(groupId);
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public long countKveds() {
-		return kvedDao.countEntries();
+	public long countGroups() {
+		return groupDao.countEntries();
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<Kved> findKvedEntries(int firstResult, int maxResults) {
-		return kvedDao.findEntries(firstResult, maxResults);
+	public List<Group> findGroupEntries(int firstResult, int maxResults) {
+		return groupDao.findEntries(firstResult, maxResults);
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<Kved> findAllKveds() {
-		return kvedDao.findAll();
+	public List<Group> findAllGroups() {
+		return groupDao.findAll();
 	}
 
 }

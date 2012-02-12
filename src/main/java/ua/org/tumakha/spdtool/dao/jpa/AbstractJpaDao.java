@@ -1,9 +1,12 @@
 package ua.org.tumakha.spdtool.dao.jpa;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,6 +22,34 @@ public abstract class AbstractJpaDao<T> {
 
 	@PersistenceContext
 	protected EntityManager entityManager;
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public List<T> findAll() {
+		Class<T> clazz = getGenericType();
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<T> query = cb.createQuery(clazz);
+		query.select(query.from(clazz));
+		return entityManager.createQuery(query).getResultList();
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public long countEntries() {
+		Class<T> clazz = getGenericType();
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Long> query = cb.createQuery(Long.class);
+		query.select(cb.count(query.from(clazz)));
+		return entityManager.createQuery(query).getSingleResult();
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public List<T> findEntries(int firstResult, int maxResults) {
+		Class<T> clazz = getGenericType();
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<T> query = cb.createQuery(clazz);
+		query.select(query.from(clazz));
+		return entityManager.createQuery(query).setFirstResult(firstResult)
+				.setMaxResults(maxResults).getResultList();
+	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public T find(Object id) {

@@ -57,13 +57,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public long countUsers() {
-		return userDao.countUsers();
+		return userDao.countEntries();
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<User> findUserEntries(int firstResult, int maxResults) {
-		return userDao.findUserEntries(firstResult, maxResults);
+		return userDao.findEntries(firstResult, maxResults);
 	}
 
 	@Override
