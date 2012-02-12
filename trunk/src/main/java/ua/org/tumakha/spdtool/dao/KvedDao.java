@@ -17,9 +17,9 @@ public interface KvedDao {
 
 	public void remove(Kved kved);
 
-	public long countKveds();
+	public long countEntries();
 
-	public List<Kved> findKvedEntries(int firstResult, int maxResults);
+	public List<Kved> findEntries(int firstResult, int maxResults);
 
 	public List<Kved> findAll();
 

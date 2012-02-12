@@ -3,9 +3,6 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:create id="fc_ua_org_tumakha_spdtool_User" modelAttribute="user" path="/users" render="${empty dependencies}" z="jqQkMAfYeoTsxjrpA9/bwHvA8Og=">
-        <field:select field="userGroups" id="c_ua_org_tumakha_spdtool_User_userGroups" itemValue="groupId" items="${usergroups}" multiple="true" path="/usergroups" z="F0tbr39pnYraL6YRr7tCyz+F004="/>
-        <field:select field="kveds" id="c_ua_org_tumakha_spdtool_User_kveds" itemValue="kvedId" items="${kveds}" multiple="true" path="/kveds"/>
-        <field:simple field="serviceTypes" id="c_ua_org_tumakha_spdtool_User_serviceTypes" messageCode="entity_reference_not_managed" messageCodeAttribute="Service Type" z="IKzItHbpMG1zZx+OWAIqwk4bZdw="/>
         <field:input field="pin" id="c_ua_org_tumakha_spdtool_User_pin" validationMessageCode="field_invalid_integer" z="ITpvrxzSq1cDR/pH37o8j0IA4mI="/>
         <field:checkbox field="active" id="c_ua_org_tumakha_spdtool_User_active" z="IMVanJ3Y3wkGS5TfryvpXxQXo4M="/>
         <field:input field="firstname" id="c_ua_org_tumakha_spdtool_User_firstname" z="VJi0O0fapTNgBmPUdxjzJhqFKZU="/>
@@ -22,7 +19,9 @@
         <field:datetime dateTimePattern="${user_regdatedpi_date_format}" field="regDateDpi" id="c_ua_org_tumakha_spdtool_User_regDateDpi" z="qb/e3LN5b2hCjeYbBK1RLOnRfF8="/>
         <field:input field="regNumberDpi" id="c_ua_org_tumakha_spdtool_User_regNumberDpi" validationMessageCode="field_invalid_integer" z="qqN/ZLV2EjF9NYDiu+2Q5MuME8I="/>
         <field:input field="regDocumentType" id="c_ua_org_tumakha_spdtool_User_regDocumentType" validationMessageCode="field_invalid_integer" z="mSwVTGvGne2l4ikBOhg+qoZr/9s="/>
-        <field:input field="income2011" id="c_ua_org_tumakha_spdtool_User_income2011" validationMessageCode="field_invalid_integer" z="5UjlleWQJsZYyJsOsUR6IGw5t0M="/>
+        <field:select field="groups" id="c_ua_org_tumakha_spdtool_User_userGroups" itemValue="groupId" items="${groups}" multiple="true" path="/groups"/>
+        <field:select field="kveds" id="c_ua_org_tumakha_spdtool_User_kveds" itemValue="kvedId" items="${kveds}" multiple="true" path="/kveds"/>
+        <field:simple field="serviceTypes" id="c_ua_org_tumakha_spdtool_User_serviceTypes" messageCode="entity_reference_not_managed" messageCodeAttribute="Service Type"/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_ua_org_tumakha_spdtool_User" render="${not empty dependencies}" z="Xz0/H5eTr/IfBnhysQeBw/2wlHE="/>
 </div>

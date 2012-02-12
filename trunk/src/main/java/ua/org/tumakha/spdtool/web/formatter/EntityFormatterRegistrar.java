@@ -10,10 +10,14 @@ import org.springframework.format.FormatterRegistry;
 public class EntityFormatterRegistrar implements FormatterRegistrar {
 
 	@Autowired
+	private GroupFormatter groupFormatter;
+
+	@Autowired
 	private KvedFormatter kvedFormatter;
 
 	@Override
 	public void registerFormatters(FormatterRegistry registry) {
+		registry.addFormatter(groupFormatter);
 		registry.addFormatter(kvedFormatter);
 	}
 

@@ -1,6 +1,5 @@
 package ua.org.tumakha.spdtool.web;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,7 +7,6 @@ import javax.validation.Valid;
 
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,39 +16,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.util.UriUtils;
-import org.springframework.web.util.WebUtils;
 
 import ua.org.tumakha.spdtool.AppConfig;
-import ua.org.tumakha.spdtool.entity.Act;
-import ua.org.tumakha.spdtool.entity.Address;
-import ua.org.tumakha.spdtool.entity.Bank;
-import ua.org.tumakha.spdtool.entity.Contract;
 import ua.org.tumakha.spdtool.entity.Group;
 import ua.org.tumakha.spdtool.entity.Kved;
-import ua.org.tumakha.spdtool.entity.ServiceType;
 import ua.org.tumakha.spdtool.entity.User;
+import ua.org.tumakha.spdtool.services.GroupService;
 import ua.org.tumakha.spdtool.services.KvedService;
 import ua.org.tumakha.spdtool.services.UserService;
+import ua.org.tumakha.spdtool.web.util.WebUtil;
 
 @RequestMapping("/users")
 @Controller
 public class UserController implements AppConfig {
 
+	@Autowired
+	private GroupService groupService;
+
+	@Autowired
 	private KvedService kvedService;
+
+	@Autowired
 	private UserService userService;
-
-	@Required
-	@Autowired
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-
-	@Required
-	@Autowired
-	public void setKvedService(KvedService kvedService) {
-		this.kvedService = kvedService;
-	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String create(@Valid User user, BindingResult bindingResult,
@@ -63,7 +50,7 @@ public class UserController implements AppConfig {
 		uiModel.asMap().clear();
 		userService.createUser(user);
 		return "redirect:/users/"
-				+ encodeUrlPathSegment(user.getUserId().toString(),
+				+ WebUtil.encodeUrlPathSegment(user.getUserId().toString(),
 						httpServletRequest);
 	}
 
@@ -114,7 +101,7 @@ public class UserController implements AppConfig {
 		uiModel.asMap().clear();
 		userService.updateUser(user);
 		return "redirect:/users/"
-				+ encodeUrlPathSegment(user.getUserId().toString(),
+				+ WebUtil.encodeUrlPathSegment(user.getUserId().toString(),
 						httpServletRequest);
 	}
 
@@ -139,51 +126,14 @@ public class UserController implements AppConfig {
 		return "redirect:/users";
 	}
 
-	@ModelAttribute("acts")
-	public Collection<Act> populateActs() {
-		// return Act.findAllActs();
-		return null;
-	}
-
-	@ModelAttribute("addresses")
-	public Collection<Address> populateAddresses() {
-		// return Address.findAllAddresses();
-		return null;
-	}
-
-	@ModelAttribute("banks")
-	public Collection<Bank> populateBanks() {
-		// return Bank.findAllBanks();
-		return null;
-	}
-
-	@ModelAttribute("contracts")
-	public Collection<Contract> populateContracts() {
-		// return Contract.findAllContracts();
-		return null;
+	@ModelAttribute("groups")
+	public Collection<Group> populateGroups() {
+		return groupService.findAllGroups();
 	}
 
 	@ModelAttribute("kveds")
 	public Collection<Kved> populateKveds() {
 		return kvedService.findAllKveds();
-	}
-
-	@ModelAttribute("servicetypes")
-	public Collection<ServiceType> populateServiceTypes() {
-		// return ServiceType.findAllServiceTypes();
-		return null;
-	}
-
-	@ModelAttribute("users")
-	public Collection<User> populateUsers() {
-		// return User.findAllUsers();
-		return null;
-	}
-
-	@ModelAttribute("groups")
-	public Collection<Group> populateUserGroups() {
-		// return UserGroup.findAllUserGroups();
-		return null;
 	}
 
 	private void addDateTimeFormatPatterns(Model uiModel) {
@@ -195,19 +145,6 @@ public class UserController implements AppConfig {
 				"user_regdatedpi_date_format",
 				DateTimeFormat.patternForStyle("M-",
 						LocaleContextHolder.getLocale()));
-	}
-
-	private String encodeUrlPathSegment(String pathSegment,
-			HttpServletRequest httpServletRequest) {
-		String enc = httpServletRequest.getCharacterEncoding();
-		if (enc == null) {
-			enc = WebUtils.DEFAULT_CHARACTER_ENCODING;
-		}
-		try {
-			pathSegment = UriUtils.encodePathSegment(pathSegment, enc);
-		} catch (UnsupportedEncodingException uee) {
-		}
-		return pathSegment;
 	}
 
 }
