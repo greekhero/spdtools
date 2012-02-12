@@ -92,7 +92,7 @@
                     <c:when test="${empty itemLabel}">
                       <c:choose>
                         <c:when test="${multiple}">
-                          <form:select id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" multiple="${multiple}" />
+                          <form:select id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" multiple="${multiple}" size="${fn:length(items)}"/>
                         </c:when>
                         <c:otherwise>
                           <form:select id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" />
@@ -102,7 +102,7 @@
                     <c:otherwise>
                       <c:choose>
                         <c:when test="${multiple}">
-                          <form:select id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" multiple="${multiple}" itemLabel="${sec_itemLabel}"/>
+                          <form:select id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" multiple="${multiple}" itemLabel="${sec_itemLabel}" size="${fn:length(items)}"/>
                         </c:when>
                         <c:otherwise>
                           <form:select id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" itemLabel="${sec_itemLabel}"/>
@@ -158,7 +158,7 @@
                     <c:when test="${empty itemLabel}">
                       <c:choose>
                         <c:when test="${multiple}">
-                          <form:select id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" multiple="${multiple}" itemValue="${fn:escapeXml(itemValue)}" />
+                          <form:select id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" multiple="${multiple}" itemValue="${fn:escapeXml(itemValue)}" size="${fn:length(items)}"/>
                         </c:when>
                         <c:otherwise>
                           <form:select id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" itemValue="${fn:escapeXml(itemValue)}" />
@@ -168,7 +168,7 @@
                     <c:otherwise>
                       <c:choose>
                         <c:when test="${multiple}">
-                          <form:select id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" multiple="${multiple}" itemValue="${fn:escapeXml(itemValue)}" itemLabel="${sec_itemLabel}"/>
+                          <form:select id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" multiple="${multiple}" itemValue="${fn:escapeXml(itemValue)}" itemLabel="${sec_itemLabel}" size="${fn:length(items)}"/>
                         </c:when>
                         <c:otherwise>
                           <form:select id="_${sec_field}_id" items="${items}" path="${sec_field}" disabled="${disabled}" itemValue="${fn:escapeXml(itemValue)}" itemLabel="${sec_itemLabel}"/>

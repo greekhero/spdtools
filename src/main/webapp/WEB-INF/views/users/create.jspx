@@ -4,7 +4,7 @@
     <jsp:output omit-xml-declaration="yes"/>
     <form:create id="fc_ua_org_tumakha_spdtool_User" modelAttribute="user" path="/users" render="${empty dependencies}" z="jqQkMAfYeoTsxjrpA9/bwHvA8Og=">
         <field:select field="userGroups" id="c_ua_org_tumakha_spdtool_User_userGroups" itemValue="groupId" items="${usergroups}" multiple="true" path="/usergroups" z="F0tbr39pnYraL6YRr7tCyz+F004="/>
-        <field:select field="kveds" id="c_ua_org_tumakha_spdtool_User_kveds" itemValue="kvedId" items="${kveds}" multiple="true" path="/kveds" z="ERqiXqrwi/D1kJW5gc0utNzKY+k="/>
+        <field:select field="kveds" id="c_ua_org_tumakha_spdtool_User_kveds" itemValue="kvedId" items="${kveds}" multiple="true" path="/kveds"/>
         <field:simple field="serviceTypes" id="c_ua_org_tumakha_spdtool_User_serviceTypes" messageCode="entity_reference_not_managed" messageCodeAttribute="Service Type" z="IKzItHbpMG1zZx+OWAIqwk4bZdw="/>
         <field:input field="pin" id="c_ua_org_tumakha_spdtool_User_pin" validationMessageCode="field_invalid_integer" z="ITpvrxzSq1cDR/pH37o8j0IA4mI="/>
         <field:checkbox field="active" id="c_ua_org_tumakha_spdtool_User_active" z="IMVanJ3Y3wkGS5TfryvpXxQXo4M="/>
