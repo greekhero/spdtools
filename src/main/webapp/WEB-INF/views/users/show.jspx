@@ -11,11 +11,11 @@
         <field:display field="lastnameEn" id="s_ua_org_tumakha_spdtool_User_lastnameEn" object="${user}" z="aHkYSKb4lhpk94zc2K14t8DHzz0="/>
         <field:display field="middlename" id="s_ua_org_tumakha_spdtool_User_middlename" object="${user}" z="+CLbIkUShg9lPPp+Fg9ZYSeFz9U="/>
         <field:display field="middlenameEn" id="s_ua_org_tumakha_spdtool_User_middlenameEn" object="${user}" z="EEsbqBcysyoe2br7oGiZmam/MPs="/>
-        <field:display field="regDpi" id="s_ua_org_tumakha_spdtool_User_regDpi" object="${user}" z="0qKmMjlyKtFciBK9pjGdP2b+N/o="/>
         <field:display date="true" dateTimePattern="${user_regdate_date_format}" field="regDate" id="s_ua_org_tumakha_spdtool_User_regDate" object="${user}" z="B6vf8O1ih1cqm5BADGe0wkdmCGc="/>
         <field:display field="regNumber" id="s_ua_org_tumakha_spdtool_User_regNumber" object="${user}" z="Q3nuKmGuU+yKC0j/LH7yM0saWGU="/>
         <field:display field="email" id="s_ua_org_tumakha_spdtool_User_email" object="${user}" z="XM6ptVFyYeYHBSoA+iO/sywJu4U="/>
         <field:display field="phone" id="s_ua_org_tumakha_spdtool_User_phone" object="${user}" z="6F0dbAI4sTiCrqBABNyIj7SwKLI="/>
+        <field:display field="regDpi" id="s_ua_org_tumakha_spdtool_User_regDpi" object="${user}" z="0qKmMjlyKtFciBK9pjGdP2b+N/o="/>
         <field:display date="true" dateTimePattern="${user_regdatedpi_date_format}" field="regDateDpi" id="s_ua_org_tumakha_spdtool_User_regDateDpi" object="${user}" z="y+itQinxLnI/nwknmdBK9P/ABjs="/>
         <field:display field="regNumberDpi" id="s_ua_org_tumakha_spdtool_User_regNumberDpi" object="${user}" z="DlcBAPOwaf0C+hI0nLXU5XklzfQ="/>
         <field:display field="regDocumentType" id="s_ua_org_tumakha_spdtool_User_regDocumentType" object="${user}" z="rh8ytKKU3TM98jWuIBDb5WXSEK4="/>
