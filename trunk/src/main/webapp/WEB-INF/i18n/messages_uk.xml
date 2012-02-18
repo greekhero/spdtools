@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>Ukrainian messages</comment>
+
+	<!-- menu -->
+    <entry key="global_menu_new">Створити {0}</entry>
+    <entry key="global_menu_list">Список {0}</entry>
+    <entry key="global_menu_find">Пошук по {0}</entry>
+	<entry key="global_language_switch">Вибрати мову {0}</entry>
+	<entry key="global_language">Мова</entry>
+	<entry key="global_sponsored">Sponsored by SpringSource</entry>
+	<entry key="global_theme">Тема</entry>
+	<entry key="global_theme_alt">alt</entry>
+	<entry key="global_theme_standard">standard</entry>
+	<entry key="global_generic">{0}</entry>
+
+	<!-- welcome page -->
+	<entry key="welcome_titlepane">Welcome to {0}</entry>
+	<entry key="welcome_h3">Welcome to {0}</entry>
+	<entry key="welcome_text">Spring Roo provides interactive, lightweight and user customizable tooling that enables rapid delivery of high performance enterprise Java applications.</entry>
+
+	<!-- entity labels -->
+	<entry key="entity_list_all">Список {0}</entry>
+	<entry key="entity_show">Перегляд {0}</entry>
+	<entry key="entity_create">Створити {0}</entry>
+	<entry key="entity_update">Редагувати {0}</entry>
+	<entry key="entity_delete">Видалити {0}</entry>
+	<entry key="entity_delete_confirm">Видалити об’єкт?</entry>
+	<entry key="entity_find">Пошук по {0}</entry>
+	<entry key="entity_not_found">Не знайдено {0}.</entry>
+	<entry key="entity_not_found_single">Не існує {0} з таким id.</entry>
+	<entry key="entity_dependency_required">The following dependencies need to be created first:</entry>
+	<entry key="entity_reference_not_managed">This relationship is managed from the {0} side.</entry>
+
+	<!-- button labels -->
+	<entry key="button_home">Головна</entry>
+	<entry key="button_save">Зберегти</entry>
+	<entry key="button_update">Редагувати</entry>
+	<entry key="button_find">Пошук</entry>
+	<entry key="button_cancel">Відміна</entry>
+	<entry key="button_proceed">Продовжити</entry>
+	<entry key="button_submit">Відправити</entry>
+	<entry key="button_reset">Скинути</entry>
+	<entry key="button_end">Кінець</entry>
+	<entry key="button_showmessage">Show Message</entry>
+	<entry key="button_showstacktrace">Show Stack Trace</entry>
+	<entry key="button_showcookie">Show Cookie</entry>
+
+	<!-- field labels -->
+	<entry key="field_simple_validation">Ввід {0} {1}</entry>
+	<entry key="field_invalid_email">Введіть дійсний email</entry>
+	<entry key="field_invalid_number">Number with \\'-\\' or \\'.\\' allowed</entry>
+	<entry key="field_invalid_integer">Integer numbers only</entry>
+	<entry key="field_invalid">Введіть дійсний {0}</entry>
+	<entry key="field_required">обов’язково</entry>
+
+	<!-- list labels -->
+	<entry key="list_first">First Page</entry>
+	<entry key="list_next">Next Page</entry>
+	<entry key="list_previous">Previous Page</entry>
+	<entry key="list_last">Last Page</entry>
+	<entry key="list_page">Page {0} of {1}</entry>
+	<entry key="list_size">List results per page:</entry>
+
+	<!-- exception -->
+	<entry key="exception_message">Exception Message</entry>
+	<entry key="exception_stacktrace">Exception Stack Trace</entry>
+	<entry key="exception_cookie">Cookies</entry>
+	<entry key="exception_details">Details</entry>
+
+	<!-- dataAccessFailure_jspx -->
+	<entry key="error_dataaccessfailure_title">Помилка доступу до БД.</entry>
+	<entry key="error_dataaccessfailure_problemdescription">Sorry, a problem occurred while accessing the database.</entry>
+
+	<!-- resourceNotFound_jspx -->
+	<entry key="error_resourcenotfound_title">Сторінка не знайдена</entry>
+	<entry key="error_resourcenotfound_problemdescription">Sorry, we did not find the resource you were looking for.</entry>
+
+	<!-- uncaughtException_jspx -->
+	<entry key="error_uncaughtexception_title">Внутрішня помилка</entry>
+	<entry key="error_uncaughtexception_problemdescription">Sorry, we encountered an internal error.</entry>
+
+	<!-- webflow -->
+	<entry key="webflow_menu_enter">Enter {0} flow</entry>
+	<entry key="webflow_state1_title">Spring Web Flow - View State One</entry>
+	<entry key="webflow_state1_message">This is a simple example to get started with Spring Web Flow. The buttons below lead you to another view state (Proceed) or to an end state.</entry>
+	<entry key="webflow_state2_title">Spring Web Flow - View State Two</entry>
+	<entry key="webflow_state2_message">This is a simple example to get started with Spring Web Flow. The buttons below lead you to another view state (Proceed) or to an end state.</entry>
+	<entry key="webflow_endstate_title">Spring Web Flow - End State</entry>
+	<entry key="webflow_endstate_message">You have now reached the end of this flow.</entry>
+
+	<!-- security -->
+	<entry key="security_login_title">SPD Tools</entry>
+	<entry key="security_login_message">Ви спробували отримати доступ до захищеної сторінки сайту.</entry>
+	<entry key="security_login_form_name">Логін</entry>
+	<entry key="security_login_form_name_message">Введіть логін</entry>
+	<entry key="security_login_form_password">Пароль</entry>
+	<entry key="security_login_form_password_message">Введіть пароль</entry>
+	<entry key="security_login_unsuccessful">Ваш спроба не вдалась, спробуйте ще раз. Причина:</entry>
+	<entry key="security_logout">Вихід</entry>
+
+</properties>
