@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,8 +37,13 @@ public class UserController implements AppConfig {
 	@Autowired
 	private KvedService kvedService;
 
-	@Autowired
 	private UserService userService;
+
+	@Required
+	@Autowired
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String create(@Valid User user, BindingResult bindingResult,
