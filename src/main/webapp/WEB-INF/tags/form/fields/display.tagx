@@ -5,6 +5,7 @@
   <jsp:directive.attribute name="object" type="java.lang.Object" required="true" rtexprvalue="true" description="The form backing object" />
   <jsp:directive.attribute name="field" type="java.lang.String" required="true" rtexprvalue="true" description="The field name" />
   <jsp:directive.attribute name="label" type="java.lang.String" required="false" rtexprvalue="true" description="The label used for this field, will default to a message bundle if not supplied" />
+  <jsp:directive.attribute name="enumClass" type="java.lang.String" required="false" rtexprvalue="true" description="Enum class of the displayed item" />
   <jsp:directive.attribute name="date" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicate that this field is of type java.util.Date" />
   <jsp:directive.attribute name="calendar" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicate that this field is of type java.util.Calendar" />
   <jsp:directive.attribute name="dateTimePattern" type="java.lang.String" required="false" rtexprvalue="true" description="The date / time pattern to use if the field is a date or calendar type" />
@@ -30,6 +31,12 @@
       </label>
       <div class="box" id="_${fn:escapeXml(id)}_${fn:escapeXml(field)}_id">
         <c:choose>
+          <c:when test="${not empty enumClass}">
+            <spring:eval expression="object[field]" var="value" />
+            <c:if test="${not empty value}">
+              <spring:message code="label_${fn:replace(enumClass,'.','_')}_${value}" htmlEscape="false" />
+            </c:if>
+          </c:when>
           <c:when test="${date}">
             <spring:escapeBody>
               <fmt:formatDate value="${object[field]}" pattern="${fn:escapeXml(dateTimePattern)}" />
