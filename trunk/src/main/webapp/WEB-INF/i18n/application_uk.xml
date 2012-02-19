@@ -112,4 +112,7 @@
 	<entry key="menu_item_user_new_label">ФОП</entry>
 	<entry key="menu_item_usergroup_list_label">Груп</entry>
 	<entry key="menu_item_usergroup_new_label">Група</entry>
+	<!-- Enums -->
+	<entry key="label_ua_org_tumakha_spdtool_enums_RegDocumentType_SVIDOCTVO">Свідоцтво</entry>
+	<entry key="label_ua_org_tumakha_spdtool_enums_RegDocumentType_VYPYSKA">Виписка</entry>
 </properties>
