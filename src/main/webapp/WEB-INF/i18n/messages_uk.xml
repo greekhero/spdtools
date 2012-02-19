@@ -26,7 +26,7 @@
 	<entry key="entity_create">Створити {0}</entry>
 	<entry key="entity_update">Редагувати {0}</entry>
 	<entry key="entity_delete">Видалити {0}</entry>
-	<entry key="entity_delete_confirm">Видалити об'єкт?</entry>
+	<entry key="entity_delete_confirm">Видалити елемент?</entry>
 	<entry key="entity_find">Пошук по {0}</entry>
 	<entry key="entity_not_found">Не знайдено {0}.</entry>
 	<entry key="entity_not_found_single">Не існує {0} з таким id.</entry>
@@ -92,7 +92,7 @@
 
 	<!-- security -->
 	<entry key="security_login_title">SPD Tools</entry>
-	<entry key="security_login_message">Ви спробували отримати доступ до захищеної сторінки сайту.</entry>
+	<entry key="security_login_message">Ви спробували отримати доступ до захищеної сторінки сайту. Введіть логін та пароль.</entry>
 	<entry key="security_login_form_name">Логін</entry>
 	<entry key="security_login_form_name_message">Введіть логін</entry>
 	<entry key="security_login_form_password">Пароль</entry>
