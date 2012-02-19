@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,13 +21,8 @@ import ua.org.tumakha.spdtool.web.util.WebUtil;
 @Controller
 public class KvedController implements AppConfig {
 
-	private KvedService kvedService;
-
-	@Required
 	@Autowired
-	public void setKvedService(KvedService kvedService) {
-		this.kvedService = kvedService;
-	}
+	private KvedService kvedService;
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String create(@Valid Kved kved, BindingResult bindingResult,
