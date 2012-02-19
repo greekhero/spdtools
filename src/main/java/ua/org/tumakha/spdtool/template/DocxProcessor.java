@@ -116,7 +116,7 @@ public class DocxProcessor {
 			}
 			mappings.put(entry.getKey().toString(), value);
 		}
-		log.debug(mappings);
+		// log.debug(mappings);
 		return mappings;
 	}
 

@@ -11,8 +11,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.services.UserService;
-import ua.org.tumakha.spdtool.template.XlsProcessor;
-import ua.org.tumakha.spdtool.template.XlsTemplate;
 
 /**
  * @author Yuriy Tumakha
@@ -20,7 +18,8 @@ import ua.org.tumakha.spdtool.template.XlsTemplate;
 public class XlsProcessorTest {
 
 	private static String[] CONFIG_LOCATIONS = {
-			"classpath:datasource-test.xml", "classpath:persistenceContext.xml" };
+			"classpath:datasource-test.xml",
+			"classpath:META-INF/spring/applicationContext.xml" };
 	private static ApplicationContext applicationContext;
 	private static UserService userService;
 	// private static TemplateService templateService;

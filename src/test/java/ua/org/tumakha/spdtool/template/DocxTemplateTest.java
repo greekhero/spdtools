@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import ua.org.tumakha.spdtool.template.DocxProcessor;
-import ua.org.tumakha.spdtool.template.DocxTemplate;
 import ua.org.tumakha.spdtool.template.model.ActModel;
 import ua.org.tumakha.util.NumberUtil;
 
@@ -48,7 +46,7 @@ public class DocxTemplateTest {
 		actModel.setBankSWIFT("AVALAUK");
 		List<ActModel> listModel = new ArrayList<ActModel>(100);
 		listModel.add(actModel);
-		docxTemplate.saveReports(DocxTemplate.ACT, listModel);
+		// docxTemplate.saveReports(DocxTemplate.ACT, listModel);
 	}
 
 }

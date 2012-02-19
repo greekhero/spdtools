@@ -38,7 +38,7 @@ public class UserServiceImplTest {
 		List<User> activeUsers = userService.findActiveUsers();
 		System.out.println(users.size());
 		System.out.println(activeUsers.size());
-		User user = activeUsers.get(0);
+		// User user = activeUsers.get(0);
 		// assertEquals(user.getActs().get(0), user.getLastAct());
 		// assertEquals(user.getLastAct().getContract(), user.getLastAct()
 		// .getContract());
