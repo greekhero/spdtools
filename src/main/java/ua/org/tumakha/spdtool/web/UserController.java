@@ -139,11 +139,11 @@ public class UserController implements AppConfig {
 	private void addDateTimeFormatPatterns(Model uiModel) {
 		uiModel.addAttribute(
 				"user_regdate_date_format",
-				DateTimeFormat.patternForStyle("M-",
+				DateTimeFormat.patternForStyle("S-",
 						LocaleContextHolder.getLocale()));
 		uiModel.addAttribute(
 				"user_regdatedpi_date_format",
-				DateTimeFormat.patternForStyle("M-",
+				DateTimeFormat.patternForStyle("S-",
 						LocaleContextHolder.getLocale()));
 	}
 

@@ -92,7 +92,7 @@ public class User {
 
 	@Column(name = "regDate", nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(style = "M-")
+	@DateTimeFormat(style = "S-")
 	@Past
 	private Date regDate;
 
@@ -104,7 +104,7 @@ public class User {
 
 	@Column(name = "regDateDPI", nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(style = "M-")
+	@DateTimeFormat(style = "S-")
 	@Past
 	private Date regDateDpi;
 
