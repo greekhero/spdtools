@@ -195,19 +195,19 @@ tr:nth-child(even) {
 	background-color: #EFEFEF;
 }
 
-a:link {
+#footer a:link {
 	color: #7db223;
 }
 
-a:hover {
+#footer a:hover {
 	color: #456314;
 }
 
-a:active {
+#footer a:active {
 	color: #7db223;
 }
 
-a:visited {
+#footer a:visited {
 	color: #7db223;
 }
 
@@ -261,7 +261,7 @@ table thead {
 	background-color: #BBBBBB;
 }
 
-table a:link {color: #303030;}
+table a {color: #303030;}
 
 .utilbox {width: 18px;}
 

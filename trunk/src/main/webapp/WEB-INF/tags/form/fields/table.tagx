@@ -62,6 +62,10 @@
         </tr>
       </thead>
       <c:forEach items="${data}" var="item">
+        <c:set var="itemId"><spring:eval expression="item[typeIdFieldName]"/></c:set>
+        <spring:url value="${path}/${itemId}" var="update_form_url">
+          <spring:param name="form" />
+        </spring:url>
         <tr>
           <c:forTokens items="${columnProperties}" delims="," var="column" varStatus="num">
             <c:set var="columnMaxLength" value="${lengths[num.count-1]}" />
@@ -88,10 +92,18 @@
               <c:if test="${columnMaxLength ge 0}">
                 <c:set value="${fn:substring(colTxt, 0, columnMaxLength)}" var="colTxt" />
               </c:if>
-              <c:out value="${colTxt}" />
+              <c:choose>
+              	<c:when test="${num.count eq 1}">
+	          	  <a href="${fn:escapeXml(update_form_url)}" alt="${fn:escapeXml(update_label)}" title="${fn:escapeXml(update_label)}">
+	              	<c:out value="${colTxt}" />
+	          	  </a>
+              	</c:when>
+              	<c:otherwise>
+              		<c:out value="${colTxt}" />
+              	</c:otherwise>
+              </c:choose>
             </td>
           </c:forTokens>
-          <c:set var="itemId"><spring:eval expression="item[typeIdFieldName]"/></c:set>
           <td class="utilbox">
             <spring:url value="${path}/${itemId}" var="show_form_url" />
             <spring:url value="/resources/images/show.png" var="show_image_url" />
@@ -102,9 +114,6 @@
           </td>
           <c:if test="${update}">
             <td class="utilbox">
-              <spring:url value="${path}/${itemId}" var="update_form_url">
-                <spring:param name="form" />
-              </spring:url>
               <spring:url value="/resources/images/update.png" var="update_image_url" />
               <spring:message arguments="${typeName}" code="entity_update" var="update_label" htmlEscape="false" />
               <a href="${fn:escapeXml(update_form_url)}" alt="${fn:escapeXml(update_label)}" title="${fn:escapeXml(update_label)}">
