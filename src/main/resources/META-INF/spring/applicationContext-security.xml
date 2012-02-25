@@ -20,6 +20,7 @@
         <intercept-url pattern="/banks/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/contracts/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/kveds/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/kveds2010/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/servicetypes/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/users/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/groups/**" access="hasRole('ROLE_ADMIN')"/>

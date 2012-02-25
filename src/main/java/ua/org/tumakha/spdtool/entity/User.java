@@ -139,6 +139,11 @@ public class User {
 	@OrderBy("code")
 	private List<Kved> kveds;
 
+	@ManyToMany
+	@JoinTable(name = "user_kved2010_mapping", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"), inverseJoinColumns = @JoinColumn(name = "kvedId", referencedColumnName = "kvedId"))
+	@OrderBy("code")
+	private List<Kved2010> kveds2010;
+
 	@Column
 	private Integer income2011;
 
@@ -379,6 +384,14 @@ public class User {
 
 	public void setKveds(List<Kved> kveds) {
 		this.kveds = kveds;
+	}
+
+	public List<Kved2010> getKveds2010() {
+		return kveds2010;
+	}
+
+	public void setKveds2010(List<Kved2010> kveds2010) {
+		this.kveds2010 = kveds2010;
 	}
 
 	public Integer getIncome2011() {

@@ -48,7 +48,8 @@
 	<entry key="label_ua_org_tumakha_spdtool_kved_code">Код</entry>
 	<entry key="label_ua_org_tumakha_spdtool_kved_name">Назва</entry>
 	<entry key="label_ua_org_tumakha_spdtool_kved_plural">KВЕД</entry>
-	<entry key="label_ua_org_tumakha_spdtool_kved_users">Users</entry>
+	<entry key="label_ua_org_tumakha_spdtool_kved2010">КВЕД 2010</entry>
+	<entry key="label_ua_org_tumakha_spdtool_kved2010_plural">KВЕД 2010</entry>
 	<entry key="label_ua_org_tumakha_spdtool_servicetype">Service Type</entry>
 	<entry key="label_ua_org_tumakha_spdtool_servicetype_name">Послуги</entry>
 	<entry key="label_ua_org_tumakha_spdtool_servicetype_nameen">Services</entry>
@@ -65,6 +66,7 @@
 	<entry key="label_ua_org_tumakha_spdtool_user_firstnameen">Firstname</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_income2011">Income2011</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_kveds">КВЕД</entry>
+	<entry key="label_ua_org_tumakha_spdtool_user_kveds2010">КВЕД 2010</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_lastname">Прізвище</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_lastnameen">Lastname</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_middlename">По-батькові</entry>
@@ -92,6 +94,7 @@
 	<entry key="menu_category_contract_label">Contract</entry>
 	<entry key="menu_category_flows_label">Flows</entry>
 	<entry key="menu_category_kved_label">КВЕД</entry>
+	<entry key="menu_category_kved2010_label">КВЕД 2010</entry>
 	<entry key="menu_category_servicetype_label">Service Type</entry>
 	<entry key="menu_category_user_label">ФОП</entry>
 	<entry key="menu_category_usergroup_label">Група</entry>
@@ -106,6 +109,8 @@
 	<entry key="menu_item_flows_sampleflow_label">Sampleflow</entry>
 	<entry key="menu_item_kved_list_label">КВЕД</entry>
 	<entry key="menu_item_kved_new_label">КВЕД</entry>
+	<entry key="menu_item_kved2010_list_label">КВЕД 2010</entry>
+	<entry key="menu_item_kved2010_new_label">КВЕД 2010</entry>
 	<entry key="menu_item_servicetype_list_label">Service Types</entry>
 	<entry key="menu_item_servicetype_new_label">Service Type</entry>
 	<entry key="menu_item_user_list_label">ФОП</entry>
