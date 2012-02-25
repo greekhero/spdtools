@@ -3,24 +3,6 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:update id="fu_ua_org_tumakha_spdtool_User" idField="userId" modelAttribute="user" path="/users" versionField="Version" z="bqT8Bu5SSQXxb8Gzl6hsXHDZWnE=">
-        <field:input field="pin" id="c_ua_org_tumakha_spdtool_User_pin" validationMessageCode="field_invalid_integer" z="ITpvrxzSq1cDR/pH37o8j0IA4mI="/>
-        <field:checkbox field="active" id="c_ua_org_tumakha_spdtool_User_active" z="IMVanJ3Y3wkGS5TfryvpXxQXo4M="/>
-        <field:input field="firstname" id="c_ua_org_tumakha_spdtool_User_firstname" z="VJi0O0fapTNgBmPUdxjzJhqFKZU="/>
-        <field:input field="firstnameEn" id="c_ua_org_tumakha_spdtool_User_firstnameEn" z="+OZWTQYc0btWlLTWovrtkXf7bYo="/>
-        <field:input field="lastname" id="c_ua_org_tumakha_spdtool_User_lastname" z="QOq1simOcAA46HPwXVERKLhbGNc="/>
-        <field:input field="lastnameEn" id="c_ua_org_tumakha_spdtool_User_lastnameEn" z="pjFlpy7lJpsBHhMXpNS1P9cJ3Vc="/>
-        <field:input field="middlename" id="c_ua_org_tumakha_spdtool_User_middlename" z="zDcMNh6lbmUen/n05oKtObuKr9Q="/>
-        <field:input field="middlenameEn" id="c_ua_org_tumakha_spdtool_User_middlenameEn" z="uG8VR5x9nvRocbpzDjtmdPFOYOg="/>
-        <field:select field="regDocumentType" id="c_ua_org_tumakha_spdtool_User_regDocumentType" enumClass="ua.org.tumakha.spdtool.enums.RegDocumentType"/>
-        <field:datetime dateTimePattern="${user_regdate_date_format}" field="regDate" id="c_ua_org_tumakha_spdtool_User_regDate" z="LrF4c1cHrGp4VNb/KRvvkepaoi8="/>
-        <field:input field="regNumber" id="c_ua_org_tumakha_spdtool_User_regNumber" z="eI4fiObuRBnPaqKXxiyJEF2eFaE="/>
-        <field:input field="email" id="c_ua_org_tumakha_spdtool_User_email" validationMessageCode="field_invalid_email" z="80VivEeS2RMj4utrInbv0f6SMpE="/>
-        <field:input field="phone" id="c_ua_org_tumakha_spdtool_User_phone" validationMessageCode="field_invalid_integer" z="0E1I+Hso2HSS367issNYUz7Sm1Y="/>
-        <field:input field="regDpi" id="c_ua_org_tumakha_spdtool_User_regDpi" z="jM3e3jWQP40umYoxHsfOmnA4bNw="/>
-        <field:datetime dateTimePattern="${user_regdatedpi_date_format}" field="regDateDpi" id="c_ua_org_tumakha_spdtool_User_regDateDpi" z="qb/e3LN5b2hCjeYbBK1RLOnRfF8="/>
-        <field:input field="regNumberDpi" id="c_ua_org_tumakha_spdtool_User_regNumberDpi" validationMessageCode="field_invalid_integer" z="qqN/ZLV2EjF9NYDiu+2Q5MuME8I="/>
-        <field:select field="groups" id="c_ua_org_tumakha_spdtool_User_userGroups" itemValue="groupId" items="${groups}" multiple="true" path="/groups"/>
-        <field:select field="kveds" id="c_ua_org_tumakha_spdtool_User_kveds" itemValue="kvedId" items="${kveds}" multiple="true" path="/kveds"/>
-        <field:simple field="serviceTypes" id="c_ua_org_tumakha_spdtool_User_serviceTypes" messageCode="entity_reference_not_managed" messageCodeAttribute="Service Type"/>
+    	<jsp:include page="user.jspx" />
     </form:update>
 </div>
