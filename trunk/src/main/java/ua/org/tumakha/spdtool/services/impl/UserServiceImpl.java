@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ua.org.tumakha.spdtool.dao.UserDao;
+import ua.org.tumakha.spdtool.entity.ServiceType;
 import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.services.UserService;
 
@@ -37,6 +38,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public User updateUser(User user) {
+		// TODO: re-attach user.serviceType
+		ServiceType serviceType = findUser(user.getUserId()).getServiceType();
+		serviceType.setName(user.getServiceType().getName());
+		serviceType.setNameEn(user.getServiceType().getNameEn());
+		user.setServiceType(serviceType);
+
 		return userDao.merge(user);
 	}
 

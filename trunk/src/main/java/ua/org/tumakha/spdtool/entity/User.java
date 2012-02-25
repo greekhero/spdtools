@@ -364,7 +364,7 @@ public class User {
 	}
 
 	public void setServiceType(ServiceType serviceType) {
-		if (serviceType.getUser() == null) {
+		if (serviceType != null && serviceType.getUser() == null) {
 			serviceType.setUser(this);
 		}
 		this.serviceType = serviceType;
