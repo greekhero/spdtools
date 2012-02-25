@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:show id="ps_ua_org_tumakha_spdtool_User" object="${user}" path="/users" z="BVlwe/iBuVUsECWoXy9167acbDY=">
@@ -23,7 +23,9 @@
         <field:display date="true" dateTimePattern="${user_regdatedpi_date_format}" field="regDateDpi" id="s_ua_org_tumakha_spdtool_User_regDateDpi" object="${user}" z="y+itQinxLnI/nwknmdBK9P/ABjs="/>
         <field:display field="regNumberDpi" id="s_ua_org_tumakha_spdtool_User_regNumberDpi" object="${user}" z="DlcBAPOwaf0C+hI0nLXU5XklzfQ="/>
         <br/>
-	    <field:display field="name" id="c_ua_org_tumakha_spdtool_servicetype_name" object="${user.serviceType}"/>
-    	<field:display field="nameEn" id="c_ua_org_tumakha_spdtool_servicetype_nameen" object="${user.serviceType}"/>
+        <c:if test="${not empty user.serviceType}">
+		    <field:display field="name" id="c_ua_org_tumakha_spdtool_servicetype_name" object="${user.serviceType}"/>
+		   	<field:display field="nameEn" id="c_ua_org_tumakha_spdtool_servicetype_nameen" object="${user.serviceType}"/>
+    	</c:if>
     </page:show>
 </div>
