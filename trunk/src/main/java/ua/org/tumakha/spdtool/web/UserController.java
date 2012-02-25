@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ua.org.tumakha.spdtool.AppConfig;
 import ua.org.tumakha.spdtool.entity.Group;
 import ua.org.tumakha.spdtool.entity.Kved;
+import ua.org.tumakha.spdtool.entity.Kved2010;
 import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.services.GroupService;
+import ua.org.tumakha.spdtool.services.Kved2010Service;
 import ua.org.tumakha.spdtool.services.KvedService;
 import ua.org.tumakha.spdtool.services.UserService;
 import ua.org.tumakha.spdtool.web.util.WebUtil;
@@ -32,6 +34,9 @@ public class UserController implements AppConfig {
 
 	@Autowired
 	private GroupService groupService;
+
+	@Autowired
+	private Kved2010Service kved2010Service;
 
 	@Autowired
 	private KvedService kvedService;
@@ -129,6 +134,11 @@ public class UserController implements AppConfig {
 	@ModelAttribute("groups")
 	public Collection<Group> populateGroups() {
 		return groupService.findAllGroups();
+	}
+
+	@ModelAttribute("kveds2010")
+	public Collection<Kved2010> populateKveds2010() {
+		return kved2010Service.findAllKveds();
 	}
 
 	@ModelAttribute("kveds")

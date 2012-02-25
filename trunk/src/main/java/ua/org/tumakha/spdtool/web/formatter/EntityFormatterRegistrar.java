@@ -15,10 +15,14 @@ public class EntityFormatterRegistrar implements FormatterRegistrar {
 	@Autowired
 	private KvedFormatter kvedFormatter;
 
+	@Autowired
+	private Kved2010Formatter kved2010Formatter;
+
 	@Override
 	public void registerFormatters(FormatterRegistry registry) {
 		registry.addFormatter(groupFormatter);
 		registry.addFormatter(kvedFormatter);
+		registry.addFormatter(kved2010Formatter);
 	}
 
 }

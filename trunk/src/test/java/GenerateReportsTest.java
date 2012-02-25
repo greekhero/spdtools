@@ -15,6 +15,7 @@ import ua.org.tumakha.spdtool.template.DocxTemplate;
 import ua.org.tumakha.spdtool.template.XlsProcessor;
 import ua.org.tumakha.spdtool.template.XlsTemplate;
 import ua.org.tumakha.spdtool.template.model.ActModel;
+import ua.org.tumakha.spdtool.template.model.Form11KvedModel;
 import ua.org.tumakha.spdtool.template.model.Form20OPPModel;
 import ua.org.tumakha.spdtool.template.model.IncomeCalculationModel;
 import ua.org.tumakha.spdtool.template.model.TaxSystemStatementModel;
@@ -60,6 +61,16 @@ public class GenerateReportsTest {
 		docxProcessor.saveReports(DocxTemplate.FORM_20_OPP, listModel);
 		if (listModel != null) {
 			System.out.println("Generated 20-OPP forms: " + listModel.size());
+		}
+	}
+
+	@Test
+	public void testGenerateForm11Kved() throws Exception {
+		List<Form11KvedModel> listModel = templateService
+				.getForm11KvedModelList(1);
+		docxProcessor.saveReports(DocxTemplate.FORM_11_KVED, listModel);
+		if (listModel != null) {
+			System.out.println("Generated forms: " + listModel.size());
 		}
 	}
 

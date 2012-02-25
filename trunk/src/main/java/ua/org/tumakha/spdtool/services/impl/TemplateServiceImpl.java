@@ -16,6 +16,7 @@ import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.services.TemplateService;
 import ua.org.tumakha.spdtool.services.UserService;
 import ua.org.tumakha.spdtool.template.model.ActModel;
+import ua.org.tumakha.spdtool.template.model.Form11KvedModel;
 import ua.org.tumakha.spdtool.template.model.Form20OPPModel;
 import ua.org.tumakha.spdtool.template.model.IncomeCalculationModel;
 import ua.org.tumakha.spdtool.template.model.TaxSystemStatementModel;
@@ -116,6 +117,24 @@ public class TemplateServiceImpl implements TemplateService {
 			for (User user : users) {
 				Form20OPPModel form20OPPModel = new Form20OPPModel(user);
 				listModel.add(form20OPPModel);
+			}
+			return listModel;
+		}
+		return null;
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public List<Form11KvedModel> getForm11KvedModelList(Integer groupId) {
+		List<User> users = userService.findUsersByGroup(groupId);
+		if (users != null && users.size() > 0) {
+			List<Form11KvedModel> listModel = new ArrayList<Form11KvedModel>(
+					users.size());
+			for (User user : users) {
+				if (user.isActive()) {
+					Form11KvedModel form11Model = new Form11KvedModel(user);
+					listModel.add(form11Model);
+				}
 			}
 			return listModel;
 		}
