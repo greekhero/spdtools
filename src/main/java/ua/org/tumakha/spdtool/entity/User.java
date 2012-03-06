@@ -141,7 +141,7 @@ public class User {
 
 	@ManyToMany
 	@JoinTable(name = "user_kved2010_mapping", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"), inverseJoinColumns = @JoinColumn(name = "kvedId", referencedColumnName = "kvedId"))
-	@OrderBy("code")
+	@OrderBy("priority DESC")
 	private List<Kved2010> kveds2010;
 
 	@Column
