@@ -6,6 +6,7 @@
         <table:table data="${kveds}" id="l_ua_org_tumakha_spdtool_Kved2010" path="/kveds2010" typeIdFieldName="kvedId">
             <table:column id="c_ua_org_tumakha_spdtool_Kved_code" property="code"/>
             <table:column id="c_ua_org_tumakha_spdtool_Kved_name" property="name" maxLength="200"/>
+            <table:column id="c_ua_org_tumakha_spdtool_Kved_priority" property="priority"/>
         </table:table>
     </page:list>
 </div>

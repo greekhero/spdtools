@@ -23,8 +23,18 @@ public class Kved2010 {
 
 	private String name;
 
+	private int priority;
+
 	// @ManyToMany(mappedBy = "kveds")
 	// private Set<User> users;
+
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
 
 	public Integer getKvedId() {
 		return kvedId;

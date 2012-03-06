@@ -5,5 +5,6 @@
     <form:update id="fu_ua_org_tumakha_spdtool_Kved2010" idField="kvedId" modelAttribute="kved" path="/kveds2010" versionField="none">
         <field:input field="code" id="c_ua_org_tumakha_spdtool_Kved_code" required="true"/>
         <field:input field="name" id="c_ua_org_tumakha_spdtool_Kved_name"/>
+        <field:input field="priority" id="c_ua_org_tumakha_spdtool_Kved_priority"/>
     </form:update>
 </div>

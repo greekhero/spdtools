@@ -1,6 +1,9 @@
 package ua.org.tumakha.spdtool.template.model;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 
 import ua.org.tumakha.spdtool.entity.Kved2010;
 import ua.org.tumakha.spdtool.entity.User;
@@ -11,51 +14,121 @@ import ua.org.tumakha.spdtool.template.DocxTemplate;
  */
 public class Form11KvedModel extends TemplateModel {
 
-	private String kvedCode1;
-	private String kvedCode2;
-	private String kvedCode3;
-	private String kvedCode4;
-	private String kvedCode5;
-	private String kvedName1;
-	private String kvedName2;
-	private String kvedName3;
-	private String kvedName4;
-	private String kvedName5;
+	private static final int NAME_MAXLENGHT = 35;
+
+	private static final int KVED_NAME_COLUMN_WIDTH = 20;
+
+	private static final int MAX_ROWS = 28;
+
+	/**
+	 * Firstname.
+	 */
+	private String f;
+
+	/**
+	 * Lastname.
+	 */
+	private String l;
+
+	/**
+	 * Middlename.
+	 */
+	private String m;
+
+	private String pin;
+
+	/**
+	 * Phone.
+	 */
+	private String p;
+
+	/**
+	 * Names column.
+	 */
+	private String n;
+
+	/**
+	 * Code list.
+	 */
+	List<String> c;
+
+	/**
+	 * On list.
+	 */
+	List<String> on;
+
+	/**
+	 * Off list.
+	 */
+	List<String> off;
+
+	/**
+	 * Item number.
+	 */
+	List<String> i;
 
 	public Form11KvedModel() {
 	}
 
 	public Form11KvedModel(User user) {
 		super(user);
-		setPhone("+380976884343");
 		copyProperties(user);
 	}
 
 	private void copyProperties(User user) {
+		p = "+380976884343";
+		pin = getPIN();
+
+		f = getFirstname().toUpperCase();
+		f += StringUtils.repeat(" ", NAME_MAXLENGHT - f.length());
+		m = getMiddlename().toUpperCase();
+		m += StringUtils.repeat(" ", NAME_MAXLENGHT - m.length());
+		l = getLastname().toUpperCase();
+		l += StringUtils.repeat(" ", NAME_MAXLENGHT - l.length());
+
+		n = " ";
+		String emptyCode = "       ";
+		List<String> codeList = new ArrayList<String>();
+		on = new ArrayList<String>();
+		off = new ArrayList<String>();
+		i = new ArrayList<String>();
+		codeList.add(emptyCode);
+		on.add("");
+		i.add("");
 		List<Kved2010> kveds = user.getKveds2010();
-		Kved2010 kved = null;
-		switch (kveds.size()) {
-		case 5:
-			kved = kveds.get(4);
-			kvedCode5 = kved.getCode();
-			kvedName5 = kved.getName();
-		case 4:
-			kved = kveds.get(3);
-			kvedCode4 = kved.getCode();
-			kvedName4 = kved.getName();
-		case 3:
-			kved = kveds.get(2);
-			kvedCode3 = kved.getCode();
-			kvedName3 = kved.getName();
-		case 2:
-			kved = kveds.get(1);
-			kvedCode2 = kved.getCode();
-			kvedName2 = kved.getName();
-		case 1:
-			kved = kveds.get(0);
-			kvedCode1 = kved.getCode();
-			kvedName1 = kved.getName();
+		int row = 1;
+		for (Kved2010 kved : kveds) {
+			String name = kved.getName().toUpperCase();
+			int len = name.length();
+			int rows = (int) Math.ceil((float) len / KVED_NAME_COLUMN_WIDTH);
+			n += name;
+			int space = KVED_NAME_COLUMN_WIDTH - len % KVED_NAME_COLUMN_WIDTH;
+			if (space != KVED_NAME_COLUMN_WIDTH) {
+				n += StringUtils.repeat(" ", KVED_NAME_COLUMN_WIDTH - len
+						% KVED_NAME_COLUMN_WIDTH);
+			}
+			codeList.add(kved.getCode() + emptyCode);
+			on.add("x");
+			i.add("" + row++);
+			for (int k = 2; k <= rows; k++) {
+				codeList.add(emptyCode);
+				on.add("");
+				i.add("");
+			}
+
 		}
+		for (int k = codeList.size(); k <= MAX_ROWS; k++) {
+			codeList.add(emptyCode);
+			on.add("");
+			i.add("");
+		}
+		for (int k = 0; k <= MAX_ROWS; k++) {
+			codeList.add(emptyCode);
+			off.add("");
+		}
+		c = codeList;
+		n += StringUtils.repeat(" ", 561 - n.length());
+
 	}
 
 	@Override
@@ -64,84 +137,84 @@ public class Form11KvedModel extends TemplateModel {
 				getFirstnameEn(), template.getFilename());
 	}
 
-	public String getKvedCode1() {
-		return kvedCode1;
+	public String getF() {
+		return f;
 	}
 
-	public void setKvedCode1(String kvedCode1) {
-		this.kvedCode1 = kvedCode1;
+	public void setF(String f) {
+		this.f = f;
 	}
 
-	public String getKvedCode2() {
-		return kvedCode2;
+	public String getL() {
+		return l;
 	}
 
-	public void setKvedCode2(String kvedCode2) {
-		this.kvedCode2 = kvedCode2;
+	public void setL(String l) {
+		this.l = l;
 	}
 
-	public String getKvedCode3() {
-		return kvedCode3;
+	public String getM() {
+		return m;
 	}
 
-	public void setKvedCode3(String kvedCode3) {
-		this.kvedCode3 = kvedCode3;
+	public void setM(String m) {
+		this.m = m;
 	}
 
-	public String getKvedCode4() {
-		return kvedCode4;
+	public String getPin() {
+		return pin;
 	}
 
-	public void setKvedCode4(String kvedCode4) {
-		this.kvedCode4 = kvedCode4;
+	public void setPin(String pin) {
+		this.pin = pin;
 	}
 
-	public String getKvedCode5() {
-		return kvedCode5;
+	public String getP() {
+		return p;
 	}
 
-	public void setKvedCode5(String kvedCode5) {
-		this.kvedCode5 = kvedCode5;
+	public void setP(String p) {
+		this.p = p;
 	}
 
-	public String getKvedName1() {
-		return kvedName1;
+	public String getN() {
+		return n;
 	}
 
-	public void setKvedName1(String kvedName1) {
-		this.kvedName1 = kvedName1;
+	public void setN(String n) {
+		this.n = n;
 	}
 
-	public String getKvedName2() {
-		return kvedName2;
+	public List<String> getC() {
+		return c;
 	}
 
-	public void setKvedName2(String kvedName2) {
-		this.kvedName2 = kvedName2;
+	public void setC(List<String> c) {
+		this.c = c;
 	}
 
-	public String getKvedName3() {
-		return kvedName3;
+	public List<String> getOn() {
+		return on;
 	}
 
-	public void setKvedName3(String kvedName3) {
-		this.kvedName3 = kvedName3;
+	public void setOn(List<String> on) {
+		this.on = on;
 	}
 
-	public String getKvedName4() {
-		return kvedName4;
+	public List<String> getOff() {
+		return off;
 	}
 
-	public void setKvedName4(String kvedName4) {
-		this.kvedName4 = kvedName4;
+	public void setOff(List<String> off) {
+		this.off = off;
 	}
 
-	public String getKvedName5() {
-		return kvedName5;
+	public List<String> getI() {
+		return i;
 	}
 
-	public void setKvedName5(String kvedName5) {
-		this.kvedName5 = kvedName5;
+	public void setI(List<String> i) {
+		this.i = i;
 	}
 
 }

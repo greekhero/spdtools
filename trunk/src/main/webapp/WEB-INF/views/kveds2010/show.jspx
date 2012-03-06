@@ -3,7 +3,8 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:show id="ps_ua_org_tumakha_spdtool_Kved2010" object="${kved}" path="/kveds2010" z="G2f5aob99urtoQX3sPIGsLtFUpg=">
-        <field:display field="code" id="s_ua_org_tumakha_spdtool_Kved_code" object="${kved}" z="NO5a5NN+qfN7Omp0H+pwj+Sasqs="/>
-        <field:display field="name" id="s_ua_org_tumakha_spdtool_Kved_name" object="${kved}" z="mOrG4z9Te1KKeim8/2BiS5+uwrM="/>
+        <field:display field="code" id="s_ua_org_tumakha_spdtool_Kved_code" object="${kved}"/>
+        <field:display field="name" id="s_ua_org_tumakha_spdtool_Kved_name" object="${kved}"/>
+        <field:display field="priority" id="c_ua_org_tumakha_spdtool_Kved_priority" object="${kved}"/>
     </page:show>
 </div>
