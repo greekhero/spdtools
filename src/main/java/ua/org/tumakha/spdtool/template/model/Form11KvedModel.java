@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
+import ua.org.tumakha.spdtool.entity.Kved;
 import ua.org.tumakha.spdtool.entity.Kved2010;
 import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.template.DocxTemplate;
@@ -19,6 +20,8 @@ public class Form11KvedModel extends TemplateModel {
 	private static final int KVED_NAME_COLUMN_WIDTH = 20;
 
 	private static final int MAX_ROWS = 28;
+
+	private static final String EMPTY_CODE = "       ";
 
 	/**
 	 * Firstname.
@@ -87,16 +90,29 @@ public class Form11KvedModel extends TemplateModel {
 		l += StringUtils.repeat(" ", NAME_MAXLENGHT - l.length());
 
 		n = " ";
-		String emptyCode = "       ";
-		List<String> codeList = new ArrayList<String>();
+		i = new ArrayList<String>();
+		c = new ArrayList<String>();
 		on = new ArrayList<String>();
 		off = new ArrayList<String>();
-		i = new ArrayList<String>();
-		codeList.add(emptyCode);
-		on.add("");
-		i.add("");
+		addEmptyRow();
 		List<Kved2010> kveds = user.getKveds2010();
-		int row = 1;
+		List<Kved> oldKveds = user.getKveds();
+		int num = 1;
+		for (Kved kved : oldKveds) {
+			String name = kved.getName().toUpperCase();
+			int len = name.length();
+			int rows = (int) Math.ceil((float) len / KVED_NAME_COLUMN_WIDTH);
+			n += name;
+			int space = KVED_NAME_COLUMN_WIDTH - len % KVED_NAME_COLUMN_WIDTH;
+			if (space != KVED_NAME_COLUMN_WIDTH) {
+				n += StringUtils.repeat(" ", KVED_NAME_COLUMN_WIDTH - len
+						% KVED_NAME_COLUMN_WIDTH);
+			}
+			addRow(num++, kved.getCode(), false);
+			for (int k = 2; k <= rows; k++) {
+				addEmptyRow();
+			}
+		}
 		for (Kved2010 kved : kveds) {
 			String name = kved.getName().toUpperCase();
 			int len = name.length();
@@ -107,28 +123,38 @@ public class Form11KvedModel extends TemplateModel {
 				n += StringUtils.repeat(" ", KVED_NAME_COLUMN_WIDTH - len
 						% KVED_NAME_COLUMN_WIDTH);
 			}
-			codeList.add(kved.getCode() + emptyCode);
-			on.add("x");
-			i.add("" + row++);
+			addRow(num++, kved.getCode(), true);
 			for (int k = 2; k <= rows; k++) {
-				codeList.add(emptyCode);
-				on.add("");
-				i.add("");
+				addEmptyRow();
 			}
-
 		}
-		for (int k = codeList.size(); k <= MAX_ROWS; k++) {
-			codeList.add(emptyCode);
-			on.add("");
-			i.add("");
+		for (int k = c.size(); k <= MAX_ROWS; k++) {
+			addEmptyRow();
 		}
-		for (int k = 0; k <= MAX_ROWS; k++) {
-			codeList.add(emptyCode);
-			off.add("");
-		}
-		c = codeList;
 		n += StringUtils.repeat(" ", 561 - n.length());
 
+	}
+
+	private void addEmptyRow() {
+		i.add("");
+		c.add(EMPTY_CODE);
+		on.add("");
+		off.add("");
+	}
+
+	private void addRow(int num, String code, boolean isOn) {
+		String checkedSymbol = "x";
+		i.add("" + num);
+		c.add(code + EMPTY_CODE);
+		String strOn = "";
+		String strOff = "";
+		if (isOn) {
+			strOn = checkedSymbol;
+		} else {
+			strOff = checkedSymbol;
+		}
+		on.add(strOn);
+		off.add(strOff);
 	}
 
 	@Override
