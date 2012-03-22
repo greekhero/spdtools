@@ -1,5 +1,6 @@
 package ua.org.tumakha.spdtool.template;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -23,11 +24,14 @@ public class XlsProcessor {
 			Map<String, Object> beans) throws InvalidFormatException,
 			IOException {
 		String outputFilename = outputFilenamePrefix + template.getFilename();
+		File outputFile = new File(REPORTS_DIRECTORY + outputFilename);
+		if (outputFile.getParentFile().mkdirs()) {
+			log.debug("Created directory: " + outputFile.getParentFile());
+		}
+
 		transformer.transformXLS(
-				TEMPLATES_DIRECTORY + "/" + template.getFilename(),
-				beans,
-				REPORTS_DIRECTORY + outputFilenamePrefix
-						+ template.getFilename());
+				TEMPLATES_DIRECTORY + "/" + template.getFilename(), beans,
+				outputFile.getAbsolutePath());
 		log.debug("Saved XLS output to: " + outputFilename);
 	}
 
