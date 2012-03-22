@@ -134,7 +134,7 @@ public class User {
 	@JoinTable(name = "user_group_mapping", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"), inverseJoinColumns = @JoinColumn(name = "groupId", referencedColumnName = "groupId"))
 	private Set<Group> groups;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_kved_mapping", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"), inverseJoinColumns = @JoinColumn(name = "kvedId", referencedColumnName = "kvedId"))
 	@OrderBy("code")
 	private List<Kved> kveds;
@@ -146,6 +146,10 @@ public class User {
 
 	@Column
 	private Integer income2011;
+
+	public char[] getPinStr() {
+		return getPin().toString().toCharArray();
+	}
 
 	public char[] getPinArray() {
 		return getPin().toString().toCharArray();

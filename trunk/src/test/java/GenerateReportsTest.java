@@ -1,19 +1,15 @@
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.services.TemplateService;
 import ua.org.tumakha.spdtool.services.UserService;
 import ua.org.tumakha.spdtool.template.DocxProcessor;
 import ua.org.tumakha.spdtool.template.DocxTemplate;
 import ua.org.tumakha.spdtool.template.XlsProcessor;
-import ua.org.tumakha.spdtool.template.XlsTemplate;
 import ua.org.tumakha.spdtool.template.model.ActModel;
 import ua.org.tumakha.spdtool.template.model.Form11KvedModel;
 import ua.org.tumakha.spdtool.template.model.Form20OPPModel;
@@ -91,17 +87,17 @@ public class GenerateReportsTest {
 	}
 
 	// @Test
-	public void testXlsEsvD5() throws Exception {
-		List<User> users = userService.findUsersByGroup(1);
-		if (users != null) {
-			for (User user : users) {
-				Map<String, Object> beans = new HashMap<String, Object>();
-				String outputFilename = String.format("/ESV_d5/%s_%s_",
-						user.getLastnameEn(), user.getFirstnameEn());
-				xlsProcessor.saveReport(XlsTemplate.ESV_D5, outputFilename,
-						beans);
-			}
-		}
-	}
+	// public void testXlsEsvD5() throws Exception {
+	// List<User> users = userService.findUsersByGroup(1);
+	// if (users != null) {
+	// for (User user : users) {
+	// Map<String, Object> beans = new HashMap<String, Object>();
+	// String outputFilename = String.format("/ESV_d5/%s_%s_",
+	// user.getLastnameEn(), user.getFirstnameEn());
+	// xlsProcessor.saveReport(XlsTemplate.ESV_D5, outputFilename,
+	// beans);
+	// }
+	// }
+	// }
 
 }
