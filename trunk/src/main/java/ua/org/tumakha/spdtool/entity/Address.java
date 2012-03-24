@@ -81,20 +81,7 @@ public class Address {
 	public String getTextUa() {
 		StringBuffer buffer = new StringBuffer();
 		if (StringUtils.hasText(street)) {
-			buffer.append(StrUtil.isFirstCharUpperOrDigit(street) ? STREET_PREFIX
-					: "");
-			buffer.append(street);
-			if (house != null) {
-				buffer.append(DELIMITER + HOUSE_PREFIX + house);
-				buffer.append(StringUtils.hasText(houseChar) ? "-" + houseChar
-						: "");
-				buffer.append(slashHouse != null ? "/" + slashHouse : "");
-			}
-			if (apartment != null) {
-				buffer.append(DELIMITER + APARTMENT_PREFIX + apartment);
-				buffer.append(StringUtils.hasText(apartmentChar) ? apartmentChar
-						: "");
-			}
+			buffer.append(getStreetLine());
 			buffer.append(DELIMITER);
 		}
 		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? CITY_PREFIX
@@ -108,9 +95,7 @@ public class Address {
 
 	public String getTextReversedUa() {
 		StringBuffer buffer = new StringBuffer();
-		if (postalCode != null) {
-			buffer.append(String.format("%05d", postalCode));
-		}
+		buffer.append(getPostalCodeStr());
 		buffer.append(StringUtils.hasText(region) ? DELIMITER + region
 				+ REGION_SUFFIX : "");
 		buffer.append(StringUtils.hasText(district) ? DELIMITER + district
@@ -118,20 +103,8 @@ public class Address {
 		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? DELIMITER
 				+ CITY_PREFIX + city : city);
 		if (StringUtils.hasText(street)) {
-			buffer.append(StrUtil.isFirstCharUpperOrDigit(street) ? DELIMITER
-					+ STREET_PREFIX : "");
-			buffer.append(street);
-			if (house != null) {
-				buffer.append(DELIMITER + HOUSE_PREFIX + house);
-				buffer.append(StringUtils.hasText(houseChar) ? "-" + houseChar
-						: "");
-				buffer.append(slashHouse != null ? "/" + slashHouse : "");
-			}
-			if (apartment != null) {
-				buffer.append(DELIMITER + APARTMENT_PREFIX + apartment);
-				buffer.append(StringUtils.hasText(apartmentChar) ? apartmentChar
-						: "");
-			}
+			buffer.append(DELIMITER);
+			buffer.append(getStreetLine());
 		}
 		return buffer.toString().trim();
 	}
@@ -161,6 +134,48 @@ public class Address {
 				+ DISTRICT_SUFFIX_EN : "");
 		buffer.append(StringUtils.hasText(regionEn) ? DELIMITER + regionEn
 				+ REGION_SUFFIX_EN : "");
+		return buffer.toString().trim();
+	}
+
+	public String getPostalCodeStr() {
+		if (postalCode != null) {
+			return String.format("%05d", postalCode);
+		} else {
+			return "";
+		}
+	}
+
+	public char[] getPostalCodeArray() {
+		return getPostalCodeStr().toCharArray();
+	}
+
+	public String getRegionAndCity() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(StringUtils.hasText(region) ? region + REGION_SUFFIX
+				+ DELIMITER : "");
+		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? CITY_PREFIX
+				+ city : city);
+		return buffer.toString().trim();
+	}
+
+	public String getStreetLine() {
+		StringBuffer buffer = new StringBuffer();
+		if (StringUtils.hasText(street)) {
+			buffer.append(StrUtil.isFirstCharUpperOrDigit(street) ? STREET_PREFIX
+					: "");
+			buffer.append(street);
+			if (house != null) {
+				buffer.append(DELIMITER + HOUSE_PREFIX + house);
+				buffer.append(StringUtils.hasText(houseChar) ? "-" + houseChar
+						: "");
+				buffer.append(slashHouse != null ? "/" + slashHouse : "");
+			}
+			if (apartment != null) {
+				buffer.append(DELIMITER + APARTMENT_PREFIX + apartment);
+				buffer.append(StringUtils.hasText(apartmentChar) ? apartmentChar
+						: "");
+			}
+		}
 		return buffer.toString().trim();
 	}
 

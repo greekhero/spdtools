@@ -71,13 +71,15 @@ public class XlsProcessorTest {
 			for (User user : users) {
 				if (user.isActive()) {
 					Double income = 10000.50;
+					Double tax = income * 0.05;
 					Map<String, Object> beans = new HashMap<String, Object>();
 					beans.put("user", user);
 					beans.put("year", year);
 					beans.put("dateYear", dateYear);
 					beans.put("income", income);
+					beans.put("tax", tax);
 					beans.put("previousTax", "-");
-					beans.put("taxToPay", income * 0.05);
+					beans.put("taxToPay", tax);
 					beans.put("phone0", "0976884343");
 					for (int q = 1; q <= 4; q++) {
 						String qsym = q == quarter ? "X" : "";
