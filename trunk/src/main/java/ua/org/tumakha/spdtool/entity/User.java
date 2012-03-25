@@ -134,7 +134,7 @@ public class User {
 	@JoinTable(name = "user_group_mapping", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"), inverseJoinColumns = @JoinColumn(name = "groupId", referencedColumnName = "groupId"))
 	private Set<Group> groups;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
 	@JoinTable(name = "user_kved_mapping", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"), inverseJoinColumns = @JoinColumn(name = "kvedId", referencedColumnName = "kvedId"))
 	@OrderBy("code")
 	private List<Kved> kveds;
@@ -143,6 +143,10 @@ public class User {
 	@JoinTable(name = "user_kved2010_mapping", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"), inverseJoinColumns = @JoinColumn(name = "kvedId", referencedColumnName = "kvedId"))
 	@OrderBy("priority DESC")
 	private List<Kved2010> kveds2010;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OrderBy("year desc, quarter desc")
+	private List<Declaration> declarations;
 
 	@Column
 	private Integer income2011;
@@ -396,6 +400,14 @@ public class User {
 
 	public void setKveds2010(List<Kved2010> kveds2010) {
 		this.kveds2010 = kveds2010;
+	}
+
+	public List<Declaration> getDeclarations() {
+		return declarations;
+	}
+
+	public void setDeclarations(List<Declaration> declarations) {
+		this.declarations = declarations;
 	}
 
 	public Integer getIncome2011() {
