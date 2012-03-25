@@ -141,4 +141,22 @@ public class TemplateServiceImpl implements TemplateService {
 		return null;
 	}
 
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public List<User> getUsersForDeclaration(Integer groupId) {
+		List<User> users = userService.findUsersByGroup(groupId);
+		List<User> usersForDeclaration = new ArrayList<User>();
+		if (users != null && users.size() > 0) {
+			for (User user : users) {
+				if (user.isActive() && user.getDeclarations() != null
+						&& user.getDeclarations().size() > 0) {
+					user.getKveds().size();
+					usersForDeclaration.add(user);
+				}
+			}
+			return usersForDeclaration;
+		}
+		return null;
+	}
+
 }

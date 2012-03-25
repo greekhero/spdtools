@@ -10,8 +10,10 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import ua.org.tumakha.spdtool.entity.Declaration;
 import ua.org.tumakha.spdtool.entity.Kved;
 import ua.org.tumakha.spdtool.entity.User;
+import ua.org.tumakha.spdtool.services.TemplateService;
 import ua.org.tumakha.spdtool.services.UserService;
 
 /**
@@ -24,7 +26,7 @@ public class XlsProcessorTest {
 			"classpath:META-INF/spring/applicationContext.xml" };
 	private static ApplicationContext applicationContext;
 	private static UserService userService;
-	// private static TemplateService templateService;
+	private static TemplateService templateService;
 	private final XlsProcessor xlsProcessor = new XlsProcessor();
 
 	@BeforeClass
@@ -32,8 +34,8 @@ public class XlsProcessorTest {
 		applicationContext = new ClassPathXmlApplicationContext(
 				CONFIG_LOCATIONS);
 		userService = (UserService) applicationContext.getBean("userService");
-		// templateService = (TemplateService) applicationContext
-		// .getBean("templateService");
+		templateService = (TemplateService) applicationContext
+				.getBean("templateService");
 
 	}
 
@@ -57,7 +59,7 @@ public class XlsProcessorTest {
 
 	@Test
 	public void testXlsDeclaration() throws Exception {
-		List<User> users = userService.findUsersByGroup(1);
+		List<User> users = templateService.getUsersForDeclaration(1);
 		Calendar calendar = Calendar.getInstance();
 		int year = calendar.get(Calendar.YEAR);
 		int month = calendar.get(Calendar.MONTH);
@@ -70,8 +72,9 @@ public class XlsProcessorTest {
 		if (users != null) {
 			for (User user : users) {
 				if (user.isActive()) {
-					Double income = 10000.50;
-					Double tax = income * 0.05;
+					Declaration declaration = user.getDeclarations().get(0);
+					Float income = declaration.getIncome();
+					Float tax = declaration.getTax();
 					Map<String, Object> beans = new HashMap<String, Object>();
 					beans.put("user", user);
 					beans.put("year", year);

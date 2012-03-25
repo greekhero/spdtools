@@ -49,7 +49,7 @@ public class Act {
 	@DateTimeFormat(style = "M-")
 	private Date dateTo;
 
-	@Column
+	@Column(precision = 2)
 	private Float amount;
 
 	public Integer getActId() {
