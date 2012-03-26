@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 <tiles-definitions>
-    <definition extends="default" name="kveds/list">
-        <put-attribute name="body" value="/WEB-INF/views/kveds/list.jspx"/>
-    </definition>
-<definition extends="default" name="kveds/show">
-        <put-attribute name="body" value="/WEB-INF/views/kveds/show.jspx"/>
-    </definition>
-<definition extends="default" name="kveds/create">
-        <put-attribute name="body" value="/WEB-INF/views/kveds/create.jspx"/>
-    </definition>
-<definition extends="default" name="kveds/update">
-        <put-attribute name="body" value="/WEB-INF/views/kveds/update.jspx"/>
+    <definition extends="default" name="kveds/*">
+        <put-attribute name="body" value="/WEB-INF/views/kveds/{1}.jspx"/>
     </definition>
 </tiles-definitions>
