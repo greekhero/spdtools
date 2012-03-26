@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ua.org.tumakha.spdtool.dao.UserDao;
+import ua.org.tumakha.spdtool.entity.Bank;
 import ua.org.tumakha.spdtool.entity.ServiceType;
 import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.services.UserService;
@@ -38,11 +39,31 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public User updateUser(User user) {
-		// TODO: re-attach user.serviceType
-		ServiceType serviceType = findUser(user.getUserId()).getServiceType();
-		serviceType.setName(user.getServiceType().getName());
-		serviceType.setNameEn(user.getServiceType().getNameEn());
-		user.setServiceType(serviceType);
+		// TODO: re-attach user serviceType, bank, address
+		User dbUser = findUser(user.getUserId());
+		ServiceType dbServiceType = dbUser.getServiceType();
+		if (dbServiceType == null) {
+			dbServiceType = new ServiceType();
+		}
+		ServiceType serviceType = user.getServiceType();
+		dbServiceType.setName(serviceType.getName());
+		dbServiceType.setNameEn(serviceType.getNameEn());
+		user.setServiceType(dbServiceType);
+
+		Bank dbBank = dbUser.getBank();
+		if (dbBank == null) {
+			dbBank = new Bank();
+		}
+		Bank bank = user.getBank();
+		dbBank.setAccountNumber(bank.getAccountNumber());
+		dbBank.setMFO(bank.getMFO());
+		dbBank.setSWIFT(bank.getSWIFT());
+		dbBank.setName(bank.getName());
+		dbBank.setNameEn(bank.getNameEn());
+		dbBank.setUsedMiddlename(bank.isUsedMiddlename());
+		dbBank.setCorrespondentBank(bank.getCorrespondentBank());
+		dbBank.setCorrespondentBankEn(bank.getCorrespondentBankEn());
+		user.setBank(dbBank);
 
 		return userDao.merge(user);
 	}

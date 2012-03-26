@@ -19,8 +19,16 @@
     <field:datetime dateTimePattern="${user_regdatedpi_date_format}" field="regDateDpi" id="c_ua_org_tumakha_spdtool_User_regDateDpi"/>
     <field:input field="regNumberDpi" id="c_ua_org_tumakha_spdtool_User_regNumberDpi" validationMessageCode="field_invalid_integer"/>
     <field:select field="groups" id="c_ua_org_tumakha_spdtool_User_userGroups" itemValue="groupId" items="${groups}" multiple="true" path="/groups"/>
-     <field:select field="kveds2010" id="c_ua_org_tumakha_spdtool_User_kveds2010" itemValue="kvedId" items="${kveds2010}" multiple="true" path="/kveds2010"/>
+    <field:select field="kveds2010" id="c_ua_org_tumakha_spdtool_User_kveds2010" itemValue="kvedId" items="${kveds2010}" multiple="true" path="/kveds2010"/>
     <field:select field="kveds" id="c_ua_org_tumakha_spdtool_User_kveds" itemValue="kvedId" items="${kveds}" multiple="true" path="/kveds"/>
     <field:textarea field="serviceType.name" id="c_ua_org_tumakha_spdtool_servicetype_name"/>
     <field:textarea field="serviceType.nameEn" id="c_ua_org_tumakha_spdtool_servicetype_nameen"/>
+    <field:input field="bank.MFO" id="c_ua_org_tumakha_spdtool_Bank_mfo" validationMessageCode="field_invalid_integer"/>
+    <field:input field="bank.SWIFT" id="c_ua_org_tumakha_spdtool_Bank_swift"/>
+    <field:input field="bank.accountNumber" id="c_ua_org_tumakha_spdtool_Bank_accountNumber" required="true" validationMessageCode="field_invalid_integer"/>
+    <field:input field="bank.name" id="c_ua_org_tumakha_spdtool_Bank_name"/>
+    <field:input field="bank.nameEn" id="c_ua_org_tumakha_spdtool_Bank_nameEn"/>
+    <field:checkbox field="bank.usedMiddlename" id="c_ua_org_tumakha_spdtool_Bank_usedMiddlename"/>
+    <field:textarea field="bank.correspondentBank" id="c_ua_org_tumakha_spdtool_Bank_correspondentBank"/>
+    <field:textarea field="bank.correspondentBankEn" id="c_ua_org_tumakha_spdtool_Bank_correspondentBankEn"/>
 </div>
