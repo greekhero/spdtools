@@ -2,6 +2,7 @@ package ua.org.tumakha.spdtool.services.impl;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Repository;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ua.org.tumakha.spdtool.dao.UserDao;
+import ua.org.tumakha.spdtool.entity.Address;
 import ua.org.tumakha.spdtool.entity.Bank;
 import ua.org.tumakha.spdtool.entity.ServiceType;
 import ua.org.tumakha.spdtool.entity.User;
@@ -45,27 +47,30 @@ public class UserServiceImpl implements UserService {
 		if (dbServiceType == null) {
 			dbServiceType = new ServiceType();
 		}
-		ServiceType serviceType = user.getServiceType();
-		dbServiceType.setName(serviceType.getName());
-		dbServiceType.setNameEn(serviceType.getNameEn());
+		BeanUtils.copyProperties(user.getServiceType(), dbServiceType,
+				getArray("serviceTypeId"));
 		user.setServiceType(dbServiceType);
 
 		Bank dbBank = dbUser.getBank();
 		if (dbBank == null) {
 			dbBank = new Bank();
 		}
-		Bank bank = user.getBank();
-		dbBank.setAccountNumber(bank.getAccountNumber());
-		dbBank.setMFO(bank.getMFO());
-		dbBank.setSWIFT(bank.getSWIFT());
-		dbBank.setName(bank.getName());
-		dbBank.setNameEn(bank.getNameEn());
-		dbBank.setUsedMiddlename(bank.isUsedMiddlename());
-		dbBank.setCorrespondentBank(bank.getCorrespondentBank());
-		dbBank.setCorrespondentBankEn(bank.getCorrespondentBankEn());
+		BeanUtils.copyProperties(user.getBank(), dbBank, getArray("bankId"));
 		user.setBank(dbBank);
 
+		Address dbAddress = dbUser.getAddress();
+		if (dbAddress == null) {
+			dbAddress = new Address();
+		}
+		BeanUtils.copyProperties(user.getAddress(), dbAddress,
+				getArray("addressId"));
+		user.setAddress(dbAddress);
+
 		return userDao.merge(user);
+	}
+
+	private String[] getArray(String value) {
+		return new String[] { value };
 	}
 
 	@Override

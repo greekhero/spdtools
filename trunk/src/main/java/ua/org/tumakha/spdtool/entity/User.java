@@ -28,6 +28,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
@@ -88,6 +89,7 @@ public class User {
 	@Enumerated(EnumType.ORDINAL)
 	private RegDocumentType regDocumentType;
 
+	@Pattern(regexp = "\\d \\d{3} \\d{3} \\d{4} \\d{6}", message = "Format not match (# ### ### #### ######)")
 	private String regNumber;
 
 	@Column(name = "regDate", nullable = true)
