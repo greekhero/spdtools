@@ -356,6 +356,9 @@ public class User {
 	}
 
 	public void setAddress(Address address) {
+		if (address != null && address.getUser() == null) {
+			address.setUser(this);
+		}
 		this.address = address;
 	}
 
@@ -364,6 +367,10 @@ public class User {
 	}
 
 	public void setBank(Bank bank) {
+		if (bank != null && bank.getUser() == null) {
+			bank.setUser(this);
+		}
+
 		this.bank = bank;
 	}
 
