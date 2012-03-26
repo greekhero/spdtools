@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Size;
 
 import org.springframework.util.StringUtils;
 
@@ -42,6 +44,7 @@ public class Address {
 	@JoinColumn(name = "userId", unique = true, nullable = false, updatable = false, insertable = true)
 	private User user;
 
+	@Digits(integer = 5, fraction = 0)
 	private Integer postalCode;
 
 	private String region;
@@ -60,22 +63,29 @@ public class Address {
 
 	private String streetEn;
 
+	@Digits(integer = 3, fraction = 0)
 	private Integer house;
 
 	@Column(nullable = true, length = 1)
+	@Size(max = 1)
 	private String houseChar;
 
 	@Column(nullable = true, length = 1)
+	@Size(max = 1)
 	private String houseCharEn;
 
+	@Digits(integer = 3, fraction = 0)
 	private Integer slashHouse;
 
+	@Digits(integer = 3, fraction = 0)
 	private Integer apartment;
 
 	@Column(nullable = true, length = 1)
+	@Size(max = 1)
 	private String apartmentChar;
 
 	@Column(nullable = true, length = 1)
+	@Size(max = 1)
 	private String apartmentCharEn;
 
 	public String getTextUa() {

@@ -31,4 +31,20 @@
     <field:checkbox field="bank.usedMiddlename" id="c_ua_org_tumakha_spdtool_Bank_usedMiddlename"/>
     <field:textarea field="bank.correspondentBank" id="c_ua_org_tumakha_spdtool_Bank_correspondentBank"/>
     <field:textarea field="bank.correspondentBankEn" id="c_ua_org_tumakha_spdtool_Bank_correspondentBankEn"/>
+    <field:input field="address.postalCode" id="c_ua_org_tumakha_spdtool_Address_postalCode" validationMessageCode="field_invalid_integer"/>
+    <field:input field="address.region" id="c_ua_org_tumakha_spdtool_Address_region"/>
+    <field:input field="address.regionEn" id="c_ua_org_tumakha_spdtool_Address_regionEn"/>
+    <field:input field="address.district" id="c_ua_org_tumakha_spdtool_Address_district"/>
+    <field:input field="address.districtEn" id="c_ua_org_tumakha_spdtool_Address_districtEn"/>
+    <field:input field="address.city" id="c_ua_org_tumakha_spdtool_Address_city"/>
+    <field:input field="address.cityEn" id="c_ua_org_tumakha_spdtool_Address_cityEn"/>
+    <field:input field="address.street" id="c_ua_org_tumakha_spdtool_Address_street"/>
+    <field:input field="address.streetEn" id="c_ua_org_tumakha_spdtool_Address_streetEn"/>
+    <field:input field="address.house" id="c_ua_org_tumakha_spdtool_Address_house" validationMessageCode="field_invalid_integer"/>
+    <field:input field="address.houseChar" id="c_ua_org_tumakha_spdtool_Address_houseChar"/>
+    <field:input field="address.houseCharEn" id="c_ua_org_tumakha_spdtool_Address_houseCharEn"/>
+    <field:input field="address.slashHouse" id="c_ua_org_tumakha_spdtool_Address_slashHouse" validationMessageCode="field_invalid_integer"/>
+    <field:input field="address.apartment" id="c_ua_org_tumakha_spdtool_Address_apartment" validationMessageCode="field_invalid_integer"/>
+    <field:input field="address.apartmentChar" id="c_ua_org_tumakha_spdtool_Address_apartmentChar"/>
+    <field:input field="address.apartmentCharEn" id="c_ua_org_tumakha_spdtool_Address_apartmentCharEn"/>
 </div>

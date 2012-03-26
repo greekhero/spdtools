@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 /**
  * @author Yuriy Tumakha
@@ -31,6 +34,9 @@ public class Bank {
 
 	private String nameEn;
 
+	@Digits(integer = 6, fraction = 0)
+	@Min(100000)
+	@Max(999999)
 	private Integer MFO;
 
 	private String SWIFT;
