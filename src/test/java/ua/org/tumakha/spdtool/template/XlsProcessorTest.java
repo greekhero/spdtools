@@ -88,7 +88,7 @@ public class XlsProcessorTest {
 						String qsym = q == quarter ? "X" : "";
 						beans.put("q" + q, qsym);
 					}
-					List<Kved> kveds = user.getKveds();
+					List<Kved> kveds = user.getActiveKveds();
 					for (int k = 1; k <= 6; k++) {
 						String code = "";
 						String name = "";

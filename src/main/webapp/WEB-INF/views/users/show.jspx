@@ -25,6 +25,7 @@
         <br/>
         <field:display field="kveds2010" id="c_ua_org_tumakha_spdtool_User_kveds2010" object="${user}"/>
         <field:display field="kveds" id="c_ua_org_tumakha_spdtool_User_kveds" object="${user}"/>
+        <field:display field="activeKveds" id="c_ua_org_tumakha_spdtool_User_activeKveds" object="${user}"/>
         <c:if test="${not empty user.serviceType}">
 		    <field:display field="name" id="c_ua_org_tumakha_spdtool_servicetype_name" object="${user.serviceType}"/>
 		   	<field:display field="nameEn" id="c_ua_org_tumakha_spdtool_servicetype_nameen" object="${user.serviceType}"/>

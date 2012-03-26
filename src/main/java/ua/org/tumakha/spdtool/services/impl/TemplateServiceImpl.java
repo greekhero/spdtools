@@ -150,7 +150,7 @@ public class TemplateServiceImpl implements TemplateService {
 			for (User user : users) {
 				if (user.isActive() && user.getDeclarations() != null
 						&& user.getDeclarations().size() > 0) {
-					user.getKveds().size();
+					user.getActiveKveds().size();
 					usersForDeclaration.add(user);
 				}
 			}

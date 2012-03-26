@@ -69,6 +69,7 @@
 	<entry key="label_ua_org_tumakha_spdtool_user_firstnameen">Firstname</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_income2011">Income2011</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_kveds">КВЕД</entry>
+	<entry key="label_ua_org_tumakha_spdtool_user_activekveds">Активні КВЕД</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_kveds2010">КВЕД 2010</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_lastname">Прізвище</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_lastnameen">Lastname</entry>
