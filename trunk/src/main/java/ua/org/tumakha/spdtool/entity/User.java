@@ -138,8 +138,13 @@ public class User {
 
 	@ManyToMany
 	@JoinTable(name = "user_kved_mapping", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"), inverseJoinColumns = @JoinColumn(name = "kvedId", referencedColumnName = "kvedId"))
-	@OrderBy("code")
+	@OrderBy("priority DESC")
 	private List<Kved> kveds;
+
+	@ManyToMany
+	@JoinTable(name = "user_active_kved_mapping", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"), inverseJoinColumns = @JoinColumn(name = "kvedId", referencedColumnName = "kvedId"))
+	@OrderBy("priority DESC")
+	private List<Kved> activeKveds;
 
 	@ManyToMany
 	@JoinTable(name = "user_kved2010_mapping", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"), inverseJoinColumns = @JoinColumn(name = "kvedId", referencedColumnName = "kvedId"))
@@ -401,6 +406,14 @@ public class User {
 
 	public void setKveds(List<Kved> kveds) {
 		this.kveds = kveds;
+	}
+
+	public List<Kved> getActiveKveds() {
+		return activeKveds;
+	}
+
+	public void setActiveKveds(List<Kved> activeKveds) {
+		this.activeKveds = activeKveds;
 	}
 
 	public List<Kved2010> getKveds2010() {

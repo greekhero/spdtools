@@ -23,6 +23,8 @@ public class Kved {
 
 	private String name;
 
+	private int priority;
+
 	// @ManyToMany(mappedBy = "kveds")
 	// private Set<User> users;
 
@@ -48,6 +50,14 @@ public class Kved {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
 	}
 
 	@Override
