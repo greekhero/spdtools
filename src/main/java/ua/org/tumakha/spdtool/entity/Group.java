@@ -1,5 +1,6 @@
 package ua.org.tumakha.spdtool.entity;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -14,7 +15,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "user_group")
-public class Group {
+public class Group implements Serializable {
+
+	private static final long serialVersionUID = 1308429568785478009L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
