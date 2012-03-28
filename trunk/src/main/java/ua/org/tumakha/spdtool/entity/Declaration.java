@@ -35,10 +35,10 @@ public class Declaration {
 	@NotNull
 	private Integer quarter;
 
-	@Column(precision = 2)
+	@Column(precision = 0)
 	private Float income;
 
-	@Column(precision = 2)
+	@Column(precision = 0)
 	private Float tax;
 
 	public Integer getDeclarationId() {
