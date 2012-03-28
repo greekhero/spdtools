@@ -96,7 +96,7 @@
 	<entry key="menu_category_address_label">Address</entry>
 	<entry key="menu_category_bank_label">Bank</entry>
 	<entry key="menu_category_contract_label">Contract</entry>
-	<entry key="menu_category_flows_label">Flows</entry>
+	<entry key="menu_category_documents_label">Документи</entry>
 	<entry key="menu_category_kved_label">КВЕД</entry>
 	<entry key="menu_category_kved2010_label">КВЕД 2010</entry>
 	<entry key="menu_category_servicetype_label">Service Type</entry>
@@ -110,7 +110,7 @@
 	<entry key="menu_item_bank_new_label">Bank</entry>
 	<entry key="menu_item_contract_list_label">Contracts</entry>
 	<entry key="menu_item_contract_new_label">Contract</entry>
-	<entry key="menu_item_flows_sampleflow_label">Sampleflow</entry>
+	<entry key="menu_item_documents_declaration_label">Декларація</entry>
 	<entry key="menu_item_kved_list_label">КВЕД</entry>
 	<entry key="menu_item_kved_new_label">КВЕД</entry>
 	<entry key="menu_item_kved2010_list_label">КВЕД 2010</entry>
@@ -121,7 +121,17 @@
 	<entry key="menu_item_user_new_label">ФОП</entry>
 	<entry key="menu_item_usergroup_list_label">Груп</entry>
 	<entry key="menu_item_usergroup_new_label">Група</entry>
+	
 	<!-- Enums -->
 	<entry key="label_ua_org_tumakha_spdtool_enums_RegDocumentType_SVIDOCTVO">Свідоцтво</entry>
 	<entry key="label_ua_org_tumakha_spdtool_enums_RegDocumentType_VYPYSKA">Виписка</entry>
+	
+	<!-- declaration -->
+	<entry key="declaration_state1_title">Генерування декларацій - Крок 1</entry>
+	<entry key="declaration_state2_title">Генерування декларацій - Крок 2</entry>
+	<entry key="declaration_endstate_title">Генерування декларацій - Фініш</entry>
+	<entry key="label_declaration_year">Рік</entry>
+	<entry key="label_declaration_quarter">Квартал</entry>
+	<entry key="label_declaration_incomefile">Дохід (.xls)</entry>
+	
 </properties>

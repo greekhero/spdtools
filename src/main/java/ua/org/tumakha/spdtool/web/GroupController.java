@@ -17,6 +17,9 @@ import ua.org.tumakha.spdtool.entity.Group;
 import ua.org.tumakha.spdtool.services.GroupService;
 import ua.org.tumakha.spdtool.web.util.WebUtil;
 
+/**
+ * @author Yuriy Tumakha
+ */
 @RequestMapping("/groups")
 @Controller
 public class GroupController implements AppConfig {

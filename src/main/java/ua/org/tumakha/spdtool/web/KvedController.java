@@ -17,6 +17,9 @@ import ua.org.tumakha.spdtool.entity.Kved;
 import ua.org.tumakha.spdtool.services.KvedService;
 import ua.org.tumakha.spdtool.web.util.WebUtil;
 
+/**
+ * @author Yuriy Tumakha
+ */
 @RequestMapping("/kveds")
 @Controller
 public class KvedController implements AppConfig {

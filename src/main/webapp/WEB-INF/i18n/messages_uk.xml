@@ -81,15 +81,6 @@
 	<entry key="error_uncaughtexception_title">Внутрішня помилка</entry>
 	<entry key="error_uncaughtexception_problemdescription">Sorry, we encountered an internal error.</entry>
 
-	<!-- webflow -->
-	<entry key="webflow_menu_enter">Enter {0} flow</entry>
-	<entry key="webflow_state1_title">Spring Web Flow - View State One</entry>
-	<entry key="webflow_state1_message">This is a simple example to get started with Spring Web Flow. The buttons below lead you to another view state (Proceed) or to an end state.</entry>
-	<entry key="webflow_state2_title">Spring Web Flow - View State Two</entry>
-	<entry key="webflow_state2_message">This is a simple example to get started with Spring Web Flow. The buttons below lead you to another view state (Proceed) or to an end state.</entry>
-	<entry key="webflow_endstate_title">Spring Web Flow - End State</entry>
-	<entry key="webflow_endstate_message">You have now reached the end of this flow.</entry>
-
 	<!-- security -->
 	<entry key="security_login_title">SPD Tools</entry>
 	<entry key="security_login_message">Ви спробували отримати доступ до захищеної сторінки сайту. Введіть логін та пароль.</entry>

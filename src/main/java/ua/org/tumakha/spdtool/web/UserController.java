@@ -28,6 +28,9 @@ import ua.org.tumakha.spdtool.services.KvedService;
 import ua.org.tumakha.spdtool.services.UserService;
 import ua.org.tumakha.spdtool.web.util.WebUtil;
 
+/**
+ * @author Yuriy Tumakha
+ */
 @RequestMapping("/users")
 @Controller
 public class UserController implements AppConfig {

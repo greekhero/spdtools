@@ -24,6 +24,7 @@
         <intercept-url pattern="/servicetypes/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/users/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/groups/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/declaration/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/**" access="permitAll" />
     </http>
 
