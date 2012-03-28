@@ -1,4 +1,4 @@
-<div xmlns:spring="http://www.springframework.org/tags" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+<div xmlns:spring="http://www.springframework.org/tags" xmlns:form="http://www.springframework.org/tags/form" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"  xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
   <jsp:directive.page contentType="text/html;charset=UTF-8" />
   <jsp:output omit-xml-declaration="yes" />
   <spring:message var="title" code="declaration_state2_title" htmlEscape="false" />
@@ -7,11 +7,13 @@
     <p>
       State 2
     </p>
-    <form method="POST">
+    <form:form modelAttribute="declarationModel">
       <div class="submit">
-        <spring:message var="end" code="button_end" htmlEscape="false" />
-        <input type="submit" id="cancel" name="_eventId_cancel" value="${fn:escapeXml(end)}" />
+        <spring:message var="cancel" code="button_cancel" htmlEscape="false" />
+        <spring:message var="proceed" code="button_proceed" htmlEscape="false" />
+        <input type="submit" id="cancel" name="_eventId_cancel" value="${fn:escapeXml(cancel)}" />
+        <input type="submit" id="success" name="_eventId_success" value="${fn:escapeXml(proceed)}" />
       </div>
-    </form>
+    </form:form>
   </util:panel>
 </div>
