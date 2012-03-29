@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.services.TemplateService;
@@ -150,6 +151,25 @@ public class TemplateServiceImpl implements TemplateService {
 			for (User user : users) {
 				if (user.isActive() && user.getDeclarations() != null
 						&& user.getDeclarations().size() > 0) {
+					user.getActiveKveds().size();
+					usersForDeclaration.add(user);
+				}
+			}
+			return usersForDeclaration;
+		}
+		return null;
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public List<User> getUsersForDeclaration(List<Integer> groupIds) {
+		Assert.notNull(groupIds, "groupIds empty.");
+		List<User> users = userService.findUsersByGroups(groupIds);
+		List<User> usersForDeclaration = new ArrayList<User>();
+		if (users != null && users.size() > 0) {
+			for (User user : users) {
+				if (user.isActive()) {
+					user.getDeclarations().size();
 					user.getActiveKveds().size();
 					usersForDeclaration.add(user);
 				}

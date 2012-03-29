@@ -1,6 +1,7 @@
 package ua.org.tumakha.spdtool.dao.jpa;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -54,6 +55,26 @@ public class UserDaoJpaImpl extends AbstractJpaDao<User> implements UserDao {
 		return entityManager
 				.createQuery(
 						"SELECT u FROM User u JOIN u.groups g WHERE u.active != NULL AND g.id = ?",
+						User.class).setParameter(1, groupId).getResultList();
+	}
+
+	@Override
+	public List<User> findByGroups(List<Integer> groupIds) {
+		return entityManager
+				.createQuery(
+						"SELECT u FROM User u JOIN u.groups g WHERE u.active != NULL AND g.id IN ?",
+						User.class).setParameter(1, groupIds).getResultList();
+	}
+
+	@Override
+	public List<User> findActiveUsersByGroups(Set<Integer> groupIds) {
+		Integer groupId = (Integer) groupIds.toArray()[0];
+		// TODO: CriteriaBuilder criteriaBuilder =
+		// entityManager.getCriteriaBuilder();
+		// criteriaBuilder.in(expression)
+		return entityManager
+				.createQuery(
+						"SELECT u FROM User u JOIN u.groups g WHERE u.active = 1 AND g.id IN ? ORDER BY u.lastname",
 						User.class).setParameter(1, groupId).getResultList();
 	}
 

@@ -5,15 +5,18 @@
 		<evaluate expression="declarationController.initModel()" result="flowScope.declarationModel"/>
 	</on-start>
 
-    <view-state id="view-state-1" view="declaration/view-state-1" model="declarationModel">
-    	<transition on="success" to="view-state-2">
-    		<evaluate expression="declarationModel.processFile()"/>
+    <view-state id="initData" view="declaration/initData" model="declarationModel">
+    	<transition on="success" to="usersDeclarations">
+    		<evaluate expression="declarationController.readData(declarationModel)"/>
     	</transition>
     </view-state>
 
-    <view-state id="view-state-2" view="declaration/view-state-2">
+    <view-state id="usersDeclarations" view="declaration/usersDeclarations">
+    	<on-entry>
+    		<evaluate expression="declarationController.initDeclarations(declarationModel)"/>
+    	</on-entry>
     	<transition on="success" to="end-state"/>
-    	<transition on="cancel" to="view-state-1"/>
+    	<transition on="cancel" to="initData"/>
     </view-state>
 
     <end-state id="end-state" view="declaration/end-state"/>

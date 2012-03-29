@@ -1,6 +1,7 @@
 package ua.org.tumakha.spdtool.services;
 
 import java.util.List;
+import java.util.Set;
 
 import ua.org.tumakha.spdtool.entity.User;
 
@@ -9,22 +10,25 @@ import ua.org.tumakha.spdtool.entity.User;
  */
 public interface UserService {
 
-	public void createUser(User user);
+	void createUser(User user);
 
-	public User updateUser(User user);
+	User updateUser(User user);
 
-	public void deleteUser(Integer userId);
+	void deleteUser(Integer userId);
 
-	public User findUser(Integer userId);
+	User findUser(Integer userId);
 
-	public long countUsers();
+	long countUsers();
 
-	public List<User> findUserEntries(int firstResult, int maxResults);
+	List<User> findUserEntries(int firstResult, int maxResults);
 
-	public List<User> findAllUsers();
+	List<User> findAllUsers();
 
-	public List<User> findActiveUsers();
+	List<User> findActiveUsers();
 
-	public List<User> findUsersByGroup(Integer groupId);
+	List<User> findUsersByGroup(Integer groupId);
 
+	List<User> findUsersByGroups(List<Integer> groupIds);
+
+	List<User> findActiveUsersByGroups(Set<Integer> groupIds);
 }

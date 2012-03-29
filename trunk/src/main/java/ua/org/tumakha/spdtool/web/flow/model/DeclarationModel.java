@@ -1,12 +1,15 @@
 package ua.org.tumakha.spdtool.web.flow.model;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.web.multipart.MultipartFile;
+
+import ua.org.tumakha.spdtool.entity.Declaration;
 
 public class DeclarationModel implements Serializable {
 
@@ -22,6 +25,8 @@ public class DeclarationModel implements Serializable {
 	private Integer quarter;
 
 	private transient MultipartFile incomeFile;
+
+	private List<Declaration> declarations;
 
 	public Set<Integer> getGroupIds() {
 		return groupIds;
@@ -57,6 +62,14 @@ public class DeclarationModel implements Serializable {
 		// incomeFile.getInputStream();
 		System.out.println(incomeFile.getOriginalFilename());
 		System.out.println(incomeFile.getSize());
+	}
+
+	public List<Declaration> getDeclarations() {
+		return declarations;
+	}
+
+	public void setDeclarations(List<Declaration> declarations) {
+		this.declarations = declarations;
 	}
 
 }

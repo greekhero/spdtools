@@ -26,4 +26,6 @@ public interface TemplateService {
 
 	List<User> getUsersForDeclaration(Integer groupId);
 
+	List<User> getUsersForDeclaration(List<Integer> groupIds);
+
 }

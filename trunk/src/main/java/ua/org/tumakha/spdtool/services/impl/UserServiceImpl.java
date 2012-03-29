@@ -1,6 +1,7 @@
 package ua.org.tumakha.spdtool.services.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,6 +116,17 @@ public class UserServiceImpl implements UserService {
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<User> findUsersByGroup(Integer groupId) {
 		return userDao.findByGroup(groupId);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public List<User> findUsersByGroups(List<Integer> groupIds) {
+		return userDao.findByGroups(groupIds);
+	}
+
+	@Override
+	public List<User> findActiveUsersByGroups(Set<Integer> groupIds) {
+		return userDao.findActiveUsersByGroups(groupIds);
 	}
 
 }

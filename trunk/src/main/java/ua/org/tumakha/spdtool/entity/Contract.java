@@ -1,5 +1,6 @@
 package ua.org.tumakha.spdtool.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,7 +19,9 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "contract", uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"number", "userId" }) })
-public class Contract {
+public class Contract implements Serializable {
+
+	private static final long serialVersionUID = 1308373430456843318L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,5 +1,7 @@
 package ua.org.tumakha.spdtool.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +19,9 @@ import javax.validation.constraints.Min;
  */
 @Entity
 @Table(name = "bank")
-public class Bank {
+public class Bank implements Serializable {
+
+	private static final long serialVersionUID = 1308052916445429074L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

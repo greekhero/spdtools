@@ -73,8 +73,8 @@ public class XlsProcessorTest {
 			for (User user : users) {
 				if (user.isActive()) {
 					Declaration declaration = user.getDeclarations().get(0);
-					Float income = declaration.getIncome();
-					Float tax = declaration.getTax();
+					Integer income = declaration.getIncome();
+					Integer tax = declaration.getTax();
 					Map<String, Object> beans = new HashMap<String, Object>();
 					beans.put("user", user);
 					beans.put("year", year);
