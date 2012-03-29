@@ -12,8 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
 import org.springframework.webflow.execution.RequestContextHolder;
 
+import ua.org.tumakha.spdtool.entity.Declaration;
 import ua.org.tumakha.spdtool.entity.Group;
+import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.services.GroupService;
+import ua.org.tumakha.spdtool.services.UserService;
 import ua.org.tumakha.spdtool.web.flow.model.DeclarationModel;
 
 /**
@@ -26,6 +29,9 @@ public class DeclarationController {
 
 	@Autowired
 	private GroupService groupService;
+
+	@Autowired
+	private UserService userService;
 
 	public DeclarationModel initModel() {
 		initLists();
@@ -76,4 +82,25 @@ public class DeclarationController {
 		return quarters;
 	}
 
+	public void readData(DeclarationModel declarationModel) {
+		declarationModel.processFile();
+	}
+
+	public void initDeclarations(DeclarationModel declarationModel) {
+		List<User> activeUsers = userService
+				.findActiveUsersByGroups(declarationModel.getGroupIds());
+		List<Declaration> declarations = new ArrayList<Declaration>();
+		if (activeUsers != null) {
+			for (User user : activeUsers) {
+				Declaration declaration = new Declaration();
+				declaration.setUser(user);
+				declaration.setYear(declarationModel.getYear());
+				declaration.setQuarter(declarationModel.getQuarter());
+				declaration.setIncome(100);
+				declaration.setTax(5);
+				declarations.add(declaration);
+			}
+		}
+		declarationModel.setDeclarations(declarations);
+	}
 }

@@ -1,5 +1,7 @@
 package ua.org.tumakha.spdtool.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +15,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "service_type")
-public class ServiceType {
+public class ServiceType implements Serializable {
+
+	private static final long serialVersionUID = 1308640674729559608L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

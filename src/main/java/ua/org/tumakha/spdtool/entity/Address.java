@@ -1,5 +1,7 @@
 package ua.org.tumakha.spdtool.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +22,9 @@ import ua.org.tumakha.util.StrUtil;
  */
 @Entity
 @Table(name = "address")
-public class Address {
+public class Address implements Serializable {
+
+	private static final long serialVersionUID = 1308742308113894965L;
 
 	private static final String DELIMITER = ", ";
 	private static final String REGION_SUFFIX = " oбл.";

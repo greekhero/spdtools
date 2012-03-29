@@ -1,6 +1,7 @@
 package ua.org.tumakha.spdtool.dao;
 
 import java.util.List;
+import java.util.Set;
 
 import ua.org.tumakha.spdtool.entity.User;
 
@@ -9,20 +10,24 @@ import ua.org.tumakha.spdtool.entity.User;
  */
 public interface UserDao {
 
-	public User find(Object id);
+	User find(Object id);
 
-	public void persist(User user);
+	void persist(User user);
 
-	public User merge(User user);
+	User merge(User user);
 
-	public long countEntries();
+	long countEntries();
 
-	public List<User> findEntries(int firstResult, int maxResults);
+	List<User> findEntries(int firstResult, int maxResults);
 
-	public List<User> findAll();
+	List<User> findAll();
 
-	public List<User> findActive();
+	List<User> findActive();
 
-	public List<User> findByGroup(Integer groupId);
+	List<User> findByGroup(Integer groupId);
+
+	List<User> findByGroups(List<Integer> groupIds);
+
+	List<User> findActiveUsersByGroups(Set<Integer> groupIds);
 
 }

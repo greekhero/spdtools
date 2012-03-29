@@ -1,5 +1,7 @@
 package ua.org.tumakha.spdtool.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +19,9 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "declaration", uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"userId", "year", "quarter" }) })
-public class Declaration {
+public class Declaration implements Serializable {
+
+	private static final long serialVersionUID = 1308357222957583032L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,10 +40,10 @@ public class Declaration {
 	private Integer quarter;
 
 	@Column(precision = 0)
-	private Float income;
+	private Integer income;
 
 	@Column(precision = 0)
-	private Float tax;
+	private Integer tax;
 
 	public Integer getDeclarationId() {
 		return declarationId;
@@ -73,19 +77,19 @@ public class Declaration {
 		this.quarter = quarter;
 	}
 
-	public Float getIncome() {
+	public Integer getIncome() {
 		return income;
 	}
 
-	public void setIncome(Float income) {
+	public void setIncome(Integer income) {
 		this.income = income;
 	}
 
-	public Float getTax() {
+	public Integer getTax() {
 		return tax;
 	}
 
-	public void setTax(Float tax) {
+	public void setTax(Integer tax) {
 		this.tax = tax;
 	}
 

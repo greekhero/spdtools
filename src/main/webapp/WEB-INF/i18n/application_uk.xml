@@ -133,5 +133,7 @@
 	<entry key="label_declaration_year">Рік</entry>
 	<entry key="label_declaration_quarter">Квартал</entry>
 	<entry key="label_declaration_incomefile">Дохід (.xls)</entry>
+	<entry key="label_declaration_income">Дохід</entry>
+	<entry key="label_declaration_tax">Податок</entry>
 	
 </properties>

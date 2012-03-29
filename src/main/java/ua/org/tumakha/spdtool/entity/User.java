@@ -1,5 +1,6 @@
 package ua.org.tumakha.spdtool.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -41,7 +42,9 @@ import ua.org.tumakha.spdtool.enums.RegDocumentType;
  */
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Serializable {
+
+	private static final long serialVersionUID = 1308009705873176089L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

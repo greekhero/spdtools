@@ -1,0 +1,48 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:spring="http://www.springframework.org/tags" xmlns:form="http://www.springframework.org/tags/form" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+  <jsp:directive.page contentType="text/html;charset=UTF-8" />
+  <jsp:output omit-xml-declaration="yes" />
+  <spring:message var="title" code="declaration_state2_title" htmlEscape="false" />
+  <util:panel id="title" title="${title}">
+    <h1>${fn:escapeXml(title)}</h1>
+    <p>
+      <b>${declarationModel.year} Q${declarationModel.quarter}</b>
+    </p>
+    <form:form modelAttribute="declarationModel">
+      <table>
+        <thead>
+      		<tr>
+      			<th><spring:message code="label_ua_org_tumakha_spdtool_user_lastname"/></th>
+      			<th><spring:message code="label_ua_org_tumakha_spdtool_user_firstname"/></th>
+      			<th><spring:message code="label_declaration_income"/></th>
+      			<th><spring:message code="label_declaration_tax"/></th>
+      		</tr>
+      	</thead>
+      	<tbody>
+			<c:forEach items="${declarationModel.declarations}" varStatus="row">
+				<tr>
+					<td>
+						<form:hidden path="declarations[${row.index}].declarationId"/>
+						<form:hidden path="declarations[${row.index}].user.userId"/>
+						<spring:bind path="declarations[${row.index}].user.lastname">${status.value}</spring:bind>
+					</td>
+					<td><spring:bind path="declarations[${row.index}].user.firstname">${status.value}</spring:bind></td>
+					<td><form:input path="declarations[${row.index}].income"/></td>
+					<td><form:input path="declarations[${row.index}].tax"/></td>
+				</tr>
+			</c:forEach>
+        </tbody>
+      </table>
+	  <p>
+		  <b>${declarationModel.year} Q${declarationModel.quarter}</b>
+	  </p>
+      <p>
+      <div class="submit">
+        <spring:message var="cancel" code="button_cancel" htmlEscape="false" />
+        <spring:message var="proceed" code="button_proceed" htmlEscape="false" />
+        <input type="submit" id="cancel" name="_eventId_cancel" value="${fn:escapeXml(cancel)}" style="margin-right: 10px;"/>
+        <input type="submit" id="success" name="_eventId_success" value="${fn:escapeXml(proceed)}" />
+      </div>
+      </p>
+    </form:form>
+  </util:panel>
+</div>

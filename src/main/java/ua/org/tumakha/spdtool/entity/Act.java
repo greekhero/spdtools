@@ -1,5 +1,6 @@
 package ua.org.tumakha.spdtool.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -23,7 +24,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "act", uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"number", "userId" }) })
-public class Act {
+public class Act implements Serializable {
+
+	private static final long serialVersionUID = 1308649270136623926L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

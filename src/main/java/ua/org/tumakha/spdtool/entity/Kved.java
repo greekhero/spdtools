@@ -1,5 +1,7 @@
 package ua.org.tumakha.spdtool.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +14,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "kved")
-public class Kved {
+public class Kved implements Serializable {
+
+	private static final long serialVersionUID = 1308743105983814207L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
