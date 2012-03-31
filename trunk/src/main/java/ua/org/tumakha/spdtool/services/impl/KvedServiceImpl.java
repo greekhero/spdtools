@@ -3,7 +3,6 @@ package ua.org.tumakha.spdtool.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -20,13 +19,8 @@ import ua.org.tumakha.spdtool.services.KvedService;
 @Repository
 public class KvedServiceImpl implements KvedService {
 
-	private KvedDao kvedDao;
-
-	@Required
 	@Autowired
-	public void setKvedDao(KvedDao kvedDao) {
-		this.kvedDao = kvedDao;
-	}
+	private KvedDao kvedDao;
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)

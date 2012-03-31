@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -30,13 +29,9 @@ import ua.org.tumakha.spdtool.template.model.TaxSystemStatementModel;
 public class TemplateServiceImpl implements TemplateService {
 
 	private static final Log log = LogFactory.getLog(TemplateServiceImpl.class);
-	private UserService userService;
 
-	@Required
 	@Autowired
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
+	private UserService userService;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
