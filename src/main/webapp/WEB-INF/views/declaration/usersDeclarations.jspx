@@ -5,7 +5,7 @@
   <util:panel id="title" title="${title}">
     <h1>${fn:escapeXml(title)}</h1>
     <p>
-      <b>${declarationModel.year} Q${declarationModel.quarter}</b>
+      <b>${declarationModel.year} <spring:message code="label_declaration_quarter"/> ${declarationModel.quarter} (${fn:length(declarationModel.declarations)} <spring:message code="label_ua_org_tumakha_spdtool_user"/>)</b>
     </p>
     <form:form modelAttribute="declarationModel">
       <table>
@@ -20,11 +20,7 @@
       	<tbody>
 			<c:forEach items="${declarationModel.declarations}" varStatus="row">
 				<tr>
-					<td>
-						<form:hidden path="declarations[${row.index}].declarationId"/>
-						<form:hidden path="declarations[${row.index}].user.userId"/>
-						<spring:bind path="declarations[${row.index}].user.lastname">${status.value}</spring:bind>
-					</td>
+					<td><spring:bind path="declarations[${row.index}].user.lastname">${status.value}</spring:bind></td>
 					<td><spring:bind path="declarations[${row.index}].user.firstname">${status.value}</spring:bind></td>
 					<td><form:input path="declarations[${row.index}].income"/></td>
 					<td><form:input path="declarations[${row.index}].tax"/></td>
@@ -32,9 +28,6 @@
 			</c:forEach>
         </tbody>
       </table>
-	  <p>
-		  <b>${declarationModel.year} Q${declarationModel.quarter}</b>
-	  </p>
       <p>
       <div class="submit">
         <spring:message var="cancel" code="button_cancel" htmlEscape="false" />

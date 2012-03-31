@@ -8,5 +8,6 @@
     <p>
       Finish
     </p>
+    ${declarationsDump}
   </util:panel>
 </div>

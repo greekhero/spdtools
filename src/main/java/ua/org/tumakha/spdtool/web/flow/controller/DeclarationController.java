@@ -11,7 +11,9 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.AutoPopulatingList;
 import org.springframework.webflow.core.collection.MutableAttributeMap;
+import org.springframework.webflow.core.collection.ParameterMap;
 import org.springframework.webflow.execution.RequestContextHolder;
 
 import ua.org.tumakha.spdtool.entity.Declaration;
@@ -95,7 +97,8 @@ public class DeclarationController {
 	public void initDeclarations(DeclarationModel declarationModel) {
 		List<User> activeUsers = userService
 				.findActiveUsersByGroups(declarationModel.getGroupIds());
-		List<Declaration> declarations = new ArrayList<Declaration>();
+		List<Declaration> declarations = new AutoPopulatingList<Declaration>(
+				Declaration.class);
 		if (activeUsers != null) {
 			Map<Integer, Declaration> dbDeclarations = getDbDeclarations(
 					declarationModel.getYear(), declarationModel.getQuarter());
@@ -128,4 +131,26 @@ public class DeclarationController {
 		return declarationsMap;
 	}
 
+	public void generateDocuments(DeclarationModel declarationModel) {
+		System.out.println(declarationModel.getGroupIds());
+		System.out.println(declarationModel.getYear());
+		System.out.println(declarationModel.getQuarter());
+		System.out.println(declarationModel.getDeclarations());
+		ParameterMap requestParameters = RequestContextHolder
+				.getRequestContext().getRequestParameters();
+		List<Declaration> declarations = (List<Declaration>) RequestContextHolder
+				.getRequestContext()
+				.getRequestScope()
+				.getCollection("declarations",
+						new ArrayList<Declaration>().getClass());
+		MutableAttributeMap flowScope = RequestContextHolder
+				.getRequestContext().getFlowScope();
+		flowScope.put(
+				"declarationsDump",
+				requestParameters.toString()
+						+ declarations
+						+ new ArrayList<Declaration>(declarationModel
+								.getDeclarations()));
+
+	}
 }
