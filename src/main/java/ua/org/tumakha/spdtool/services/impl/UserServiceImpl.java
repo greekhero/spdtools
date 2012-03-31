@@ -5,7 +5,6 @@ import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -25,13 +24,8 @@ import ua.org.tumakha.spdtool.services.UserService;
 @Repository
 public class UserServiceImpl implements UserService {
 
-	private UserDao userDao;
-
-	@Required
 	@Autowired
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
-	}
+	private UserDao userDao;
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)

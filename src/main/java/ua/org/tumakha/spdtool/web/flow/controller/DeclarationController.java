@@ -3,8 +3,10 @@ package ua.org.tumakha.spdtool.web.flow.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.webflow.execution.RequestContextHolder;
 import ua.org.tumakha.spdtool.entity.Declaration;
 import ua.org.tumakha.spdtool.entity.Group;
 import ua.org.tumakha.spdtool.entity.User;
+import ua.org.tumakha.spdtool.services.DeclarationService;
 import ua.org.tumakha.spdtool.services.GroupService;
 import ua.org.tumakha.spdtool.services.UserService;
 import ua.org.tumakha.spdtool.web.flow.model.DeclarationModel;
@@ -32,6 +35,9 @@ public class DeclarationController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private DeclarationService declarationService;
 
 	public DeclarationModel initModel() {
 		initLists();
@@ -91,16 +97,35 @@ public class DeclarationController {
 				.findActiveUsersByGroups(declarationModel.getGroupIds());
 		List<Declaration> declarations = new ArrayList<Declaration>();
 		if (activeUsers != null) {
+			Map<Integer, Declaration> dbDeclarations = getDbDeclarations(
+					declarationModel.getYear(), declarationModel.getQuarter());
 			for (User user : activeUsers) {
-				Declaration declaration = new Declaration();
-				declaration.setUser(user);
-				declaration.setYear(declarationModel.getYear());
-				declaration.setQuarter(declarationModel.getQuarter());
-				declaration.setIncome(100);
-				declaration.setTax(5);
+				Declaration declaration;
+				if (dbDeclarations.containsKey(user.getUserId())) {
+					declaration = dbDeclarations.get(user.getUserId());
+				} else {
+					declaration = new Declaration();
+					declaration.setUser(user);
+					declaration.setYear(declarationModel.getYear());
+					declaration.setQuarter(declarationModel.getQuarter());
+					// declaration.setIncome(100);
+					// declaration.setTax(5);
+				}
 				declarations.add(declaration);
 			}
 		}
 		declarationModel.setDeclarations(declarations);
 	}
+
+	private Map<Integer, Declaration> getDbDeclarations(Integer year,
+			Integer quarter) {
+		Map<Integer, Declaration> declarationsMap = new HashMap<Integer, Declaration>();
+		List<Declaration> dbDeclarations = declarationService
+				.findDeclarationsByYearAndQuarter(year, quarter);
+		for (Declaration declaration : dbDeclarations) {
+			declarationsMap.put(declaration.getUser().getUserId(), declaration);
+		}
+		return declarationsMap;
+	}
+
 }
