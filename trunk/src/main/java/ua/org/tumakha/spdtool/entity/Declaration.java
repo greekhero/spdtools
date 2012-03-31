@@ -93,4 +93,41 @@ public class Declaration implements Serializable {
 		this.tax = tax;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Declaration [");
+		if (declarationId != null) {
+			builder.append("declarationId=");
+			builder.append(declarationId);
+			builder.append(", ");
+		}
+		if (user != null) {
+			builder.append("user=");
+			builder.append(user);
+			builder.append(", ");
+		}
+		if (year != null) {
+			builder.append("year=");
+			builder.append(year);
+			builder.append(", ");
+		}
+		if (quarter != null) {
+			builder.append("quarter=");
+			builder.append(quarter);
+			builder.append(", ");
+		}
+		if (income != null) {
+			builder.append("income=");
+			builder.append(income);
+			builder.append(", ");
+		}
+		if (tax != null) {
+			builder.append("tax=");
+			builder.append(tax);
+		}
+		builder.append("]");
+		return builder.toString();
+	}
+
 }

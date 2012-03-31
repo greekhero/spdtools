@@ -13,8 +13,14 @@
           <spring:message code="exception_details" />
         </h4>
         <spring:message var="message" code="exception_message" htmlEscape="false" />
-        <util:panel id="_message" title="${message}" openPane="false">
+        <util:panel id="_message" title="${message}" openPane="true">
           <c:out value="${exception.localizedMessage}" />
+          <c:if test="${exception != exception.cause}">
+          	<br/><c:out value="${exception.cause.localizedMessage}" />
+          </c:if>
+          <c:if test="${exception.cause != exception.cause.cause}">
+          	<br/><c:out value="${exception.cause.cause.localizedMessage}" />
+          </c:if>
         </util:panel>
         <spring:message var="stacktrace" code="exception_stacktrace" htmlEscape="false" />
         <util:panel id="_exception" title="${stacktrace}" openPane="false">

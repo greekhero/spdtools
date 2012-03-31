@@ -15,10 +15,12 @@
     	<on-entry>
     		<evaluate expression="declarationController.initDeclarations(declarationModel)"/>
     	</on-entry>
-    	<transition on="success" to="end-state"/>
+    	<transition on="success" to="downloadDocuments">
+    		<evaluate expression="declarationController.generateDocuments(declarationModel)"/>
+    	</transition>
     	<transition on="cancel" to="initData"/>
     </view-state>
 
-    <end-state id="end-state" view="declaration/end-state"/>
+    <end-state id="downloadDocuments" view="declaration/downloadDocuments"/>
 
 </flow>
