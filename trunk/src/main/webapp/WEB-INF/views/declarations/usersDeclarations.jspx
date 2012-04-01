@@ -7,7 +7,8 @@
     <p>
       <b>${declarationModel.year} <spring:message code="label_declaration_quarter"/> ${declarationModel.quarter} (${fn:length(declarationModel.declarations)} <spring:message code="label_ua_org_tumakha_spdtool_user"/>)</b>
     </p>
-    <form:form method="PUT" modelAttribute="declarationModel" enctype="application/x-www-form-urlencoded">
+    <spring:url value="generateDocuments" var="form_url" />
+    <form:form action="${fn:escapeXml(form_url)}" modelAttribute="declarationModel" method="PUT">
       <form:hidden path="year"/>
       <form:hidden path="quarter"/>
       <table>

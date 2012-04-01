@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,18 +149,20 @@ public class DeclarationController {
 		return declarationsMap;
 	}
 
-	@RequestMapping(method = RequestMethod.PUT)
+	@RequestMapping(value = "/generateDocuments", method = RequestMethod.PUT)
 	public String generateDocuments(DeclarationModel declarationModel,
 			Model uiModel, BindingResult bindingResult,
-			HttpServletRequest httpServletRequest) {
+			RedirectAttributes redirectAttrs) {
+		if (bindingResult.hasErrors()) {
+			uiModel.addAttribute("declarationModel", declarationModel);
+			return "declarations/userDeclarations";
+		}
+
 		System.out.println(declarationModel.getGroupIds());
 		System.out.println(declarationModel.getYear());
 		System.out.println(declarationModel.getQuarter());
 		System.out.println(declarationModel.getDeclarations());
-		// flowScope.put(
-		// "declarationsDump",
-		// + new ArrayList<Declaration>(declarationModel
-		// .getDeclarations()));
+		redirectAttrs.addFlashAttribute("declarationModel", declarationModel);
 		return "redirect:/declarations/downloadDocuments";
 	}
 
