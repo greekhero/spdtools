@@ -1,20 +1,28 @@
-package ua.org.tumakha.spdtool.web.flow.controller;
+package ua.org.tumakha.spdtool.web;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.AutoPopulatingList;
-import org.springframework.webflow.core.collection.MutableAttributeMap;
-import org.springframework.webflow.core.collection.ParameterMap;
-import org.springframework.webflow.execution.RequestContextHolder;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ua.org.tumakha.spdtool.entity.Declaration;
 import ua.org.tumakha.spdtool.entity.Group;
@@ -22,11 +30,12 @@ import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.services.DeclarationService;
 import ua.org.tumakha.spdtool.services.GroupService;
 import ua.org.tumakha.spdtool.services.UserService;
-import ua.org.tumakha.spdtool.web.flow.model.DeclarationModel;
+import ua.org.tumakha.spdtool.web.model.DeclarationModel;
 
 /**
  * @author Yuriy Tumakha
  */
+@RequestMapping("/declarations")
 @Controller
 public class DeclarationController {
 
@@ -41,9 +50,8 @@ public class DeclarationController {
 	@Autowired
 	private DeclarationService declarationService;
 
-	public DeclarationModel initModel() {
-		initLists();
-
+	@RequestMapping(method = RequestMethod.GET)
+	public String initData(Model uiModel) {
 		Set<Integer> defaultGroupIds = new HashSet<Integer>(
 				Arrays.asList(DEFAULT_GROUP_ID));
 		Calendar calendar = Calendar.getInstance();
@@ -58,22 +66,17 @@ public class DeclarationController {
 		declarationModel.setGroupIds(defaultGroupIds);
 		declarationModel.setYear(defaultYear);
 		declarationModel.setQuarter(defaultQuarter);
-		return declarationModel;
+		uiModel.addAttribute("declarationModel", declarationModel);
+		return "declarations/initData";
 	}
 
-	private void initLists() {
-		MutableAttributeMap flowScope = RequestContextHolder
-				.getRequestContext().getFlowScope();
-		flowScope.put("groups", getGroups());
-		flowScope.put("years", getYears());
-		flowScope.put("quarters", getQuarters());
-	}
-
-	private List<Group> getGroups() {
+	@ModelAttribute("groups")
+	public Collection<Group> populateGroups() {
 		return groupService.findAllGroups();
 	}
 
-	private List<Integer> getYears() {
+	@ModelAttribute("years")
+	public Collection<Integer> getYears() {
 		int year = Calendar.getInstance().get(Calendar.YEAR);
 		List<Integer> years = new ArrayList<Integer>();
 		for (int y = year - 2; y <= year + 1; y++) {
@@ -82,7 +85,8 @@ public class DeclarationController {
 		return years;
 	}
 
-	private List<Integer> getQuarters() {
+	@ModelAttribute("quarters")
+	public Collection<Integer> getQuarters() {
 		List<Integer> quarters = new ArrayList<Integer>();
 		for (int q = 1; q <= 4; q++) {
 			quarters.add(q);
@@ -90,11 +94,24 @@ public class DeclarationController {
 		return quarters;
 	}
 
-	public void readData(DeclarationModel declarationModel) {
-		declarationModel.processFile();
+	@RequestMapping(value = "/{vievName}", method = RequestMethod.GET)
+	public String displayView(@PathVariable("vievName") String vievName,
+			Model uiModel) {
+		if (!uiModel.containsAttribute("declarationModel")) {
+			return "redirect:/declarations";
+		}
+		return "declarations/" + vievName;
 	}
 
-	public void initDeclarations(DeclarationModel declarationModel) {
+	@RequestMapping(method = RequestMethod.POST)
+	public String readData(@Valid DeclarationModel declarationModel,
+			Model uiModel, BindingResult bindingResult,
+			RedirectAttributes redirectAttrs) {
+		if (bindingResult.hasErrors()) {
+			uiModel.addAttribute("declarationModel", declarationModel);
+			return "declarations/initData";
+		}
+		declarationModel.processFile();
 		List<User> activeUsers = userService
 				.findActiveUsersByGroups(declarationModel.getGroupIds());
 		List<Declaration> declarations = new AutoPopulatingList<Declaration>(
@@ -118,6 +135,8 @@ public class DeclarationController {
 			}
 		}
 		declarationModel.setDeclarations(declarations);
+		redirectAttrs.addFlashAttribute("declarationModel", declarationModel);
+		return "redirect:/declarations/usersDeclarations";
 	}
 
 	private Map<Integer, Declaration> getDbDeclarations(Integer year,
@@ -131,26 +150,19 @@ public class DeclarationController {
 		return declarationsMap;
 	}
 
-	public void generateDocuments(DeclarationModel declarationModel) {
+	@RequestMapping(method = RequestMethod.PUT)
+	public String generateDocuments(DeclarationModel declarationModel,
+			Model uiModel, BindingResult bindingResult,
+			HttpServletRequest httpServletRequest) {
 		System.out.println(declarationModel.getGroupIds());
 		System.out.println(declarationModel.getYear());
 		System.out.println(declarationModel.getQuarter());
 		System.out.println(declarationModel.getDeclarations());
-		ParameterMap requestParameters = RequestContextHolder
-				.getRequestContext().getRequestParameters();
-		List<Declaration> declarations = (List<Declaration>) RequestContextHolder
-				.getRequestContext()
-				.getRequestScope()
-				.getCollection("declarations",
-						new ArrayList<Declaration>().getClass());
-		MutableAttributeMap flowScope = RequestContextHolder
-				.getRequestContext().getFlowScope();
-		flowScope.put(
-				"declarationsDump",
-				requestParameters.toString()
-						+ declarations
-						+ new ArrayList<Declaration>(declarationModel
-								.getDeclarations()));
-
+		// flowScope.put(
+		// "declarationsDump",
+		// + new ArrayList<Declaration>(declarationModel
+		// .getDeclarations()));
+		return "redirect:/declarations/downloadDocuments";
 	}
+
 }
