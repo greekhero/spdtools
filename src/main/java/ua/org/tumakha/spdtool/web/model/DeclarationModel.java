@@ -1,4 +1,4 @@
-package ua.org.tumakha.spdtool.web.flow.model;
+package ua.org.tumakha.spdtool.web.model;
 
 import java.io.Serializable;
 import java.util.List;
@@ -16,6 +16,7 @@ public class DeclarationModel implements Serializable {
 	private static final long serialVersionUID = 1308953328548550645L;
 
 	@Size(min = 1)
+	@NotNull
 	private Set<Integer> groupIds;
 
 	@NotNull
