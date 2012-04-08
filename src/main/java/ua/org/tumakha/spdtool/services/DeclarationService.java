@@ -22,4 +22,6 @@ public interface DeclarationService {
 	List<Declaration> findDeclarationsByYearAndQuarter(Integer year,
 			Integer quarter);
 
+	void saveDeclarations(List<Declaration> declarations);
+
 }

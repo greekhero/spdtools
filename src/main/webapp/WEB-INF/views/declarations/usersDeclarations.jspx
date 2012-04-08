@@ -2,13 +2,19 @@
   <jsp:directive.page contentType="text/html;charset=UTF-8" />
   <jsp:output omit-xml-declaration="yes" />
   <spring:message var="title" code="declaration_state2_title" htmlEscape="false" />
+<script type="text/javascript">
+function calculateTax(el) {
+	document.getElementById(el.id.replace("income", "tax")).value = Math.round(el.value*0.05);
+}
+</script>
   <util:panel id="title" title="${title}">
     <h1>${fn:escapeXml(title)}</h1>
+    <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
     <p>
       <b>${declarationModel.year} <spring:message code="label_declaration_quarter"/> ${declarationModel.quarter} (${fn:length(declarationModel.declarations)} <spring:message code="label_ua_org_tumakha_spdtool_user"/>)</b>
     </p>
     <spring:url value="generateDocuments" var="form_url" />
-    <form:form action="${fn:escapeXml(form_url)}" modelAttribute="declarationModel" method="PUT">
+    <form:form action="${fn:escapeXml(form_url)}" modelAttribute="declarationModel" method="POST">
       <form:hidden path="year"/>
       <form:hidden path="quarter"/>
       <table>
@@ -25,7 +31,7 @@
 				<tr>
 					<td><spring:bind path="declarations[${row.index}].user.lastname">${status.value}</spring:bind></td>
 					<td><spring:bind path="declarations[${row.index}].user.firstname">${status.value}</spring:bind></td>
-					<td><form:input path="declarations[${row.index}].income"/></td>
+					<td><form:input path="declarations[${row.index}].income" onchange="calculateTax(this)" onkeyup="calculateTax(this)"/></td>
 					<td><form:input path="declarations[${row.index}].tax"/></td>
 				</tr>
 			</c:forEach>
@@ -34,9 +40,9 @@
       <p>
       <div class="submit">
         <spring:message var="cancel" code="button_cancel" htmlEscape="false" />
-        <spring:message var="proceed" code="button_proceed" htmlEscape="false" />
-        <input type="submit" id="cancel" name="_eventId_cancel" value="${fn:escapeXml(cancel)}" style="margin-right: 10px;"/>
-        <input type="submit" id="success" name="_eventId_success" value="${fn:escapeXml(proceed)}" />
+        <spring:message var="generate" code="button_generate" htmlEscape="false" />
+        <input type="submit" id="cancel" name="cancel" value="${fn:escapeXml(cancel)}" style="margin-right: 10px;"/>
+        <input type="submit" id="success" name="success" value="${fn:escapeXml(generate)}" />
       </div>
       </p>
     </form:form>
