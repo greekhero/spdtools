@@ -68,29 +68,31 @@ public class ActModel extends TemplateModel {
 	}
 
 	private void copyProperties(User user, Act act) {
-		Contract contract = act.getContract();
-		actNo = act.getNumber();
-		contractNo = contract.getNumber();
-		contractDate = contractDateFormat.format(contract.getDate());
-		contractDateEn = contractDateFormatEn.format(contract.getDate());
 		serviceType = user.getServiceType().getName();
 		serviceTypeVOrudnomu = user.getServiceType().getNameVOrudnomu();
 		serviceTypeEn = user.getServiceType().getNameEn();
-		date = actDateFormat.format(act.getDateTo());
-		dateEn = actDateFormatEn.format(act.getDateTo());
-		startDate = actDateFormat.format(act.getDateFrom());
-		startDateEn = actDateFormatEn.format(act.getDateFrom());
-		dateFrom = actPeriodFormat.format(act.getDateFrom());
-		dateFromEn = actPeriodFormatEn.format(act.getDateFrom());
-		dateFromDigit = uaDateFormat.format(act.getDateFrom());
-		dateTo = actPeriodFormat.format(act.getDateTo());
-		dateToEn = actPeriodFormatEn.format(act.getDateTo());
-		dateToDigit = uaDateFormat.format(act.getDateTo());
-		int amount = act.getAmount().intValue();
-		amountDigit = amountFormat.format(amount);
-		amountUa = NumberUtil.numberInWordsUa(amount) + " "
-				+ NumberUtil.numberInDollarsUa(amount);
-		amountEn = NumberUtil.numberInWordsEn(amount);
+		if (act != null) {
+			Contract contract = act.getContract();
+			actNo = act.getNumber();
+			contractNo = contract.getNumber();
+			contractDate = contractDateFormat.format(contract.getDate());
+			contractDateEn = contractDateFormatEn.format(contract.getDate());
+			date = actDateFormat.format(act.getDateTo());
+			dateEn = actDateFormatEn.format(act.getDateTo());
+			startDate = actDateFormat.format(act.getDateFrom());
+			startDateEn = actDateFormatEn.format(act.getDateFrom());
+			dateFrom = actPeriodFormat.format(act.getDateFrom());
+			dateFromEn = actPeriodFormatEn.format(act.getDateFrom());
+			dateFromDigit = uaDateFormat.format(act.getDateFrom());
+			dateTo = actPeriodFormat.format(act.getDateTo());
+			dateToEn = actPeriodFormatEn.format(act.getDateTo());
+			dateToDigit = uaDateFormat.format(act.getDateTo());
+			int amount = act.getAmount().intValue();
+			amountDigit = amountFormat.format(amount);
+			amountUa = NumberUtil.numberInWordsUa(amount) + " "
+					+ NumberUtil.numberInDollarsUa(amount);
+			amountEn = NumberUtil.numberInWordsEn(amount);
+		}
 	}
 
 	public String getN() {
@@ -261,7 +263,10 @@ public class ActModel extends TemplateModel {
 	public String getOutputFilename(DocxTemplate template) {
 		String month = "";
 		try {
-			month = yearMonthFormat.format(actPeriodFormatEn.parse(dateToEn));
+			if (dateToEn != null) {
+				month = yearMonthFormat.format(actPeriodFormatEn
+						.parse(dateToEn));
+			}
 		} catch (ParseException e) {
 			throw new IllegalStateException(e);
 		}

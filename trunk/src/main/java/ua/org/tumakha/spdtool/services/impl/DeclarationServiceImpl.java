@@ -1,5 +1,7 @@
 package ua.org.tumakha.spdtool.services.impl;
 
+import static org.springframework.util.Assert.notNull;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +60,19 @@ public class DeclarationServiceImpl implements DeclarationService {
 	public List<Declaration> findDeclarationsByYearAndQuarter(Integer year,
 			Integer quarter) {
 		return declarationDao.findByYearAndQuarter(year, quarter);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void saveDeclarations(List<Declaration> declarations) {
+		notNull(declarations);
+		for (Declaration declaration : declarations) {
+			if (declaration.getDeclarationId() == null) {
+				declarationDao.persist(declaration);
+			} else {
+				declarationDao.merge(declaration);
+			}
+		}
 	}
 
 }

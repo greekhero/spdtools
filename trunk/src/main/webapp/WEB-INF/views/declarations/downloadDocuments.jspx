@@ -8,6 +8,6 @@
     <p>
       Finish
     </p>
-    ${declarationModel.declarations}
+    ${declarationModel.declarations}<br/>
   </util:panel>
 </div>

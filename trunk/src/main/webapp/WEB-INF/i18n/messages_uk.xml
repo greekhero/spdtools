@@ -40,6 +40,7 @@
 	<entry key="button_find">Пошук</entry>
 	<entry key="button_cancel">Відміна</entry>
 	<entry key="button_proceed">Продовжити</entry>
+	<entry key="button_generate">Генерувати</entry>
 	<entry key="button_submit">Відправити</entry>
 	<entry key="button_reset">Скинути</entry>
 	<entry key="button_end">Кінець</entry>
