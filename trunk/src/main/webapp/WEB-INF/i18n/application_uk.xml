@@ -136,4 +136,5 @@
 	<entry key="label_declaration_income">Дохід</entry>
 	<entry key="label_declaration_tax">Податок</entry>
 	<entry key="error_declaration_upload_fileextension">Неправильне розширення файлу. Дозволено .xls або .xlsx файл.</entry>
+	<entry key="error_declaration_user_not_found">Не знайдено ФОП з прізвищем {0}.</entry>
 </properties>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workbook>
+    <worksheet name="Sheet1">
+        <loop startRow="1" endRow="1" items="declarations" var="declaration" varType="ua.org.tumakha.spdtool.reader.model.DeclarationReaderModel">
+            <section startRow="1" endRow="1">
+                <mapping row="2" col="0">declaration.lastname</mapping>
+                <mapping row="2" col="2">declaration.income</mapping>
+                <mapping row="2" col="3">declaration.tax</mapping>
+            </section>
+            <loopbreakcondition>
+                <rowcheck offset="1">
+                    <cellcheck offset="0">END</cellcheck>
+                </rowcheck>
+            </loopbreakcondition>
+        </loop>
+    </worksheet>
+</workbook>

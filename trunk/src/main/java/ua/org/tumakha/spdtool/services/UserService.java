@@ -26,6 +26,8 @@ public interface UserService {
 
 	List<User> findActiveUsers();
 
+	User findUserByLastname(String lastname);
+
 	List<User> findUsersByGroup(Integer groupId);
 
 	List<User> findUsersByGroups(List<Integer> groupIds);

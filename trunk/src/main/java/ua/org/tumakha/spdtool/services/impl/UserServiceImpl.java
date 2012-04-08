@@ -108,6 +108,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
+	public User findUserByLastname(String lastname) {
+		return userDao.findByLastname(lastname);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<User> findUsersByGroup(Integer groupId) {
 		return userDao.findByGroup(groupId);
 	}

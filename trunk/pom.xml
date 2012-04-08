@@ -87,6 +87,11 @@
   		<artifactId>jxls-core</artifactId>
   		<version>1.0</version>
   	</dependency>
+  	<dependency>
+  		<groupId>net.sf.jxls</groupId>
+  		<artifactId>jxls-reader</artifactId>
+  		<version>1.0</version>
+  	</dependency>
 	<dependency>
 	  <groupId>org.freemarker</groupId>
 	  <artifactId>freemarker</artifactId>
@@ -119,6 +124,11 @@
         <groupId>org.springframework</groupId>
         <artifactId>spring-webmvc</artifactId>
         <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.webflow</groupId>
+        <artifactId>spring-js-resources</artifactId>
+        <version>2.3.1.RELEASE</version>
     </dependency>
     <dependency>
         <groupId>javax.servlet</groupId>
