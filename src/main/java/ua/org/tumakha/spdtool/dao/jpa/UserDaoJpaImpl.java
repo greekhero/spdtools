@@ -51,6 +51,14 @@ public class UserDaoJpaImpl extends AbstractJpaDao<User> implements UserDao {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
+	public User findByLastname(String lastname) {
+		return entityManager
+				.createQuery("SELECT u FROM User u WHERE u.lastname = ?",
+						User.class).setParameter(1, lastname).getSingleResult();
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<User> findByGroup(Integer groupId) {
 		return entityManager
 				.createQuery(

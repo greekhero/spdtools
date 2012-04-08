@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workbook>
+    <worksheet name="Sheet1">
+        <loop startRow="1" endRow="1" items="acts" var="act" varType="ua.org.tumakha.spdtool.reader.model.ActReaderModel">
+            <section startRow="1" endRow="1">
+                <mapping row="2" col="0">act.lastname</mapping>
+                <mapping row="2" col="1">act.salary</mapping>
+            </section>
+            <loopbreakcondition>
+                <rowcheck offset="1">
+                    <cellcheck offset="0">END</cellcheck>
+                </rowcheck>
+            </loopbreakcondition>
+        </loop>
+    </worksheet>
+</workbook>

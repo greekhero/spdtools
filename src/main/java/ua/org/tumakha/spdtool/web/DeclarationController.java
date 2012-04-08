@@ -1,6 +1,5 @@
 package ua.org.tumakha.spdtool.web;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -30,6 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.org.tumakha.spdtool.entity.Declaration;
 import ua.org.tumakha.spdtool.entity.Group;
 import ua.org.tumakha.spdtool.entity.User;
+import ua.org.tumakha.spdtool.reader.model.DeclarationReaderModel;
 import ua.org.tumakha.spdtool.services.DeclarationService;
 import ua.org.tumakha.spdtool.services.GroupService;
 import ua.org.tumakha.spdtool.services.UserService;
@@ -38,7 +38,7 @@ import ua.org.tumakha.spdtool.web.model.DeclarationModel;
 /**
  * @author Yuriy Tumakha
  */
-@RequestMapping("/declarations")
+@RequestMapping(DeclarationController.BASE_PATH)
 @SessionAttributes("declarationModel")
 @Controller
 public class DeclarationController {
@@ -46,9 +46,9 @@ public class DeclarationController {
 	private static final Log log = LogFactory
 			.getLog(DeclarationController.class);
 
-	private static final Integer DEFAULT_GROUP_ID = 1;
+	protected static final String BASE_PATH = "/declarations";
 
-	private static final String START_REDIRECT = "redirect:/declarations";
+	private static final Integer DEFAULT_GROUP_ID = 1;
 
 	@Autowired
 	private GroupService groupService;
@@ -76,7 +76,7 @@ public class DeclarationController {
 		declarationModel.setYear(defaultYear);
 		declarationModel.setQuarter(defaultQuarter);
 		uiModel.addAttribute("declarationModel", declarationModel);
-		return "redirect:/declarations/initData";
+		return redirect("initData");
 	}
 
 	@ModelAttribute("groups")
@@ -107,9 +107,9 @@ public class DeclarationController {
 	public String displayView(@PathVariable("vievName") String vievName,
 			Model uiModel) {
 		if (!uiModel.containsAttribute("declarationModel")) {
-			return START_REDIRECT;
+			return redirect("");
 		}
-		return "declarations/" + vievName;
+		return view(vievName);
 	}
 
 	@RequestMapping(value = "/readData", method = RequestMethod.POST)
@@ -117,55 +117,89 @@ public class DeclarationController {
 			Model uiModel, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			uiModel.addAttribute("declarationModel", declarationModel);
-			return "declarations/initData";
+			return view("initData");
 		}
-		Map<Integer, Declaration> fileDeclarations = null;
+		List<DeclarationReaderModel> xlsDeclarations = null;
 		try {
-			fileDeclarations = declarationModel.processFile(bindingResult);
-		} catch (IOException e) {
+			xlsDeclarations = declarationModel.processFile(bindingResult);
+		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new IllegalArgumentException(e);
 		}
+		Map<Integer, DeclarationReaderModel> fileDeclarations = getFileDeclarations(
+				xlsDeclarations, bindingResult);
 		if (bindingResult.hasErrors()) {
-			return "declarations/initData";
+			return view("initData");
 		}
+
 		List<User> activeUsers = userService
 				.findActiveUsersByGroups(declarationModel.getGroupIds());
-
-		// List<Declaration> declarations = new AutoPopulatingList<Declaration>(
-		// Declaration.class);
 		List<Declaration> declarations = new ArrayList<Declaration>();
 		if (activeUsers != null) {
-			Map<Integer, Declaration> dbDeclarations = getDbDeclarations(
-					declarationModel.getYear(), declarationModel.getQuarter());
+			Map<Integer, Declaration> dbDeclarations = getDbDeclarations(declarationModel);
 			for (User user : activeUsers) {
 				Declaration declaration;
-				if (fileDeclarations != null
-						&& fileDeclarations.containsKey(user.getUserId())) {
-					declaration = fileDeclarations.get(user.getUserId());
-				} else if (dbDeclarations.containsKey(user.getUserId())) {
+				if (dbDeclarations.containsKey(user.getUserId())) {
 					declaration = dbDeclarations.get(user.getUserId());
 				} else {
-					declaration = declarationModel.createDeclaration(user,
-							null, null);
+					declaration = createDeclaration(user, declarationModel);
+				}
+				if (fileDeclarations != null
+						&& fileDeclarations.containsKey(user.getUserId())) {
+					DeclarationReaderModel fileDeclaration = fileDeclarations
+							.get(user.getUserId());
+					declaration.setIncome(fileDeclaration.getIncome());
+					declaration.setTax(fileDeclaration.getTax());
 				}
 				declarations.add(declaration);
 			}
 		}
 		declarationModel.setDeclarations(declarations);
 		uiModel.addAttribute("declarationModel", declarationModel);
-		return "redirect:/declarations/usersDeclarations";
+		return redirect("usersDeclarations");
 	}
 
-	private Map<Integer, Declaration> getDbDeclarations(Integer year,
-			Integer quarter) {
+	private Map<Integer, DeclarationReaderModel> getFileDeclarations(
+			List<DeclarationReaderModel> xlsDeclarations,
+			BindingResult bindingResult) {
+		if (xlsDeclarations == null) {
+			return null;
+		}
+		Map<Integer, DeclarationReaderModel> fileDeclarations = new HashMap<Integer, DeclarationReaderModel>();
+		log.debug(xlsDeclarations.size() + " rows in xls file.");
+		for (DeclarationReaderModel declaration : xlsDeclarations) {
+			try {
+				User user = userService.findUserByLastname(declaration
+						.getLastname());
+				fileDeclarations.put(user.getUserId(), declaration);
+			} catch (Exception e) {
+				bindingResult.reject("error_declaration_user_not_found",
+						new Object[] { declaration.getLastname() },
+						"User not found.");
+			}
+		}
+		return fileDeclarations;
+	}
+
+	private Map<Integer, Declaration> getDbDeclarations(
+			DeclarationModel declarationModel) {
 		Map<Integer, Declaration> declarationsMap = new HashMap<Integer, Declaration>();
 		List<Declaration> dbDeclarations = declarationService
-				.findDeclarationsByYearAndQuarter(year, quarter);
+				.findDeclarationsByYearAndQuarter(declarationModel.getYear(),
+						declarationModel.getQuarter());
 		for (Declaration declaration : dbDeclarations) {
 			declarationsMap.put(declaration.getUser().getUserId(), declaration);
 		}
 		return declarationsMap;
+	}
+
+	private Declaration createDeclaration(User user,
+			DeclarationModel declarationModel) {
+		Declaration declaration = new Declaration();
+		declaration.setUser(user);
+		declaration.setYear(declarationModel.getYear());
+		declaration.setQuarter(declarationModel.getQuarter());
+		return declaration;
 	}
 
 	@RequestMapping(value = "/generateDocuments", method = RequestMethod.POST)
@@ -174,17 +208,26 @@ public class DeclarationController {
 			Model uiModel, BindingResult bindingResult,
 			RedirectAttributes redirectAttrs) {
 		if (cancel != null) {
-			return "redirect:/declarations/initData";
+			return redirect("initData");
 		}
 		if (bindingResult.hasErrors()) {
 			uiModel.addAttribute("declarationModel", declarationModel);
-			return "declarations/userDeclarations";
+			return view("userDeclarations");
 		}
 		declarationService.saveDeclarations(declarationModel.getDeclarations());
 		// redirectAttrs.addFlashAttribute("declarationModel",
 		// declarationModel);
 		// TODO: complete session
-		return "redirect:/declarations/downloadDocuments";
+		return redirect("downloadDocuments");
+	}
+
+	private String view(String viewName) {
+		return BASE_PATH.substring(1) + "/"
+				+ (viewName == null ? "" : viewName);
+	}
+
+	private String redirect(String viewName) {
+		return String.format("redirect:%s/%s", BASE_PATH, viewName);
 	}
 
 }

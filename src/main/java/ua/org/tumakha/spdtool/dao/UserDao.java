@@ -24,6 +24,8 @@ public interface UserDao {
 
 	List<User> findActive();
 
+	User findByLastname(String lastname);
+
 	List<User> findByGroup(Integer groupId);
 
 	List<User> findByGroups(List<Integer> groupIds);

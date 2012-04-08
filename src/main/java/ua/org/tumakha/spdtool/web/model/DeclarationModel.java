@@ -1,21 +1,23 @@
 package ua.org.tumakha.spdtool.web.model;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
+import org.xml.sax.SAXException;
 
 import ua.org.tumakha.spdtool.entity.Declaration;
-import ua.org.tumakha.spdtool.entity.User;
+import ua.org.tumakha.spdtool.reader.XlsMapping;
+import ua.org.tumakha.spdtool.reader.XlsReader;
+import ua.org.tumakha.spdtool.reader.model.DeclarationReaderModel;
 
 public class DeclarationModel implements Serializable {
 
@@ -63,11 +65,8 @@ public class DeclarationModel implements Serializable {
 		this.incomeFile = incomeFile;
 	}
 
-	public Map<Integer, Declaration> processFile(BindingResult bindingResult)
-			throws IOException {
-		System.out.println(incomeFile.getOriginalFilename());
-		System.out.println(incomeFile.getSize());
-
+	public List<DeclarationReaderModel> processFile(BindingResult bindingResult)
+			throws IOException, InvalidFormatException, SAXException {
 		if (incomeFile.isEmpty()) {
 			return null;
 		} else if (!incomeFile.getOriginalFilename().endsWith(".xls")
@@ -75,19 +74,11 @@ public class DeclarationModel implements Serializable {
 			bindingResult.reject("error_declaration_upload_fileextension");
 			return null;
 		}
-		Map<Integer, Declaration> declarations = new HashMap<Integer, Declaration>();
-		InputStream inputStream = incomeFile.getInputStream();
+		XlsReader xlsReader = new XlsReader();
+		List<DeclarationReaderModel> declarations = new ArrayList<DeclarationReaderModel>();
+		xlsReader.addBean("declarations", declarations);
+		xlsReader.read(incomeFile.getInputStream(), XlsMapping.DECLARATION);
 		return declarations;
-	}
-
-	public Declaration createDeclaration(User user, Integer income, Integer tax) {
-		Declaration declaration = new Declaration();
-		declaration.setUser(user);
-		declaration.setYear(getYear());
-		declaration.setQuarter(getQuarter());
-		declaration.setIncome(income);
-		declaration.setTax(tax);
-		return declaration;
 	}
 
 	public List<Declaration> getDeclarations() {
