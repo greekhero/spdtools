@@ -32,6 +32,7 @@ import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.reader.model.DeclarationReaderModel;
 import ua.org.tumakha.spdtool.services.DeclarationService;
 import ua.org.tumakha.spdtool.services.GroupService;
+import ua.org.tumakha.spdtool.services.TemplateService;
 import ua.org.tumakha.spdtool.services.UserService;
 import ua.org.tumakha.spdtool.web.model.DeclarationModel;
 
@@ -58,6 +59,9 @@ public class DeclarationController {
 
 	@Autowired
 	private DeclarationService declarationService;
+
+	@Autowired
+	private TemplateService templateService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String initData(Model uiModel) {
@@ -144,12 +148,13 @@ public class DeclarationController {
 				} else {
 					declaration = createDeclaration(user, declarationModel);
 				}
-				if (fileDeclarations != null
-						&& fileDeclarations.containsKey(user.getUserId())) {
+				if (fileDeclarations != null) {
 					DeclarationReaderModel fileDeclaration = fileDeclarations
 							.get(user.getUserId());
-					declaration.setIncome(fileDeclaration.getIncome());
-					declaration.setTax(fileDeclaration.getTax());
+					if (fileDeclaration != null) {
+						declaration.setIncome(fileDeclaration.getIncome());
+						declaration.setTax(fileDeclaration.getTax());
+					}
 				}
 				declarations.add(declaration);
 			}
@@ -206,7 +211,7 @@ public class DeclarationController {
 	public String generateDocuments(@Valid DeclarationModel declarationModel,
 			@RequestParam(value = "cancel", required = false) String cancel,
 			Model uiModel, BindingResult bindingResult,
-			RedirectAttributes redirectAttrs) {
+			RedirectAttributes redirectAttrs) throws Exception {
 		if (cancel != null) {
 			return redirect("initData");
 		}
@@ -215,8 +220,13 @@ public class DeclarationController {
 			return view("userDeclarations");
 		}
 		declarationService.saveDeclarations(declarationModel.getDeclarations());
-		// redirectAttrs.addFlashAttribute("declarationModel",
-		// declarationModel);
+
+		List<String> fileNames = templateService.generateDeclarations(
+				declarationModel.getGroupIds(), declarationModel.getYear(),
+				declarationModel.getQuarter());
+
+		redirectAttrs.addFlashAttribute("fileNames", fileNames);
+
 		// TODO: complete session
 		return redirect("downloadDocuments");
 	}

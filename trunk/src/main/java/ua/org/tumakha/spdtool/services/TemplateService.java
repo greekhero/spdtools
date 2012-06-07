@@ -1,6 +1,10 @@
 package ua.org.tumakha.spdtool.services;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Set;
+
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.template.model.ActModel;
@@ -27,5 +31,8 @@ public interface TemplateService {
 	List<User> getUsersForDeclaration(Integer groupId);
 
 	List<User> getUsersForDeclaration(List<Integer> groupIds);
+
+	List<String> generateDeclarations(Set<Integer> groupIds, Integer year,
+			Integer quarter) throws InvalidFormatException, IOException;
 
 }
