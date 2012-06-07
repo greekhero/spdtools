@@ -20,7 +20,7 @@ public class XlsProcessor {
 	private static final String REPORTS_DIRECTORY = "C:/Reports/xls";
 	private XLSTransformer transformer = new XLSTransformer();
 
-	public void saveReport(XlsTemplate template, String outputFilenamePrefix,
+	public String saveReport(XlsTemplate template, String outputFilenamePrefix,
 			Map<String, Object> beans) throws InvalidFormatException,
 			IOException {
 		String outputFilename = outputFilenamePrefix + template.getFilename();
@@ -33,6 +33,7 @@ public class XlsProcessor {
 				TEMPLATES_DIRECTORY + "/" + template.getFilename(), beans,
 				outputFile.getAbsolutePath());
 		log.debug("Saved XLS output to: " + outputFilename);
+		return outputFilename;
 	}
 
 }
