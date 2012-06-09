@@ -199,6 +199,15 @@ public class TemplateServiceImpl implements TemplateService {
 		// TODO filter by groupIds
 		List<Declaration> declarations = declarationService
 				.findDeclarationsByYearAndQuarter(year, quarter);
+		Map<Integer, Declaration> previousDeclarations = new HashMap<Integer, Declaration>();
+		if (!quarter.equals(1)) {
+			List<Declaration> prevDeclarations = declarationService
+					.findDeclarationsByYearAndQuarter(year, quarter - 1);
+			for (Declaration declaration : prevDeclarations) {
+				previousDeclarations.put(declaration.getUser().getUserId(),
+						declaration);
+			}
+		}
 		for (Declaration declaration : declarations) {
 			User user = declaration.getUser();
 			Integer income = declaration.getIncome();
@@ -209,9 +218,21 @@ public class TemplateServiceImpl implements TemplateService {
 			beans.put("dateYear", dateYear);
 			beans.put("income", income);
 			beans.put("tax", tax);
-			// TODO: if quarter != 1 get previous tax from DB.
-			beans.put("previousTax", "-");
-			beans.put("taxToPay", tax);
+			String strPreviousTax = "-";
+			Integer taxToPay = tax;
+			if (!quarter.equals(1) && tax != null) {
+				Declaration previousDeclaration = previousDeclarations.get(user
+						.getUserId());
+				if (previousDeclaration != null) {
+					if (previousDeclaration.getTax() != null) {
+						strPreviousTax = previousDeclaration.getTax()
+								.toString();
+						taxToPay = tax - previousDeclaration.getTax();
+					}
+				}
+			}
+			beans.put("previousTax", strPreviousTax);
+			beans.put("taxToPay", taxToPay);
 			beans.put("phone0", "0976884343");
 			for (int q = 1; q <= 4; q++) {
 				String qsym = q == quarter ? "X" : "";
