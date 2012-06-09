@@ -147,7 +147,7 @@ public class User implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "user_active_kved_mapping", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"), inverseJoinColumns = @JoinColumn(name = "kvedId", referencedColumnName = "kvedId"))
 	@OrderBy("priority DESC")
-	private List<Kved> activeKveds;
+	private List<Kved2010> activeKveds;
 
 	@ManyToMany
 	@JoinTable(name = "user_kved2010_mapping", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"), inverseJoinColumns = @JoinColumn(name = "kvedId", referencedColumnName = "kvedId"))
@@ -411,11 +411,11 @@ public class User implements Serializable {
 		this.kveds = kveds;
 	}
 
-	public List<Kved> getActiveKveds() {
+	public List<Kved2010> getActiveKveds() {
 		return activeKveds;
 	}
 
-	public void setActiveKveds(List<Kved> activeKveds) {
+	public void setActiveKveds(List<Kved2010> activeKveds) {
 		this.activeKveds = activeKveds;
 	}
 
