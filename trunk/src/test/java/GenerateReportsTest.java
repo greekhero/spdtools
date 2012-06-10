@@ -86,18 +86,4 @@ public class GenerateReportsTest {
 		}
 	}
 
-	// @Test
-	// public void testXlsEsvD5() throws Exception {
-	// List<User> users = userService.findUsersByGroup(1);
-	// if (users != null) {
-	// for (User user : users) {
-	// Map<String, Object> beans = new HashMap<String, Object>();
-	// String outputFilename = String.format("/ESV_d5/%s_%s_",
-	// user.getLastnameEn(), user.getFirstnameEn());
-	// xlsProcessor.saveReport(XlsTemplate.ESV_D5, outputFilename,
-	// beans);
-	// }
-	// }
-	// }
-
 }
