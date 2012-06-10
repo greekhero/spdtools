@@ -52,8 +52,8 @@ public class Act implements Serializable {
 	@DateTimeFormat(style = "M-")
 	private Date dateTo;
 
-	@Column(precision = 2)
-	private Float amount;
+	@Column
+	private Integer amount;
 
 	public Integer getActId() {
 		return actId;
@@ -103,11 +103,11 @@ public class Act implements Serializable {
 		this.dateTo = dateTo;
 	}
 
-	public Float getAmount() {
+	public Integer getAmount() {
 		return amount;
 	}
 
-	public void setAmount(Float amount) {
+	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
 

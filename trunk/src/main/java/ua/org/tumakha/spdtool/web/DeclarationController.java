@@ -227,7 +227,6 @@ public class DeclarationController {
 
 		redirectAttrs.addFlashAttribute("fileNames", fileNames);
 
-		// TODO: complete session
 		return redirect("downloadDocuments");
 	}
 

@@ -94,10 +94,8 @@ public class Address implements Serializable {
 
 	public String getTextUa() {
 		StringBuffer buffer = new StringBuffer();
-		if (StringUtils.hasText(street)) {
-			buffer.append(getStreetLine());
-			buffer.append(DELIMITER);
-		}
+		buffer.append(getStreetLine());
+		buffer.append(DELIMITER);
 		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? CITY_PREFIX
 				+ city : city);
 		buffer.append(StringUtils.hasText(district) ? DELIMITER + district
@@ -116,10 +114,8 @@ public class Address implements Serializable {
 				+ DISTRICT_SUFFIX : "");
 		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? DELIMITER
 				+ CITY_PREFIX + city : city);
-		if (StringUtils.hasText(street)) {
-			buffer.append(DELIMITER);
-			buffer.append(getStreetLine());
-		}
+		buffer.append(DELIMITER);
+		buffer.append(getStreetLine());
 		return buffer.toString().trim();
 	}
 
@@ -129,19 +125,19 @@ public class Address implements Serializable {
 			buffer.append(StrUtil.isFirstCharUpperOrDigit(streetEn) ? STREET_PREFIX_EN
 					: "");
 			buffer.append(streetEn);
-			if (house != null) {
-				buffer.append(DELIMITER + HOUSE_PREFIX_EN + house);
-				buffer.append(StringUtils.hasText(houseCharEn) ? "-"
-						+ houseCharEn : "");
-				buffer.append(slashHouse != null ? "/" + slashHouse : "");
-			}
-			if (apartment != null) {
-				buffer.append(DELIMITER + APARTMENT_PREFIX_EN + apartment);
-				buffer.append(StringUtils.hasText(apartmentCharEn) ? apartmentCharEn
-						: "");
-			}
-			buffer.append(DELIMITER);
 		}
+		if (house != null) {
+			buffer.append(DELIMITER + HOUSE_PREFIX_EN + house);
+			buffer.append(StringUtils.hasText(houseCharEn) ? "-" + houseCharEn
+					: "");
+			buffer.append(slashHouse != null ? "/" + slashHouse : "");
+		}
+		if (apartment != null) {
+			buffer.append(DELIMITER + APARTMENT_PREFIX_EN + apartment);
+			buffer.append(StringUtils.hasText(apartmentCharEn) ? apartmentCharEn
+					: "");
+		}
+		buffer.append(DELIMITER);
 		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? CITY_PREFIX_EN
 				+ cityEn : cityEn);
 		buffer.append(StringUtils.hasText(districtEn) ? DELIMITER + districtEn
@@ -178,17 +174,16 @@ public class Address implements Serializable {
 			buffer.append(StrUtil.isFirstCharUpperOrDigit(street) ? STREET_PREFIX
 					: "");
 			buffer.append(street);
-			if (house != null) {
-				buffer.append(DELIMITER + HOUSE_PREFIX + house);
-				buffer.append(StringUtils.hasText(houseChar) ? "-" + houseChar
-						: "");
-				buffer.append(slashHouse != null ? "/" + slashHouse : "");
-			}
-			if (apartment != null) {
-				buffer.append(DELIMITER + APARTMENT_PREFIX + apartment);
-				buffer.append(StringUtils.hasText(apartmentChar) ? apartmentChar
-						: "");
-			}
+		}
+		if (house != null) {
+			buffer.append(DELIMITER + HOUSE_PREFIX + house);
+			buffer.append(StringUtils.hasText(houseChar) ? "-" + houseChar : "");
+			buffer.append(slashHouse != null ? "/" + slashHouse : "");
+		}
+		if (apartment != null) {
+			buffer.append(DELIMITER + APARTMENT_PREFIX + apartment);
+			buffer.append(StringUtils.hasText(apartmentChar) ? apartmentChar
+					: "");
 		}
 		return buffer.toString().trim();
 	}

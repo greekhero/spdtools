@@ -1,0 +1,43 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:spring="http://www.springframework.org/tags" xmlns:form="http://www.springframework.org/tags/form" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+  <jsp:directive.page contentType="text/html;charset=UTF-8" />
+  <jsp:output omit-xml-declaration="yes" />
+  <spring:message var="title" code="act_state2_title" htmlEscape="false" />
+  <util:panel id="title" title="${title}">
+    <h1>${fn:escapeXml(title)}</h1>
+    <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+    <p>
+      <b>${actModel.year} <spring:message code="label_act_month"/> ${actModel.month} (${fn:length(actModel.acts)} <spring:message code="label_ua_org_tumakha_spdtool_user"/>)</b>
+    </p>
+    <spring:url value="generateDocuments" var="form_url" />
+    <form:form action="${fn:escapeXml(form_url)}" modelAttribute="actModel" method="POST">
+      <form:hidden path="year"/>
+      <form:hidden path="month"/>
+      <table>
+        <thead>
+      		<tr>
+      			<th><spring:message code="label_ua_org_tumakha_spdtool_user_lastname"/></th>
+      			<th><spring:message code="label_ua_org_tumakha_spdtool_user_firstname"/></th>
+      			<th><spring:message code="label_act_salary"/></th>
+      		</tr>
+      	</thead>
+      	<tbody>
+			<c:forEach items="${actModel.acts}" varStatus="row">
+				<tr>
+					<td><spring:bind path="acts[${row.index}].user.lastname">${status.value}</spring:bind></td>
+					<td><spring:bind path="acts[${row.index}].user.firstname">${status.value}</spring:bind></td>
+					<td><form:input path="acts[${row.index}].amount"/></td>
+				</tr>
+			</c:forEach>
+        </tbody>
+      </table>
+      <p>
+      <div class="submit">
+        <spring:message var="cancel" code="button_cancel" htmlEscape="false" />
+        <spring:message var="generate" code="button_generate" htmlEscape="false" />
+        <input type="submit" id="cancel" name="cancel" value="${fn:escapeXml(cancel)}" style="margin-right: 10px;"/>
+        <input type="submit" id="success" name="success" value="${fn:escapeXml(generate)}" />
+      </div>
+      </p>
+    </form:form>
+  </util:panel>
+</div>

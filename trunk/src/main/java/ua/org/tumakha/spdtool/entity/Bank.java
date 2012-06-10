@@ -31,7 +31,7 @@ public class Bank implements Serializable {
 	@JoinColumn(name = "userId", unique = true, nullable = false, updatable = false)
 	private User user;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Long accountNumber;
 
 	private String name;
