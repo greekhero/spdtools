@@ -6,7 +6,7 @@ package ua.org.tumakha.spdtool.template;
 public enum DocxTemplate {
 	
 	ACT("Act_PE.docx", true),
-	CONTRACT_AMENDMENT("Contract_PE_Amendment.docx", true),
+	CONTRACT_ANNEX("Contract_PE_Annex.docx", true),
 	CONTRACT("Contract_PE.docx", true),
 	TAX_SYSTEM_STATEMENT("Tax_System_Statement.docx", false),
 	INCOME_CALCULATION("Income_Calculation.docx", false),

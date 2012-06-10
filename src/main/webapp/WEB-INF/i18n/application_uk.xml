@@ -111,6 +111,7 @@
 	<entry key="menu_item_contract_list_label">Contracts</entry>
 	<entry key="menu_item_contract_new_label">Contract</entry>
 	<entry key="menu_item_documents_declaration_label">Декларація</entry>
+	<entry key="menu_item_documents_act_label">Акт</entry>
 	<entry key="menu_item_kved_list_label">КВЕД</entry>
 	<entry key="menu_item_kved_new_label">КВЕД</entry>
 	<entry key="menu_item_kved2010_list_label">КВЕД 2010</entry>
@@ -137,4 +138,15 @@
 	<entry key="label_declaration_tax">Податок</entry>
 	<entry key="error_declaration_upload_fileextension">Неправильне розширення файлу. Дозволено .xls або .xlsx файл.</entry>
 	<entry key="error_declaration_user_not_found">Не знайдено ФОП з прізвищем {0}.</entry>
+
+	<!-- act -->
+	<entry key="act_state1_title">Генерування актів - Крок 1</entry>
+	<entry key="act_state2_title">Генерування актів - Крок 2</entry>
+	<entry key="act_endstate_title">Генерування актів - Фініш</entry>
+	<entry key="label_act_year">Рік</entry>
+	<entry key="label_act_month">Місяць</entry>
+	<entry key="label_act_file">Зарплата (.xls)</entry>
+	<entry key="label_act_salary">Зарплата</entry>
+	<entry key="error_act_upload_fileextension">Неправильне розширення файлу. Дозволено .xls або .xlsx файл.</entry>
+	<entry key="error_act_user_not_found">Не знайдено ФОП з прізвищем {0}.</entry>
 </properties>

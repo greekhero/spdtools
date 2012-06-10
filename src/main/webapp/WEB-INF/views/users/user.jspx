@@ -21,7 +21,7 @@
     <field:select field="groups" id="c_ua_org_tumakha_spdtool_User_userGroups" itemValue="groupId" items="${groups}" multiple="true" path="/groups"/>
     <field:select field="kveds2010" id="c_ua_org_tumakha_spdtool_User_kveds2010" itemValue="kvedId" items="${kveds2010}" multiple="true" path="/kveds2010"/>
     <field:select field="kveds" id="c_ua_org_tumakha_spdtool_User_kveds" itemValue="kvedId" items="${kveds}" multiple="true" path="/kveds"/>
-    <field:select field="activeKveds" id="c_ua_org_tumakha_spdtool_User_activeKveds" itemValue="kvedId" items="${kveds}" multiple="true" path="/kveds"/>
+    <field:select field="activeKveds" id="c_ua_org_tumakha_spdtool_User_activeKveds" itemValue="kvedId" items="${kveds2010}" multiple="true" path="/kveds"/>
     <field:textarea field="serviceType.name" id="c_ua_org_tumakha_spdtool_servicetype_name"/>
     <field:textarea field="serviceType.nameEn" id="c_ua_org_tumakha_spdtool_servicetype_nameen"/>
     <field:input field="bank.MFO" id="c_ua_org_tumakha_spdtool_Bank_mfo" validationMessageCode="field_invalid_integer"/>

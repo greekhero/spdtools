@@ -4,6 +4,7 @@
     <jsp:output omit-xml-declaration="yes"/>
     <menu:menu id="_menu" z="nZaf43BjUg1iM0v70HJVEsXDopc=">
         <menu:category id="c_documents">
+            <menu:item id="i_documents_act" url="/acts"/>
             <menu:item id="i_documents_declaration" url="/declarations"/>
         </menu:category>
         <menu:category id="c_user">
