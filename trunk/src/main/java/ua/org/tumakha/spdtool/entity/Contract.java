@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
  * @author Yuriy Tumakha
  */
@@ -35,6 +37,7 @@ public class Contract implements Serializable {
 	private String number;
 
 	@Column(nullable = false)
+	@DateTimeFormat(pattern = "dd.MM.yyyy")
 	private Date date;
 
 	public Integer getContractId() {

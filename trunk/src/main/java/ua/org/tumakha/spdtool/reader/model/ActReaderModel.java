@@ -27,7 +27,7 @@ public class ActReaderModel {
 
 	@Override
 	public String toString() {
-		return String.format("SalaryReaderModel [lastname=%s, salary=%s]",
+		return String.format("ActReaderModel [lastname=%s, salary=%s]",
 				lastname, salary);
 	}
 

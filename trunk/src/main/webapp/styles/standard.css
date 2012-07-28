@@ -16,15 +16,16 @@ body {
 }
 
 #wrapper {
-	width:800px;
+	width:1035px;
 	min-width: 800px;
-	max-width: 800px;
+	max-width: 1035px;
 	margin-right: auto;
 	margin-left: auto;
+	margin-top: 15px;
 
 	/* fix max-width incompatibility in IE6 */
 	width:expression(document.body.clientWidth > 800? "800px": "auto" );
-	
+
 	overflow:hidden;
 	display:block;
 }

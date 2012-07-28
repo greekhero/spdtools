@@ -1,4 +1,4 @@
-<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:spring="http://www.springframework.org/tags" xmlns:form="http://www.springframework.org/tags/form" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:spring="http://www.springframework.org/tags" xmlns:form="http://www.springframework.org/tags/form" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
   <jsp:directive.page contentType="text/html;charset=UTF-8" />
   <jsp:output omit-xml-declaration="yes" />
   <spring:message var="title" code="act_state2_title" htmlEscape="false" />
@@ -8,7 +8,7 @@
     <p>
       <b>${actModel.year} <spring:message code="label_act_month"/> ${actModel.month} (${fn:length(actModel.acts)} <spring:message code="label_ua_org_tumakha_spdtool_user"/>)</b>
     </p>
-    <spring:url value="generateDocuments" var="form_url" />
+    <spring:url value="saveActs" var="form_url" />
     <form:form action="${fn:escapeXml(form_url)}" modelAttribute="actModel" method="POST">
       <form:hidden path="year"/>
       <form:hidden path="month"/>
@@ -17,6 +17,8 @@
       		<tr>
       			<th><spring:message code="label_ua_org_tumakha_spdtool_user_lastname"/></th>
       			<th><spring:message code="label_ua_org_tumakha_spdtool_user_firstname"/></th>
+      			<th><spring:message code="label_act_contract_number"/></th>
+      			<th width="50"><spring:message code="label_act_start_date"/></th>
       			<th><spring:message code="label_act_salary"/></th>
       		</tr>
       	</thead>
@@ -25,7 +27,32 @@
 				<tr>
 					<td><spring:bind path="acts[${row.index}].user.lastname">${status.value}</spring:bind></td>
 					<td><spring:bind path="acts[${row.index}].user.firstname">${status.value}</spring:bind></td>
-					<td><form:input path="acts[${row.index}].amount"/></td>
+					<td>
+						<c:choose>
+							<c:when test="${actModel.acts[row.index].contract.date lt actModel.acts[row.index].dateFrom}">
+								<c:out value="${actModel.acts[row.index].contract.number}"/>
+							</c:when>
+							<c:otherwise>
+								<form:input path="acts[${row.index}].contract.number" cssStyle="width: 80px;"/>
+
+								<script type="text/javascript">dojo.require('dijit.form.DateTextBox')</script>
+								<form:input id="contract_date_id_${row.index}" path="acts[${row.index}].contract.date" />
+								<br/><form:errors cssClass="errors" id="contract_date_error_id_${row.index}" path="acts[${row.index}].contract.date"/>
+								<script type="text/javascript">
+        							Spring.addDecoration(new Spring.ElementDecoration({elementId : 'contract_date_id_${row.index}', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {promptMessage: 'Contract Date', invalidMessage: 'Invalid Date', required: false, constraints: {datePattern : 'dd.MM.yyyy', required : false}, datePattern : 'dd.MM.yyyy'}}));
+        						</script>
+							</c:otherwise>
+						</c:choose>
+					</td>
+					<td>
+						<script type="text/javascript">dojo.require('dijit.form.DateTextBox')</script>
+						<form:input id="act_date_id_${row.index}" path="acts[${row.index}].dateFrom" />
+						<br/><form:errors cssClass="errors" id="act_date_error_id_${row.index}" path="acts[${row.index}].dateFrom"/>
+						<script type="text/javascript">
+      						Spring.addDecoration(new Spring.ElementDecoration({elementId : 'act_date_id_${row.index}', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {promptMessage: 'Act Start Date', invalidMessage: 'Invalid Date', required: false, constraints: {datePattern : 'dd.MM.yyyy', required : false}, datePattern : 'dd.MM.yyyy'}}));
+      					</script>
+					</td>
+					<td><form:input path="acts[${row.index}].amount" cssStyle="width: 40px;"/></td>
 				</tr>
 			</c:forEach>
         </tbody>

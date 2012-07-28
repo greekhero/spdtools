@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.org.tumakha.spdtool.entity.Act;
 import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.reader.model.ActReaderModel;
+import ua.org.tumakha.spdtool.services.ActService;
 import ua.org.tumakha.spdtool.services.TemplateService;
 import ua.org.tumakha.spdtool.services.UserService;
 import ua.org.tumakha.spdtool.web.model.ActModel;
@@ -42,10 +43,13 @@ public class ActController {
 
 	protected static final String BASE_PATH = "/acts";
 
-	private static final Integer EXCLUDE_GROUP_ID = 3;
+	private static final Integer EXCLUDE_USER_ID = 93;
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private ActService actService;
 
 	@Autowired
 	private TemplateService templateService;
@@ -120,19 +124,21 @@ public class ActController {
 		if (activeUsers != null) {
 			Map<Integer, Act> dbActs = getDbActs(actModel);
 			for (User user : activeUsers) {
-				Act act;
-				if (dbActs.containsKey(user.getUserId())) {
-					act = dbActs.get(user.getUserId());
-				} else {
-					act = createAct(user, actModel);
-				}
-				if (fileActs != null) {
-					ActReaderModel fileAct = fileActs.get(user.getUserId());
-					if (fileAct != null) {
-						act.setAmount(fileAct.getSalary());
+				if (!user.getUserId().equals(EXCLUDE_USER_ID)) {
+					Act act;
+					if (dbActs.containsKey(user.getUserId())) {
+						act = dbActs.get(user.getUserId());
+					} else {
+						act = createAct(user, actModel);
 					}
+					if (fileActs != null) {
+						ActReaderModel fileAct = fileActs.get(user.getUserId());
+						if (fileAct != null) {
+							act.setAmount(fileAct.getSalary());
+						}
+					}
+					acts.add(act);
 				}
-				acts.add(act);
 			}
 		}
 		actModel.setActs(acts);
@@ -161,11 +167,11 @@ public class ActController {
 
 	private Map<Integer, Act> getDbActs(ActModel actModel) {
 		Map<Integer, Act> actsMap = new HashMap<Integer, Act>();
-		// List<Act> dbActs = actService.findActsByYearAndMonth(
-		// actModel.getYear(), actModel.getMonth());
-		// for (Act act : dbActs) {
-		// actsMap.put(act.getUser().getUserId(), act);
-		// }
+		List<Act> dbActs = actService.findActsByYearAndMonth(
+				actModel.getYear(), actModel.getMonth());
+		for (Act act : dbActs) {
+			actsMap.put(act.getUser().getUserId(), act);
+		}
 		return actsMap;
 	}
 
@@ -177,8 +183,8 @@ public class ActController {
 		return act;
 	}
 
-	@RequestMapping(value = "/generateDocuments", method = RequestMethod.POST)
-	public String generateDocuments(@Valid ActModel actModel,
+	@RequestMapping(value = "/saveActs", method = RequestMethod.POST)
+	public String saveActs(@Valid ActModel actModel,
 			@RequestParam(value = "cancel", required = false) String cancel,
 			Model uiModel, BindingResult bindingResult,
 			RedirectAttributes redirectAttrs) throws Exception {
@@ -189,11 +195,17 @@ public class ActController {
 			uiModel.addAttribute("actModel", actModel);
 			return view("userActs");
 		}
-		// actService.saveActs(actModel.getActs());
-		//
+		actService.saveActs(actModel.getActs());
+
+		return redirect("generateDocuments");
+	}
+
+	@RequestMapping(value = "/generateDocuments", method = RequestMethod.GET)
+	public String generateDocuments(@Valid ActModel actModel,
+			RedirectAttributes redirectAttrs) throws Exception {
+
 		// List<String> fileNames = templateService.generateActs(
-		// actModel.getGroupIds(), actModel.getYear(),
-		// actModel.getQuarter());
+		// actModel.getYear(), actModel.getMonth());
 
 		// redirectAttrs.addFlashAttribute("fileNames", fileNames);
 
