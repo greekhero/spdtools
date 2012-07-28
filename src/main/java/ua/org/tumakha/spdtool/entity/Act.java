@@ -45,11 +45,11 @@ public class Act implements Serializable {
 	private String number;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(style = "M-")
+	@DateTimeFormat(pattern = "dd.MM.yyyy")
 	private Date dateFrom;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(style = "M-")
+	@DateTimeFormat(pattern = "dd.MM.yyyy")
 	private Date dateTo;
 
 	@Column

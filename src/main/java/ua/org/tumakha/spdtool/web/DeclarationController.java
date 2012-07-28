@@ -207,11 +207,10 @@ public class DeclarationController {
 		return declaration;
 	}
 
-	@RequestMapping(value = "/generateDocuments", method = RequestMethod.POST)
-	public String generateDocuments(@Valid DeclarationModel declarationModel,
+	@RequestMapping(value = "/saveDeclarations", method = RequestMethod.POST)
+	public String saveDeclarations(@Valid DeclarationModel declarationModel,
 			@RequestParam(value = "cancel", required = false) String cancel,
-			Model uiModel, BindingResult bindingResult,
-			RedirectAttributes redirectAttrs) throws Exception {
+			Model uiModel, BindingResult bindingResult) throws Exception {
 		if (cancel != null) {
 			return redirect("initData");
 		}
@@ -220,6 +219,13 @@ public class DeclarationController {
 			return view("userDeclarations");
 		}
 		declarationService.saveDeclarations(declarationModel.getDeclarations());
+
+		return redirect("generateDocuments");
+	}
+
+	@RequestMapping(value = "/generateDocuments", method = RequestMethod.GET)
+	public String generateDocuments(@Valid DeclarationModel declarationModel,
+			RedirectAttributes redirectAttrs) throws Exception {
 
 		List<String> fileNames = templateService.generateDeclarations(
 				declarationModel.getGroupIds(), declarationModel.getYear(),

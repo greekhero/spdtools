@@ -146,6 +146,8 @@
 	<entry key="label_act_year">Рік</entry>
 	<entry key="label_act_month">Місяць</entry>
 	<entry key="label_act_file">Зарплата (.xls)</entry>
+	<entry key="label_act_contract_number">Контракт</entry>
+	<entry key="label_act_start_date">Акт Старт</entry>
 	<entry key="label_act_salary">Зарплата</entry>
 	<entry key="error_act_upload_fileextension">Неправильне розширення файлу. Дозволено .xls або .xlsx файл.</entry>
 	<entry key="error_act_user_not_found">Не знайдено ФОП з прізвищем {0}.</entry>

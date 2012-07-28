@@ -13,7 +13,7 @@ function calculateTax(el) {
     <p>
       <b>${declarationModel.year} <spring:message code="label_declaration_quarter"/> ${declarationModel.quarter} (${fn:length(declarationModel.declarations)} <spring:message code="label_ua_org_tumakha_spdtool_user"/>)</b>
     </p>
-    <spring:url value="generateDocuments" var="form_url" />
+    <spring:url value="saveDeclarations" var="form_url" />
     <form:form action="${fn:escapeXml(form_url)}" modelAttribute="declarationModel" method="POST">
       <form:hidden path="year"/>
       <form:hidden path="quarter"/>
