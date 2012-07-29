@@ -34,7 +34,8 @@ public interface TemplateService {
 	List<String> generateDeclarations(Set<Integer> groupIds, Integer year,
 			Integer quarter) throws InvalidFormatException, IOException;
 
-	List<String> generateActs(Integer year, Integer month)
+	List<String> generateActs(Integer year, Integer month,
+			boolean generateContracts, boolean generateActs)
 			throws JAXBException, Docx4JException, TemplateException,
 			IOException;
 

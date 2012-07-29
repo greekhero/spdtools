@@ -33,6 +33,7 @@ public class ActModel extends TemplateModel {
 	private static final NumberFormat amountFormat = NumberFormat
 			.getNumberInstance(enLocale);
 
+	private boolean newContract;
 	private String actNo;
 	private String contractNo;
 	private String contractDate;
@@ -68,6 +69,8 @@ public class ActModel extends TemplateModel {
 	}
 
 	private void copyProperties(User user, Act act) {
+		newContract = user.getLastContract().getDate().getTime() + 2160000000L > act
+				.getDateFrom().getTime();
 		serviceType = user.getServiceType().getName();
 		serviceTypeVOrudnomu = user.getServiceType().getNameVOrudnomu();
 		serviceTypeEn = user.getServiceType().getNameEn();
@@ -93,6 +96,14 @@ public class ActModel extends TemplateModel {
 					+ NumberUtil.numberInDollarsUa(amount);
 			amountEn = NumberUtil.numberInWordsEn(amount);
 		}
+	}
+
+	public boolean isNewContract() {
+		return newContract;
+	}
+
+	public void setNewContract(boolean newContract) {
+		this.newContract = newContract;
 	}
 
 	public String getN() {
