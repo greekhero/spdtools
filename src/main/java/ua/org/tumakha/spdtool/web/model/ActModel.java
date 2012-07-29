@@ -27,6 +27,10 @@ public class ActModel implements Serializable {
 	@NotNull
 	private Integer month;
 
+	private boolean generateContracts;
+
+	private boolean generateActs;
+
 	private transient MultipartFile actFile;
 
 	private List<Act> acts;
@@ -45,6 +49,22 @@ public class ActModel implements Serializable {
 
 	public void setMonth(Integer month) {
 		this.month = month;
+	}
+
+	public boolean isGenerateContracts() {
+		return generateContracts;
+	}
+
+	public void setGenerateContracts(boolean generateContracts) {
+		this.generateContracts = generateContracts;
+	}
+
+	public boolean isGenerateActs() {
+		return generateActs;
+	}
+
+	public void setGenerateActs(boolean generateActs) {
+		this.generateActs = generateActs;
 	}
 
 	public void setActFile(MultipartFile actFile) {

@@ -146,6 +146,8 @@
 	<entry key="label_act_year">Рік</entry>
 	<entry key="label_act_month">Місяць</entry>
 	<entry key="label_act_file">Зарплата (.xls)</entry>
+	<entry key="label_act_generate_contracts">Ген. контракти</entry>
+	<entry key="label_act_generate_acts">Генерувати акти</entry>
 	<entry key="label_act_contract_number">Контракт</entry>
 	<entry key="label_act_start_date">Акт Старт</entry>
 	<entry key="label_act_salary">Зарплата</entry>

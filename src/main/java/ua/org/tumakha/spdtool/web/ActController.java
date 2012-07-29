@@ -71,6 +71,7 @@ public class ActController {
 		ActModel actModel = new ActModel();
 		actModel.setYear(defaultYear);
 		actModel.setMonth(defaultMonth);
+		actModel.setGenerateActs(true);
 		uiModel.addAttribute("actModel", actModel);
 		return redirect("initData");
 	}
@@ -262,7 +263,8 @@ public class ActController {
 			RedirectAttributes redirectAttrs) throws Exception {
 
 		List<String> fileNames = templateService.generateActs(
-				actModel.getYear(), actModel.getMonth());
+				actModel.getYear(), actModel.getMonth(),
+				actModel.isGenerateContracts(), actModel.isGenerateActs());
 
 		redirectAttrs.addFlashAttribute("fileNames", fileNames);
 

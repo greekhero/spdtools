@@ -12,6 +12,9 @@
         <field:select field="month" id="c_act_month" items="${months}"/>
         <label for="incomeFile"><spring:message code="label_act_file" htmlEscape="false" /></label>
         <input type="file" id="actFile" name="actFile"/>
+        <br/><br/>
+        <field:checkbox field="generateActs" id="c_act_generate_acts"/>
+        <field:checkbox field="generateContracts" id="c_act_generate_contracts"/>
       </p>
       <div class="submit">
         <spring:message var="proceed" code="button_proceed" htmlEscape="false" />

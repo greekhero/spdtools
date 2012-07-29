@@ -229,7 +229,8 @@ public class TemplateServiceImpl implements TemplateService {
 	}
 
 	@Override
-	public List<String> generateActs(Integer year, Integer month)
+	public List<String> generateActs(Integer year, Integer month,
+			boolean generateContracts, boolean generateActs)
 			throws JAXBException, Docx4JException, TemplateException,
 			IOException {
 		List<String> fileNames = new ArrayList<String>();
@@ -238,12 +239,25 @@ public class TemplateServiceImpl implements TemplateService {
 		if (listModel != null) {
 			System.out.println("Generated report models: " + listModel.size());
 		}
-		fileNames.addAll(docxProcessor.saveReports(DocxTemplate.CONTRACT,
-				listModel));
-		fileNames.addAll(docxProcessor.saveReports(DocxTemplate.CONTRACT_ANNEX,
-				listModel));
-		fileNames
-				.addAll(docxProcessor.saveReports(DocxTemplate.ACT, listModel));
+		if (generateActs) {
+			fileNames.addAll(docxProcessor.saveReports(
+					DocxTemplate.CONTRACT_ANNEX, listModel));
+			fileNames.addAll(docxProcessor.saveReports(DocxTemplate.ACT,
+					listModel));
+		}
+		if (generateContracts) {
+			fileNames.addAll(docxProcessor.saveReports(DocxTemplate.CONTRACT,
+					listModel));
+		} else {
+			List<ActModel> newActModels = new ArrayList<ActModel>();
+			for (ActModel actModel : listModel) {
+				if (actModel.isNewContract()) {
+					newActModels.add(actModel);
+				}
+			}
+			fileNames.addAll(docxProcessor.saveReports(DocxTemplate.CONTRACT,
+					newActModels));
+		}
 		// docxProcessor.saveReports(DocxTemplate.CONTRACT_ADITIONAL_AGREEMENT,
 		// listModel);
 		return fileNames;
