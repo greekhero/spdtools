@@ -33,7 +33,7 @@
 								<c:out value="${actModel.acts[row.index].contract.number}"/>
 							</c:when>
 							<c:otherwise>
-								<form:input path="acts[${row.index}].contract.number" cssStyle="width: 80px;"/>
+								<form:input path="acts[${row.index}].contract.number" cssStyle="width: 80px; margin-right: 10px;"/>
 
 								<script type="text/javascript">dojo.require('dijit.form.DateTextBox')</script>
 								<form:input id="contract_date_id_${row.index}" path="acts[${row.index}].contract.date" />
