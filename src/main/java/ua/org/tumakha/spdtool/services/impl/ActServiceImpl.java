@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ua.org.tumakha.spdtool.dao.ActDao;
+import ua.org.tumakha.spdtool.dao.ContractDao;
 import ua.org.tumakha.spdtool.entity.Act;
 import ua.org.tumakha.spdtool.services.ActService;
 
@@ -23,6 +24,9 @@ public class ActServiceImpl implements ActService {
 
 	@Autowired
 	private ActDao actDao;
+
+	@Autowired
+	private ContractDao contractDao;
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -66,10 +70,16 @@ public class ActServiceImpl implements ActService {
 	public void saveActs(List<Act> acts) {
 		notNull(acts);
 		for (Act act : acts) {
-			if (act.getActId() == null) {
-				actDao.persist(act);
-			} else {
-				actDao.merge(act);
+			if (act.getAmount() != null && !act.getAmount().equals(0)) {
+				if (act.getActId() == null) {
+					if (act.getContract().getContractId() == null) {
+						contractDao.persist(act.getContract());
+					}
+					actDao.persist(act);
+				} else {
+					contractDao.merge(act.getContract());
+					actDao.merge(act);
+				}
 			}
 		}
 	}

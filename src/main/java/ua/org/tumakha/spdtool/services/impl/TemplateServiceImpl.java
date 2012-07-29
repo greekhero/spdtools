@@ -7,21 +7,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.xml.bind.JAXBException;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import ua.org.tumakha.spdtool.entity.Act;
 import ua.org.tumakha.spdtool.entity.Declaration;
 import ua.org.tumakha.spdtool.entity.Kved2010;
 import ua.org.tumakha.spdtool.entity.User;
+import ua.org.tumakha.spdtool.services.ActService;
 import ua.org.tumakha.spdtool.services.DeclarationService;
 import ua.org.tumakha.spdtool.services.TemplateService;
 import ua.org.tumakha.spdtool.services.UserService;
+import ua.org.tumakha.spdtool.template.DocxProcessor;
+import ua.org.tumakha.spdtool.template.DocxTemplate;
 import ua.org.tumakha.spdtool.template.XlsProcessor;
 import ua.org.tumakha.spdtool.template.XlsTemplate;
 import ua.org.tumakha.spdtool.template.model.ActModel;
@@ -29,6 +36,7 @@ import ua.org.tumakha.spdtool.template.model.Form11KvedModel;
 import ua.org.tumakha.spdtool.template.model.Form20OPPModel;
 import ua.org.tumakha.spdtool.template.model.IncomeCalculationModel;
 import ua.org.tumakha.spdtool.template.model.TaxSystemStatementModel;
+import freemarker.template.TemplateException;
 
 /**
  * @author Yuriy Tumakha
@@ -45,10 +53,15 @@ public class TemplateServiceImpl implements TemplateService {
 	@Autowired
 	private DeclarationService declarationService;
 
+	@Autowired
+	private ActService actService;
+
 	private final XlsProcessor xlsProcessor = new XlsProcessor();
+	private final DocxProcessor docxProcessor = new DocxProcessor();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
+	@Deprecated
 	public List<ActModel> getActModelList() {
 		List<User> users = userService.findActiveUsers();
 		if (users != null && users.size() > 0) {
@@ -59,13 +72,6 @@ public class TemplateServiceImpl implements TemplateService {
 					lastUser = user;
 					ActModel actModel = new ActModel(user);
 					listModel.add(actModel);
-
-					// } catch (Exception e) {
-					// System.out.println(user.getLastname() + ": "
-					// + e.getMessage());
-					// System.out.println(e);
-					// throw new RuntimeException(e);
-					// }
 				}
 			} finally {
 				log.debug("Last User: " + lastUser.getUserId() + " "
@@ -220,6 +226,43 @@ public class TemplateServiceImpl implements TemplateService {
 			fileNames.add(outputFilename);
 		}
 		return fileNames;
+	}
+
+	@Override
+	public List<String> generateActs(Integer year, Integer month)
+			throws JAXBException, Docx4JException, TemplateException,
+			IOException {
+		List<String> fileNames = new ArrayList<String>();
+		List<Act> acts = actService.findActsByYearAndMonth(year, month);
+		List<ActModel> listModel = getActModelList(acts);
+		if (listModel != null) {
+			System.out.println("Generated report models: " + listModel.size());
+		}
+		fileNames.addAll(docxProcessor.saveReports(DocxTemplate.CONTRACT,
+				listModel));
+		fileNames.addAll(docxProcessor.saveReports(DocxTemplate.CONTRACT_ANNEX,
+				listModel));
+		fileNames
+				.addAll(docxProcessor.saveReports(DocxTemplate.ACT, listModel));
+		// docxProcessor.saveReports(DocxTemplate.CONTRACT_ADITIONAL_AGREEMENT,
+		// listModel);
+		return fileNames;
+	}
+
+	public List<ActModel> getActModelList(List<Act> acts) {
+		List<ActModel> listModel = new ArrayList<ActModel>(acts.size());
+		User lastUser = null;
+		try {
+			for (Act act : acts) {
+				lastUser = act.getUser();
+				ActModel actModel = new ActModel(act);
+				listModel.add(actModel);
+			}
+		} finally {
+			log.error("ActModel error: Last User - " + lastUser.getUserId()
+					+ " " + lastUser.getLastnameEn());
+		}
+		return listModel;
 	}
 
 }

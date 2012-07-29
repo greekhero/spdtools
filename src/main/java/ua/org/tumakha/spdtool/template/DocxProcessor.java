@@ -2,6 +2,7 @@ package ua.org.tumakha.spdtool.template;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,13 +46,15 @@ public class DocxProcessor {
 		log.debug(model.getClass());// TODO:
 	}
 
-	public void saveReports(DocxTemplate template,
+	public List<String> saveReports(DocxTemplate template,
 			List<? extends TemplateModel> listModel) throws JAXBException,
 			Docx4JException, TemplateException, IOException {
 
+		List<String> fileNames = new ArrayList<String>();
+
 		if (listModel == null || listModel.size() == 0) {
 			log.debug("listModel is empty");
-			return;
+			return fileNames;
 		}
 		// Open a document from the file system
 		// 1. Load the Package
@@ -68,12 +71,12 @@ public class DocxProcessor {
 		String xml = XmlUtils.marshaltoString(wmlDocumentEl, true);
 
 		for (TemplateModel model : listModel) {
-			saveDocument(wordMLPackage, xml, model, template);
+			fileNames.add(saveDocument(wordMLPackage, xml, model, template));
 		}
-
+		return fileNames;
 	}
 
-	private static void saveDocument(WordprocessingMLPackage wordMLPackage,
+	private static String saveDocument(WordprocessingMLPackage wordMLPackage,
 			String xml, TemplateModel model, DocxTemplate template)
 			throws JAXBException, Docx4JException, TemplateException,
 			IOException {
@@ -102,6 +105,7 @@ public class DocxProcessor {
 		SaveToZipFile saver = new SaveToZipFile(wordMLPackage);
 		saver.save(outputfilepath);
 		log.debug("Saved output to: " + outputfilepath);
+		return outputfilepath;
 	}
 
 	@SuppressWarnings("unchecked")

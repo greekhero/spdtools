@@ -3,9 +3,12 @@ package ua.org.tumakha.spdtool.web;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.validation.Valid;
 
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ua.org.tumakha.spdtool.entity.Act;
+import ua.org.tumakha.spdtool.entity.Contract;
 import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.reader.model.ActReaderModel;
 import ua.org.tumakha.spdtool.services.ActService;
@@ -176,11 +180,64 @@ public class ActController {
 	}
 
 	private Act createAct(User user, ActModel actModel) {
+		Contract lastContract = user.getLastContract();
+		Act lastAct = null;
+		if (lastContract == null) {
+			lastContract = createContract(user, actModel);
+		} else {
+			Calendar calendarLastContract = Calendar.getInstance();
+			calendarLastContract.setTime(lastContract.getDate());
+			if (!actModel.getYear().equals(
+					calendarLastContract.get(Calendar.YEAR))) {
+				lastContract = createContract(user, actModel);
+			} else {
+				lastAct = user.getLastAct();
+			}
+		}
+
+		String actNumber = lastContract.getNumber() + "-01";
+		if (lastAct != null) {
+			Matcher matcher = Pattern.compile("(\\d+)$").matcher(
+					lastAct.getNumber());
+			if (matcher.find()) {
+				StringBuffer result = new StringBuffer();
+				matcher.appendReplacement(
+						result,
+						String.format("%02d",
+								Integer.parseInt(matcher.group(1)) + 1));
+				actNumber = result.toString();
+			}
+		}
+		Calendar calendarActFrom = new GregorianCalendar(actModel.getYear(),
+				actModel.getMonth() - 1, 1);
+		int nextMonth = actModel.getMonth() == 12 ? 0 : actModel.getMonth();
+		int nextYear = actModel.getMonth() == 12 ? actModel.getYear() + 1
+				: actModel.getYear();
+		Calendar calendarActTo = new GregorianCalendar(nextYear, nextMonth, 1);
+		calendarActTo.add(Calendar.DAY_OF_MONTH, -1);
+
 		Act act = new Act();
 		act.setUser(user);
-		// act.setYear(actModel.getYear());
-		// act.setQuarter(actModel.getMonth());
+		act.setContract(lastContract);
+		act.setNumber(actNumber);
+		act.setDateFrom(calendarActFrom.getTime());
+		act.setDateTo(calendarActTo.getTime());
 		return act;
+	}
+
+	private Contract createContract(User user, ActModel actModel) {
+		Calendar calendarContract = new GregorianCalendar(actModel.getYear(),
+				actModel.getMonth() - 1, 1);
+		String contractNumber = String.format("%s%s%s/%d-%02d", user
+				.getFirstnameEn().charAt(0), user.getMiddlenameEn().charAt(0),
+				user.getLastnameEn().charAt(0), actModel.getYear(), actModel
+						.getMonth());
+
+		Contract contract = new Contract();
+		contract.setUser(user);
+		contract.setDate(calendarContract.getTime());
+		contract.setNumber(contractNumber);
+		return contract;
 	}
 
 	@RequestMapping(value = "/saveActs", method = RequestMethod.POST)
@@ -204,10 +261,10 @@ public class ActController {
 	public String generateDocuments(@Valid ActModel actModel,
 			RedirectAttributes redirectAttrs) throws Exception {
 
-		// List<String> fileNames = templateService.generateActs(
-		// actModel.getYear(), actModel.getMonth());
+		List<String> fileNames = templateService.generateActs(
+				actModel.getYear(), actModel.getMonth());
 
-		// redirectAttrs.addFlashAttribute("fileNames", fileNames);
+		redirectAttrs.addFlashAttribute("fileNames", fileNames);
 
 		return redirect("downloadDocuments");
 	}
