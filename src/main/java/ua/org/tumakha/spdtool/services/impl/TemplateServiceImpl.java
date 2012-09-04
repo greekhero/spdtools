@@ -69,9 +69,11 @@ public class TemplateServiceImpl implements TemplateService {
 			User lastUser = null;
 			try {
 				for (User user : users) {
-					lastUser = user;
-					ActModel actModel = new ActModel(user);
-					listModel.add(actModel);
+					if (!user.getUserId().equals(93)) {
+						lastUser = user;
+						ActModel actModel = new ActModel(user);
+						listModel.add(actModel);
+					}
 				}
 			} finally {
 				log.debug("Last User: " + lastUser.getUserId() + " "
