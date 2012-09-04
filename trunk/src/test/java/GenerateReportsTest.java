@@ -45,7 +45,8 @@ public class GenerateReportsTest {
 		docxProcessor.saveReports(DocxTemplate.CONTRACT, listModel);
 		docxProcessor.saveReports(DocxTemplate.CONTRACT_ANNEX, listModel);
 		docxProcessor.saveReports(DocxTemplate.ACT, listModel);
-		docxProcessor.saveReports(DocxTemplate.CONTRACT_ADITIONAL_AGREEMENT, listModel);
+		docxProcessor.saveReports(DocxTemplate.CONTRACT_ADITIONAL_AGREEMENT,
+				listModel);
 		if (listModel != null) {
 			System.out.println("Generated report models: " + listModel.size());
 		}
