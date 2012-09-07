@@ -40,7 +40,7 @@ public class Address implements Serializable {
 	private static final String DISTRICT_SUFFIX = " р-н.";
 	private static final String DISTRICT_SUFFIX_EN = " distr.";
 	private static final String KORPUS_PREFIX = "корпус ";
-	private static final String KORPUS_PREFIX_EN = "block ";
+	private static final String KORPUS_PREFIX_EN = "corps ";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
