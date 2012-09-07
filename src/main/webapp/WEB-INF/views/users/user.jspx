@@ -45,6 +45,7 @@
     <field:input field="address.houseChar" id="c_ua_org_tumakha_spdtool_Address_houseChar"/>
     <field:input field="address.houseCharEn" id="c_ua_org_tumakha_spdtool_Address_houseCharEn"/>
     <field:input field="address.slashHouse" id="c_ua_org_tumakha_spdtool_Address_slashHouse" validationMessageCode="field_invalid_integer"/>
+    <field:input field="address.korpus" id="c_ua_org_tumakha_spdtool_Address_korpus" validationMessageCode="field_invalid_integer"/>
     <field:input field="address.apartment" id="c_ua_org_tumakha_spdtool_Address_apartment" validationMessageCode="field_invalid_integer"/>
     <field:input field="address.apartmentChar" id="c_ua_org_tumakha_spdtool_Address_apartmentChar"/>
     <field:input field="address.apartmentCharEn" id="c_ua_org_tumakha_spdtool_Address_apartmentCharEn"/>

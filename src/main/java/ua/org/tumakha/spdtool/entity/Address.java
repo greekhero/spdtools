@@ -39,6 +39,8 @@ public class Address implements Serializable {
 	private static final String APARTMENT_PREFIX_EN = "ap. ";
 	private static final String DISTRICT_SUFFIX = " р-н.";
 	private static final String DISTRICT_SUFFIX_EN = " distr.";
+	private static final String KORPUS_PREFIX = "корпус ";
+	private static final String KORPUS_PREFIX_EN = "block ";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -80,6 +82,9 @@ public class Address implements Serializable {
 
 	@Digits(integer = 3, fraction = 0)
 	private Integer slashHouse;
+
+	@Digits(integer = 3, fraction = 0)
+	private Integer korpus;
 
 	@Digits(integer = 3, fraction = 0)
 	private Integer apartment;
@@ -132,6 +137,8 @@ public class Address implements Serializable {
 					: "");
 			buffer.append(slashHouse != null ? "/" + slashHouse : "");
 		}
+		buffer.append(korpus != null ? DELIMITER + KORPUS_PREFIX_EN + korpus
+				: "");
 		if (apartment != null) {
 			buffer.append(DELIMITER + APARTMENT_PREFIX_EN + apartment);
 			buffer.append(StringUtils.hasText(apartmentCharEn) ? apartmentCharEn
@@ -180,6 +187,7 @@ public class Address implements Serializable {
 			buffer.append(StringUtils.hasText(houseChar) ? "-" + houseChar : "");
 			buffer.append(slashHouse != null ? "/" + slashHouse : "");
 		}
+		buffer.append(korpus != null ? DELIMITER + KORPUS_PREFIX + korpus : "");
 		if (apartment != null) {
 			buffer.append(DELIMITER + APARTMENT_PREFIX + apartment);
 			buffer.append(StringUtils.hasText(apartmentChar) ? apartmentChar
@@ -290,6 +298,14 @@ public class Address implements Serializable {
 
 	public void setSlashHouse(Integer slashHouse) {
 		this.slashHouse = slashHouse;
+	}
+
+	public Integer getKorpus() {
+		return korpus;
+	}
+
+	public void setKorpus(Integer korpus) {
+		this.korpus = korpus;
 	}
 
 	public Integer getApartment() {

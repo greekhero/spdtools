@@ -30,6 +30,7 @@
 	<entry key="label_ua_org_tumakha_spdtool_address_slashhouse">/ підбудинок</entry>
 	<entry key="label_ua_org_tumakha_spdtool_address_street">Вулиця</entry>
 	<entry key="label_ua_org_tumakha_spdtool_address_streeten">Street</entry>
+	<entry key="label_ua_org_tumakha_spdtool_address_korpus">Корпус</entry>
 	<entry key="label_ua_org_tumakha_spdtool_bank">Банк</entry>
 	<entry key="label_ua_org_tumakha_spdtool_bank_accountnumber">Номер рахунку</entry>
 	<entry key="label_ua_org_tumakha_spdtool_bank_mfo">МФО</entry>
