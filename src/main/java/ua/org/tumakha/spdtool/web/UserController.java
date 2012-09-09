@@ -55,8 +55,13 @@ public class UserController implements AppConfig {
 			addDateTimeFormatPatterns(uiModel);
 			return "users/create";
 		}
+		try {
+			userService.createUser(user);
+		} catch (Exception e) {
+			addError(uiModel, e);
+			return "users/create";
+		}
 		uiModel.asMap().clear();
-		userService.createUser(user);
 		return "redirect:/users/"
 				+ WebUtil.encodeUrlPathSegment(user.getUserId().toString(),
 						httpServletRequest);
@@ -106,8 +111,13 @@ public class UserController implements AppConfig {
 			addDateTimeFormatPatterns(uiModel);
 			return "users/update";
 		}
+		try {
+			userService.updateUser(user);
+		} catch (Exception e) {
+			addError(uiModel, e);
+			return "users/update";
+		}
 		uiModel.asMap().clear();
-		userService.updateUser(user);
 		return "redirect:/users/"
 				+ WebUtil.encodeUrlPathSegment(user.getUserId().toString(),
 						httpServletRequest);
@@ -160,4 +170,12 @@ public class UserController implements AppConfig {
 						LocaleContextHolder.getLocale()));
 	}
 
+	private void addError(Model uiModel, Throwable e) {
+		String errorMessage = e.getLocalizedMessage() + " <br/> ";
+		while (e != e.getCause() && e.getCause() != null) {
+			e = e.getCause();
+			errorMessage += e.getLocalizedMessage() + " <br/> ";
+		}
+		uiModel.addAttribute("error", errorMessage);
+	}
 }
