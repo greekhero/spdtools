@@ -40,10 +40,10 @@ public class Declaration implements Serializable {
 	private Integer quarter;
 
 	@Column(precision = 0)
-	private Integer income;
+	private Float income;
 
 	@Column(precision = 0)
-	private Integer tax;
+	private Float tax;
 
 	public Integer getDeclarationId() {
 		return declarationId;
@@ -77,19 +77,19 @@ public class Declaration implements Serializable {
 		this.quarter = quarter;
 	}
 
-	public Integer getIncome() {
+	public Float getIncome() {
 		return income;
 	}
 
-	public void setIncome(Integer income) {
+	public void setIncome(Float income) {
 		this.income = income;
 	}
 
-	public Integer getTax() {
+	public Float getTax() {
 		return tax;
 	}
 
-	public void setTax(Integer tax) {
+	public void setTax(Float tax) {
 		this.tax = tax;
 	}
 
