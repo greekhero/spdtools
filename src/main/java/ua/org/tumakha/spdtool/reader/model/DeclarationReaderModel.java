@@ -7,9 +7,9 @@ public class DeclarationReaderModel {
 
 	private String lastname;
 
-	private Integer income;
+	private Float income;
 
-	private Integer tax;
+	private Float tax;
 
 	public String getLastname() {
 		return lastname;
@@ -19,19 +19,19 @@ public class DeclarationReaderModel {
 		this.lastname = lastname;
 	}
 
-	public Integer getIncome() {
+	public Float getIncome() {
 		return income;
 	}
 
-	public void setIncome(Integer income) {
+	public void setIncome(Float income) {
 		this.income = income;
 	}
 
-	public Integer getTax() {
+	public Float getTax() {
 		return tax;
 	}
 
-	public void setTax(Integer tax) {
+	public void setTax(Float tax) {
 		this.tax = tax;
 	}
 

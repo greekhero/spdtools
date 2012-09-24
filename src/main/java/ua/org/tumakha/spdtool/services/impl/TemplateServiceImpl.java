@@ -1,6 +1,9 @@
 package ua.org.tumakha.spdtool.services.impl;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +49,7 @@ import freemarker.template.TemplateException;
 public class TemplateServiceImpl implements TemplateService {
 
 	private static final Log log = LogFactory.getLog(TemplateServiceImpl.class);
+	private static final NumberFormat MONEY_FORMAT = getMoneyFormat();
 
 	@Autowired
 	private UserService userService;
@@ -180,28 +184,31 @@ public class TemplateServiceImpl implements TemplateService {
 		}
 		for (Declaration declaration : declarations) {
 			User user = declaration.getUser();
-			Integer income = declaration.getIncome();
-			Integer tax = declaration.getTax();
+			Float income = declaration.getIncome();
+			Float tax = declaration.getTax();
 			Map<String, Object> beans = new HashMap<String, Object>();
 			beans.put("user", user);
 			beans.put("year", year);
 			beans.put("dateYear", dateYear);
 			beans.put("income", income);
 			beans.put("tax", tax);
-			String strPreviousTax = "-";
-			Integer taxToPay = tax;
+			Float previousTax = null;
+			Float taxToPay = tax;
 			if (!quarter.equals(1) && tax != null) {
 				Declaration previousDeclaration = previousDeclarations.get(user
 						.getUserId());
 				if (previousDeclaration != null) {
 					if (previousDeclaration.getTax() != null) {
-						strPreviousTax = previousDeclaration.getTax()
-								.toString();
+						previousTax = previousDeclaration.getTax();
 						taxToPay = tax - previousDeclaration.getTax();
 					}
 				}
 			}
-			beans.put("previousTax", strPreviousTax);
+			if (previousTax == null) {
+				beans.put("previousTax", "-");
+			} else {
+				beans.put("previousTax", previousTax);
+			}
 			beans.put("taxToPay", taxToPay);
 			beans.put("phone0", "0976884343");
 			for (int q = 1; q <= 4; q++) {
@@ -279,6 +286,12 @@ public class TemplateServiceImpl implements TemplateService {
 					+ " " + lastUser.getLastnameEn());
 		}
 		return listModel;
+	}
+
+	private static NumberFormat getMoneyFormat() {
+		DecimalFormatSymbols formatSymbols = new DecimalFormatSymbols();
+		formatSymbols.setDecimalSeparator(',');
+		return new DecimalFormat("#.00", formatSymbols);
 	}
 
 }
