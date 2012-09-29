@@ -9,6 +9,7 @@ import ua.org.tumakha.spdtool.entity.Act;
 import ua.org.tumakha.spdtool.entity.Contract;
 import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.template.DocxTemplate;
+import ua.org.tumakha.spdtool.template.FOTemplate;
 import ua.org.tumakha.util.NumberUtil;
 
 /**
@@ -282,6 +283,24 @@ public class ActModel extends TemplateModel {
 			throw new IllegalStateException(e);
 		}
 		return String.format("/%s/%s/ICGU_%s_%s_%s", month, getLastname(),
+				getFirstnameEn().substring(0, 1) + getMiddlenameEn().charAt(0)
+						+ getLastnameEn().charAt(0), month.replace("-", "_"),
+				template.getFilename());
+
+	}
+
+	@Override
+	public String getOutputFilename(FOTemplate template) {
+		String month = "";
+		try {
+			if (dateToEn != null) {
+				month = yearMonthFormat.format(actPeriodFormatEn
+						.parse(dateToEn));
+			}
+		} catch (ParseException e) {
+			throw new IllegalStateException(e);
+		}
+		return String.format("/%s/%s_%s_%s_%s", month, getLastnameEn(),
 				getFirstnameEn().substring(0, 1) + getMiddlenameEn().charAt(0)
 						+ getLastnameEn().charAt(0), month.replace("-", "_"),
 				template.getFilename());
