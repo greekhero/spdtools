@@ -10,6 +10,7 @@ import ua.org.tumakha.spdtool.entity.Address;
 import ua.org.tumakha.spdtool.entity.Bank;
 import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.template.DocxTemplate;
+import ua.org.tumakha.spdtool.template.FOTemplate;
 import ua.org.tumakha.util.StrUtil;
 
 /**
@@ -128,6 +129,10 @@ public abstract class TemplateModel {
 	}
 
 	public abstract String getOutputFilename(DocxTemplate template);
+
+	public String getOutputFilename(FOTemplate template) {
+		return "test.pdf";
+	}
 
 	private String pinAt(int index) {
 		return StrUtil.charAt(PIN, index);

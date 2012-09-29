@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Set;
 
 import javax.xml.bind.JAXBException;
+import javax.xml.transform.TransformerException;
 
+import org.apache.fop.apps.FOPException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 
@@ -37,6 +39,6 @@ public interface TemplateService {
 	List<String> generateActs(Integer year, Integer month,
 			boolean generateContracts, boolean generateActs)
 			throws JAXBException, Docx4JException, TemplateException,
-			IOException;
+			IOException, TransformerException, FOPException;
 
 }
