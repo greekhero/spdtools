@@ -10,7 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.Reader;
+import java.io.StringReader;
 import java.util.Date;
 
 import javax.xml.transform.Result;
@@ -44,9 +44,10 @@ public class FOTemplateRenderer {
 			.newInstance();
 	private final FOUserAgent foUserAgent = fopFactory.newFOUserAgent();
 
-	private final Source src;
+	private final String foXml;
 
-	public FOTemplateRenderer(Reader foReader) {
+	public FOTemplateRenderer(String foXml) {
+		this.foXml = foXml;
 		foUserAgent.setProducer("XSL-FO");
 		foUserAgent.setCreator("Yuriy Tumakha");
 		foUserAgent.setAuthor("Yuriy Tumakha");
@@ -59,13 +60,16 @@ public class FOTemplateRenderer {
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
-
-		src = new StreamSource(foReader);
 	}
 
 	public void savePdf(File outputFile) throws IOException,
 			TransformerException, FOPException {
 		proccessTemplate(outputFile, MimeConstants.MIME_PDF);
+	}
+
+	public void saveRtf(File outputFile) throws IOException,
+			TransformerException, FOPException {
+		proccessTemplate(outputFile, MimeConstants.MIME_RTF_ALT2);
 	}
 
 	private void proccessTemplate(File outputFile, String mime)
@@ -83,6 +87,7 @@ public class FOTemplateRenderer {
 			Result res = new SAXResult(fop.getDefaultHandler());
 
 			// Start XSLT transformation and FOP processing
+			Source src = new StreamSource(new StringReader(foXml));
 			tFactory.newTransformer().transform(src, res);
 
 		} catch (FileNotFoundException e) {

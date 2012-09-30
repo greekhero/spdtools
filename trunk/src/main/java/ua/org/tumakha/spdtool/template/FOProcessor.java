@@ -2,7 +2,6 @@ package ua.org.tumakha.spdtool.template;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,9 +24,9 @@ public class FOProcessor {
 	private static final Logger log = Logger.getLogger(FOProcessor.class);
 	private static final String TEMPLATES_DIRECTORY = "C:/spdtool-data/templates/fo";
 	private static final String REPORTS_DIRECTORY = "C:/Reports/docx";
-	private static final FreeMarkerProccessor FREE_MARKER_PROCCESSOR = getFreeMarkerProccessor();
+	private final FreeMarkerProccessor FREE_MARKER_PROCCESSOR = getFreeMarkerProccessor();
 
-	private static FreeMarkerProccessor getFreeMarkerProccessor() {
+	private FreeMarkerProccessor getFreeMarkerProccessor() {
 		try {
 			return FreeMarkerProccessor.getInstance(TEMPLATES_DIRECTORY);
 		} catch (IOException e) {
@@ -36,8 +35,8 @@ public class FOProcessor {
 		return null;
 	}
 
-	public List<String> savePdf(FOTemplate template,
-			List<? extends TemplateModel> listModel)
+	public List<String> saveReports(FOTemplate template,
+			List<? extends TemplateModel> listModel, FOType... types)
 			throws TransformerException, FOPException, TemplateException,
 			IOException {
 		List<String> fileNames = new ArrayList<String>();
@@ -45,31 +44,43 @@ public class FOProcessor {
 			log.debug("listModel is empty");
 		} else {
 			for (TemplateModel model : listModel) {
-				fileNames.add(saveDocument(template, model));
+				saveDocument(fileNames, template, model, types);
 			}
 		}
 		return fileNames;
 	}
 
-	private String saveDocument(FOTemplate template, TemplateModel model)
-			throws TransformerException, FOPException, TemplateException,
-			IOException {
+	private void saveDocument(List<String> fileNames, FOTemplate template,
+			TemplateModel model, FOType... types) throws TransformerException,
+			FOPException, TemplateException, IOException {
 		// process as FreeMarker template
 		String foXml = FREE_MARKER_PROCCESSOR.processTemplate(
 				template.getFilename(), getMappings(model));
 
-		FOTemplateRenderer foTemplateRenderer = new FOTemplateRenderer(
-				new StringReader(foXml));
+		FOTemplateRenderer foTemplateRenderer = new FOTemplateRenderer(foXml);
 
-		String outputfilepath = REPORTS_DIRECTORY
-				+ model.getOutputFilename(template).replace(".fo", ".pdf");
-		File outputFile = new File(outputfilepath);
-		if (outputFile.getParentFile().mkdirs()) {
-			log.debug("Created directory: " + outputFile.getParentFile());
+		for (FOType type : types) {
+			String tempateFilename = model.getOutputFilename(template);
+			String outputFilename = null;
+			if (type == FOType.PDF) {
+				outputFilename = tempateFilename.replace(".fo", ".pdf");
+			} else if (type == FOType.RTF) {
+				outputFilename = tempateFilename.replace(".fo", ".rtf");
+			}
+			String outputfilepath = REPORTS_DIRECTORY + outputFilename;
+
+			File outputFile = new File(outputfilepath);
+			if (outputFile.getParentFile().mkdirs()) {
+				log.debug("Created directory: " + outputFile.getParentFile());
+			}
+			if (type == FOType.PDF) {
+				foTemplateRenderer.savePdf(outputFile);
+			} else if (type == FOType.RTF) {
+				foTemplateRenderer.saveRtf(outputFile);
+			}
+			fileNames.add(outputfilepath);
+			log.debug("Saved output to: " + outputfilepath);
 		}
-		foTemplateRenderer.savePdf(outputFile);
-		log.debug("Saved output to: " + outputfilepath);
-		return outputfilepath;
 	}
 
 	@SuppressWarnings("unchecked")
