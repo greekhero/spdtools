@@ -5,7 +5,8 @@ package ua.org.tumakha.spdtool.template;
  */
 public enum FOTemplate {
 
-	ACT("Act_PE.fo");
+	ACT("Act_PE.fo"),
+	CONTRACT_ANNEX("Contract_PE_Annex.fo");
 
 	private String filename;
 

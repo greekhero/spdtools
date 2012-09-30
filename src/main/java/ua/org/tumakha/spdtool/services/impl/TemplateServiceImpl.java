@@ -65,9 +65,6 @@ public class TemplateServiceImpl implements TemplateService {
 	@Autowired
 	private ActService actService;
 
-	private final XlsProcessor xlsProcessor = new XlsProcessor();
-	private final DocxProcessor docxProcessor = new DocxProcessor();
-
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Deprecated
@@ -187,6 +184,7 @@ public class TemplateServiceImpl implements TemplateService {
 						declaration);
 			}
 		}
+		XlsProcessor xlsProcessor = new XlsProcessor();
 		for (Declaration declaration : declarations) {
 			User user = declaration.getUser();
 			Float income = declaration.getIncome();
@@ -253,18 +251,22 @@ public class TemplateServiceImpl implements TemplateService {
 		if (listModel != null) {
 			System.out.println("Generated report models: " + listModel.size());
 		}
+		generateActsDocx(fileNames, listModel, generateContracts, generateActs);
+		generateActsPdf(fileNames, listModel, generateContracts, generateActs);
+
+		return fileNames;
+	}
+
+	private void generateActsDocx(List<String> fileNames,
+			List<ActModel> listModel, boolean generateContracts,
+			boolean generateActs) throws JAXBException, Docx4JException,
+			TemplateException, IOException {
+		DocxProcessor docxProcessor = new DocxProcessor();
 		if (generateActs) {
 			fileNames.addAll(docxProcessor.saveReports(
 					DocxTemplate.CONTRACT_ANNEX, listModel));
 			fileNames.addAll(docxProcessor.saveReports(DocxTemplate.ACT,
 					listModel));
-
-			boolean generatePdf = false;
-			if (generatePdf) {
-				FOProcessor foProcessor = new FOProcessor();
-				fileNames.addAll(foProcessor.saveReports(FOTemplate.ACT,
-						listModel, FOType.PDF));
-			}
 		}
 		if (generateContracts) {
 			fileNames.addAll(docxProcessor.saveReports(DocxTemplate.CONTRACT,
@@ -281,7 +283,31 @@ public class TemplateServiceImpl implements TemplateService {
 		}
 		// docxProcessor.saveReports(DocxTemplate.CONTRACT_ADITIONAL_AGREEMENT,
 		// listModel);
-		return fileNames;
+	}
+
+	private void generateActsPdf(List<String> fileNames,
+			List<ActModel> listModel, boolean generateContracts,
+			boolean generateActs) throws TemplateException, IOException,
+			TransformerException, FOPException {
+		FOProcessor foProcessor = new FOProcessor();
+		if (generateActs) {
+			fileNames.addAll(foProcessor.saveReports(FOTemplate.ACT, listModel,
+					FOType.PDF));
+			// fileNames.addAll(foProcessor.saveReports(FOTemplate.CONTRACT_ANNEX,
+			// listModel, FOType.PDF));
+		}
+		if (generateContracts) {
+
+		} else {
+			// List<ActModel> newActModels = new ArrayList<ActModel>();
+			// for (ActModel actModel : listModel) {
+			// if (actModel.isNewContract()) {
+			// newActModels.add(actModel);
+			// }
+			// }
+			// fileNames.addAll(docxProcessor.saveReports(DocxTemplate.CONTRACT,
+			// newActModels));
+		}
 	}
 
 	public List<ActModel> getActModelList(List<Act> acts) {
