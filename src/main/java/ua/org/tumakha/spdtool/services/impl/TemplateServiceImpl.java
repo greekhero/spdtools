@@ -36,6 +36,7 @@ import ua.org.tumakha.spdtool.template.DocxProcessor;
 import ua.org.tumakha.spdtool.template.DocxTemplate;
 import ua.org.tumakha.spdtool.template.FOProcessor;
 import ua.org.tumakha.spdtool.template.FOTemplate;
+import ua.org.tumakha.spdtool.template.FOType;
 import ua.org.tumakha.spdtool.template.XlsProcessor;
 import ua.org.tumakha.spdtool.template.XlsTemplate;
 import ua.org.tumakha.spdtool.template.model.ActModel;
@@ -66,7 +67,6 @@ public class TemplateServiceImpl implements TemplateService {
 
 	private final XlsProcessor xlsProcessor = new XlsProcessor();
 	private final DocxProcessor docxProcessor = new DocxProcessor();
-	private final FOProcessor foProcessor = new FOProcessor();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
@@ -258,7 +258,10 @@ public class TemplateServiceImpl implements TemplateService {
 					DocxTemplate.CONTRACT_ANNEX, listModel));
 			fileNames.addAll(docxProcessor.saveReports(DocxTemplate.ACT,
 					listModel));
-			fileNames.addAll(foProcessor.savePdf(FOTemplate.ACT, listModel));
+
+			FOProcessor foProcessor = new FOProcessor();
+			fileNames.addAll(foProcessor.saveReports(FOTemplate.ACT, listModel,
+					FOType.PDF));
 		}
 		if (generateContracts) {
 			fileNames.addAll(docxProcessor.saveReports(DocxTemplate.CONTRACT,
