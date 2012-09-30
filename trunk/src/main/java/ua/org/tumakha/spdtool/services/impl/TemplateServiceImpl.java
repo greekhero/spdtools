@@ -259,9 +259,12 @@ public class TemplateServiceImpl implements TemplateService {
 			fileNames.addAll(docxProcessor.saveReports(DocxTemplate.ACT,
 					listModel));
 
-			FOProcessor foProcessor = new FOProcessor();
-			fileNames.addAll(foProcessor.saveReports(FOTemplate.ACT, listModel,
-					FOType.PDF));
+			boolean generatePdf = false;
+			if (generatePdf) {
+				FOProcessor foProcessor = new FOProcessor();
+				fileNames.addAll(foProcessor.saveReports(FOTemplate.ACT,
+						listModel, FOType.PDF));
+			}
 		}
 		if (generateContracts) {
 			fileNames.addAll(docxProcessor.saveReports(DocxTemplate.CONTRACT,
