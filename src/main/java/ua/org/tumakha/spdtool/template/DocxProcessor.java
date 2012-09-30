@@ -1,7 +1,9 @@
 package ua.org.tumakha.spdtool.template;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +15,9 @@ import javax.xml.bind.JAXBException;
 import org.apache.commons.beanutils.BeanMap;
 import org.apache.log4j.Logger;
 import org.docx4j.XmlUtils;
+import org.docx4j.convert.out.pdf.PdfConversion;
+import org.docx4j.convert.out.pdf.viaXSLFO.Conversion;
+import org.docx4j.convert.out.pdf.viaXSLFO.PdfSettings;
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.openpackaging.io.SaveToZipFile;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
@@ -105,7 +110,27 @@ public class DocxProcessor {
 		SaveToZipFile saver = new SaveToZipFile(wordMLPackage);
 		saver.save(outputfilepath);
 		log.debug("Saved output to: " + outputfilepath);
+
+		// savePdf(wordMLPackage, outputfilepath);
+
 		return outputfilepath;
+	}
+
+	private static void savePdf(WordprocessingMLPackage wordMLPackage,
+			String outputfilepath) throws FileNotFoundException,
+			Docx4JException {
+		// the PdfConversion object
+		PdfConversion c = new Conversion(wordMLPackage);
+
+		// for demo/debugging purposes, save the intermediate XSL FO
+		((org.docx4j.convert.out.pdf.viaXSLFO.Conversion) c)
+				.setSaveFO(new java.io.File(outputfilepath.replace(".docx",
+						".fo.xml")));
+
+		// PdfConversion writes to an output stream
+		String pdffilepath = outputfilepath.replace(".docx", ".pdf");
+		OutputStream os = new java.io.FileOutputStream(pdffilepath);
+		c.output(os, new PdfSettings());
 	}
 
 	@SuppressWarnings("unchecked")
