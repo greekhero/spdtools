@@ -252,7 +252,8 @@ public class TemplateServiceImpl implements TemplateService {
 			System.out.println("Generated report models: " + listModel.size());
 		}
 		generateActsDocx(fileNames, listModel, generateContracts, generateActs);
-		generateActsPdf(fileNames, listModel, generateContracts, generateActs);
+		// generateActsPdf(fileNames, listModel, generateContracts,
+		// generateActs);
 
 		return fileNames;
 	}
