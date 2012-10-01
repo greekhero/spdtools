@@ -252,8 +252,7 @@ public class TemplateServiceImpl implements TemplateService {
 			System.out.println("Generated report models: " + listModel.size());
 		}
 		generateActsDocx(fileNames, listModel, generateContracts, generateActs);
-		// generateActsPdf(fileNames, listModel, generateContracts,
-		// generateActs);
+		generateActsPdf(fileNames, listModel, generateContracts, generateActs);
 
 		return fileNames;
 	}
@@ -294,8 +293,8 @@ public class TemplateServiceImpl implements TemplateService {
 		if (generateActs) {
 			fileNames.addAll(foProcessor.saveReports(FOTemplate.ACT, listModel,
 					FOType.PDF));
-			// fileNames.addAll(foProcessor.saveReports(FOTemplate.CONTRACT_ANNEX,
-			// listModel, FOType.PDF));
+			fileNames.addAll(foProcessor.saveReports(FOTemplate.CONTRACT_ANNEX,
+					listModel, FOType.PDF));
 		}
 		if (generateContracts) {
 
