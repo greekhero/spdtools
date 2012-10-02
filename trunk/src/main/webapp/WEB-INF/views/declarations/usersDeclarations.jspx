@@ -4,7 +4,7 @@
   <spring:message var="title" code="declaration_state2_title" htmlEscape="false" />
 <script type="text/javascript">
 function calculateTax(el) {
-	document.getElementById(el.id.replace("income", "tax")).value = Math.round(el.value*0.05);
+	document.getElementById(el.id.replace("income", "tax")).value = Math.round(el.value*5)/100;
 }
 </script>
   <util:panel id="title" title="${title}">

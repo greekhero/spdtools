@@ -39,10 +39,10 @@ public class Declaration implements Serializable {
 	@NotNull
 	private Integer quarter;
 
-	@Column(precision = 0)
+	@Column(precision = 2)
 	private Float income;
 
-	@Column(precision = 0)
+	@Column(precision = 2)
 	private Float tax;
 
 	public Integer getDeclarationId() {
