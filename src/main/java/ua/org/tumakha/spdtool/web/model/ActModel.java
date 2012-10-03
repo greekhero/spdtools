@@ -84,6 +84,9 @@ public class ActModel implements Serializable {
 		List<ActReaderModel> acts = new ArrayList<ActReaderModel>();
 		xlsReader.addBean("acts", acts);
 		xlsReader.read(actFile.getInputStream(), XlsMapping.ACT);
+		if (acts.size() == 0) {
+			bindingResult.reject("error_act_file_no_records");
+		}
 		return acts;
 	}
 
