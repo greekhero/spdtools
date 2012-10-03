@@ -78,6 +78,9 @@ public class DeclarationModel implements Serializable {
 		List<DeclarationReaderModel> declarations = new ArrayList<DeclarationReaderModel>();
 		xlsReader.addBean("declarations", declarations);
 		xlsReader.read(incomeFile.getInputStream(), XlsMapping.DECLARATION);
+		if (declarations.size() == 0) {
+			bindingResult.reject("error_declaration_file_no_records");
+		}
 		return declarations;
 	}
 

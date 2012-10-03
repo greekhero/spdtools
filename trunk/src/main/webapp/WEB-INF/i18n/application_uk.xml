@@ -138,6 +138,7 @@
 	<entry key="label_declaration_income">Дохід</entry>
 	<entry key="label_declaration_tax">Податок</entry>
 	<entry key="error_declaration_upload_fileextension">Неправильне розширення файлу. Дозволено .xls або .xlsx файл.</entry>
+	<entry key="error_declaration_file_no_records">Файл порожній або не знайдено лист "Sheet1".</entry>
 	<entry key="error_declaration_user_not_found">Не знайдено ФОП з прізвищем {0}.</entry>
 
 	<!-- act -->
@@ -153,5 +154,6 @@
 	<entry key="label_act_start_date">Акт Старт</entry>
 	<entry key="label_act_salary">Зарплата</entry>
 	<entry key="error_act_upload_fileextension">Неправильне розширення файлу. Дозволено .xls або .xlsx файл.</entry>
+	<entry key="error_act_file_no_records">Файл порожній або не знайдено лист "Sheet1".</entry>
 	<entry key="error_act_user_not_found">Не знайдено ФОП з прізвищем {0}.</entry>
 </properties>
