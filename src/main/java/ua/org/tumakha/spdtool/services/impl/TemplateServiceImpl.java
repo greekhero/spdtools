@@ -297,16 +297,17 @@ public class TemplateServiceImpl implements TemplateService {
 					listModel, FOType.PDF));
 		}
 		if (generateContracts) {
-
+			fileNames.addAll(foProcessor.saveReports(FOTemplate.CONTRACT,
+					listModel, FOType.PDF));
 		} else {
-			// List<ActModel> newActModels = new ArrayList<ActModel>();
-			// for (ActModel actModel : listModel) {
-			// if (actModel.isNewContract()) {
-			// newActModels.add(actModel);
-			// }
-			// }
-			// fileNames.addAll(docxProcessor.saveReports(DocxTemplate.CONTRACT,
-			// newActModels));
+			List<ActModel> newActModels = new ArrayList<ActModel>();
+			for (ActModel actModel : listModel) {
+				if (actModel.isNewContract()) {
+					newActModels.add(actModel);
+				}
+			}
+			fileNames.addAll(foProcessor.saveReports(FOTemplate.CONTRACT,
+					newActModels, FOType.PDF));
 		}
 	}
 
