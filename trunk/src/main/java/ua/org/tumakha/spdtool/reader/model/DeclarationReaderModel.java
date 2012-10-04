@@ -1,5 +1,7 @@
 package ua.org.tumakha.spdtool.reader.model;
 
+import java.math.BigDecimal;
+
 /**
  * @author Yuriy Tumakha
  */
@@ -7,9 +9,9 @@ public class DeclarationReaderModel {
 
 	private String lastname;
 
-	private Float income;
+	private BigDecimal income;
 
-	private Float tax;
+	private BigDecimal tax;
 
 	public String getLastname() {
 		return lastname;
@@ -19,19 +21,19 @@ public class DeclarationReaderModel {
 		this.lastname = lastname;
 	}
 
-	public Float getIncome() {
+	public BigDecimal getIncome() {
 		return income;
 	}
 
-	public void setIncome(Float income) {
+	public void setIncome(BigDecimal income) {
 		this.income = income;
 	}
 
-	public Float getTax() {
+	public BigDecimal getTax() {
 		return tax;
 	}
 
-	public void setTax(Float tax) {
+	public void setTax(BigDecimal tax) {
 		this.tax = tax;
 	}
 
