@@ -1,6 +1,7 @@
 package ua.org.tumakha.spdtool.services.impl;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
@@ -187,23 +188,23 @@ public class TemplateServiceImpl implements TemplateService {
 		XlsProcessor xlsProcessor = new XlsProcessor();
 		for (Declaration declaration : declarations) {
 			User user = declaration.getUser();
-			Float income = declaration.getIncome();
-			Float tax = declaration.getTax();
+			BigDecimal income = declaration.getIncome();
+			BigDecimal tax = declaration.getTax();
 			Map<String, Object> beans = new HashMap<String, Object>();
 			beans.put("user", user);
 			beans.put("year", year);
 			beans.put("dateYear", dateYear);
 			beans.put("income", income);
 			beans.put("tax", tax);
-			Float previousTax = null;
-			Float taxToPay = tax;
+			BigDecimal previousTax = null;
+			BigDecimal taxToPay = tax;
 			if (!quarter.equals(1) && tax != null) {
 				Declaration previousDeclaration = previousDeclarations.get(user
 						.getUserId());
 				if (previousDeclaration != null) {
 					if (previousDeclaration.getTax() != null) {
 						previousTax = previousDeclaration.getTax();
-						taxToPay = tax - previousDeclaration.getTax();
+						taxToPay = tax.subtract(previousTax);
 					}
 				}
 			}

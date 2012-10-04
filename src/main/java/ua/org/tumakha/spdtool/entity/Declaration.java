@@ -1,6 +1,7 @@
 package ua.org.tumakha.spdtool.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,10 +41,10 @@ public class Declaration implements Serializable {
 	private Integer quarter;
 
 	@Column(precision = 2)
-	private Float income;
+	private BigDecimal income;
 
 	@Column(precision = 2)
-	private Float tax;
+	private BigDecimal tax;
 
 	public Integer getDeclarationId() {
 		return declarationId;
@@ -77,19 +78,19 @@ public class Declaration implements Serializable {
 		this.quarter = quarter;
 	}
 
-	public Float getIncome() {
+	public BigDecimal getIncome() {
 		return income;
 	}
 
-	public void setIncome(Float income) {
+	public void setIncome(BigDecimal income) {
 		this.income = income;
 	}
 
-	public Float getTax() {
+	public BigDecimal getTax() {
 		return tax;
 	}
 
-	public void setTax(Float tax) {
+	public void setTax(BigDecimal tax) {
 		this.tax = tax;
 	}
 
