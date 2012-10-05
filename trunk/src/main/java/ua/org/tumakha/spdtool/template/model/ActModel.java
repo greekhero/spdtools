@@ -46,6 +46,8 @@ public class ActModel extends TemplateModel {
 	private String dateEn;
 	private String startDate;
 	private String startDateEn;
+	private String startContractDate;
+	private String startContractDateEn;
 	private String dateFrom;
 	private String dateFromEn;
 	private String dateFromDigit;
@@ -85,6 +87,8 @@ public class ActModel extends TemplateModel {
 			dateEn = actDateFormatEn.format(act.getDateTo());
 			startDate = actDateFormat.format(act.getDateFrom());
 			startDateEn = actDateFormatEn.format(act.getDateFrom());
+			startContractDate = actDateFormat.format(contract.getDate());
+			startContractDateEn = actDateFormatEn.format(contract.getDate());
 			dateFrom = actPeriodFormat.format(act.getDateFrom());
 			dateFromEn = actPeriodFormatEn.format(act.getDateFrom());
 			dateFromDigit = uaDateFormat.format(act.getDateFrom());
@@ -197,6 +201,22 @@ public class ActModel extends TemplateModel {
 
 	public void setStartDateEn(String startDateEn) {
 		this.startDateEn = startDateEn;
+	}
+
+	public String getStartContractDate() {
+		return startContractDate;
+	}
+
+	public void setStartContractDate(String startContractDate) {
+		this.startContractDate = startContractDate;
+	}
+
+	public String getStartContractDateEn() {
+		return startContractDateEn;
+	}
+
+	public void setStartContractDateEn(String startContractDateEn) {
+		this.startContractDateEn = startContractDateEn;
 	}
 
 	public String getDateFrom() {
