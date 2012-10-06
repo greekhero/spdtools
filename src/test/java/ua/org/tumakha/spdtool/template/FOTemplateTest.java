@@ -19,6 +19,8 @@ public class FOTemplateTest {
 		actModel.setContractNo("YVT/2011-05");
 		actModel.setContractDate("18 травня 2011");
 		actModel.setContractDateEn("18 May 2011");
+		actModel.setStartContractDate("«24»  вересня  2011 р");
+		actModel.setStartContractDateEn("«24»  September  2011");
 		actModel.setDate("31 грудня 2011 р.");
 		actModel.setDateEn("31 of December 2011");
 		actModel.setDateFrom("01 грудня 2011");
@@ -35,6 +37,7 @@ public class FOTemplateTest {
 		actModel.setAmountUa(NumberUtil.numberInWordsUa(4762) + " долари");
 		actModel.setAmountEn(NumberUtil.numberInWordsEn(4762));
 		actModel.setRegNumber("123456 4455667 45666");
+		actModel.setRegNumberEn("123456 4455667 45666");
 		actModel.setRegDate("18.12.2010");
 		actModel.setRegAddress("вул. Горького, б.32,  м. Київ,Україна");
 		actModel.setRegAddressEn("str. Horkogo, 32,  Kyiv, Ukraine");
