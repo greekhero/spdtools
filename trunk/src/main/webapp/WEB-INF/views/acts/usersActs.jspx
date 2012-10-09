@@ -15,6 +15,7 @@
       <table>
         <thead>
       		<tr>
+      			<th><input type="checkbox" id="selectall"/></th>
       			<th><spring:message code="label_ua_org_tumakha_spdtool_user_lastname"/></th>
       			<th><spring:message code="label_ua_org_tumakha_spdtool_user_firstname"/></th>
       			<th><spring:message code="label_act_contract_number"/></th>
@@ -25,6 +26,7 @@
       	<tbody>
 			<c:forEach items="${actModel.acts}" varStatus="row">
 				<tr>
+					<td><form:checkbox path="enabledUserIds" value="${actModel.acts[row.index].user.userId}" cssClass="userCheckbox"/></td>
 					<td><spring:bind path="acts[${row.index}].user.lastname">${status.value}</spring:bind></td>
 					<td><spring:bind path="acts[${row.index}].user.firstname">${status.value}</spring:bind></td>
 					<td>
@@ -66,5 +68,14 @@
       </div>
       </p>
     </form:form>
+    <script type="text/javascript">
+    dojo.query("input[type='checkbox']").forEach(function(element) {
+        Spring.addDecoration(new Spring.ElementDecoration({
+            elementId: element.id,
+            widgetType : "dijit.form.CheckBox",
+            widgetAttrs : { checked : element.checked }
+        }));
+    });
+	</script>
   </util:panel>
 </div>

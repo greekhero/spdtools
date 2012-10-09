@@ -71,7 +71,6 @@ public class ActController {
 		ActModel actModel = new ActModel();
 		actModel.setYear(defaultYear);
 		actModel.setMonth(defaultMonth);
-		actModel.setGenerateActs(true);
 		uiModel.addAttribute("actModel", actModel);
 		return redirect("initData");
 	}
@@ -126,6 +125,7 @@ public class ActController {
 
 		List<User> activeUsers = userService.findActiveUsers();
 		List<Act> acts = new ArrayList<Act>();
+		actModel.getEnabledUserIds().clear();
 		if (activeUsers != null) {
 			Map<Integer, Act> dbActs = getDbActs(actModel);
 			for (User user : activeUsers) {
@@ -143,6 +143,7 @@ public class ActController {
 						}
 					}
 					acts.add(act);
+					actModel.getEnabledUserIds().add(user.getUserId());
 				}
 			}
 		}
@@ -253,7 +254,7 @@ public class ActController {
 			uiModel.addAttribute("actModel", actModel);
 			return view("userActs");
 		}
-		actService.saveActs(actModel.getActs());
+		actService.saveActs(actModel.getActs(), actModel.getEnabledUserIds());
 
 		return redirect("generateDocuments");
 	}
@@ -263,8 +264,9 @@ public class ActController {
 			RedirectAttributes redirectAttrs) throws Exception {
 
 		List<String> fileNames = templateService.generateActs(
-				actModel.getYear(), actModel.getMonth(),
-				actModel.isGenerateContracts(), actModel.isGenerateActs());
+				actModel.getEnabledUserIds(), actModel.getYear(),
+				actModel.getMonth(), actModel.isGenerateContracts(),
+				actModel.isGenerateActs());
 
 		redirectAttrs.addFlashAttribute("fileNames", fileNames);
 

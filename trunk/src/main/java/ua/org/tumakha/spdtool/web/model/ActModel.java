@@ -3,7 +3,9 @@ package ua.org.tumakha.spdtool.web.model;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 
@@ -34,6 +36,13 @@ public class ActModel implements Serializable {
 	private transient MultipartFile actFile;
 
 	private List<Act> acts;
+
+	private Set<Integer> enabledUserIds;
+
+	public ActModel() {
+		enabledUserIds = new HashSet<Integer>();
+		generateActs = true;
+	}
 
 	public Integer getYear() {
 		return year;
@@ -96,6 +105,14 @@ public class ActModel implements Serializable {
 
 	public void setActs(List<Act> acts) {
 		this.acts = acts;
+	}
+
+	public Set<Integer> getEnabledUserIds() {
+		return enabledUserIds;
+	}
+
+	public void setEnabledUserIds(Set<Integer> enabledUserIds) {
+		this.enabledUserIds = enabledUserIds;
 	}
 
 }

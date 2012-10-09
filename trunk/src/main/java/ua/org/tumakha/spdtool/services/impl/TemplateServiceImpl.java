@@ -242,13 +242,13 @@ public class TemplateServiceImpl implements TemplateService {
 	}
 
 	@Override
-	public List<String> generateActs(Integer year, Integer month,
-			boolean generateContracts, boolean generateActs)
+	public List<String> generateActs(Set<Integer> enabledUserIds, Integer year,
+			Integer month, boolean generateContracts, boolean generateActs)
 			throws JAXBException, Docx4JException, TemplateException,
 			IOException, TransformerException, FOPException {
 		List<String> fileNames = new ArrayList<String>();
 		List<Act> acts = actService.findActsByYearAndMonth(year, month);
-		List<ActModel> listModel = getActModelList(acts);
+		List<ActModel> listModel = getActModelList(acts, enabledUserIds);
 		if (listModel != null) {
 			System.out.println("Generated report models: " + listModel.size());
 		}
@@ -316,14 +316,17 @@ public class TemplateServiceImpl implements TemplateService {
 		}
 	}
 
-	public List<ActModel> getActModelList(List<Act> acts) {
+	public List<ActModel> getActModelList(List<Act> acts,
+			Set<Integer> enabledUserIds) {
 		List<ActModel> listModel = new ArrayList<ActModel>(acts.size());
 		User lastUser = null;
 		try {
 			for (Act act : acts) {
 				lastUser = act.getUser();
-				ActModel actModel = new ActModel(act);
-				listModel.add(actModel);
+				if (enabledUserIds.contains(lastUser.getUserId())) {
+					ActModel actModel = new ActModel(act);
+					listModel.add(actModel);
+				}
 			}
 		} finally {
 			log.error("ActModel error: Last User - " + lastUser.getUserId()

@@ -1,6 +1,7 @@
 package ua.org.tumakha.spdtool.services;
 
 import java.util.List;
+import java.util.Set;
 
 import ua.org.tumakha.spdtool.entity.Act;
 
@@ -21,6 +22,6 @@ public interface ActService {
 
 	List<Act> findActsByYearAndMonth(Integer year, Integer month);
 
-	void saveActs(List<Act> acts);
+	void saveActs(List<Act> acts, Set<Integer> enabledUserIds);
 
 }
