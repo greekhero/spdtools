@@ -3,6 +3,7 @@ package ua.org.tumakha.spdtool.services.impl;
 import static org.springframework.util.Assert.notNull;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -67,10 +68,12 @@ public class ActServiceImpl implements ActService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void saveActs(List<Act> acts) {
-		notNull(acts);
+	public void saveActs(List<Act> acts, Set<Integer> enabledUserIds) {
+		notNull(acts, "acts must not be null.");
+		notNull(enabledUserIds, "enabledUserIds must not be null.");
 		for (Act act : acts) {
-			if (act.getAmount() != null && !act.getAmount().equals(0)) {
+			if (enabledUserIds.contains(act.getUser().getUserId())
+					&& act.getAmount() != null && !act.getAmount().equals(0)) {
 				if (act.getActId() == null) {
 					if (act.getContract().getContractId() == null) {
 						contractDao.persist(act.getContract());
