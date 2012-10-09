@@ -13,6 +13,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
 import org.apache.commons.beanutils.BeanMap;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.docx4j.XmlUtils;
 import org.docx4j.convert.out.pdf.PdfConversion;
@@ -49,6 +50,19 @@ public class DocxProcessor {
 
 	public void saveReport(TemplateModel model) {
 		log.debug(model.getClass());// TODO:
+	}
+
+	public void cleanBaseDirectory(DocxTemplate template, TemplateModel model)
+			throws IOException {
+		String outputfilepath = REPORTS_DIRECTORY
+				+ model.getOutputFilename(template);
+		File outputFile = new File(outputfilepath);
+		File outputBaseDirectory = outputFile.getParentFile().getParentFile();
+		// prevent delete not reports directories
+		String path = outputBaseDirectory.getAbsolutePath();
+		if (path.contains("docx") && path.length() > 16) {
+			FileUtils.deleteDirectory(outputBaseDirectory);
+		}
 	}
 
 	public List<String> saveReports(DocxTemplate template,
@@ -104,9 +118,11 @@ public class DocxProcessor {
 		wordMLPackage.getMainDocumentPart().setJaxbElement((Document) obj);
 
 		File outputFile = new File(outputfilepath);
-		if (outputFile.getParentFile().mkdirs()) {
-			log.debug("Created directory: " + outputFile.getParentFile());
+		File outputDirectory = outputFile.getParentFile();
+		if (outputDirectory.mkdirs()) {
+			log.debug("Created directory: " + outputDirectory);
 		}
+
 		SaveToZipFile saver = new SaveToZipFile(wordMLPackage);
 		saver.save(outputfilepath);
 		log.debug("Saved output to: " + outputfilepath);
