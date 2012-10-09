@@ -263,6 +263,10 @@ public class TemplateServiceImpl implements TemplateService {
 			boolean generateActs) throws JAXBException, Docx4JException,
 			TemplateException, IOException {
 		DocxProcessor docxProcessor = new DocxProcessor();
+		if (listModel != null && listModel.size() > 0) {
+			docxProcessor
+					.cleanBaseDirectory(DocxTemplate.ACT, listModel.get(0));
+		}
 		if (generateActs) {
 			fileNames.addAll(docxProcessor.saveReports(
 					DocxTemplate.CONTRACT_ANNEX, listModel));
