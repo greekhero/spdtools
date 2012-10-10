@@ -26,7 +26,7 @@
       	<tbody>
 			<c:forEach items="${actModel.acts}" varStatus="row">
 				<tr>
-					<td><form:checkbox path="enabledUserIds" value="${actModel.acts[row.index].user.userId}" cssClass="userCheckbox"/></td>
+					<td><form:checkbox path="enabledUserIds" value="${actModel.acts[row.index].user.userId}"/></td>
 					<td><spring:bind path="acts[${row.index}].user.lastname">${status.value}</spring:bind></td>
 					<td><spring:bind path="acts[${row.index}].user.firstname">${status.value}</spring:bind></td>
 					<td>
