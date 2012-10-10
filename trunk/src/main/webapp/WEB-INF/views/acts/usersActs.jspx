@@ -69,13 +69,27 @@
       </p>
     </form:form>
     <script type="text/javascript">
-    dojo.query("input[type='checkbox']").forEach(function(element) {
-        Spring.addDecoration(new Spring.ElementDecoration({
-            elementId: element.id,
-            widgetType : "dijit.form.CheckBox",
-            widgetAttrs : { checked : element.checked }
-        }));
-    });
+    	dojo.byId("selectall").checked = true;
+
+   	    dojo.query("input[type='checkbox']").forEach(function(element) {
+   	        Spring.addDecoration(new Spring.ElementDecoration({
+   	            elementId: element.id,
+   	            widgetType : "dijit.form.CheckBox",
+   	            widgetAttrs : { checked : element.checked }
+   	        }));
+   	    });
+
+       	dojo.addOnLoad(function() {
+
+            dojo.connect(dijit.byId("selectall"), "onChange", function() {
+            	dojo.query(("input[type='checkbox']")).forEach(function(element) {
+            		if (element.id != "selectall") {
+            			dijit.byId(element.id).setChecked(dojo.byId("selectall").checked);
+            		}
+            	});
+            });
+
+        });
 	</script>
   </util:panel>
 </div>
