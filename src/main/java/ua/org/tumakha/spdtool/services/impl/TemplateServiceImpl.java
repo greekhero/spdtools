@@ -168,24 +168,30 @@ public class TemplateServiceImpl implements TemplateService {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<String> generateDeclarations(Set<Integer> groupIds,
-			Integer year, Integer quarter) throws InvalidFormatException,
-			IOException {
+	public List<String> generateDeclarations(Set<Integer> enabledUserIds,
+			Set<Integer> groupIds, Integer year, Integer quarter)
+			throws InvalidFormatException, IOException {
 		char[] dateYear = ("" + (quarter == 4 ? year + 1 : year)).toCharArray();
 		List<String> fileNames = new ArrayList<String>();
-		// TODO filter by groupIds
 		List<Declaration> declarations = declarationService
-				.findDeclarationsByYearAndQuarter(year, quarter);
+				.findDeclarationsByYearAndQuarter(enabledUserIds, year, quarter);
 		Map<Integer, Declaration> previousDeclarations = new HashMap<Integer, Declaration>();
 		if (!quarter.equals(1)) {
 			List<Declaration> prevDeclarations = declarationService
-					.findDeclarationsByYearAndQuarter(year, quarter - 1);
+					.findDeclarationsByYearAndQuarter(enabledUserIds, year,
+							quarter - 1);
 			for (Declaration declaration : prevDeclarations) {
 				previousDeclarations.put(declaration.getUser().getUserId(),
 						declaration);
 			}
 		}
+
 		XlsProcessor xlsProcessor = new XlsProcessor();
+		if (declarations != null && declarations.size() > 0) {
+			xlsProcessor.cleanBaseDirectory(XlsTemplate.DECLARATION, year,
+					quarter);
+		}
+
 		for (Declaration declaration : declarations) {
 			User user = declaration.getUser();
 			BigDecimal income = declaration.getIncome();

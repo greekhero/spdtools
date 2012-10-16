@@ -33,8 +33,9 @@ public interface TemplateService {
 
 	List<Form11KvedModel> getForm11KvedModelList(Integer groupId);
 
-	List<String> generateDeclarations(Set<Integer> groupIds, Integer year,
-			Integer quarter) throws InvalidFormatException, IOException;
+	List<String> generateDeclarations(Set<Integer> enabledUserIds,
+			Set<Integer> groupIds, Integer year, Integer quarter)
+			throws InvalidFormatException, IOException;
 
 	List<String> generateActs(Set<Integer> enabledUserIds, Integer year,
 			Integer month, boolean generateContracts, boolean generateActs)

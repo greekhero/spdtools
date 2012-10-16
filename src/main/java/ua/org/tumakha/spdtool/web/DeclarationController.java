@@ -139,6 +139,7 @@ public class DeclarationController {
 		List<User> activeUsers = userService
 				.findActiveUsersByGroups(declarationModel.getGroupIds());
 		List<Declaration> declarations = new ArrayList<Declaration>();
+		declarationModel.getEnabledUserIds().clear();
 		if (activeUsers != null) {
 			Map<Integer, Declaration> dbDeclarations = getDbDeclarations(declarationModel);
 			for (User user : activeUsers) {
@@ -157,6 +158,7 @@ public class DeclarationController {
 					}
 				}
 				declarations.add(declaration);
+				declarationModel.getEnabledUserIds().add(user.getUserId());
 			}
 		}
 		declarationModel.setDeclarations(declarations);
@@ -214,11 +216,15 @@ public class DeclarationController {
 		if (cancel != null) {
 			return redirect("initData");
 		}
-		if (bindingResult.hasErrors()) {
-			uiModel.addAttribute("declarationModel", declarationModel);
-			return view("userDeclarations");
+		if (declarationModel.getEnabledUserIds() == null) {
+			bindingResult.reject("error_declaration_users_not_selected");
 		}
-		declarationService.saveDeclarations(declarationModel.getDeclarations());
+		if (bindingResult.hasErrors()) {
+			return redirect("usersDeclarations");
+		}
+		declarationService.saveDeclarations(
+				declarationModel.getEnabledUserIds(),
+				declarationModel.getDeclarations());
 
 		return redirect("generateDocuments");
 	}
@@ -228,6 +234,7 @@ public class DeclarationController {
 			RedirectAttributes redirectAttrs) throws Exception {
 
 		List<String> fileNames = templateService.generateDeclarations(
+				declarationModel.getEnabledUserIds(),
 				declarationModel.getGroupIds(), declarationModel.getYear(),
 				declarationModel.getQuarter());
 

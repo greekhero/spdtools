@@ -1,6 +1,7 @@
 package ua.org.tumakha.spdtool.services;
 
 import java.util.List;
+import java.util.Set;
 
 import ua.org.tumakha.spdtool.entity.Declaration;
 
@@ -22,6 +23,10 @@ public interface DeclarationService {
 	List<Declaration> findDeclarationsByYearAndQuarter(Integer year,
 			Integer quarter);
 
-	void saveDeclarations(List<Declaration> declarations);
+	List<Declaration> findDeclarationsByYearAndQuarter(
+			Set<Integer> enabledUserIds, Integer year, Integer quarter);
+
+	void saveDeclarations(Set<Integer> enabledUserIds,
+			List<Declaration> declarations);
 
 }

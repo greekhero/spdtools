@@ -20,6 +20,7 @@ function calculateTax(el) {
       <table>
         <thead>
       		<tr>
+      			<th><input type="checkbox" id="selectall"/></th>
       			<th><spring:message code="label_ua_org_tumakha_spdtool_user_lastname"/></th>
       			<th><spring:message code="label_ua_org_tumakha_spdtool_user_firstname"/></th>
       			<th><spring:message code="label_declaration_income"/></th>
@@ -29,6 +30,7 @@ function calculateTax(el) {
       	<tbody>
 			<c:forEach items="${declarationModel.declarations}" varStatus="row">
 				<tr>
+					<td><form:checkbox path="enabledUserIds" value="${declarationModel.declarations[row.index].user.userId}"/></td>
 					<td><spring:bind path="declarations[${row.index}].user.lastname">${status.value}</spring:bind></td>
 					<td><spring:bind path="declarations[${row.index}].user.firstname">${status.value}</spring:bind></td>
 					<td><form:input path="declarations[${row.index}].income" onchange="calculateTax(this)" onkeyup="calculateTax(this)"/></td>
@@ -46,5 +48,28 @@ function calculateTax(el) {
       </div>
       </p>
     </form:form>
+    <script type="text/javascript">
+    	dojo.byId("selectall").checked = true;
+
+   	    dojo.query("input[type='checkbox']").forEach(function(element) {
+   	        Spring.addDecoration(new Spring.ElementDecoration({
+   	            elementId: element.id,
+   	            widgetType : "dijit.form.CheckBox",
+   	            widgetAttrs : { checked : element.checked }
+   	        }));
+   	    });
+
+       	dojo.addOnLoad(function() {
+
+            dojo.connect(dijit.byId("selectall"), "onChange", function() {
+            	dojo.query(("input[type='checkbox']")).forEach(function(element) {
+            		if (element.id != "selectall") {
+            			dijit.byId(element.id).setChecked(dojo.byId("selectall").checked);
+            		}
+            	});
+            });
+
+        });
+	</script>
   </util:panel>
 </div>

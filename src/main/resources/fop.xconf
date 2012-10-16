@@ -93,6 +93,18 @@
           <font-triplet name="TimesMT" style="italic" weight="bold"/>
         </font>
       </fonts>
+        <font metrics-url="cour.xml" kerning="yes" embed-url="cour.ttf">
+          <font-triplet name="CourierNew" style="normal" weight="normal"/>
+        </font>
+        <font metrics-url="courbd.xml" kerning="yes" embed-url="courbd.ttf">
+          <font-triplet name="CourierNew" style="normal" weight="bold"/>
+        </font>
+        <font metrics-url="couri.xml" kerning="yes" embed-url="couri.ttf">
+          <font-triplet name="CourierNew" style="italic" weight="normal"/>
+        </font>
+        <font metrics-url="courbi.xml" kerning="yes" embed-url="courbi.ttf">
+          <font-triplet name="CourierNew" style="italic" weight="bold"/>
+        </font>
 
       <!-- This option lets you specify additional options on an XML handler -->
       <!--xml-handler namespace="http://www.w3.org/2000/svg">
