@@ -140,6 +140,8 @@
 	<entry key="error_declaration_upload_fileextension">Неправильне розширення файлу. Дозволено .xls або .xlsx файл.</entry>
 	<entry key="error_declaration_file_no_records">Файл порожній або не знайдено лист "Sheet1".</entry>
 	<entry key="error_declaration_user_not_found">Не знайдено ФОП з прізвищем {0}.</entry>
+	<entry key="error_declaration_users_not_selected">Не вибрано ФОП.</entry>
+	
 
 	<!-- act -->
 	<entry key="act_state1_title">Генерування актів - Крок 1</entry>
@@ -156,4 +158,5 @@
 	<entry key="error_act_upload_fileextension">Неправильне розширення файлу. Дозволено .xls або .xlsx файл.</entry>
 	<entry key="error_act_file_no_records">Файл порожній або не знайдено лист "Sheet1".</entry>
 	<entry key="error_act_user_not_found">Не знайдено ФОП з прізвищем {0}.</entry>
+	<entry key="error_act_users_not_selected">Не вибрано ФОП.</entry>
 </properties>

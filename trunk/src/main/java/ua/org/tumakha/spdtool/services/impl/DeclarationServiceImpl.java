@@ -3,6 +3,7 @@ package ua.org.tumakha.spdtool.services.impl;
 import static org.springframework.util.Assert.notNull;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -63,16 +64,27 @@ public class DeclarationServiceImpl implements DeclarationService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public List<Declaration> findDeclarationsByYearAndQuarter(
+			Set<Integer> enabledUserIds, Integer year, Integer quarter) {
+		return declarationDao.findByYearAndQuarter(enabledUserIds, year,
+				quarter);
+	}
+
+	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void saveDeclarations(List<Declaration> declarations) {
+	public void saveDeclarations(Set<Integer> enabledUserIds,
+			List<Declaration> declarations) {
 		notNull(declarations);
+		notNull(enabledUserIds, "enabledUserIds must not be null.");
 		for (Declaration declaration : declarations) {
-			if (declaration.getDeclarationId() == null) {
-				declarationDao.persist(declaration);
-			} else {
-				declarationDao.merge(declaration);
+			if (enabledUserIds.contains(declaration.getUser().getUserId())) {
+				if (declaration.getDeclarationId() == null) {
+					declarationDao.persist(declaration);
+				} else {
+					declarationDao.merge(declaration);
+				}
 			}
 		}
 	}
-
 }

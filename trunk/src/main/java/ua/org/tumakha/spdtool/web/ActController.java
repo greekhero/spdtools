@@ -250,9 +250,11 @@ public class ActController {
 		if (cancel != null) {
 			return redirect("initData");
 		}
+		if (actModel.getEnabledUserIds() == null) {
+			bindingResult.reject("error_act_users_not_selected");
+		}
 		if (bindingResult.hasErrors()) {
-			uiModel.addAttribute("actModel", actModel);
-			return view("userActs");
+			return redirect("usersActs");
 		}
 		actService.saveActs(actModel.getActs(), actModel.getEnabledUserIds());
 

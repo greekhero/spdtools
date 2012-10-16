@@ -3,6 +3,7 @@ package ua.org.tumakha.spdtool.web.model;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -36,6 +37,12 @@ public class DeclarationModel implements Serializable {
 	private transient MultipartFile incomeFile;
 
 	private List<Declaration> declarations;
+
+	private Set<Integer> enabledUserIds;
+
+	public DeclarationModel() {
+		enabledUserIds = new HashSet<Integer>();
+	}
 
 	public Set<Integer> getGroupIds() {
 		return groupIds;
@@ -90,6 +97,14 @@ public class DeclarationModel implements Serializable {
 
 	public void setDeclarations(List<Declaration> declarations) {
 		this.declarations = declarations;
+	}
+
+	public Set<Integer> getEnabledUserIds() {
+		return enabledUserIds;
+	}
+
+	public void setEnabledUserIds(Set<Integer> enabledUserIds) {
+		this.enabledUserIds = enabledUserIds;
 	}
 
 }
