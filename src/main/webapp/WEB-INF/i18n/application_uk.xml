@@ -113,6 +113,7 @@
 	<entry key="menu_item_contract_new_label">Contract</entry>
 	<entry key="menu_item_documents_declaration_label">Декларація</entry>
 	<entry key="menu_item_documents_act_label">Акт</entry>
+	<entry key="menu_item_documents_ecp_label">ЕЦП</entry>
 	<entry key="menu_item_kved_list_label">КВЕД</entry>
 	<entry key="menu_item_kved_new_label">КВЕД</entry>
 	<entry key="menu_item_kved2010_list_label">КВЕД 2010</entry>
@@ -159,4 +160,12 @@
 	<entry key="error_act_file_no_records">Файл порожній або не знайдено лист "Sheet1".</entry>
 	<entry key="error_act_user_not_found">Не знайдено ФОП з прізвищем {0}.</entry>
 	<entry key="error_act_users_not_selected">Не вибрано ФОП.</entry>
+
+	<!-- ecp -->
+	<entry key="ecp_state1_title">Генерування заяв ЕЦП - Крок 1</entry>
+	<entry key="ecp_state2_title">Генерування заяв ЕЦП - Крок 2</entry>
+	<entry key="ecp_endstate_title">Генерування заяв ЕЦП - Фініш</entry>
+	<entry key="label_filing_date">Дата подачі</entry>
+	<entry key="error_ecp_users_not_selected">Не вибрано ФОП.</entry>
+
 </properties>

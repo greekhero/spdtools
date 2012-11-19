@@ -1,6 +1,7 @@
 package ua.org.tumakha.spdtool.services;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -41,5 +42,8 @@ public interface TemplateService {
 			Integer month, boolean generateContracts, boolean generateActs)
 			throws JAXBException, Docx4JException, TemplateException,
 			IOException, TransformerException, FOPException;
+
+	List<String> generateEcpDocuments(Set<Integer> enabledUserIds,
+			Set<Integer> groupIds, Date date);
 
 }
