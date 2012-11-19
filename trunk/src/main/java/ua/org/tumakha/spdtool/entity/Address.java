@@ -158,7 +158,7 @@ public class Address implements Serializable {
 		if (postalCode != null) {
 			return String.format("%05d", postalCode);
 		} else {
-			return "";
+			return "     ";
 		}
 	}
 

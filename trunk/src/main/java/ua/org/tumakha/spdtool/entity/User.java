@@ -161,8 +161,8 @@ public class User implements Serializable {
 	@Column
 	private Integer income2011;
 
-	public char[] getPinStr() {
-		return getPin().toString().toCharArray();
+	public String getPinStr() {
+		return getPin().toString();
 	}
 
 	public char[] getPinArray() {
