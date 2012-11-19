@@ -44,6 +44,7 @@ public interface TemplateService {
 			IOException, TransformerException, FOPException;
 
 	List<String> generateEcpDocuments(Set<Integer> enabledUserIds,
-			Set<Integer> groupIds, Date date);
+			Set<Integer> groupIds, Date date) throws JAXBException,
+			Docx4JException, TemplateException, IOException;
 
 }

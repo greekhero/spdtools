@@ -46,6 +46,7 @@ import ua.org.tumakha.spdtool.template.model.Form11KvedModel;
 import ua.org.tumakha.spdtool.template.model.Form20OPPModel;
 import ua.org.tumakha.spdtool.template.model.IncomeCalculationModel;
 import ua.org.tumakha.spdtool.template.model.TaxSystemStatementModel;
+import ua.org.tumakha.spdtool.template.model.UserModel;
 import freemarker.template.TemplateException;
 
 /**
@@ -342,6 +343,14 @@ public class TemplateServiceImpl implements TemplateService {
 		return listModel;
 	}
 
+	public List<UserModel> getUserModelList(List<User> users) {
+		List<UserModel> listModel = new ArrayList<UserModel>(users.size());
+		for (User user : users) {
+			listModel.add(new UserModel(user));
+		}
+		return listModel;
+	}
+
 	private static NumberFormat getMoneyFormat() {
 		DecimalFormatSymbols formatSymbols = new DecimalFormatSymbols();
 		formatSymbols.setDecimalSeparator(',');
@@ -350,13 +359,18 @@ public class TemplateServiceImpl implements TemplateService {
 
 	@Override
 	public List<String> generateEcpDocuments(Set<Integer> enabledUserIds,
-			Set<Integer> groupIds, Date date) {
+			Set<Integer> groupIds, Date date) throws JAXBException,
+			Docx4JException, TemplateException, IOException {
 		List<User> ecpUsers = userService.findUsersByIds(enabledUserIds);
-		List<String> fileNames = new ArrayList<String>();
+		List<UserModel> userModelList = getUserModelList(ecpUsers);
+		DocxProcessor docxProcessor = new DocxProcessor();
 
-		System.out.println(ecpUsers);
+		if (userModelList != null && userModelList.size() > 0) {
+			docxProcessor.cleanBaseDirectory(DocxTemplate.REQUEST_ECP,
+					userModelList.get(0));
+		}
 
-		return fileNames;
+		return docxProcessor.saveReports(DocxTemplate.REQUEST_ECP,
+				userModelList);
 	}
-
 }
