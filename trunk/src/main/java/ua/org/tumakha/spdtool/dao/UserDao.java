@@ -32,4 +32,6 @@ public interface UserDao {
 
 	List<User> findActiveUsersByGroups(Set<Integer> groupIds);
 
+	List<User> findByIds(Set<Integer> enabledUserIds);
+
 }

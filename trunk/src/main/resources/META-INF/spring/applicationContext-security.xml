@@ -26,6 +26,7 @@
         <intercept-url pattern="/groups/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/declarations/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/acts/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/ecp/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/**" access="permitAll" />
     </http>
 

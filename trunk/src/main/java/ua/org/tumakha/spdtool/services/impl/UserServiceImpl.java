@@ -129,4 +129,9 @@ public class UserServiceImpl implements UserService {
 		return userDao.findActiveUsersByGroups(groupIds);
 	}
 
+	@Override
+	public List<User> findUsersByIds(Set<Integer> enabledUserIds) {
+		return userDao.findByIds(enabledUserIds);
+	}
+
 }

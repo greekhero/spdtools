@@ -6,6 +6,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -345,6 +346,17 @@ public class TemplateServiceImpl implements TemplateService {
 		DecimalFormatSymbols formatSymbols = new DecimalFormatSymbols();
 		formatSymbols.setDecimalSeparator(',');
 		return new DecimalFormat("#.00", formatSymbols);
+	}
+
+	@Override
+	public List<String> generateEcpDocuments(Set<Integer> enabledUserIds,
+			Set<Integer> groupIds, Date date) {
+		List<User> ecpUsers = userService.findUsersByIds(enabledUserIds);
+		List<String> fileNames = new ArrayList<String>();
+
+		System.out.println(ecpUsers);
+
+		return fileNames;
 	}
 
 }

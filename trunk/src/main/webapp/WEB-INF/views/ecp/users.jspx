@@ -1,0 +1,65 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:spring="http://www.springframework.org/tags" xmlns:form="http://www.springframework.org/tags/form" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+  <jsp:directive.page contentType="text/html;charset=UTF-8" />
+  <jsp:output omit-xml-declaration="yes" />
+  <spring:message var="title" code="ecp_state2_title" htmlEscape="false" />
+  <util:panel id="title" title="${title}">
+    <h1>${fn:escapeXml(title)}</h1>
+    <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
+    <p>
+      <b>${fn:length(ecpModel.users)} <spring:message code="label_ua_org_tumakha_spdtool_user"/></b>
+    </p>
+    <spring:url value="generateDocuments" var="form_url" />
+    <form:form action="${fn:escapeXml(form_url)}" modelAttribute="ecpModel" method="POST">
+      <form:hidden path="date"/>
+      <table>
+        <thead>
+      		<tr>
+      			<th><input type="checkbox" id="selectall"/></th>
+      			<th><spring:message code="label_ua_org_tumakha_spdtool_user_lastname"/></th>
+      			<th><spring:message code="label_ua_org_tumakha_spdtool_user_firstname"/></th>
+      		</tr>
+      	</thead>
+      	<tbody>
+			<c:forEach items="${ecpModel.users}" varStatus="row">
+				<tr>
+					<td><form:checkbox path="enabledUserIds" value="${ecpModel.users[row.index].userId}"/></td>
+					<td><spring:bind path="users[${row.index}].lastname">${status.value}</spring:bind></td>
+					<td><spring:bind path="users[${row.index}].firstname">${status.value}</spring:bind></td>
+				</tr>
+			</c:forEach>
+        </tbody>
+      </table>
+      <p>
+      <div class="submit">
+        <spring:message var="cancel" code="button_cancel" htmlEscape="false" />
+        <spring:message var="generate" code="button_generate" htmlEscape="false" />
+        <input type="submit" id="cancel" name="cancel" value="${fn:escapeXml(cancel)}" style="margin-right: 10px;"/>
+        <input type="submit" id="success" name="success" value="${fn:escapeXml(generate)}" />
+      </div>
+      </p>
+    </form:form>
+    <script type="text/javascript">
+    	dojo.byId("selectall").checked = true;
+
+   	    dojo.query("input[type='checkbox']").forEach(function(element) {
+   	        Spring.addDecoration(new Spring.ElementDecoration({
+   	            elementId: element.id,
+   	            widgetType : "dijit.form.CheckBox",
+   	            widgetAttrs : { checked : element.checked }
+   	        }));
+   	    });
+
+       	dojo.addOnLoad(function() {
+
+            dojo.connect(dijit.byId("selectall"), "onChange", function() {
+            	dojo.query(("input[type='checkbox']")).forEach(function(element) {
+            		if (element.id != "selectall") {
+            			dijit.byId(element.id).setChecked(dojo.byId("selectall").checked);
+            		}
+            	});
+            });
+
+        });
+	</script>
+  </util:panel>
+</div>

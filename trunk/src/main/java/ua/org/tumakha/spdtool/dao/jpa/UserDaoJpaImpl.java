@@ -82,4 +82,13 @@ public class UserDaoJpaImpl extends AbstractJpaDao<User> implements UserDao {
 						User.class).setParameter(1, groupIds).getResultList();
 	}
 
+	@Override
+	public List<User> findByIds(Set<Integer> enabledUserIds) {
+		return entityManager
+				.createQuery(
+						"SELECT u FROM User u WHERE u.active != NULL AND u.userId IN ?1",
+						User.class).setParameter(1, enabledUserIds)
+				.getResultList();
+	}
+
 }

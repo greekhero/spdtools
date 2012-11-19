@@ -33,4 +33,7 @@ public interface UserService {
 	List<User> findUsersByGroups(List<Integer> groupIds);
 
 	List<User> findActiveUsersByGroups(Set<Integer> groupIds);
+
+	List<User> findUsersByIds(Set<Integer> enabledUserIds);
+
 }
