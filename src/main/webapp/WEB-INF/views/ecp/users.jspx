@@ -17,6 +17,7 @@
       			<th><input type="checkbox" id="selectall"/></th>
       			<th><spring:message code="label_ua_org_tumakha_spdtool_user_lastname"/></th>
       			<th><spring:message code="label_ua_org_tumakha_spdtool_user_firstname"/></th>
+      			<th><spring:message code="label_ua_org_tumakha_spdtool_user_email"/></th>
       		</tr>
       	</thead>
       	<tbody>
@@ -25,6 +26,7 @@
 					<td><form:checkbox path="enabledUserIds" value="${ecpModel.users[row.index].userId}"/></td>
 					<td><spring:bind path="users[${row.index}].lastname">${status.value}</spring:bind></td>
 					<td><spring:bind path="users[${row.index}].firstname">${status.value}</spring:bind></td>
+					<td><spring:bind path="users[${row.index}].email">${status.value}</spring:bind></td>
 				</tr>
 			</c:forEach>
         </tbody>

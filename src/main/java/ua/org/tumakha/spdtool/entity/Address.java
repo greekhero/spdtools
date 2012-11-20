@@ -166,6 +166,11 @@ public class Address implements Serializable {
 		return getPostalCodeStr().toCharArray();
 	}
 
+	public String getRegionStr() {
+		String str = region == null ? "" : region;
+		return StrUtil.padRight(str, 50 - str.length());
+	}
+
 	public String getRegionAndCity() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(StringUtils.hasText(region) ? region + REGION_SUFFIX
