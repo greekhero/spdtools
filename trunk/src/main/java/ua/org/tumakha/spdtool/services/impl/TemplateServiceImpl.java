@@ -366,11 +366,15 @@ public class TemplateServiceImpl implements TemplateService {
 		DocxProcessor docxProcessor = new DocxProcessor();
 
 		if (userModelList != null && userModelList.size() > 0) {
-			docxProcessor.cleanBaseDirectory(DocxTemplate.REQUEST_ECP,
+			docxProcessor.cleanBaseDirectory(DocxTemplate.ECP_REGISTRATION,
 					userModelList.get(0));
 		}
 
-		return docxProcessor.saveReports(DocxTemplate.REQUEST_ECP,
-				userModelList);
+		List<String> fileNames = new ArrayList<String>();
+		fileNames.addAll(docxProcessor.saveReports(
+				DocxTemplate.ECP_REGISTRATION, userModelList));
+		fileNames.addAll(docxProcessor.saveReports(DocxTemplate.ECP_JOIN,
+				userModelList));
+		return fileNames;
 	}
 }
