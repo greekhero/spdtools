@@ -169,6 +169,11 @@ public class User implements Serializable {
 		return getPin().toString().toCharArray();
 	}
 
+	public String getFullname() {
+		return String.format("%s %s %s", getLastname(), getFirstname(),
+				getMiddlename());
+	}
+
 	public String getLastnameFirstMiddle() {
 		return String.format("%s  %s. %s.", getLastname(), getFirstname()
 				.substring(0, 1), getMiddlename().substring(0, 1));

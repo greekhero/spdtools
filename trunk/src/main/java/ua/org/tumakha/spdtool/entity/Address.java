@@ -72,12 +72,12 @@ public class Address implements Serializable {
 	@Digits(integer = 3, fraction = 0)
 	private Integer house;
 
-	@Column(nullable = true, length = 1)
-	@Size(max = 1)
+	@Column(nullable = true, length = 10)
+	@Size(max = 10)
 	private String houseChar;
 
-	@Column(nullable = true, length = 1)
-	@Size(max = 1)
+	@Column(nullable = true, length = 10)
+	@Size(max = 10)
 	private String houseCharEn;
 
 	@Digits(integer = 3, fraction = 0)
@@ -89,12 +89,12 @@ public class Address implements Serializable {
 	@Digits(integer = 3, fraction = 0)
 	private Integer apartment;
 
-	@Column(nullable = true, length = 1)
-	@Size(max = 1)
+	@Column(nullable = true, length = 10)
+	@Size(max = 10)
 	private String apartmentChar;
 
-	@Column(nullable = true, length = 1)
-	@Size(max = 1)
+	@Column(nullable = true, length = 10)
+	@Size(max = 10)
 	private String apartmentCharEn;
 
 	public String getTextUa() {
@@ -175,7 +175,53 @@ public class Address implements Serializable {
 	}
 
 	public String getCityStr() {
-		return StrUtil.padRight(city, 60);
+		StringBuffer cityBuffer = new StringBuffer();
+		if (StrUtil.isFirstCharUpperOrDigit(city)) {
+			cityBuffer.append(CITY_PREFIX);
+		}
+		cityBuffer.append(StrUtil.padRight(city, 60));
+		return cityBuffer.toString();
+	}
+
+	public String getStreetStr() {
+		StringBuffer streetBuffer = new StringBuffer();
+		if (StrUtil.isFirstCharUpperOrDigit(street)) {
+			streetBuffer.append(STREET_PREFIX);
+		}
+		streetBuffer.append(StrUtil.padRight(street, 60));
+		return streetBuffer.toString();
+	}
+
+	public String getHouseStr() {
+		StringBuffer houseBuffer = new StringBuffer();
+		if (house != null) {
+			houseBuffer.append(house);
+			if (StringUtils.hasText(houseChar)) {
+				houseBuffer.append("-");
+				houseBuffer.append(houseChar);
+			}
+			if (slashHouse != null) {
+				houseBuffer.append("/");
+				houseBuffer.append(slashHouse);
+			}
+		}
+		return StrUtil.padRight(houseBuffer.toString(), 6);
+	}
+
+	public String getKorpusStr() {
+		String str = korpus == null ? "" : korpus.toString();
+		return StrUtil.padRight(str, 6);
+	}
+
+	public String getApartmentStr() {
+		StringBuffer apartmentBuffer = new StringBuffer();
+		if (apartment != null) {
+			apartmentBuffer.append(apartment);
+			if (StringUtils.hasText(apartmentChar)) {
+				apartmentBuffer.append(apartmentChar);
+			}
+		}
+		return StrUtil.padRight(apartmentBuffer.toString(), 6);
 	}
 
 	public String getRegionAndCity() {
