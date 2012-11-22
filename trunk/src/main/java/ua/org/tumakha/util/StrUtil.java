@@ -30,10 +30,11 @@ public abstract class StrUtil {
 		return result;
 	}
 
-	public static String padRight(String str, int num) {
-		str = str.replace("-", "_");
-		str = String.format("%1$-" + num + "s", str);
-		return str.replace("_", "-");
+	public static String padRight(String str, int width) {
+		if (str == null) {
+			str = "";
+		}
+		return org.apache.commons.lang.StringUtils.rightPad(str, width);
 	}
 
 }

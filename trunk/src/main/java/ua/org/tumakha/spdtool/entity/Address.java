@@ -167,8 +167,15 @@ public class Address implements Serializable {
 	}
 
 	public String getRegionStr() {
-		String str = region == null ? "" : region;
-		return org.apache.commons.lang.StringUtils.rightPad(str, 30);
+		return StrUtil.padRight(region, 30);
+	}
+
+	public String getDistrictStr() {
+		return StrUtil.padRight(district, 30);
+	}
+
+	public String getCityStr() {
+		return StrUtil.padRight(city, 60);
 	}
 
 	public String getRegionAndCity() {
