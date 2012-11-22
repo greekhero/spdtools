@@ -2,9 +2,10 @@ package ua.org.tumakha.spdtool.template.model;
 
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
+
 import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.template.DocxTemplate;
-import ua.org.tumakha.util.StrUtil;
 
 /**
  * @author Yuriy Tumakha
@@ -46,8 +47,7 @@ public class UserModel extends TemplateModel {
 		name.append(user.getFirstname());
 		name.append(" ");
 		name.append(user.getMiddlename());
-		return StrUtil.padRight(name.toString(), 100 - name.length());
-
+		return StringUtils.rightPad(name.toString(), 100);
 	}
 
 	@Override
