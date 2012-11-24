@@ -36,6 +36,7 @@ import org.hibernate.validator.constraints.Email;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import ua.org.tumakha.spdtool.enums.RegDocumentType;
+import ua.org.tumakha.util.StrUtil;
 
 /**
  * @author Yuriy Tumakha
@@ -169,6 +170,10 @@ public class User implements Serializable {
 		return getPin().toString().toCharArray();
 	}
 
+	public String getEmailStr() {
+		return StrUtil.padRight(email, 60);
+	}
+
 	public String getFullname() {
 		return String.format("%s %s %s", getLastname(), getFirstname(),
 				getMiddlename());
@@ -177,6 +182,11 @@ public class User implements Serializable {
 	public String getLastnameFirstMiddle() {
 		return String.format("%s  %s. %s.", getLastname(), getFirstname()
 				.substring(0, 1), getMiddlename().substring(0, 1));
+	}
+
+	public String getFirstMiddleLastname() {
+		return String.format("%s.%s.  %s", getFirstname().substring(0, 1),
+				getMiddlename().substring(0, 1), getLastname());
 	}
 
 	public Integer getUserId() {
