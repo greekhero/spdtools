@@ -343,10 +343,10 @@ public class TemplateServiceImpl implements TemplateService {
 		return listModel;
 	}
 
-	public List<UserModel> getUserModelList(List<User> users) {
+	public List<UserModel> getUserModelList(List<User> users, Date date) {
 		List<UserModel> listModel = new ArrayList<UserModel>(users.size());
 		for (User user : users) {
-			listModel.add(new UserModel(user));
+			listModel.add(new UserModel(user, date));
 		}
 		return listModel;
 	}
@@ -362,7 +362,7 @@ public class TemplateServiceImpl implements TemplateService {
 			Set<Integer> groupIds, Date date) throws JAXBException,
 			Docx4JException, TemplateException, IOException {
 		List<User> ecpUsers = userService.findUsersByIds(enabledUserIds);
-		List<UserModel> userModelList = getUserModelList(ecpUsers);
+		List<UserModel> userModelList = getUserModelList(ecpUsers, date);
 		DocxProcessor docxProcessor = new DocxProcessor();
 
 		if (userModelList != null && userModelList.size() > 0) {
