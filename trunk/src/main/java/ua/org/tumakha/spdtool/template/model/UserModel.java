@@ -17,6 +17,8 @@ public class UserModel extends TemplateModel {
 	private static final DateFormat YEAR_FORMAT = new SimpleDateFormat("yyyy");
 	private static final DateFormat UA_MONTH_FORMAT = new SimpleDateFormat(
 			"MMMMM", uaLocale);
+	private static final DateFormat MONTH_DIGIT_FORMAT = new SimpleDateFormat(
+			"MM", uaLocale);
 
 	private User user;
 
@@ -25,6 +27,8 @@ public class UserModel extends TemplateModel {
 	private String dateDay;
 
 	private String dateMonth;
+
+	private String dateMonthDigit;
 
 	private String dateYear;
 
@@ -57,6 +61,8 @@ public class UserModel extends TemplateModel {
 		if (date != null) {
 			dateDay = DAY_FORMAT.format(date);
 			dateMonth = StrUtil.padRight(UA_MONTH_FORMAT.format(date), 15);
+			dateMonthDigit = StrUtil.padRight(MONTH_DIGIT_FORMAT.format(date),
+					2);
 			dateYear = YEAR_FORMAT.format(date);
 		} else {
 			dateYear = YEAR_FORMAT.format(new Date());
@@ -78,7 +84,7 @@ public class UserModel extends TemplateModel {
 		name.append(user.getFirstname());
 		name.append(" ");
 		name.append(user.getMiddlename());
-		return StrUtil.padRight(name.toString(), 100);
+		return StrUtil.padRight(name.toString(), 120);
 	}
 
 	public String getDateDay() {
@@ -87,6 +93,10 @@ public class UserModel extends TemplateModel {
 
 	public String getDateMonth() {
 		return dateMonth == null ? "_____________" : dateMonth;
+	}
+
+	public String getDateMonthDigit() {
+		return dateMonthDigit == null ? "  " : dateMonthDigit;
 	}
 
 	public String getDateYear() {
@@ -99,6 +109,10 @@ public class UserModel extends TemplateModel {
 
 	public void setDateMonth(String dateMonth) {
 		this.dateMonth = dateMonth;
+	}
+
+	public void setDateMonthDigit(String dateMonthDigit) {
+		this.dateMonthDigit = dateMonthDigit;
 	}
 
 	public void setDateYear(String dateYear) {
