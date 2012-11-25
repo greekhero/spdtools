@@ -162,6 +162,31 @@ public class User implements Serializable {
 	@Column
 	private Integer income2011;
 
+	// TODO: remove
+	public String getPassportseriaStr() {
+		return "  ";
+	}
+
+	public String getPassportnumberStr() {
+		return "      ";
+	}
+
+	public String getPassportorganStr() {
+		return StrUtil.padRight("", 140);
+	}
+
+	public String getPassportdateDay() {
+		return "  ";
+	}
+
+	public String getPassportdateMonthDigit() {
+		return "  ";
+	}
+
+	public String getPassportdateYear() {
+		return "    ";
+	}
+
 	public String getPinStr() {
 		return getPin().toString();
 	}
@@ -185,8 +210,9 @@ public class User implements Serializable {
 	}
 
 	public String getFirstMiddleLastname() {
-		return String.format("%s.%s.  %s", getFirstname().substring(0, 1),
-				getMiddlename().substring(0, 1), getLastname());
+		return StrUtil.padRight(String.format("%s.%s.  %s", getFirstname()
+				.substring(0, 1), getMiddlename().substring(0, 1),
+				getLastname()), 72);
 	}
 
 	public Integer getUserId() {

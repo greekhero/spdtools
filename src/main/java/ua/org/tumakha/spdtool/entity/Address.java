@@ -205,7 +205,7 @@ public class Address implements Serializable {
 				houseBuffer.append(slashHouse);
 			}
 		}
-		return StrUtil.padRight(houseBuffer.toString(), 6);
+		return StrUtil.padRight(houseBuffer.toString(), 8);
 	}
 
 	public String getKorpusStr() {
