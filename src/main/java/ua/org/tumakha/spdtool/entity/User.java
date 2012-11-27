@@ -128,6 +128,9 @@ public class User implements Serializable {
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private ServiceType serviceType;
 
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private Passport passport;
+
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@OrderBy("date desc")
 	private List<Contract> contracts;
@@ -161,31 +164,6 @@ public class User implements Serializable {
 
 	@Column
 	private Integer income2011;
-
-	// TODO: remove
-	public String getPassportseriaStr() {
-		return "  ";
-	}
-
-	public String getPassportnumberStr() {
-		return "      ";
-	}
-
-	public String getPassportorganStr() {
-		return StrUtil.padRight("", 140);
-	}
-
-	public String getPassportdateDay() {
-		return "  ";
-	}
-
-	public String getPassportdateMonthDigit() {
-		return "  ";
-	}
-
-	public String getPassportdateYear() {
-		return "    ";
-	}
 
 	public String getPinStr() {
 		return getPin().toString();
@@ -434,6 +412,14 @@ public class User implements Serializable {
 			serviceType.setUser(this);
 		}
 		this.serviceType = serviceType;
+	}
+
+	public Passport getPassport() {
+		return passport;
+	}
+
+	public void setPassport(Passport passport) {
+		this.passport = passport;
 	}
 
 	public Set<Group> getGroups() {
