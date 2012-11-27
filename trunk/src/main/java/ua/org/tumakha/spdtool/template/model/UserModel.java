@@ -13,7 +13,7 @@ import ua.org.tumakha.util.StrUtil;
  */
 public class UserModel extends TemplateModel {
 
-	private static final DateFormat DAY_FORMAT = new SimpleDateFormat("d");
+	private static final DateFormat DAY_FORMAT = new SimpleDateFormat("dd");
 	private static final DateFormat YEAR_FORMAT = new SimpleDateFormat("yyyy");
 	private static final DateFormat UA_MONTH_FORMAT = new SimpleDateFormat(
 			"MMMMM", uaLocale);
