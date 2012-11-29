@@ -52,6 +52,6 @@
     <field:input field="address.apartmentCharEn" id="c_ua_org_tumakha_spdtool_Address_apartmentCharEn"/>
     <field:input field="passport.seria" id="c_passport_seria"/>
     <field:input field="passport.number" id="c_passport_number" validationMessageCode="field_invalid_integer"/>
-    <field:input field="passport.organ" id="c_passport_organ"/>
+    <field:textarea field="passport.organ" id="c_passport_organ"/>
     <field:datetime dateTimePattern="${user_regdate_date_format}" field="passport.date" id="c_passport_date"/>
 </div>
