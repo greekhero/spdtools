@@ -47,5 +47,8 @@
     		<field:display field="textUa" id="c_ua_org_tumakha_spdtool_address" object="${user.address}"/>
     		<field:display field="textEn" id="c_ua_org_tumakha_spdtool_addressen" object="${user.address}"/>
     	</c:if>
+    	<c:if test="${not empty user.passport}">
+    		<field:display field="textUa" id="c_passport" object="${user.passport}"/>
+    	</c:if>
     </page:show>
 </div>

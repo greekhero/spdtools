@@ -419,6 +419,9 @@ public class User implements Serializable {
 	}
 
 	public void setPassport(Passport passport) {
+		if (passport != null && passport.getUser() == null) {
+			passport.setUser(this);
+		}
 		this.passport = passport;
 	}
 

@@ -168,4 +168,11 @@
 	<entry key="label_filing_date">Дата подачі</entry>
 	<entry key="error_ecp_users_not_selected">Не вибрано ФОП.</entry>
 
+	<!-- passport -->
+	<entry key="label_passport">Паспорт</entry>
+	<entry key="label_passport_seria">Паспорт Серія</entry>
+	<entry key="label_passport_number">Паспорт Номер</entry>
+	<entry key="label_passport_organ">Ким виданий</entry>
+	<entry key="label_passport_date">Дата видачі</entry>
+
 </properties>
