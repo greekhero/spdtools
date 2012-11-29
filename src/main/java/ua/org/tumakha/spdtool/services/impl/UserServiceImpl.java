@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.org.tumakha.spdtool.dao.UserDao;
 import ua.org.tumakha.spdtool.entity.Address;
 import ua.org.tumakha.spdtool.entity.Bank;
+import ua.org.tumakha.spdtool.entity.Passport;
 import ua.org.tumakha.spdtool.entity.ServiceType;
 import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.services.UserService;
@@ -60,6 +61,14 @@ public class UserServiceImpl implements UserService {
 		BeanUtils.copyProperties(user.getAddress(), dbAddress,
 				getArray("addressId"));
 		user.setAddress(dbAddress);
+
+		Passport dbPasport = dbUser.getPassport();
+		if (dbPasport == null) {
+			dbPasport = new Passport();
+		}
+		BeanUtils.copyProperties(user.getPassport(), dbPasport,
+				getArray("passportId"));
+		user.setPassport(dbPasport);
 
 		return userDao.merge(user);
 	}

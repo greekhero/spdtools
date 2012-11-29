@@ -13,8 +13,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import ua.org.tumakha.util.StrUtil;
 
@@ -27,6 +32,8 @@ public class Passport implements Serializable {
 
 	private static final long serialVersionUID = 1308052916443329074L;
 
+	private static final DateFormat DATE_FORMAT = new SimpleDateFormat(
+			"dd.MM.yyyy");
 	private static final DateFormat DAY_FORMAT = new SimpleDateFormat("dd");
 	private static final DateFormat YEAR_FORMAT = new SimpleDateFormat("yyyy");
 	private static final DateFormat MONTH_DIGIT_FORMAT = new SimpleDateFormat(
@@ -51,6 +58,9 @@ public class Passport implements Serializable {
 	@Column(length = 100)
 	private String organ;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(style = "S-")
+	@Past
 	private Date date;
 
 	public String getSeriaStr() {
@@ -92,6 +102,20 @@ public class Passport implements Serializable {
 		} else {
 			return YEAR_FORMAT.format(date);
 		}
+	}
+
+	public String getTextUa() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(seria);
+		buffer.append(" ");
+		buffer.append(number == null ? "" : number);
+		buffer.append(", ");
+		buffer.append(organ);
+		if (date != null) {
+			buffer.append(", ");
+			buffer.append(DATE_FORMAT.format(date));
+		}
+		return buffer.toString().trim();
 	}
 
 	public Integer getPassportId() {

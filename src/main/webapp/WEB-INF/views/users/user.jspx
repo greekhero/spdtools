@@ -27,7 +27,7 @@
     <field:textarea field="serviceType.nameEn" id="c_ua_org_tumakha_spdtool_servicetype_nameen"/>
     <field:input field="bank.MFO" id="c_ua_org_tumakha_spdtool_Bank_mfo" validationMessageCode="field_invalid_integer"/>
     <field:input field="bank.SWIFT" id="c_ua_org_tumakha_spdtool_Bank_swift"/>
-    <field:input field="bank.accountNumber" id="c_ua_org_tumakha_spdtool_Bank_accountNumber" required="true" validationMessageCode="field_invalid_integer"/>
+    <field:input field="bank.accountNumber" id="c_ua_org_tumakha_spdtool_Bank_accountNumber" validationMessageCode="field_invalid_integer"/>
     <field:input field="bank.name" id="c_ua_org_tumakha_spdtool_Bank_name"/>
     <field:input field="bank.nameEn" id="c_ua_org_tumakha_spdtool_Bank_nameEn"/>
     <field:checkbox field="bank.usedMiddlename" id="c_ua_org_tumakha_spdtool_Bank_usedMiddlename"/>
@@ -50,4 +50,8 @@
     <field:input field="address.apartment" id="c_ua_org_tumakha_spdtool_Address_apartment" validationMessageCode="field_invalid_integer"/>
     <field:input field="address.apartmentChar" id="c_ua_org_tumakha_spdtool_Address_apartmentChar"/>
     <field:input field="address.apartmentCharEn" id="c_ua_org_tumakha_spdtool_Address_apartmentCharEn"/>
+    <field:input field="passport.seria" id="c_passport_seria"/>
+    <field:input field="passport.number" id="c_passport_number" validationMessageCode="field_invalid_integer"/>
+    <field:input field="passport.organ" id="c_passport_organ"/>
+    <field:datetime dateTimePattern="${user_regdate_date_format}" field="passport.date" id="c_passport_date"/>
 </div>
