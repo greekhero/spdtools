@@ -74,6 +74,9 @@ public class UserModel extends TemplateModel {
 	public String getPhone() {
 		String phone = user.getPhone() == null ? "0958912127" : user.getPhone()
 				.toString();
+		if (phone.length() == 9) {
+			phone = "0" + phone;
+		}
 		return StrUtil.padRight(phone, 12);
 	}
 
