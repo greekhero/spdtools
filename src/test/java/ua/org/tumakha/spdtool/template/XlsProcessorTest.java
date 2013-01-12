@@ -38,14 +38,17 @@ public class XlsProcessorTest {
 
 	@Test
 	public void testXlsEsvD5() throws Exception {
+
+		int year = 2012;
+
 		List<User> users = userService.findUsersByGroup(1);
 		if (users != null) {
 			for (User user : users) {
 				if (user.isActive()) {
 					Map<String, Object> beans = new HashMap<String, Object>();
 					beans.put("user", user);
-					String outputFilename = String.format("/ESV_d5/%s_%s_",
-							user.getLastnameEn(), user.getFirstnameEn());
+					String outputFilename = String.format("/ESV_d5/%s_%s_%d_",
+							user.getLastnameEn(), user.getFirstnameEn(), year);
 					xlsProcessor.saveReport(XlsTemplate.ESV_D5, outputFilename,
 							beans);
 				}
