@@ -11,6 +11,7 @@
   	<aspectj.version>1.6.12</aspectj.version>
   	<slf4j.version>1.6.2</slf4j.version>
   	<gwt.version>2.5.0</gwt.version>
+  	<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
   	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
@@ -280,6 +281,9 @@
     </dependency>
   </dependencies>
   <build>
+    <!-- Generate compiled stuff in the folder used for developing mode -->
+    <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
+
     <finalName>spdtools</finalName>
   	<plugins>
   		<plugin>
@@ -372,7 +376,7 @@
                     <logLevel>INFO</logLevel>
                     <style>PRETTY</style>
 		            <runTarget>SpdSmart.html</runTarget>
-		            <hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>                    
+		            <hostedWebapp>${webappDirectory}</hostedWebapp>                  
 <!--              		<i18nMessagesBundle>ua.org.tumakha.client.Messages</i18nMessagesBundle>      
 					<runTarget>/ApplicationScaffold.html</runTarget>
                     <modules>
