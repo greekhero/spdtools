@@ -10,6 +10,8 @@
   	<spring.version>3.1.0.RELEASE</spring.version>
   	<aspectj.version>1.6.12</aspectj.version>
   	<slf4j.version>1.6.2</slf4j.version>
+  	<gwt.version>2.5.0</gwt.version>
+  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
     <dependency>
@@ -259,6 +261,23 @@
         <artifactId>spring-security-taglibs</artifactId>
         <version>${spring.version}</version>
     </dependency>
+    <dependency>
+        <groupId>com.smartgwt</groupId>
+        <artifactId>smartgwt</artifactId>
+        <version>3.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.gwt</groupId>
+      <artifactId>gwt-servlet</artifactId>
+      <version>${gwt.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.gwt</groupId>
+      <artifactId>gwt-user</artifactId>
+      <version>${gwt.version}</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
   <build>
     <finalName>spdtools</finalName>
@@ -288,6 +307,18 @@
             <configuration>
                 <downloadSources>true</downloadSources>
                 <downloadJavadocs>false</downloadJavadocs>
+                    <wtpversion>2.0</wtpversion>
+                    <additionalBuildcommands>
+					    <buildCommand>
+					      	<name>com.google.gdt.eclipse.core.webAppProjectValidator</name>
+					    </buildCommand>
+                    	<buildCommand>
+                            <name>com.google.gwt.eclipse.core.gwtProjectValidator</name>
+                        </buildCommand>
+                    </additionalBuildcommands>
+                    <additionalProjectnatures>
+                    	<projectnature>com.google.gwt.eclipse.core.gwtNature</projectnature>
+                    </additionalProjectnatures>
             </configuration>
         </plugin>
             <plugin>
@@ -318,6 +349,57 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
+		    <!-- GWT Maven Plugin -->
+		    <plugin>
+		        <groupId>org.codehaus.mojo</groupId>
+		        <artifactId>gwt-maven-plugin</artifactId>
+		        <version>2.5.0</version>
+		        <executions>
+		          <execution>
+                    <id>gwtcompile</id>
+                    <phase>prepare-package</phase>
+		            <goals>
+		              <goal>compile</goal>
+<!--		              <goal>test</goal>
+		              <goal>i18n</goal>
+		              <goal>generateAsync</goal> -->
+		            </goals>
+		          </execution>
+		        </executions>
+		        <!-- Plugin configuration. There are many available options, see 
+		          gwt-maven-plugin documentation at codehaus.org -->
+                <configuration>
+                    <logLevel>INFO</logLevel>
+                    <style>PRETTY</style>
+		            <runTarget>SpdSmart.html</runTarget>
+		            <hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>                    
+<!--              		<i18nMessagesBundle>ua.org.tumakha.client.Messages</i18nMessagesBundle>      
+					<runTarget>/ApplicationScaffold.html</runTarget>
+                    <modules>
+                        <module>${project.groupId}.ApplicationScaffold</module>
+                    </modules>
+                    <copyWebapp>true</copyWebapp> -->
+                </configuration>		        
+                <dependencies>
+                    <dependency>
+                        <groupId>com.google.gwt</groupId>
+                        <artifactId>gwt-dev</artifactId>
+                        <version>2.5.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.google.gwt</groupId>
+                        <artifactId>gwt-user</artifactId>
+                        <version>2.5.0</version>
+                    </dependency>
+                </dependencies>
+		    </plugin>
   	</plugins>
   </build>
+  
+  <repositories>
+  	<repository> 
+	  <id>smartgwt</id>
+	  <url>http://www.smartclient.com/maven2</url> 
+	</repository>
+  </repositories>
 </project>
