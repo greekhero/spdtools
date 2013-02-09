@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
@@ -36,6 +37,7 @@ import org.hibernate.validator.constraints.Email;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import ua.org.tumakha.spdtool.enums.RegDocumentType;
+import ua.org.tumakha.spdtool.enums.RentType;
 import ua.org.tumakha.util.StrUtil;
 
 /**
@@ -102,17 +104,40 @@ public class User implements Serializable {
 	@Past
 	private Date regDate;
 
+	@Deprecated
 	@Column(name = "regDPI", length = 255)
 	private String regDpi;
 
 	@Column(name = "regNumberDPI")
-	private Integer regNumberDpi;
+	private Long regNumberDpi;
 
 	@Column(name = "regDateDPI", nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(style = "S-")
 	@Past
 	private Date regDateDpi;
+
+	@Column(length = 20)
+	private String regNumberPF;
+
+	@ManyToOne
+	@JoinColumn(name = "taxOrganizationId", nullable = true)
+	private TaxOrganization taxOrganization;
+
+	@ManyToOne
+	@JoinColumn(name = "pensionOrganizationId", nullable = true)
+	private PensionOrganization pensionOrganization;
+
+	@Enumerated(EnumType.ORDINAL)
+	private RentType rentType;
+
+	@Column(length = 20)
+	private String rentContractNumber;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(style = "S-")
+	@Past
+	private Date rentContractDate;
 
 	private Long phone;
 
@@ -161,9 +186,6 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@OrderBy("year desc, quarter desc")
 	private List<Declaration> declarations;
-
-	@Column
-	private Integer income2011;
 
 	public String getPinStr() {
 		return getPin().toString();
@@ -318,11 +340,11 @@ public class User implements Serializable {
 		this.regDocumentType = regDocumentType;
 	}
 
-	public Integer getRegNumberDpi() {
+	public Long getRegNumberDpi() {
 		return regNumberDpi;
 	}
 
-	public void setRegNumberDpi(Integer regNumberDpi) {
+	public void setRegNumberDpi(Long regNumberDpi) {
 		this.regNumberDpi = regNumberDpi;
 	}
 
@@ -332,6 +354,62 @@ public class User implements Serializable {
 
 	public void setRegDateDpi(Date regDateDpi) {
 		this.regDateDpi = regDateDpi;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public String getRegNumberPF() {
+		return regNumberPF;
+	}
+
+	public void setRegNumberPF(String regNumberPF) {
+		this.regNumberPF = regNumberPF;
+	}
+
+	public TaxOrganization getTaxOrganization() {
+		return taxOrganization;
+	}
+
+	public void setTaxOrganization(TaxOrganization taxOrganization) {
+		this.taxOrganization = taxOrganization;
+	}
+
+	public PensionOrganization getPensionOrganization() {
+		return pensionOrganization;
+	}
+
+	public void setPensionOrganization(PensionOrganization pensionOrganization) {
+		this.pensionOrganization = pensionOrganization;
+	}
+
+	public RentType getRentType() {
+		return rentType;
+	}
+
+	public void setRentType(RentType rentType) {
+		this.rentType = rentType;
+	}
+
+	public String getRentContractNumber() {
+		return rentContractNumber;
+	}
+
+	public void setRentContractNumber(String rentContractNumber) {
+		this.rentContractNumber = rentContractNumber;
+	}
+
+	public Date getRentContractDate() {
+		return rentContractDate;
+	}
+
+	public void setRentContractDate(Date rentContractDate) {
+		this.rentContractDate = rentContractDate;
 	}
 
 	public Long getPhone() {
@@ -463,14 +541,6 @@ public class User implements Serializable {
 
 	public void setDeclarations(List<Declaration> declarations) {
 		this.declarations = declarations;
-	}
-
-	public Integer getIncome2011() {
-		return income2011;
-	}
-
-	public void setIncome2011(Integer income2011) {
-		this.income2011 = income2011;
 	}
 
 }

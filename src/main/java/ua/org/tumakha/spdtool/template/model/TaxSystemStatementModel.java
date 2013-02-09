@@ -11,7 +11,6 @@ import org.apache.commons.lang.StringUtils;
 import ua.org.tumakha.spdtool.entity.Kved;
 import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.template.DocxTemplate;
-import ua.org.tumakha.util.NumberUtil;
 
 /**
  * @author Yuriy Tumakha
@@ -52,8 +51,9 @@ public class TaxSystemStatementModel extends TemplateModel {
 		startDate = startDateFormat.format(cal.getTime());
 		address = "Україна, на замовлення";
 		addressSpace = StringUtils.repeat("_", 90 - address.length());
-		incomeUa = user.getIncome2011() != null ? NumberUtil
-				.numberInWordsUa(user.getIncome2011()) : "";
+		// incomeUa = user.getIncome2011() != null ? NumberUtil
+		// .numberInWordsUa(user.getIncome2011()) : "";
+		incomeUa = "";
 		List<Kved> kveds = user.getKveds();
 		Kved kved = null;
 		switch (kveds.size()) {
