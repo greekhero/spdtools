@@ -24,8 +24,8 @@ public class SpdSmart implements EntryPoint {
 		Canvas canvas = new Canvas();
 
 		final ListGrid usersGrid = new ListGrid();
-		usersGrid.setWidth(1000);
-		usersGrid.setHeight(700);
+		usersGrid.setWidth(800);
+		usersGrid.setHeight(600);
 		usersGrid.setShowAllRecords(true);
 
 		ListGridField userIdField = new ListGridField("userId", "ID");
