@@ -47,11 +47,11 @@
 	<entry key="label_ua_org_tumakha_spdtool_contract_number">Number</entry>
 	<entry key="label_ua_org_tumakha_spdtool_contract_plural">Contracts</entry>
 	<entry key="label_ua_org_tumakha_spdtool_contract_userid">User Id</entry>
-	<entry key="label_ua_org_tumakha_spdtool_kved">КВЕД</entry>
+	<entry key="label_ua_org_tumakha_spdtool_kved">КВЕД 2005</entry>
 	<entry key="label_ua_org_tumakha_spdtool_kved_code">Код</entry>
 	<entry key="label_ua_org_tumakha_spdtool_kved_name">Назва</entry>
 	<entry key="label_ua_org_tumakha_spdtool_kved_priority">Пріоритет</entry>
-	<entry key="label_ua_org_tumakha_spdtool_kved_plural">KВЕД</entry>
+	<entry key="label_ua_org_tumakha_spdtool_kved_plural">KВЕД 2005</entry>
 	<entry key="label_ua_org_tumakha_spdtool_kved2010">КВЕД 2010</entry>
 	<entry key="label_ua_org_tumakha_spdtool_kved2010_plural">KВЕД 2010</entry>
 	<entry key="label_ua_org_tumakha_spdtool_servicetype">Service Type</entry>
@@ -69,7 +69,7 @@
 	<entry key="label_ua_org_tumakha_spdtool_user_firstname">Ім’я</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_firstnameen">Firstname</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_income2011">Income2011</entry>
-	<entry key="label_ua_org_tumakha_spdtool_user_kveds">КВЕД</entry>
+	<entry key="label_ua_org_tumakha_spdtool_user_kveds">КВЕД 2005</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_activekveds">Активні КВЕД</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_kveds2010">КВЕД 2010</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_lastname">Прізвище</entry>
@@ -98,7 +98,7 @@
 	<entry key="menu_category_bank_label">Bank</entry>
 	<entry key="menu_category_contract_label">Contract</entry>
 	<entry key="menu_category_documents_label">Документи</entry>
-	<entry key="menu_category_kved_label">КВЕД</entry>
+	<entry key="menu_category_kved_label">КВЕД 2005</entry>
 	<entry key="menu_category_kved2010_label">КВЕД 2010</entry>
 	<entry key="menu_category_servicetype_label">Service Type</entry>
 	<entry key="menu_category_user_label">ФОП</entry>
@@ -114,8 +114,8 @@
 	<entry key="menu_item_documents_declaration_label">Декларація</entry>
 	<entry key="menu_item_documents_act_label">Акт</entry>
 	<entry key="menu_item_documents_ecp_label">ЕЦП</entry>
-	<entry key="menu_item_kved_list_label">КВЕД</entry>
-	<entry key="menu_item_kved_new_label">КВЕД</entry>
+	<entry key="menu_item_kved_list_label">КВЕД 2005</entry>
+	<entry key="menu_item_kved_new_label">КВЕД 2005</entry>
 	<entry key="menu_item_kved2010_list_label">КВЕД 2010</entry>
 	<entry key="menu_item_kved2010_new_label">КВЕД 2010</entry>
 	<entry key="menu_item_servicetype_list_label">Service Types</entry>
