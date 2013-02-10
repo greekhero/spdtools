@@ -1,14 +1,17 @@
 package ua.org.tumakha.spdtool.entity;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -32,6 +35,9 @@ public class PensionOrganization implements Serializable {
 	@JoinColumn(name = "accountId", unique = true, nullable = false, updatable = false)
 	private Account account;
 
+	@OneToMany(mappedBy = "pensionOrganization", fetch = FetchType.LAZY)
+	private Set<User> users;
+
 	public Integer getOrganizationId() {
 		return organizationId;
 	}
@@ -54,6 +60,14 @@ public class PensionOrganization implements Serializable {
 
 	public void setAccount(Account account) {
 		this.account = account;
+	}
+
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
 	}
 
 	public String getPayeeName() {
