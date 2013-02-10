@@ -21,10 +21,14 @@ import ua.org.tumakha.spdtool.AppConfig;
 import ua.org.tumakha.spdtool.entity.Group;
 import ua.org.tumakha.spdtool.entity.Kved;
 import ua.org.tumakha.spdtool.entity.Kved2010;
+import ua.org.tumakha.spdtool.entity.PensionOrganization;
+import ua.org.tumakha.spdtool.entity.TaxOrganization;
 import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.services.GroupService;
 import ua.org.tumakha.spdtool.services.Kved2010Service;
 import ua.org.tumakha.spdtool.services.KvedService;
+import ua.org.tumakha.spdtool.services.PensionOrganizationService;
+import ua.org.tumakha.spdtool.services.TaxOrganizationService;
 import ua.org.tumakha.spdtool.services.UserService;
 import ua.org.tumakha.spdtool.web.util.WebUtil;
 
@@ -46,6 +50,12 @@ public class UserController implements AppConfig {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private PensionOrganizationService pensionOrganizationService;
+
+	@Autowired
+	private TaxOrganizationService taxOrganizationService;
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String create(@Valid User user, BindingResult bindingResult, Model uiModel,
@@ -165,4 +175,15 @@ public class UserController implements AppConfig {
 		}
 		uiModel.addAttribute("error", errorMessage);
 	}
+
+	@ModelAttribute("pensionOrganizations")
+	public Collection<PensionOrganization> populatePensionOrganizations() {
+		return pensionOrganizationService.findAllPensionOrganizations();
+	}
+
+	@ModelAttribute("taxOrganizations")
+	public Collection<TaxOrganization> populateTaxOrganizations() {
+		return taxOrganizationService.findAllTaxOrganizations();
+	}
+
 }

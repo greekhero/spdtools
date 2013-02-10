@@ -11,5 +11,6 @@
         <field:input field="account.codeEDRPOU" id="c_ua_org_tumakha_spdtool_Account_codeEDRPOU"/>
         <field:input field="account.mFO" id="c_ua_org_tumakha_spdtool_Account_MFO" validationMessageCode="field_invalid_integer"/>
         <field:input field="account.bankName" id="c_ua_org_tumakha_spdtool_Account_bankName"/>
+        <field:select field="pensionOrganization" id="c_ua_org_tumakha_spdtool_TaxOrganization_pensionOrganization" itemValue="organizationId" items="${pensionOrganizations}" path="/pension_organization"/>
     </form:update>
 </div>

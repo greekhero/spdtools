@@ -44,8 +44,8 @@ public class Form20OPPModel extends TemplateModel {
 		lastnameEn = user.getLastnameEn();
 		lastnameFirstMiddle = user.getLastnameFirstMiddle();
 		PIN = user.getPin().toString();
-		if (user.getRegDpi() != null) {
-			regDPI = user.getRegDpi();
+		if (user.getTaxOrganization() != null && user.getTaxOrganization().getName() != null) {
+			regDPI = user.getTaxOrganization().getName();
 			regDPIspace = StringUtils.repeat("_", (49 - regDPI.length()) / 2);
 		}
 		Address address = user.getAddress();
@@ -62,8 +62,7 @@ public class Form20OPPModel extends TemplateModel {
 				house += "-" + address.getHouseChar();
 			}
 		}
-		slashHouse = address.getSlashHouse() != null ? ""
-				+ address.getSlashHouse() : "";
+		slashHouse = address.getSlashHouse() != null ? "" + address.getSlashHouse() : "";
 		if (address.getApartment() != null) {
 			apartment = "" + address.getApartment();
 			if (address.getApartmentChar() != null) {
@@ -74,8 +73,7 @@ public class Form20OPPModel extends TemplateModel {
 
 	@Override
 	public String getOutputFilename(DocxTemplate template) {
-		return String.format("/20-OPP/%s_%s_%s", lastnameEn, firstnameEn,
-				template.getFilename());
+		return String.format("/20-OPP/%s_%s_%s", lastnameEn, firstnameEn, template.getFilename());
 	}
 
 	private String pinAt(int index) {

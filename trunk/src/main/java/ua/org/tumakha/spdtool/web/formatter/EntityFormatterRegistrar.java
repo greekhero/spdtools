@@ -18,11 +18,19 @@ public class EntityFormatterRegistrar implements FormatterRegistrar {
 	@Autowired
 	private Kved2010Formatter kved2010Formatter;
 
+	@Autowired
+	private PensionOrganizationFormatter pensionOrganizationFormatter;
+
+	@Autowired
+	private TaxOrganizationFormatter taxOrganizationFormatter;
+
 	@Override
 	public void registerFormatters(FormatterRegistry registry) {
 		registry.addFormatter(groupFormatter);
 		registry.addFormatter(kvedFormatter);
 		registry.addFormatter(kved2010Formatter);
+		registry.addFormatter(pensionOrganizationFormatter);
+		registry.addFormatter(taxOrganizationFormatter);
 	}
 
 }

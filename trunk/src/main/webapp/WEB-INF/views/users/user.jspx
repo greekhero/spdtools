@@ -16,10 +16,12 @@
     <field:input field="regNumber" id="c_ua_org_tumakha_spdtool_User_regNumber"/>
     <field:input field="email" id="c_ua_org_tumakha_spdtool_User_email" validationMessageCode="field_invalid_email"/>
     <field:input field="phone" id="c_ua_org_tumakha_spdtool_User_phone" validationMessageCode="field_invalid_integer"/>
-    <field:textarea field="regDpi" id="c_ua_org_tumakha_spdtool_User_regDpi"/>
+    
+    <field:select field="taxOrganization" id="c_ua_org_tumakha_spdtool_TaxOrganization" itemValue="organizationId" items="${taxOrganizations}" required="false" path="/tax_organization"/>
     <field:datetime dateTimePattern="${user_regdatedpi_date_format}" field="regDateDpi" id="c_ua_org_tumakha_spdtool_User_regDateDpi"/>
     <field:input field="regNumberDpi" id="c_ua_org_tumakha_spdtool_User_regNumberDpi"/>
     
+    <field:select field="pensionOrganization" id="c_ua_org_tumakha_spdtool_PensionOrganization" itemValue="organizationId" items="${pensionOrganizations}" required="false" path="/pension_organization"/>
     <field:input field="regNumberPF" id="c_ua_org_tumakha_spdtool_User_regNumberPF"/>
     
     <field:select field="rentType" id="c_ua_org_tumakha_spdtool_User_rentType" enumClass="ua.org.tumakha.spdtool.enums.RentType"/>

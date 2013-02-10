@@ -106,6 +106,7 @@
 	<entry key="label_ua_org_tumakha_spdtool_taxorganization">Пoдаткова</entry>
 	<entry key="label_ua_org_tumakha_spdtool_taxorganization_name">Назва</entry>
 	<entry key="label_ua_org_tumakha_spdtool_taxorganization_code">Код</entry>
+	<entry key="label_ua_org_tumakha_spdtool_taxorganization_pensionorganization">Пенсійний Фонд</entry>
 	<entry key="label_ua_org_tumakha_spdtool_taxorganization_plural"> - Податкові</entry>
 	<entry key="label_ua_org_tumakha_spdtool_account_payeename">Отримувач платежу</entry>
 	<entry key="label_ua_org_tumakha_spdtool_account_accountnumber">Рахунок</entry>
