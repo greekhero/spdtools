@@ -11,11 +11,11 @@ public interface ContractDao {
 
 	Contract find(Object id);
 
-	void persist(Contract act);
+	void persist(Contract contract);
 
-	Contract merge(Contract act);
+	Contract merge(Contract contract);
 
-	void remove(Contract act);
+	void remove(Contract contract);
 
 	List<Contract> findAll();
 

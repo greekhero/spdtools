@@ -24,6 +24,10 @@
         </c:when>
         <c:otherwise>
           <spring:message arguments="${label}" code="entity_not_found" />
+          <a href="?form" style="margin-left: 10px;">
+                <spring:url value="/resources/images/add.png" var="create_img_url" />
+                <img src="${fn:escapeXml(create_img_url)}" title="Create New" />
+          </a>
         </c:otherwise>
       </c:choose>
     </util:panel>
