@@ -85,6 +85,12 @@
 	<entry key="label_ua_org_tumakha_spdtool_user_regdpi">ДПІ</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_regnumber">Номер в реєстрі</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_regnumberdpi">Номер в ДПІ</entry>
+	<entry key="label_ua_org_tumakha_spdtool_user_regnumberpf">Номер в ПФ</entry>
+	
+	<entry key="label_ua_org_tumakha_spdtool_user_renttype">Тип оренди</entry>
+	<entry key="label_ua_org_tumakha_spdtool_user_rentcontractnumber">№ договору оренди</entry>
+	<entry key="label_ua_org_tumakha_spdtool_user_rentcontractdate">Дата договору оренди</entry>
+	
 	<entry key="label_ua_org_tumakha_spdtool_user_servicetypes">Service Types</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_usergroups">Групи</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_userid">User Id</entry>
@@ -128,6 +134,10 @@
 	<!-- Enums -->
 	<entry key="label_ua_org_tumakha_spdtool_enums_RegDocumentType_SVIDOCTVO">Свідоцтво</entry>
 	<entry key="label_ua_org_tumakha_spdtool_enums_RegDocumentType_VYPYSKA">Виписка</entry>
+	
+	<entry key="label_ua_org_tumakha_spdtool_enums_RentType_NONE">Немає</entry>
+	<entry key="label_ua_org_tumakha_spdtool_enums_RentType_OFFICE">Приміщення</entry>
+	<entry key="label_ua_org_tumakha_spdtool_enums_RentType_OFFICE_EQUIPMENT">Приміщення та обладнання</entry>
 	
 	<!-- declaration -->
 	<entry key="declaration_state1_title">Генерування декларацій - Крок 1</entry>

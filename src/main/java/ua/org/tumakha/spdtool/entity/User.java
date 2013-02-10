@@ -128,7 +128,7 @@ public class User implements Serializable {
 	@JoinColumn(name = "pensionOrganizationId", nullable = true)
 	private PensionOrganization pensionOrganization;
 
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	private RentType rentType;
 
 	@Column(length = 20)
@@ -136,7 +136,6 @@ public class User implements Serializable {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(style = "S-")
-	@Past
 	private Date rentContractDate;
 
 	private Long phone;

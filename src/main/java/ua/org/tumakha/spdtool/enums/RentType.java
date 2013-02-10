@@ -5,5 +5,5 @@ package ua.org.tumakha.spdtool.enums;
  */
 public enum RentType {
 
-	NONE, OFFICE, OFIICE_EQUIPMENT;
+	NONE, OFFICE, OFFICE_EQUIPMENT;
 }

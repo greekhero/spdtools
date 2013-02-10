@@ -23,6 +23,12 @@
         <field:display date="true" dateTimePattern="${user_regdatedpi_date_format}" field="regDateDpi" id="s_ua_org_tumakha_spdtool_User_regDateDpi" object="${user}" z="y+itQinxLnI/nwknmdBK9P/ABjs="/>
         <field:display field="regNumberDpi" id="s_ua_org_tumakha_spdtool_User_regNumberDpi" object="${user}" z="DlcBAPOwaf0C+hI0nLXU5XklzfQ="/>
         <br/>
+        <field:display field="regNumberPF" id="s_ua_org_tumakha_spdtool_User_regNumberPF" object="${user}"/>
+        <br/>
+        <field:display field="rentType" id="s_ua_org_tumakha_spdtool_User_rentType" enumClass="ua.org.tumakha.spdtool.enums.RentType" object="${user}"/>
+    	<field:display field="rentContractNumber" id="s_ua_org_tumakha_spdtool_User_rentContractNumber" object="${user}"/>
+    	<field:display date="true" dateTimePattern="${user_regdate_date_format}" field="rentContractDate" id="s_ua_org_tumakha_spdtool_User_rentContractDate" object="${user}"/>
+        <br/>
         <field:display field="kveds2010" id="c_ua_org_tumakha_spdtool_User_kveds2010" object="${user}"/>
         <field:display field="kveds" id="c_ua_org_tumakha_spdtool_User_kveds" object="${user}"/>
         <field:display field="activeKveds" id="c_ua_org_tumakha_spdtool_User_activeKveds" object="${user}"/>

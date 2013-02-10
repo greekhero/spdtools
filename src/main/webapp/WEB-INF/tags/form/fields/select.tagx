@@ -43,7 +43,8 @@
     </c:set>
     
     <c:if test="${not empty enumClass}">
-    	<jsp:useBean id="items" class="java.util.HashMap" scope="request"/>  
+    	<jsp:useBean id="items" class="java.util.LinkedHashMap" scope="request"/> 
+    	<jsp:scriptlet>items.clear();</jsp:scriptlet>
 	    <spring:eval expression="T(${enumClass}).values()" var="values"/>
 	    <c:forEach items="${values}" var="value">
 	    	<c:set target="${items}" property="${value}"><spring:message code="label_${fn:replace(enumClass,'.','_')}_${value}" htmlEscape="false" /></c:set>
