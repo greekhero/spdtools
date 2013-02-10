@@ -48,8 +48,8 @@ public class UserController implements AppConfig {
 	private UserService userService;
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String create(@Valid User user, BindingResult bindingResult,
-			Model uiModel, HttpServletRequest httpServletRequest) {
+	public String create(@Valid User user, BindingResult bindingResult, Model uiModel,
+			HttpServletRequest httpServletRequest) {
 		if (bindingResult.hasErrors()) {
 			uiModel.addAttribute("user", user);
 			addDateTimeFormatPatterns(uiModel);
@@ -58,13 +58,12 @@ public class UserController implements AppConfig {
 		try {
 			userService.createUser(user);
 		} catch (Exception e) {
+			uiModel.addAttribute("user", user);
 			addError(uiModel, e);
 			return "users/create";
 		}
 		uiModel.asMap().clear();
-		return "redirect:/users/"
-				+ WebUtil.encodeUrlPathSegment(user.getUserId().toString(),
-						httpServletRequest);
+		return "redirect:/users/" + WebUtil.encodeUrlPathSegment(user.getUserId().toString(), httpServletRequest);
 	}
 
 	@RequestMapping(params = "form", method = RequestMethod.GET)
@@ -83,19 +82,15 @@ public class UserController implements AppConfig {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String list(
-			@RequestParam(value = "page", required = false) Integer page,
-			@RequestParam(value = "size", required = false) Integer size,
-			Model uiModel) {
+	public String list(@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "size", required = false) Integer size, Model uiModel) {
 		if (page != null || size != null) {
 			int sizeNo = size == null ? DEFAULT_PAGE_SIZE : size.intValue();
-			uiModel.addAttribute("users", userService.findUserEntries(
-					page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+			uiModel.addAttribute("users",
+					userService.findUserEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
 			float nrOfPages = (float) userService.countUsers() / sizeNo;
-			uiModel.addAttribute(
-					"maxPages",
-					(int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1
-							: nrOfPages));
+			uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1
+					: nrOfPages));
 		} else {
 			uiModel.addAttribute("users", userService.findAllUsers());
 		}
@@ -104,8 +99,8 @@ public class UserController implements AppConfig {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
-	public String update(@Valid User user, BindingResult bindingResult,
-			Model uiModel, HttpServletRequest httpServletRequest) {
+	public String update(@Valid User user, BindingResult bindingResult, Model uiModel,
+			HttpServletRequest httpServletRequest) {
 		if (bindingResult.hasErrors()) {
 			uiModel.addAttribute("user", user);
 			addDateTimeFormatPatterns(uiModel);
@@ -114,18 +109,16 @@ public class UserController implements AppConfig {
 		try {
 			userService.updateUser(user);
 		} catch (Exception e) {
+			uiModel.addAttribute("user", user);
 			addError(uiModel, e);
 			return "users/update";
 		}
 		uiModel.asMap().clear();
-		return "redirect:/users/"
-				+ WebUtil.encodeUrlPathSegment(user.getUserId().toString(),
-						httpServletRequest);
+		return "redirect:/users/" + WebUtil.encodeUrlPathSegment(user.getUserId().toString(), httpServletRequest);
 	}
 
 	@RequestMapping(value = "/{userId}", params = "form", method = RequestMethod.GET)
-	public String updateForm(@PathVariable("userId") Integer userId,
-			Model uiModel) {
+	public String updateForm(@PathVariable("userId") Integer userId, Model uiModel) {
 		addDateTimeFormatPatterns(uiModel);
 		uiModel.addAttribute("user", userService.findUser(userId));
 		return "users/update";
@@ -134,13 +127,11 @@ public class UserController implements AppConfig {
 	@RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
 	public String delete(@PathVariable("userId") Integer userId,
 			@RequestParam(value = "page", required = false) Integer page,
-			@RequestParam(value = "size", required = false) Integer size,
-			Model uiModel) {
+			@RequestParam(value = "size", required = false) Integer size, Model uiModel) {
 		userService.deleteUser(userId);
 		uiModel.asMap().clear();
 		uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
-		uiModel.addAttribute("size",
-				(size == null) ? DEFAULT_PAGE_SIZE : size.toString());
+		uiModel.addAttribute("size", (size == null) ? DEFAULT_PAGE_SIZE : size.toString());
 		return "redirect:/users";
 	}
 
@@ -160,14 +151,10 @@ public class UserController implements AppConfig {
 	}
 
 	private void addDateTimeFormatPatterns(Model uiModel) {
-		uiModel.addAttribute(
-				"user_regdate_date_format",
-				DateTimeFormat.patternForStyle("S-",
-						LocaleContextHolder.getLocale()));
-		uiModel.addAttribute(
-				"user_regdatedpi_date_format",
-				DateTimeFormat.patternForStyle("S-",
-						LocaleContextHolder.getLocale()));
+		uiModel.addAttribute("user_regdate_date_format",
+				DateTimeFormat.patternForStyle("S-", LocaleContextHolder.getLocale()));
+		uiModel.addAttribute("user_regdatedpi_date_format",
+				DateTimeFormat.patternForStyle("S-", LocaleContextHolder.getLocale()));
 	}
 
 	private void addError(Model uiModel, Throwable e) {

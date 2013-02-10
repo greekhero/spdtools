@@ -99,6 +99,20 @@
 	<entry key="label_ua_org_tumakha_spdtool_usergroup_name">Назва</entry>
 	<entry key="label_ua_org_tumakha_spdtool_usergroup_plural">Груп</entry>
 	<entry key="label_ua_org_tumakha_spdtool_usergroup_users">Users</entry>
+	
+	<entry key="label_ua_org_tumakha_spdtool_pensionorganization">Пенсійний Фонд</entry>
+	<entry key="label_ua_org_tumakha_spdtool_pensionorganization_name">Назва</entry>
+	<entry key="label_ua_org_tumakha_spdtool_pensionorganization_plural"> - Пенсійні Фонди</entry>
+	<entry key="label_ua_org_tumakha_spdtool_taxorganization">Пoдаткова</entry>
+	<entry key="label_ua_org_tumakha_spdtool_taxorganization_name">Назва</entry>
+	<entry key="label_ua_org_tumakha_spdtool_taxorganization_code">Код</entry>
+	<entry key="label_ua_org_tumakha_spdtool_taxorganization_plural"> - Податкові</entry>
+	<entry key="label_ua_org_tumakha_spdtool_account_payeename">Отримувач платежу</entry>
+	<entry key="label_ua_org_tumakha_spdtool_account_accountnumber">Рахунок</entry>
+	<entry key="label_ua_org_tumakha_spdtool_account_codeedrpou">Код ЄДРПОУ</entry>
+	<entry key="label_ua_org_tumakha_spdtool_account_mfo">МФО Банку</entry>
+	<entry key="label_ua_org_tumakha_spdtool_account_bankname">Назва банку</entry>
+	
 	<entry key="menu_category_act_label">Act</entry>
 	<entry key="menu_category_address_label">Address</entry>
 	<entry key="menu_category_bank_label">Bank</entry>
@@ -109,6 +123,7 @@
 	<entry key="menu_category_servicetype_label">Service Type</entry>
 	<entry key="menu_category_user_label">ФОП</entry>
 	<entry key="menu_category_usergroup_label">Група</entry>
+	<entry key="menu_category_organization_label">Організації</entry>
 	<entry key="menu_item_act_list_label">Acts</entry>
 	<entry key="menu_item_act_new_label">Act</entry>
 	<entry key="menu_item_address_list_label">Addresses</entry>
@@ -130,6 +145,10 @@
 	<entry key="menu_item_user_new_label">ФОП</entry>
 	<entry key="menu_item_usergroup_list_label">Груп</entry>
 	<entry key="menu_item_usergroup_new_label">Група</entry>
+	<entry key="menu_item_taxorganization_list_label">Податкова</entry>
+	<entry key="menu_item_taxorganization_new_label">Податкова</entry>
+	<entry key="menu_item_pensionorganization_list_label">Пенсійний Фонд</entry>
+	<entry key="menu_item_pensionorganization_new_label">Пенсійний Фонд</entry>
 	
 	<!-- Enums -->
 	<entry key="label_ua_org_tumakha_spdtool_enums_RegDocumentType_SVIDOCTVO">Свідоцтво</entry>

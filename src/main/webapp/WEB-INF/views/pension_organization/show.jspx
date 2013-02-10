@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_ua_org_tumakha_spdtool_PensionOrganization" object="${organization}" path="/pension_organization">
+    	<field:display field="name" id="c_ua_org_tumakha_spdtool_PensionOrganization_name" object="${organization}"/>
+	    <field:display field="payeeName" id="c_ua_org_tumakha_spdtool_Account_payeeName" object="${organization.account}"/>
+	    <br/>
+        <field:display field="accountNumber" id="c_ua_org_tumakha_spdtool_Account_accountNumber" object="${organization.account}"/>
+        <field:display field="codeEDRPOU" id="c_ua_org_tumakha_spdtool_Account_codeEDRPOU" object="${organization.account}"/>
+        <field:display field="mFO" id="c_ua_org_tumakha_spdtool_Account_MFO" object="${organization.account}"/>
+        <field:display field="bankName" id="c_ua_org_tumakha_spdtool_Account_bankName" object="${organization.account}"/>
+    </page:show>
+</div>

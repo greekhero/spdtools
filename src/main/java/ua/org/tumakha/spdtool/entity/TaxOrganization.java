@@ -2,6 +2,7 @@ package ua.org.tumakha.spdtool.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,7 +31,7 @@ public class TaxOrganization implements Serializable {
 
 	private Integer code;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "accountId", unique = true, nullable = false, updatable = false)
 	private Account account;
 
@@ -76,6 +77,14 @@ public class TaxOrganization implements Serializable {
 
 	public void setPensionOrganization(PensionOrganization pensionOrganization) {
 		this.pensionOrganization = pensionOrganization;
+	}
+
+	public String getPayeeName() {
+		return account.getPayeeName();
+	}
+
+	public Long getAccountNumber() {
+		return account.getAccountNumber();
 	}
 
 }
