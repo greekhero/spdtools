@@ -18,7 +18,14 @@
     <field:input field="phone" id="c_ua_org_tumakha_spdtool_User_phone" validationMessageCode="field_invalid_integer"/>
     <field:textarea field="regDpi" id="c_ua_org_tumakha_spdtool_User_regDpi"/>
     <field:datetime dateTimePattern="${user_regdatedpi_date_format}" field="regDateDpi" id="c_ua_org_tumakha_spdtool_User_regDateDpi"/>
-    <field:input field="regNumberDpi" id="c_ua_org_tumakha_spdtool_User_regNumberDpi" validationMessageCode="field_invalid_integer"/>
+    <field:input field="regNumberDpi" id="c_ua_org_tumakha_spdtool_User_regNumberDpi"/>
+    
+    <field:input field="regNumberPF" id="c_ua_org_tumakha_spdtool_User_regNumberPF"/>
+    
+    <field:select field="rentType" id="c_ua_org_tumakha_spdtool_User_rentType" enumClass="ua.org.tumakha.spdtool.enums.RentType"/>
+    <field:input field="rentContractNumber" id="c_ua_org_tumakha_spdtool_User_rentContractNumber"/>
+    <field:datetime dateTimePattern="${user_regdate_date_format}" field="rentContractDate" id="c_ua_org_tumakha_spdtool_User_rentContractDate"/>
+    
     <field:select field="groups" id="c_ua_org_tumakha_spdtool_User_userGroups" itemValue="groupId" items="${groups}" multiple="true" path="/groups"/>
     <field:select field="kveds2010" id="c_ua_org_tumakha_spdtool_User_kveds2010" itemValue="kvedId" items="${kveds2010}" multiple="true" path="/kveds2010"/>
     <field:select field="kveds" id="c_ua_org_tumakha_spdtool_User_kveds" itemValue="kvedId" items="${kveds}" multiple="true" path="/kveds"/>

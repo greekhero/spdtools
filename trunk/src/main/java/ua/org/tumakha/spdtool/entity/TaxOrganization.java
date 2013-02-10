@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -32,6 +33,10 @@ public class TaxOrganization implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "accountId", unique = true, nullable = false, updatable = false)
 	private Account account;
+
+	@ManyToOne
+	@JoinColumn(name = "pensionOrganizationId", nullable = true)
+	private PensionOrganization pensionOrganization;
 
 	public Integer getOrganizationId() {
 		return organizationId;
@@ -63,6 +68,14 @@ public class TaxOrganization implements Serializable {
 
 	public void setAccount(Account account) {
 		this.account = account;
+	}
+
+	public PensionOrganization getPensionOrganization() {
+		return pensionOrganization;
+	}
+
+	public void setPensionOrganization(PensionOrganization pensionOrganization) {
+		this.pensionOrganization = pensionOrganization;
 	}
 
 }
