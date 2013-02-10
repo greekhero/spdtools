@@ -20,10 +20,8 @@ public abstract class TemplateModel {
 
 	protected static final Locale uaLocale = new Locale("uk", "UA");
 	protected static final Locale enLocale = Locale.ENGLISH;
-	protected static final DateFormat uaDateFormat = new SimpleDateFormat(
-			"dd.MM.yyyy");
-	private static final DateFormat regDateDPIFormat = new SimpleDateFormat(
-			"ddMMyyyy");
+	protected static final DateFormat uaDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+	private static final DateFormat regDateDPIFormat = new SimpleDateFormat("ddMMyyyy");
 
 	private String firstname;
 	private String firstnameEn;
@@ -72,27 +70,22 @@ public abstract class TemplateModel {
 		firstnameEn = user.getFirstnameEn();
 		middlename = user.getMiddlename();
 		middlenameEn = user.getMiddlenameEn();
-		middlenameBankEn = bank.isUsedMiddlename() ? user.getMiddlenameEn()
-				: "";
+		middlenameBankEn = bank.isUsedMiddlename() ? user.getMiddlenameEn() : "";
 		lastname = user.getLastname();
 		lastnameEn = user.getLastnameEn();
 		if (user.getRegDocumentType() != null) {
 			regDocumentName = user.getRegDocumentType().getDescription();
-			regDocumentNameVOrudnomu = user.getRegDocumentType()
-					.getDescriptionVOrudnomu();
+			regDocumentNameVOrudnomu = user.getRegDocumentType().getDescriptionVOrudnomu();
 			regDocumentNameEn = user.getRegDocumentType().getDescriptionEn();
 		}
 		regNumber = user.getRegNumber();
 		regNumberEn = regNumber != null ? regNumber.replace("з", "z") : "";
-		regDate = user.getRegDate() != null ? uaDateFormat.format(user
-				.getRegDate()) : "";
-		if (user.getRegDpi() != null) {
-			regDPI = user.getRegDpi();
+		regDate = user.getRegDate() != null ? uaDateFormat.format(user.getRegDate()) : "";
+		if (user.getTaxOrganization() != null && user.getTaxOrganization().getName() != null) {
+			regDPI = user.getTaxOrganization().getName();
 		}
-		regNumberDPI = user.getRegNumberDpi() != null ? user.getRegNumberDpi()
-				.toString() : "";
-		regDateDPI = user.getRegDateDpi() != null ? regDateDPIFormat
-				.format(user.getRegDateDpi()) : "";
+		regNumberDPI = user.getRegNumberDpi() != null ? user.getRegNumberDpi().toString() : "";
+		regDateDPI = user.getRegDateDpi() != null ? regDateDPIFormat.format(user.getRegDateDpi()) : "";
 		regAddress = address.getTextUa() + ", Україна";
 		regAddressEn = address.getTextEn() + ", Ukraine";
 		if (address.getPostalCode() != null) {
@@ -108,8 +101,7 @@ public abstract class TemplateModel {
 				house += "-" + address.getHouseChar();
 			}
 		}
-		slashHouse = address.getSlashHouse() != null ? ""
-				+ address.getSlashHouse() : "";
+		slashHouse = address.getSlashHouse() != null ? "" + address.getSlashHouse() : "";
 		if (address.getApartment() != null) {
 			apartment = "" + address.getApartment();
 			if (address.getApartmentChar() != null) {

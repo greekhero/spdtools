@@ -104,10 +104,6 @@ public class User implements Serializable {
 	@Past
 	private Date regDate;
 
-	@Deprecated
-	@Column(name = "regDPI", length = 255)
-	private String regDpi;
-
 	@Column(name = "regNumberDPI")
 	private Long regNumberDpi;
 
@@ -199,19 +195,17 @@ public class User implements Serializable {
 	}
 
 	public String getFullname() {
-		return String.format("%s %s %s", getLastname(), getFirstname(),
-				getMiddlename());
+		return String.format("%s %s %s", getLastname(), getFirstname(), getMiddlename());
 	}
 
 	public String getLastnameFirstMiddle() {
-		return String.format("%s  %s. %s.", getLastname(), getFirstname()
-				.substring(0, 1), getMiddlename().substring(0, 1));
+		return String.format("%s  %s. %s.", getLastname(), getFirstname().substring(0, 1),
+				getMiddlename().substring(0, 1));
 	}
 
 	public String getFirstMiddleLastname() {
-		return StrUtil.padRight(String.format("%s.%s.  %s", getFirstname()
-				.substring(0, 1), getMiddlename().substring(0, 1),
-				getLastname()), 72);
+		return StrUtil.padRight(String.format("%s.%s.  %s", getFirstname().substring(0, 1),
+				getMiddlename().substring(0, 1), getLastname()), 72);
 	}
 
 	public Integer getUserId() {
@@ -321,14 +315,6 @@ public class User implements Serializable {
 
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
-	}
-
-	public String getRegDpi() {
-		return regDpi;
-	}
-
-	public void setRegDpi(String regDpi) {
-		this.regDpi = regDpi;
 	}
 
 	public RegDocumentType getRegDocumentType() {

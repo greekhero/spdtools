@@ -25,7 +25,7 @@ public class PensionOrganization implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer organizationId;
 
-	@Column(length = 255)
+	@Column(unique = true, length = 255)
 	private String name;
 
 	@OneToOne(cascade = CascadeType.ALL)

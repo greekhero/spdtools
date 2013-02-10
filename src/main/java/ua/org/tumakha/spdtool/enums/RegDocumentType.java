@@ -5,10 +5,10 @@ package ua.org.tumakha.spdtool.enums;
  */
 public enum RegDocumentType {
 
-	SVIDOCTVO("Свідоцтво про державну реєстрацію",
-			"Certificate of state registration"),
+	SVIDOCTVO("Свідоцтво про державну реєстрацію фізичної особи - підприємця",
+			"Certificate of state registration Private Entrepreneur"), 
 	VYPYSKA("Виписка з єдиного державного реєстру юридичних осіб та фізичних осіб-підприємців",
-			"Excerpt from the Unified State Register of Legal Entities and Individual Entrepreneurs");
+			"Excerpt from the Unified State Register of Legal Entities and Private Entrepreneurs");
 
 	private String description;
 	private String descriptionEn;

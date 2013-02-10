@@ -1,5 +1,7 @@
 package ua.org.tumakha.spdtool.web;
 
+import java.util.Collection;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -7,13 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.org.tumakha.spdtool.AppConfig;
+import ua.org.tumakha.spdtool.entity.PensionOrganization;
 import ua.org.tumakha.spdtool.entity.TaxOrganization;
+import ua.org.tumakha.spdtool.services.PensionOrganizationService;
 import ua.org.tumakha.spdtool.services.TaxOrganizationService;
 import ua.org.tumakha.spdtool.web.util.WebUtil;
 
@@ -26,6 +31,9 @@ public class TaxOrganizationController implements AppConfig {
 
 	@Autowired
 	private TaxOrganizationService taxOrganizationService;
+
+	@Autowired
+	private PensionOrganizationService pensionOrganizationService;
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String create(@Valid TaxOrganization taxOrganization, BindingResult bindingResult, Model uiModel,
@@ -118,6 +126,11 @@ public class TaxOrganizationController implements AppConfig {
 			errorMessage += e.getLocalizedMessage() + " <br/> ";
 		}
 		uiModel.addAttribute("error", errorMessage);
+	}
+
+	@ModelAttribute("pensionOrganizations")
+	public Collection<PensionOrganization> populatePensionOrganizations() {
+		return pensionOrganizationService.findAllPensionOrganizations();
 	}
 
 }
