@@ -5,6 +5,7 @@ package ua.org.tumakha.spdtool.template;
  */
 public enum XlsTemplate {
 
+	PAYMENTS("Payments.xls"),
 	ESV_D5("ESV_d5.xls"),
 	DECLARATION("Declaration.xls");
 

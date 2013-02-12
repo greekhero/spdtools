@@ -203,6 +203,11 @@ public class User implements Serializable {
 				getMiddlename().substring(0, 1));
 	}
 
+	public String getLastnameFirstMiddleShort() {
+		return String.format("%s %s.%s.", getLastname(), getFirstname().substring(0, 1), getMiddlename()
+				.substring(0, 1));
+	}
+
 	public String getFirstMiddleLastname() {
 		return StrUtil.padRight(String.format("%s.%s.  %s", getFirstname().substring(0, 1),
 				getMiddlename().substring(0, 1), getLastname()), 72);
