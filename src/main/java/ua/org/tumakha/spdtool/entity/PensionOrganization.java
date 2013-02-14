@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 /**
@@ -36,6 +37,7 @@ public class PensionOrganization implements Serializable {
 	private Account account;
 
 	@OneToMany(mappedBy = "pensionOrganization", fetch = FetchType.LAZY)
+	@OrderBy("active desc, lastname asc")
 	private Set<User> users;
 
 	public Integer getOrganizationId() {

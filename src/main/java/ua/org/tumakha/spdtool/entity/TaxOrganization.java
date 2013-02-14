@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 /**
@@ -44,6 +45,7 @@ public class TaxOrganization implements Serializable {
 	private PensionOrganization pensionOrganization;
 
 	@OneToMany(mappedBy = "taxOrganization", fetch = FetchType.LAZY)
+	@OrderBy("active desc, lastname asc")
 	private Set<User> users;
 
 	public Integer getOrganizationId() {

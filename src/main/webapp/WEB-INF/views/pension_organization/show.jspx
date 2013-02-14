@@ -14,7 +14,16 @@
         	<label><spring:message code="label_ua_org_tumakha_spdtool_user_plural" htmlEscape="false" />: </label>
         	<div class="box">
 		       	<c:forEach items="${organization.users}" var="user">
-		       		<c:out value="${user.lastname} ${user.firstname}"/><br/>
+			        <spring:url value="/users/${user.userId}" var="update_user_url">
+			          <spring:param name="form" />
+			        </spring:url>
+					<c:if test="${!(user.active != null &amp;&amp; user.active)}">
+				      <c:set var="link_style" value="font-style: italic;"/>
+				      <c:set var="user_title" value="Not Active"/>
+				    </c:if>
+		       		<a href="${update_user_url}" style="${link_style}" title="${user_title}">
+		       			<c:out value="${user.lastname} ${user.firstname}"/>
+		       		</a><br/>
 		       	</c:forEach>
         	</div>
         	<br/>
