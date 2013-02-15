@@ -372,3 +372,11 @@ fieldset th {
 	height: 11px;
 	width: 16px;
 }
+
+#links a {
+	color: #666666;
+}
+
+#links a:hover {
+	color: #648C1D;
+}

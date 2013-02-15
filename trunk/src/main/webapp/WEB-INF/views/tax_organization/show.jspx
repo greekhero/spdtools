@@ -16,7 +16,7 @@
         </c:if>
         <c:if test="${not empty organization.users}">
         	<label><spring:message code="label_ua_org_tumakha_spdtool_user_plural" htmlEscape="false" />: </label>
-        	<div class="box">
+        	<div version="2.0" id="links" class="box">
 		       	<c:forEach items="${organization.users}" var="user">
 			        <spring:url value="/users/${user.userId}" var="update_user_url">
 			          <spring:param name="form" />
