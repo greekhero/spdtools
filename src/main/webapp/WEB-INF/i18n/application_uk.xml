@@ -184,7 +184,7 @@
 	<entry key="label_act_generate_contracts">Ген. контракти</entry>
 	<entry key="label_act_generate_acts">Генерувати акти</entry>
 	<entry key="label_act_contract_number">Контракт</entry>
-	<entry key="label_act_start_date">Акт Старт</entry>
+	<entry key="label_act_dates">Дати акту</entry>
 	<entry key="label_act_salary">Зарплата</entry>
 	<entry key="error_act_upload_fileextension">Неправильне розширення файлу. Дозволено .xls або .xlsx файл.</entry>
 	<entry key="error_act_file_no_records">Файл порожній або не знайдено лист "Sheet1".</entry>
