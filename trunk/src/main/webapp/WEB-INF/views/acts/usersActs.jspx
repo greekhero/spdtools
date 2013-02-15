@@ -18,12 +18,13 @@
       			<th><input type="checkbox" id="selectall"/></th>
       			<th><spring:message code="label_ua_org_tumakha_spdtool_user_lastname"/></th>
       			<th><spring:message code="label_ua_org_tumakha_spdtool_user_firstname"/></th>
-      			<th><spring:message code="label_act_contract_number"/></th>
-      			<th width="50"><spring:message code="label_act_start_date"/></th>
+      			<th width="200"><spring:message code="label_act_contract_number"/></th>
+      			<th width="170"><spring:message code="label_act_dates"/></th>
       			<th><spring:message code="label_act_salary"/></th>
       		</tr>
       	</thead>
       	<tbody>
+      		<script type="text/javascript">dojo.require('dijit.form.DateTextBox')</script>
 			<c:forEach items="${actModel.acts}" varStatus="row">
 				<tr>
 					<td><form:checkbox path="enabledUserIds" value="${actModel.acts[row.index].user.userId}"/></td>
@@ -36,22 +37,25 @@
 							</c:when>
 							<c:otherwise>
 								<form:input path="acts[${row.index}].contract.number" cssStyle="width: 80px; margin-right: 10px;"/>
-
-								<script type="text/javascript">dojo.require('dijit.form.DateTextBox')</script>
 								<form:input id="contract_date_id_${row.index}" path="acts[${row.index}].contract.date" />
 								<br/><form:errors cssClass="errors" id="contract_date_error_id_${row.index}" path="acts[${row.index}].contract.date"/>
 								<script type="text/javascript">
-        							Spring.addDecoration(new Spring.ElementDecoration({elementId : 'contract_date_id_${row.index}', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {promptMessage: 'Contract Date', invalidMessage: 'Invalid Date', required: false, constraints: {datePattern : 'dd.MM.yyyy', required : false}, datePattern : 'dd.MM.yyyy'}}));
+        							Spring.addDecoration(new Spring.ElementDecoration({elementId : 'contract_date_id_${row.index}', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {style: 'width: 70px', promptMessage: 'Contract Date', invalidMessage: 'Invalid Date', required: false, constraints: {datePattern : 'dd.MM.yyyy', required : false}, datePattern : 'dd.MM.yyyy'}}));
         						</script>
 							</c:otherwise>
 						</c:choose>
 					</td>
 					<td>
-						<script type="text/javascript">dojo.require('dijit.form.DateTextBox')</script>
-						<form:input id="act_date_id_${row.index}" path="acts[${row.index}].dateFrom" />
-						<br/><form:errors cssClass="errors" id="act_date_error_id_${row.index}" path="acts[${row.index}].dateFrom"/>
+						<form:input id="act_date_from_id_${row.index}" path="acts[${row.index}].dateFrom" />
+						<form:errors cssClass="errors" id="act_date_from_error_id_${row.index}" path="acts[${row.index}].dateFrom"/>
 						<script type="text/javascript">
-      						Spring.addDecoration(new Spring.ElementDecoration({elementId : 'act_date_id_${row.index}', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {promptMessage: 'Act Start Date', invalidMessage: 'Invalid Date', required: false, constraints: {datePattern : 'dd.MM.yyyy', required : false}, datePattern : 'dd.MM.yyyy'}}));
+      						Spring.addDecoration(new Spring.ElementDecoration({elementId : 'act_date_from_id_${row.index}', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {style: 'width: 70px', promptMessage: 'Act Start Date', invalidMessage: 'Invalid Date', required: false, constraints: {datePattern : 'dd.MM.yyyy', required : false}, datePattern : 'dd.MM.yyyy'}}));
+      					</script>
+      					<span style="margin-left: 10px;"></span>
+						<form:input id="act_date_to_id_${row.index}" path="acts[${row.index}].dateTo" />
+						<form:errors cssClass="errors" id="act_date_to_error_id_${row.index}" path="acts[${row.index}].dateTo"/>
+						<script type="text/javascript">
+      						Spring.addDecoration(new Spring.ElementDecoration({elementId : 'act_date_to_id_${row.index}', widgetType : 'dijit.form.DateTextBox', widgetAttrs : {style: 'width: 70px', promptMessage: 'Act End Date', invalidMessage: 'Invalid Date', required: false, constraints: {datePattern : 'dd.MM.yyyy', required : false}, datePattern : 'dd.MM.yyyy'}}));
       					</script>
 					</td>
 					<td><form:input path="acts[${row.index}].amount" cssStyle="width: 40px;"/></td>
