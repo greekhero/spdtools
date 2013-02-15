@@ -7,6 +7,8 @@ public class ActReaderModel {
 
 	private String lastname;
 
+	private String firstname;
+
 	private Integer salary;
 
 	public String getLastname() {
@@ -15,6 +17,14 @@ public class ActReaderModel {
 
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
 	public Integer getSalary() {
@@ -27,8 +37,7 @@ public class ActReaderModel {
 
 	@Override
 	public String toString() {
-		return String.format("ActReaderModel [lastname=%s, salary=%s]",
-				lastname, salary);
+		return String.format("ActReaderModel [lastname=%s, firstname=%s, salary=%s]", lastname, firstname, salary);
 	}
 
 }

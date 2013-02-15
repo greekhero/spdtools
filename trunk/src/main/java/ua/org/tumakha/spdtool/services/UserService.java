@@ -28,6 +28,8 @@ public interface UserService {
 
 	User findUserByLastname(String lastname);
 
+	User findUserByLastFirst(String lastname, String firstname);
+
 	List<User> findUsersByGroup(Integer groupId);
 
 	List<User> findUsersByGroups(List<Integer> groupIds);

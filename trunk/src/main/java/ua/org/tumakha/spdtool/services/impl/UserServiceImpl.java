@@ -43,8 +43,7 @@ public class UserServiceImpl implements UserService {
 		if (dbServiceType == null) {
 			dbServiceType = new ServiceType();
 		}
-		BeanUtils.copyProperties(user.getServiceType(), dbServiceType,
-				getArray("serviceTypeId"));
+		BeanUtils.copyProperties(user.getServiceType(), dbServiceType, getArray("serviceTypeId"));
 		user.setServiceType(dbServiceType);
 
 		Bank dbBank = dbUser.getBank();
@@ -58,16 +57,14 @@ public class UserServiceImpl implements UserService {
 		if (dbAddress == null) {
 			dbAddress = new Address();
 		}
-		BeanUtils.copyProperties(user.getAddress(), dbAddress,
-				getArray("addressId"));
+		BeanUtils.copyProperties(user.getAddress(), dbAddress, getArray("addressId"));
 		user.setAddress(dbAddress);
 
 		Passport dbPasport = dbUser.getPassport();
 		if (dbPasport == null) {
 			dbPasport = new Passport();
 		}
-		BeanUtils.copyProperties(user.getPassport(), dbPasport,
-				getArray("passportId"));
+		BeanUtils.copyProperties(user.getPassport(), dbPasport, getArray("passportId"));
 		user.setPassport(dbPasport);
 
 		return userDao.merge(user);
@@ -119,6 +116,12 @@ public class UserServiceImpl implements UserService {
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public User findUserByLastname(String lastname) {
 		return userDao.findByLastname(lastname);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public User findUserByLastFirst(String lastname, String firstname) {
+		return userDao.findByLastFirst(lastname, firstname);
 	}
 
 	@Override
