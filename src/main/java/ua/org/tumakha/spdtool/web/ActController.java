@@ -130,8 +130,14 @@ public class ActController {
 					Act act;
 					if (dbActs.containsKey(user.getUserId())) {
 						act = dbActs.get(user.getUserId());
+						Calendar calendarActTo = GregorianCalendar.getInstance();
+						calendarActTo.setTime(act.getDateTo());
+						int dayTo = calendarActTo.get(Calendar.DAY_OF_MONTH);
+						if (dayTo < 28 && calendarActTo.get(Calendar.MONTH) == (actModel.getMonth() - 1)) {
+							act = createAct(user, actModel, dayTo + 1);
+						}
 					} else {
-						act = createAct(user, actModel);
+						act = createAct(user, actModel, 1);
 					}
 					if (fileActs != null) {
 						ActReaderModel fileAct = fileActs.get(user.getUserId());
@@ -184,7 +190,7 @@ public class ActController {
 		return actsMap;
 	}
 
-	private Act createAct(User user, ActModel actModel) {
+	private Act createAct(User user, ActModel actModel, int fromDay) {
 		Contract lastContract = user.getLastContract();
 		Act lastAct = null;
 		if (lastContract == null) {
@@ -208,7 +214,7 @@ public class ActController {
 				actNumber = result.toString();
 			}
 		}
-		Calendar calendarActFrom = new GregorianCalendar(actModel.getYear(), actModel.getMonth() - 1, 1);
+		Calendar calendarActFrom = new GregorianCalendar(actModel.getYear(), actModel.getMonth() - 1, fromDay);
 		int nextMonth = actModel.getMonth() == 12 ? 0 : actModel.getMonth();
 		int nextYear = actModel.getMonth() == 12 ? actModel.getYear() + 1 : actModel.getYear();
 		Calendar calendarActTo = new GregorianCalendar(nextYear, nextMonth, 1);
