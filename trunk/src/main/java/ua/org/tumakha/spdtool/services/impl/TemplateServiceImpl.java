@@ -2,9 +2,11 @@ package ua.org.tumakha.spdtool.services.impl;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -30,6 +32,7 @@ import ua.org.tumakha.spdtool.entity.Act;
 import ua.org.tumakha.spdtool.entity.Declaration;
 import ua.org.tumakha.spdtool.entity.Kved2010;
 import ua.org.tumakha.spdtool.entity.User;
+import ua.org.tumakha.spdtool.enums.RentType;
 import ua.org.tumakha.spdtool.services.ActService;
 import ua.org.tumakha.spdtool.services.DeclarationService;
 import ua.org.tumakha.spdtool.services.TemplateService;
@@ -58,6 +61,7 @@ public class TemplateServiceImpl implements TemplateService {
 
 	private static final Log log = LogFactory.getLog(TemplateServiceImpl.class);
 	private static final NumberFormat MONEY_FORMAT = getMoneyFormat();
+	private static final DateFormat UA_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 
 	@Autowired
 	private UserService userService;
@@ -85,8 +89,7 @@ public class TemplateServiceImpl implements TemplateService {
 					}
 				}
 			} finally {
-				log.debug("Last User: " + lastUser.getUserId() + " "
-						+ lastUser.getLastnameEn());
+				log.debug("Last User: " + lastUser.getUserId() + " " + lastUser.getLastnameEn());
 			}
 
 			return listModel;
@@ -96,16 +99,13 @@ public class TemplateServiceImpl implements TemplateService {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<TaxSystemStatementModel> getTaxSystemStatementModelList(
-			Integer groupId) {
+	public List<TaxSystemStatementModel> getTaxSystemStatementModelList(Integer groupId) {
 		List<User> users = userService.findUsersByGroup(groupId);
 		if (users != null && users.size() > 0) {
-			List<TaxSystemStatementModel> listModel = new ArrayList<TaxSystemStatementModel>(
-					users.size());
+			List<TaxSystemStatementModel> listModel = new ArrayList<TaxSystemStatementModel>(users.size());
 			for (User user : users) {
 				if (user.isActive()) {
-					TaxSystemStatementModel taxSystemStatementModel = new TaxSystemStatementModel(
-							user);
+					TaxSystemStatementModel taxSystemStatementModel = new TaxSystemStatementModel(user);
 					listModel.add(taxSystemStatementModel);
 				}
 			}
@@ -116,16 +116,13 @@ public class TemplateServiceImpl implements TemplateService {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<IncomeCalculationModel> getIncomeCalculationModelList(
-			Integer groupId) {
+	public List<IncomeCalculationModel> getIncomeCalculationModelList(Integer groupId) {
 		List<User> users = userService.findUsersByGroup(groupId);
 		if (users != null && users.size() > 0) {
-			List<IncomeCalculationModel> listModel = new ArrayList<IncomeCalculationModel>(
-					users.size());
+			List<IncomeCalculationModel> listModel = new ArrayList<IncomeCalculationModel>(users.size());
 			for (User user : users) {
 				if (user.isActive()) {
-					IncomeCalculationModel model = new IncomeCalculationModel(
-							user);
+					IncomeCalculationModel model = new IncomeCalculationModel(user);
 					listModel.add(model);
 				}
 			}
@@ -139,8 +136,7 @@ public class TemplateServiceImpl implements TemplateService {
 	public List<Form20OPPModel> getForm20OPPModelList() {
 		List<User> users = userService.findActiveUsers();
 		if (users != null && users.size() > 0) {
-			List<Form20OPPModel> listModel = new ArrayList<Form20OPPModel>(
-					users.size());
+			List<Form20OPPModel> listModel = new ArrayList<Form20OPPModel>(users.size());
 			for (User user : users) {
 				Form20OPPModel form20OPPModel = new Form20OPPModel(user);
 				listModel.add(form20OPPModel);
@@ -155,8 +151,7 @@ public class TemplateServiceImpl implements TemplateService {
 	public List<Form11KvedModel> getForm11KvedModelList(Integer groupId) {
 		List<User> users = userService.findUsersByGroup(groupId);
 		if (users != null && users.size() > 0) {
-			List<Form11KvedModel> listModel = new ArrayList<Form11KvedModel>(
-					users.size());
+			List<Form11KvedModel> listModel = new ArrayList<Form11KvedModel>(users.size());
 			for (User user : users) {
 				if (user.isActive()) {
 					Form11KvedModel form11Model = new Form11KvedModel(user);
@@ -170,28 +165,24 @@ public class TemplateServiceImpl implements TemplateService {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<String> generateDeclarations(Set<Integer> enabledUserIds,
-			Set<Integer> groupIds, Integer year, Integer quarter)
-			throws InvalidFormatException, IOException {
+	public List<String> generateDeclarations(Set<Integer> enabledUserIds, Set<Integer> groupIds, Integer year,
+			Integer quarter) throws InvalidFormatException, IOException {
 		char[] dateYear = ("" + (quarter == 4 ? year + 1 : year)).toCharArray();
 		List<String> fileNames = new ArrayList<String>();
-		List<Declaration> declarations = declarationService
-				.findDeclarationsByYearAndQuarter(enabledUserIds, year, quarter);
+		List<Declaration> declarations = declarationService.findDeclarationsByYearAndQuarter(enabledUserIds, year,
+				quarter);
 		Map<Integer, Declaration> previousDeclarations = new HashMap<Integer, Declaration>();
 		if (!quarter.equals(1)) {
-			List<Declaration> prevDeclarations = declarationService
-					.findDeclarationsByYearAndQuarter(enabledUserIds, year,
-							quarter - 1);
+			List<Declaration> prevDeclarations = declarationService.findDeclarationsByYearAndQuarter(enabledUserIds,
+					year, quarter - 1);
 			for (Declaration declaration : prevDeclarations) {
-				previousDeclarations.put(declaration.getUser().getUserId(),
-						declaration);
+				previousDeclarations.put(declaration.getUser().getUserId(), declaration);
 			}
 		}
 
 		XlsProcessor xlsProcessor = new XlsProcessor();
 		if (declarations != null && declarations.size() > 0) {
-			xlsProcessor.cleanBaseDirectory(XlsTemplate.DECLARATION, year,
-					quarter);
+			xlsProcessor.cleanBaseDirectory(XlsTemplate.DECLARATION, year, quarter);
 		}
 
 		for (Declaration declaration : declarations) {
@@ -207,8 +198,7 @@ public class TemplateServiceImpl implements TemplateService {
 			BigDecimal previousTax = null;
 			BigDecimal taxToPay = tax;
 			if (!quarter.equals(1) && tax != null) {
-				Declaration previousDeclaration = previousDeclarations.get(user
-						.getUserId());
+				Declaration previousDeclaration = previousDeclarations.get(user.getUserId());
 				if (previousDeclaration != null) {
 					if (previousDeclaration.getTax() != null) {
 						previousTax = previousDeclaration.getTax();
@@ -239,20 +229,17 @@ public class TemplateServiceImpl implements TemplateService {
 				beans.put("kvedCode" + k, code);
 				beans.put("kvedName" + k, name);
 			}
-			String outputFilenamePrefix = String.format(
-					"/DECLARATION/%d_Q%d/%s_%s_%d_Q%d_", year, quarter,
+			String outputFilenamePrefix = String.format("/DECLARATION/%d_Q%d/%s_%s_%d_Q%d_", year, quarter,
 					user.getLastnameEn(), user.getFirstnameEn(), year, quarter);
-			String outputFilename = xlsProcessor.saveReport(
-					XlsTemplate.DECLARATION, outputFilenamePrefix, beans);
+			String outputFilename = xlsProcessor.saveReport(XlsTemplate.DECLARATION, outputFilenamePrefix, beans);
 			fileNames.add(outputFilename);
 		}
 		return fileNames;
 	}
 
 	@Override
-	public List<String> generateActs(Set<Integer> enabledUserIds, Integer year,
-			Integer month, boolean generateContracts, boolean generateActs)
-			throws JAXBException, Docx4JException, TemplateException,
+	public List<String> generateActs(Set<Integer> enabledUserIds, Integer year, Integer month,
+			boolean generateContracts, boolean generateActs) throws JAXBException, Docx4JException, TemplateException,
 			IOException, TransformerException, FOPException {
 		List<String> fileNames = new ArrayList<String>();
 		List<Act> acts = actService.findActsByYearAndMonth(year, month);
@@ -266,24 +253,18 @@ public class TemplateServiceImpl implements TemplateService {
 		return fileNames;
 	}
 
-	private void generateActsDocx(List<String> fileNames,
-			List<ActModel> listModel, boolean generateContracts,
-			boolean generateActs) throws JAXBException, Docx4JException,
-			TemplateException, IOException {
+	private void generateActsDocx(List<String> fileNames, List<ActModel> listModel, boolean generateContracts,
+			boolean generateActs) throws JAXBException, Docx4JException, TemplateException, IOException {
 		DocxProcessor docxProcessor = new DocxProcessor();
 		if (listModel != null && listModel.size() > 0) {
-			docxProcessor
-					.cleanBaseDirectory(DocxTemplate.ACT, listModel.get(0));
+			docxProcessor.cleanBaseDirectory(DocxTemplate.ACT, listModel.get(0));
 		}
 		if (generateActs) {
-			fileNames.addAll(docxProcessor.saveReports(
-					DocxTemplate.CONTRACT_ANNEX, listModel));
-			fileNames.addAll(docxProcessor.saveReports(DocxTemplate.ACT,
-					listModel));
+			fileNames.addAll(docxProcessor.saveReports(DocxTemplate.CONTRACT_ANNEX, listModel));
+			fileNames.addAll(docxProcessor.saveReports(DocxTemplate.ACT, listModel));
 		}
 		if (generateContracts) {
-			fileNames.addAll(docxProcessor.saveReports(DocxTemplate.CONTRACT,
-					listModel));
+			fileNames.addAll(docxProcessor.saveReports(DocxTemplate.CONTRACT, listModel));
 		} else {
 			List<ActModel> newActModels = new ArrayList<ActModel>();
 			for (ActModel actModel : listModel) {
@@ -291,27 +272,21 @@ public class TemplateServiceImpl implements TemplateService {
 					newActModels.add(actModel);
 				}
 			}
-			fileNames.addAll(docxProcessor.saveReports(DocxTemplate.CONTRACT,
-					newActModels));
+			fileNames.addAll(docxProcessor.saveReports(DocxTemplate.CONTRACT, newActModels));
 		}
 		// docxProcessor.saveReports(DocxTemplate.CONTRACT_ADITIONAL_AGREEMENT,
 		// listModel);
 	}
 
-	private void generateActsPdf(List<String> fileNames,
-			List<ActModel> listModel, boolean generateContracts,
-			boolean generateActs) throws TemplateException, IOException,
-			TransformerException, FOPException {
+	private void generateActsPdf(List<String> fileNames, List<ActModel> listModel, boolean generateContracts,
+			boolean generateActs) throws TemplateException, IOException, TransformerException, FOPException {
 		FOProcessor foProcessor = new FOProcessor();
 		if (generateActs) {
-			fileNames.addAll(foProcessor.saveReports(FOTemplate.ACT, listModel,
-					FOType.PDF));
-			fileNames.addAll(foProcessor.saveReports(FOTemplate.CONTRACT_ANNEX,
-					listModel, FOType.PDF));
+			fileNames.addAll(foProcessor.saveReports(FOTemplate.ACT, listModel, FOType.PDF));
+			fileNames.addAll(foProcessor.saveReports(FOTemplate.CONTRACT_ANNEX, listModel, FOType.PDF));
 		}
 		if (generateContracts) {
-			fileNames.addAll(foProcessor.saveReports(FOTemplate.CONTRACT,
-					listModel, FOType.PDF));
+			fileNames.addAll(foProcessor.saveReports(FOTemplate.CONTRACT, listModel, FOType.PDF));
 		} else {
 			List<ActModel> newActModels = new ArrayList<ActModel>();
 			for (ActModel actModel : listModel) {
@@ -319,13 +294,11 @@ public class TemplateServiceImpl implements TemplateService {
 					newActModels.add(actModel);
 				}
 			}
-			fileNames.addAll(foProcessor.saveReports(FOTemplate.CONTRACT,
-					newActModels, FOType.PDF));
+			fileNames.addAll(foProcessor.saveReports(FOTemplate.CONTRACT, newActModels, FOType.PDF));
 		}
 	}
 
-	public List<ActModel> getActModelList(List<Act> acts,
-			Set<Integer> enabledUserIds) {
+	public List<ActModel> getActModelList(List<Act> acts, Set<Integer> enabledUserIds) {
 		List<ActModel> listModel = new ArrayList<ActModel>(acts.size());
 		User lastUser = null;
 		try {
@@ -337,8 +310,7 @@ public class TemplateServiceImpl implements TemplateService {
 				}
 			}
 		} finally {
-			log.error("ActModel error: Last User - " + lastUser.getUserId()
-					+ " " + lastUser.getLastnameEn());
+			log.error("ActModel error: Last User - " + lastUser.getUserId() + " " + lastUser.getLastnameEn());
 		}
 		return listModel;
 	}
@@ -358,23 +330,60 @@ public class TemplateServiceImpl implements TemplateService {
 	}
 
 	@Override
-	public List<String> generateEcpDocuments(Set<Integer> enabledUserIds,
-			Set<Integer> groupIds, Date date) throws JAXBException,
-			Docx4JException, TemplateException, IOException {
+	public List<String> generateEcpDocuments(Set<Integer> enabledUserIds, Set<Integer> groupIds, Date date)
+			throws JAXBException, Docx4JException, TemplateException, IOException {
 		List<User> ecpUsers = userService.findUsersByIds(enabledUserIds);
 		List<UserModel> userModelList = getUserModelList(ecpUsers, date);
 		DocxProcessor docxProcessor = new DocxProcessor();
 
 		if (userModelList != null && userModelList.size() > 0) {
-			docxProcessor.cleanBaseDirectory(DocxTemplate.ECP_REGISTRATION,
-					userModelList.get(0));
+			docxProcessor.cleanBaseDirectory(DocxTemplate.ECP_REGISTRATION, userModelList.get(0));
 		}
 
 		List<String> fileNames = new ArrayList<String>();
-		fileNames.addAll(docxProcessor.saveReports(
-				DocxTemplate.ECP_REGISTRATION, userModelList));
-		fileNames.addAll(docxProcessor.saveReports(DocxTemplate.ECP_JOIN,
-				userModelList));
+		fileNames.addAll(docxProcessor.saveReports(DocxTemplate.ECP_REGISTRATION, userModelList));
+		fileNames.addAll(docxProcessor.saveReports(DocxTemplate.ECP_JOIN, userModelList));
 		return fileNames;
 	}
+
+	@Override
+	public List<String> generatePaymentDocuments(Set<Integer> enabledUserIds, Set<Integer> groupIds, boolean sendEmail)
+			throws InvalidFormatException, IOException {
+		log.info(enabledUserIds.toString() + " " + sendEmail);
+		int year = 2013;
+		int month = 1;
+		boolean showTaxPayment = false;
+
+		int i = 0;
+		List<User> users = userService.findUsersByIds(enabledUserIds);
+		List<String> fileNames = new ArrayList<String>();
+		XlsProcessor xlsProcessor = new XlsProcessor();
+		if (users != null) {
+			for (User user : users) {
+				if (user.isActive()) {
+					boolean showRentPayment = false;
+					Map<String, Object> beans = new HashMap<String, Object>();
+					if (user.getRentType() != null && !user.getRentType().equals(RentType.NONE)) {
+						showRentPayment = true;
+						boolean rentEquipment = user.getRentType().equals(RentType.OFFICE_EQUIPMENT);
+						String strRentEquipment = rentEquipment ? " та обладнання" : "";
+						int rentAmount = rentEquipment ? 1350 : 642;
+						beans.put("strRentEquipment", strRentEquipment);
+						beans.put("rentAmount", rentAmount);
+						beans.put("rentContractDate", UA_DATE_FORMAT.format(user.getRentContractDate()));
+					}
+					beans.put("user", user);
+					beans.put("showTaxPayment", showTaxPayment);
+					beans.put("showRentPayment", showRentPayment);
+					String outputFilenamePrefix = String.format("/Payments/%d_%02d/%s_%s_%d_%02d_", year, month,
+							user.getLastnameEn(), user.getFirstnameEn(), year, month);
+					fileNames.add(xlsProcessor.saveReport(XlsTemplate.PAYMENTS, outputFilenamePrefix, beans));
+					i++;
+				}
+			}
+		}
+		System.out.println("Generated user Payment files: " + i);
+		return fileNames;
+	}
+
 }

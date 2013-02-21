@@ -82,6 +82,8 @@
 	<entry key="error_uncaughtexception_title">Внутрішня помилка</entry>
 	<entry key="error_uncaughtexception_problemdescription">Sorry, we encountered an internal error.</entry>
 
+	<entry key="error_users_not_selected">Не вибрано ФОП.</entry>
+
 	<!-- security -->
 	<entry key="security_login_title">SPD Tools</entry>
 	<entry key="security_login_message">Ви спробували отримати доступ до захищеної сторінки сайту. Введіть логін та пароль.</entry>

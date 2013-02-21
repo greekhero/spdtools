@@ -1,15 +1,15 @@
 <div xmlns:spring="http://www.springframework.org/tags" xmlns:form="http://www.springframework.org/tags/form" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
   <jsp:directive.page contentType="text/html;charset=UTF-8" />
   <jsp:output omit-xml-declaration="yes" />
-  <spring:message var="title" code="ecp_state1_title" htmlEscape="false" />
+  <spring:message var="title" code="payments_state1_title" htmlEscape="false" />
   <util:panel id="title" title="${title}">
     <h1>${fn:escapeXml(title)}</h1>
     <spring:url value="readData" var="form_url" />
-    <form:form action="${fn:escapeXml(form_url)}" modelAttribute="ecpModel" method="POST">
+    <form:form action="${fn:escapeXml(form_url)}" modelAttribute="paymentModel" method="POST">
       <form:errors cssClass="errors" delimiter="&lt;p/&gt;"/>
       <p>
 	    <field:select field="groupIds" id="c_ua_org_tumakha_spdtool_User_userGroups" itemValue="groupId" itemLabel="name" items="${groups}" multiple="true" path="/groups"/>
-	    <field:datetime dateTimePattern="${dateFormat}" field="date" id="c_filing_date"/>
+	    <field:checkbox field="sendEmail" id="c_payments_send_emails"/>
       </p>
       <div class="submit">
         <spring:message var="proceed" code="button_proceed" htmlEscape="false" />

@@ -2,7 +2,6 @@ package ua.org.tumakha.spdtool.web;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,9 +10,7 @@ import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,21 +27,21 @@ import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.services.GroupService;
 import ua.org.tumakha.spdtool.services.TemplateService;
 import ua.org.tumakha.spdtool.services.UserService;
-import ua.org.tumakha.spdtool.web.model.EcpModel;
+import ua.org.tumakha.spdtool.web.model.PaymentModel;
 
 /**
  * @author Yuriy Tumakha
  */
-@RequestMapping(EcpController.BASE_PATH)
-@SessionAttributes(EcpController.MODEL_ATTRIBUTE)
+@RequestMapping(PaymentsController.BASE_PATH)
+@SessionAttributes(PaymentsController.MODEL_ATTRIBUTE)
 @Controller
-public class EcpController {
+public class PaymentsController {
 
-	private static final Log log = LogFactory.getLog(EcpController.class);
+	private static final Log log = LogFactory.getLog(PaymentsController.class);
 
-	protected static final String BASE_PATH = "/ecp";
+	protected static final String BASE_PATH = "/payments";
 
-	protected static final String MODEL_ATTRIBUTE = "ecpModel";
+	protected static final String MODEL_ATTRIBUTE = "paymentModel";
 
 	private static final Integer DEFAULT_GROUP_ID = 1;
 
@@ -60,21 +57,15 @@ public class EcpController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String initData(Model uiModel) {
 		Set<Integer> defaultGroupIds = new HashSet<Integer>(Arrays.asList(DEFAULT_GROUP_ID));
-		EcpModel ecpModel = new EcpModel();
-		ecpModel.setGroupIds(defaultGroupIds);
-		ecpModel.setDate(new Date());
-		uiModel.addAttribute(MODEL_ATTRIBUTE, ecpModel);
+		PaymentModel paymentModel = new PaymentModel();
+		paymentModel.setGroupIds(defaultGroupIds);
+		uiModel.addAttribute(MODEL_ATTRIBUTE, paymentModel);
 		return redirect("initData");
 	}
 
 	@ModelAttribute("groups")
 	public Collection<Group> populateGroups() {
 		return groupService.findAllGroups();
-	}
-
-	@ModelAttribute("dateFormat")
-	public String getDateFormat() {
-		return DateTimeFormat.patternForStyle("S-", LocaleContextHolder.getLocale());
 	}
 
 	@RequestMapping(value = "/{vievName}", method = RequestMethod.GET)
@@ -86,10 +77,10 @@ public class EcpController {
 	}
 
 	@RequestMapping(value = "/readData", method = RequestMethod.POST)
-	public String readData(@Valid EcpModel ecpModel, Model uiModel, BindingResult bindingResult) {
+	public String readData(@Valid PaymentModel paymentModel, Model uiModel, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
-			uiModel.addAttribute(MODEL_ATTRIBUTE, ecpModel);
+			uiModel.addAttribute(MODEL_ATTRIBUTE, paymentModel);
 			return view("initData");
 		}
 
@@ -97,39 +88,40 @@ public class EcpController {
 			return view("initData");
 		}
 
-		List<User> activeUsers = userService.findActiveUsersByGroups(ecpModel.getGroupIds());
-		ecpModel.getEnabledUserIds().clear();
+		List<User> activeUsers = userService.findActiveUsersByGroups(paymentModel.getGroupIds());
+		paymentModel.getEnabledUserIds().clear();
 		if (activeUsers != null) {
 			for (User user : activeUsers) {
-				ecpModel.getEnabledUserIds().add(user.getUserId());
+				paymentModel.getEnabledUserIds().add(user.getUserId());
 			}
 		}
-		ecpModel.setUsers(activeUsers);
-		uiModel.addAttribute(MODEL_ATTRIBUTE, ecpModel);
+		paymentModel.setUsers(activeUsers);
+		uiModel.addAttribute(MODEL_ATTRIBUTE, paymentModel);
 		return redirect("users");
 	}
 
 	@RequestMapping(value = "/generateDocuments", method = RequestMethod.POST)
-	public String generateDocuments(@Valid EcpModel ecpModel,
+	public String generateDocuments(@Valid PaymentModel paymentModel,
 			@RequestParam(value = "cancel", required = false) String cancel, Model uiModel,
 			BindingResult bindingResult, RedirectAttributes redirectAttrs) throws Exception {
 
 		if (cancel != null) {
 			return redirect("initData");
 		}
-		if (ecpModel.getEnabledUserIds() == null) {
+		if (paymentModel.getEnabledUserIds() == null) {
 			bindingResult.reject("error_users_not_selected");
 		}
 		if (bindingResult.hasErrors()) {
 			return redirect("users");
 		}
 
-		List<String> fileNames = templateService.generateEcpDocuments(ecpModel.getEnabledUserIds(),
-				ecpModel.getGroupIds(), ecpModel.getDate());
+		log.debug("EnabledUserIds: " + paymentModel.getEnabledUserIds());
+		List<String> fileNames = templateService.generatePaymentDocuments(paymentModel.getEnabledUserIds(),
+				paymentModel.getGroupIds(), paymentModel.isSendEmail());
 
 		redirectAttrs.addFlashAttribute("fileNames", fileNames);
 
-		return redirect("downloadDocuments");
+		return redirect("generatedDocuments");
 	}
 
 	private String view(String viewName) {
