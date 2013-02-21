@@ -6,6 +6,7 @@
         <menu:category id="c_documents">
             <menu:item id="i_documents_act" url="/acts"/>
             <menu:item id="i_documents_declaration" url="/declarations"/>
+            <menu:item id="i_documents_payment" url="/payments"/>
             <menu:item id="i_documents_ecp" url="/ecp"/>
         </menu:category>
         <menu:category id="c_user">

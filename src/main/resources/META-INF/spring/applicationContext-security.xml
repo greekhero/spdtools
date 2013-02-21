@@ -27,6 +27,7 @@
         <intercept-url pattern="/declarations/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/acts/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/ecp/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/payments/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/tax_organization/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/pension_organization/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/**" access="permitAll" />

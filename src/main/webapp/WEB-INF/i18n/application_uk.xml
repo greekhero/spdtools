@@ -136,6 +136,7 @@
 	<entry key="menu_item_documents_declaration_label">Декларація</entry>
 	<entry key="menu_item_documents_act_label">Акт</entry>
 	<entry key="menu_item_documents_ecp_label">ЕЦП</entry>
+	<entry key="menu_item_documents_payment_label">Платіж</entry>
 	<entry key="menu_item_kved_list_label">КВЕД 2005</entry>
 	<entry key="menu_item_kved_new_label">КВЕД 2005</entry>
 	<entry key="menu_item_kved2010_list_label">КВЕД 2010</entry>
@@ -196,7 +197,6 @@
 	<entry key="ecp_state2_title">Генерування заяв ЕЦП - Крок 2</entry>
 	<entry key="ecp_endstate_title">Генерування заяв ЕЦП - Фініш</entry>
 	<entry key="label_filing_date">Дата подачі</entry>
-	<entry key="error_ecp_users_not_selected">Не вибрано ФОП.</entry>
 
 	<!-- passport -->
 	<entry key="label_passport">Паспорт</entry>
@@ -204,5 +204,11 @@
 	<entry key="label_passport_number">Паспорт Номер</entry>
 	<entry key="label_passport_organ">Ким виданий</entry>
 	<entry key="label_passport_date">Дата видачі</entry>
+
+	<!-- payments -->
+	<entry key="payments_state1_title">Генерування платежів - Крок 1</entry>
+	<entry key="payments_state2_title">Генерування платежів - Крок 2</entry>
+	<entry key="payments_endstate_title">Генерування платежів - Фініш</entry>
+	<entry key="label_payments_send_emails">Відправити емейли</entry>
 
 </properties>

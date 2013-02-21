@@ -34,17 +34,17 @@ public interface TemplateService {
 
 	List<Form11KvedModel> getForm11KvedModelList(Integer groupId);
 
-	List<String> generateDeclarations(Set<Integer> enabledUserIds,
-			Set<Integer> groupIds, Integer year, Integer quarter)
+	List<String> generateDeclarations(Set<Integer> enabledUserIds, Set<Integer> groupIds, Integer year, Integer quarter)
 			throws InvalidFormatException, IOException;
 
-	List<String> generateActs(Set<Integer> enabledUserIds, Integer year,
-			Integer month, boolean generateContracts, boolean generateActs)
-			throws JAXBException, Docx4JException, TemplateException,
-			IOException, TransformerException, FOPException;
+	List<String> generateActs(Set<Integer> enabledUserIds, Integer year, Integer month, boolean generateContracts,
+			boolean generateActs) throws JAXBException, Docx4JException, TemplateException, IOException,
+			TransformerException, FOPException;
 
-	List<String> generateEcpDocuments(Set<Integer> enabledUserIds,
-			Set<Integer> groupIds, Date date) throws JAXBException,
-			Docx4JException, TemplateException, IOException;
+	List<String> generateEcpDocuments(Set<Integer> enabledUserIds, Set<Integer> groupIds, Date date)
+			throws JAXBException, Docx4JException, TemplateException, IOException;
+
+	List<String> generatePaymentDocuments(Set<Integer> enabledUserIds, Set<Integer> groupIds, boolean sendEmail)
+			throws InvalidFormatException, IOException;
 
 }
