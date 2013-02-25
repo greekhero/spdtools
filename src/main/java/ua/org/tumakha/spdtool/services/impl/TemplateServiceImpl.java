@@ -349,10 +349,13 @@ public class TemplateServiceImpl implements TemplateService {
 	@Override
 	public List<String> generatePaymentDocuments(Set<Integer> enabledUserIds, Set<Integer> groupIds, boolean sendEmail)
 			throws InvalidFormatException, IOException {
-		log.info(enabledUserIds.toString() + " " + sendEmail);
+
 		int year = 2013;
-		int month = 1;
+		int month = 2;
 		boolean showTaxPayment = false;
+		String rentPeriod = "лютий 2013";
+		String esvPeriod = rentPeriod;
+		String taxPeriod = "1 кв. 2013";
 
 		int i = 0;
 		List<User> users = userService.findUsersByIds(enabledUserIds);
@@ -368,6 +371,7 @@ public class TemplateServiceImpl implements TemplateService {
 						boolean rentEquipment = user.getRentType().equals(RentType.OFFICE_EQUIPMENT);
 						String strRentEquipment = rentEquipment ? " та обладнання" : "";
 						int rentAmount = rentEquipment ? 1350 : 642;
+						beans.put("rentPeriod", rentPeriod);
 						beans.put("strRentEquipment", strRentEquipment);
 						beans.put("rentAmount", rentAmount);
 						beans.put("rentContractDate", UA_DATE_FORMAT.format(user.getRentContractDate()));
@@ -375,6 +379,10 @@ public class TemplateServiceImpl implements TemplateService {
 					beans.put("user", user);
 					beans.put("showTaxPayment", showTaxPayment);
 					beans.put("showRentPayment", showRentPayment);
+					beans.put("esvPeriod", esvPeriod);
+					if (showTaxPayment) {
+						beans.put("taxPeriod", taxPeriod);
+					}
 					String outputFilenamePrefix = String.format("/Payments/%d_%02d/%s_%s_%d_%02d_", year, month,
 							user.getLastnameEn(), user.getFirstnameEn(), year, month);
 					fileNames.add(xlsProcessor.saveReport(XlsTemplate.PAYMENTS, outputFilenamePrefix, beans));
