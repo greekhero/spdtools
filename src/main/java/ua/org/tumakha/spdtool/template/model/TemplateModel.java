@@ -111,7 +111,7 @@ public abstract class TemplateModel {
 		phone = user.getPhone() != null ? user.getPhone().toString() : "";
 		email = user.getEmail() != null ? user.getEmail() : "";
 		PIN = user.getPin().toString();
-		bankAccount = bank.getAccountNumber().toString();
+		bankAccount = bank.getAccountNumber() == null ? "" : bank.getAccountNumber().toString();
 		bankName = bank.getName();
 		bankNameEn = bank.getNameEn();
 		bankMFO = bank.getMFO() != null ? bank.getMFO().toString() : "";
