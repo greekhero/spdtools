@@ -7,5 +7,13 @@
 	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
 
     <jee:jndi-lookup id="dataSource" jndi-name="jdbc/spd"/>
+    
+	<bean id="configJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+    	<constructor-arg ref="dataSource" />
+    </bean>
+
+	<bean id="propertyConfigurer" class="ua.org.tumakha.spdtool.AppPropertyPlaceholderConfigurer" init-method="init">
+		<constructor-arg index="0" ref="configJdbcTemplate" />
+	</bean>
 
 </beans>

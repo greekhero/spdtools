@@ -39,8 +39,7 @@
     	<authentication-provider>
 	    	<password-encoder hash="sha-256"/>
 	        <user-service>
-	            <user name="admin" password="94160c710f5c02b0deaa4f8f4f296471b19e1152390f31b545d75a3648e3332a" authorities="ROLE_ADMIN"/>
-		        <user name="user" password="94160c710f5c02b0deaa4f8f4f296471b19e1152390f31b545d75a3648e3332a" authorities="ROLE_USER"/>
+	            <user name="${admin.login}" password="${admin.password}" authorities="ROLE_ADMIN"/>
 		    </user-service>
     	</authentication-provider>
 	</authentication-manager>
