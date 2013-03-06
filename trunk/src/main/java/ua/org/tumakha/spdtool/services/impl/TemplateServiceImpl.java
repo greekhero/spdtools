@@ -1,5 +1,6 @@
 package ua.org.tumakha.spdtool.services.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -14,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
 
@@ -23,6 +26,10 @@ import org.apache.fop.apps.FOPException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -71,6 +78,12 @@ public class TemplateServiceImpl implements TemplateService {
 
 	@Autowired
 	private ActService actService;
+
+	@Autowired
+	private JavaMailSender mailSender;
+
+	@Value("${admin.email}")
+	private String adminEmail;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
@@ -385,13 +398,30 @@ public class TemplateServiceImpl implements TemplateService {
 					}
 					String outputFilenamePrefix = String.format("/Payments/%d_%02d/%s_%s_%d_%02d_", year, month,
 							user.getLastnameEn(), user.getFirstnameEn(), year, month);
-					fileNames.add(xlsProcessor.saveReport(XlsTemplate.PAYMENTS, outputFilenamePrefix, beans));
+					String outputFilename = xlsProcessor.saveReport(XlsTemplate.PAYMENTS, outputFilenamePrefix, beans);
+					fileNames.add(outputFilename);
 					i++;
+					sendEmail(user, new File(XlsProcessor.REPORTS_DIRECTORY + outputFilename));
 				}
 			}
 		}
 		System.out.println("Generated user Payment files: " + i);
 		return fileNames;
+	}
+
+	public void sendEmail(final User user, File attachmentFile) {
+		try {
+			MimeMessage mimeMessage = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+			helper.setTo(new InternetAddress(adminEmail));
+			helper.setSubject("Payment details");
+			helper.setText("Hi " + user.getFirstnameEn() + ",\n\nYour payment details in attachment.");
+			FileSystemResource attachment = new FileSystemResource(attachmentFile);
+			helper.addAttachment(attachment.getFilename(), attachment);
+			mailSender.send(mimeMessage);
+		} catch (Exception ex) {
+			log.error("Send email failed.", ex);
+		}
 	}
 
 }
