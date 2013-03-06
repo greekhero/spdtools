@@ -18,29 +18,25 @@ public class XlsProcessor {
 
 	private static final Log log = LogFactory.getLog(XlsProcessor.class);
 	private static final String TEMPLATES_DIRECTORY = "C:/spdtool-data/templates/xls";
-	private static final String REPORTS_DIRECTORY = "C:/Reports/xls";
+	public static final String REPORTS_DIRECTORY = "C:/Reports/xls";
 	private final XLSTransformer transformer = new XLSTransformer();
 
-	public String saveReport(XlsTemplate template, String outputFilenamePrefix,
-			Map<String, Object> beans) throws InvalidFormatException,
-			IOException {
+	public String saveReport(XlsTemplate template, String outputFilenamePrefix, Map<String, Object> beans)
+			throws InvalidFormatException, IOException {
 		String outputFilename = outputFilenamePrefix + template.getFilename();
 		File outputFile = new File(REPORTS_DIRECTORY + outputFilename);
 		if (outputFile.getParentFile().mkdirs()) {
 			log.debug("Created directory: " + outputFile.getParentFile());
 		}
 
-		transformer.transformXLS(
-				TEMPLATES_DIRECTORY + "/" + template.getFilename(), beans,
+		transformer.transformXLS(TEMPLATES_DIRECTORY + "/" + template.getFilename(), beans,
 				outputFile.getAbsolutePath());
 		log.debug("Saved XLS output to: " + outputFilename);
 		return outputFilename;
 	}
 
-	public void cleanBaseDirectory(XlsTemplate template, Integer year,
-			Integer quarter) throws IOException {
-		String outputpath = REPORTS_DIRECTORY
-				+ String.format("/DECLARATION/%d_Q%d", year, quarter);
+	public void cleanBaseDirectory(XlsTemplate template, Integer year, Integer quarter) throws IOException {
+		String outputpath = REPORTS_DIRECTORY + String.format("/DECLARATION/%d_Q%d", year, quarter);
 		File outputBaseDirectory = new File(outputpath);
 		// prevent delete not reports directories
 		String path = outputBaseDirectory.getAbsolutePath();
