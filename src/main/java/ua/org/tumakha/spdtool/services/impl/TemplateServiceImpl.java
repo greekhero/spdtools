@@ -360,7 +360,7 @@ public class TemplateServiceImpl implements TemplateService {
 	}
 
 	@Override
-	public List<String> generatePaymentDocuments(Set<Integer> enabledUserIds, Set<Integer> groupIds, boolean sendEmail)
+	public List<String> generatePaymentDocuments(Set<Integer> enabledUserIds, boolean sendEmail)
 			throws InvalidFormatException, IOException {
 
 		int year = 2013;
@@ -401,7 +401,9 @@ public class TemplateServiceImpl implements TemplateService {
 					String outputFilename = xlsProcessor.saveReport(XlsTemplate.PAYMENTS, outputFilenamePrefix, beans);
 					fileNames.add(outputFilename);
 					i++;
-					sendEmail(user, new File(XlsProcessor.REPORTS_DIRECTORY + outputFilename));
+					if (sendEmail) {
+						sendEmail(user, new File(XlsProcessor.REPORTS_DIRECTORY + outputFilename));
+					}
 				}
 			}
 		}
