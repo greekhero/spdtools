@@ -117,7 +117,7 @@ public class PaymentsController {
 
 		log.debug("EnabledUserIds: " + paymentModel.getEnabledUserIds());
 		List<String> fileNames = templateService.generatePaymentDocuments(paymentModel.getEnabledUserIds(),
-				paymentModel.getGroupIds(), paymentModel.isSendEmail());
+				paymentModel.isSendEmail());
 
 		redirectAttrs.addFlashAttribute("fileNames", fileNames);
 

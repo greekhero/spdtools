@@ -44,7 +44,7 @@ public interface TemplateService {
 	List<String> generateEcpDocuments(Set<Integer> enabledUserIds, Set<Integer> groupIds, Date date)
 			throws JAXBException, Docx4JException, TemplateException, IOException;
 
-	List<String> generatePaymentDocuments(Set<Integer> enabledUserIds, Set<Integer> groupIds, boolean sendEmail)
+	List<String> generatePaymentDocuments(Set<Integer> enabledUserIds, boolean sendEmail)
 			throws InvalidFormatException, IOException;
 
 }
