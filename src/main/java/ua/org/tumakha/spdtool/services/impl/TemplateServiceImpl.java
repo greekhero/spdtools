@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -49,6 +50,8 @@ import ua.org.tumakha.spdtool.template.DocxTemplate;
 import ua.org.tumakha.spdtool.template.FOProcessor;
 import ua.org.tumakha.spdtool.template.FOTemplate;
 import ua.org.tumakha.spdtool.template.FOType;
+import ua.org.tumakha.spdtool.template.TextProcessor;
+import ua.org.tumakha.spdtool.template.TextTemplate;
 import ua.org.tumakha.spdtool.template.XlsProcessor;
 import ua.org.tumakha.spdtool.template.XlsTemplate;
 import ua.org.tumakha.spdtool.template.model.ActModel;
@@ -57,6 +60,9 @@ import ua.org.tumakha.spdtool.template.model.Form20OPPModel;
 import ua.org.tumakha.spdtool.template.model.IncomeCalculationModel;
 import ua.org.tumakha.spdtool.template.model.TaxSystemStatementModel;
 import ua.org.tumakha.spdtool.template.model.UserModel;
+
+import com.ibm.icu.util.Calendar;
+
 import freemarker.template.TemplateException;
 
 /**
@@ -69,6 +75,7 @@ public class TemplateServiceImpl implements TemplateService {
 	private static final Log log = LogFactory.getLog(TemplateServiceImpl.class);
 	private static final NumberFormat MONEY_FORMAT = getMoneyFormat();
 	private static final DateFormat UA_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
+	private static final DateFormat DAY_MONTH_EN_FORMAT = new SimpleDateFormat("d'th of 'MMMMM", Locale.US);
 
 	@Autowired
 	private UserService userService;
@@ -370,6 +377,10 @@ public class TemplateServiceImpl implements TemplateService {
 		String esvPeriod = rentPeriod;
 		String taxPeriod = "1 кв. 2013";
 
+		Calendar calendarEndDate = Calendar.getInstance(Locale.US);
+		calendarEndDate.set(Calendar.DAY_OF_MONTH, 19);
+		Date endDate = calendarEndDate.getTime();
+
 		int i = 0;
 		List<User> users = userService.findUsersByIds(enabledUserIds);
 		List<String> fileNames = new ArrayList<String>();
@@ -402,7 +413,9 @@ public class TemplateServiceImpl implements TemplateService {
 					fileNames.add(outputFilename);
 					i++;
 					if (sendEmail) {
-						sendEmail(user, new File(XlsProcessor.REPORTS_DIRECTORY + outputFilename));
+						beans.put("endDate", DAY_MONTH_EN_FORMAT.format(endDate));
+						sendEmail(TextTemplate.PAYMENT_DETAILS_EMAIL, "Payment details", beans, new File(
+								XlsProcessor.REPORTS_DIRECTORY + outputFilename));
 					}
 				}
 			}
@@ -411,13 +424,13 @@ public class TemplateServiceImpl implements TemplateService {
 		return fileNames;
 	}
 
-	public void sendEmail(final User user, File attachmentFile) {
+	private void sendEmail(TextTemplate emailTemplate, String subject, Map<String, Object> beans, File attachmentFile) {
 		try {
 			MimeMessage mimeMessage = mailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 			helper.setTo(new InternetAddress(adminEmail));
-			helper.setSubject("Payment details");
-			helper.setText("Hi " + user.getFirstnameEn() + ",\n\nYour payment details in attachment.");
+			helper.setSubject(subject);
+			helper.setText(new TextProcessor().processTemplateText(emailTemplate, beans));
 			FileSystemResource attachment = new FileSystemResource(attachmentFile);
 			helper.addAttachment(attachment.getFilename(), attachment);
 			mailSender.send(mimeMessage);
