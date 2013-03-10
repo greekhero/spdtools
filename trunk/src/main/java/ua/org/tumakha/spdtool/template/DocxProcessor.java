@@ -31,31 +31,20 @@ import freemarker.template.TemplateException;
 /**
  * @author Yuriy Tumakha
  */
-public class DocxProcessor {
+public class DocxProcessor extends TextProcessor {
 
 	public static JAXBContext context = org.docx4j.jaxb.Context.jc;
 	private static final Logger log = Logger.getLogger(DocxProcessor.class);
 	private static final String TEMPLATES_DIRECTORY = "C:/spdtool-data/templates/docx";
 	private static final String REPORTS_DIRECTORY = "C:/Reports/docx";
-	private static final FreeMarkerProccessor FREE_MARKER_PROCCESSOR = getFreeMarkerProccessor();
-
-	private static FreeMarkerProccessor getFreeMarkerProccessor() {
-		try {
-			return FreeMarkerProccessor.getInstance(TEMPLATES_DIRECTORY);
-		} catch (IOException e) {
-			log.error(e.getMessage(), e);
-		}
-		return null;
-	}
+	private static final FreeMarkerProccessor FREE_MARKER_PROCCESSOR = getFreeMarkerProccessor(TEMPLATES_DIRECTORY);
 
 	public void saveReport(TemplateModel model) {
 		log.debug(model.getClass());// TODO:
 	}
 
-	public void cleanBaseDirectory(DocxTemplate template, TemplateModel model)
-			throws IOException {
-		String outputfilepath = REPORTS_DIRECTORY
-				+ model.getOutputFilename(template);
+	public void cleanBaseDirectory(DocxTemplate template, TemplateModel model) throws IOException {
+		String outputfilepath = REPORTS_DIRECTORY + model.getOutputFilename(template);
 		File outputFile = new File(outputfilepath);
 		File outputBaseDirectory = outputFile.getParentFile().getParentFile();
 		// prevent delete not reports directories
@@ -65,9 +54,8 @@ public class DocxProcessor {
 		}
 	}
 
-	public List<String> saveReports(DocxTemplate template,
-			List<? extends TemplateModel> listModel) throws JAXBException,
-			Docx4JException, TemplateException, IOException {
+	public List<String> saveReports(DocxTemplate template, List<? extends TemplateModel> listModel)
+			throws JAXBException, Docx4JException, TemplateException, IOException {
 
 		List<String> fileNames = new ArrayList<String>();
 
@@ -77,9 +65,8 @@ public class DocxProcessor {
 		}
 		// Open a document from the file system
 		// 1. Load the Package
-		WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage
-				.load(new java.io.File(TEMPLATES_DIRECTORY + "/"
-						+ template.getFilename()));
+		WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(new java.io.File(TEMPLATES_DIRECTORY + "/"
+				+ template.getFilename()));
 
 		// 2. Fetch the document part
 		MainDocumentPart documentPart = wordMLPackage.getMainDocumentPart();
@@ -95,18 +82,14 @@ public class DocxProcessor {
 		return fileNames;
 	}
 
-	private static String saveDocument(WordprocessingMLPackage wordMLPackage,
-			String xml, TemplateModel model, DocxTemplate template)
-			throws JAXBException, Docx4JException, TemplateException,
-			IOException {
-		String outputfilepath = REPORTS_DIRECTORY
-				+ model.getOutputFilename(template);
+	private static String saveDocument(WordprocessingMLPackage wordMLPackage, String xml, TemplateModel model,
+			DocxTemplate template) throws JAXBException, Docx4JException, TemplateException, IOException {
+		String outputfilepath = REPORTS_DIRECTORY + model.getOutputFilename(template);
 		Object obj = null;
 		if (template.isFreemarker()) {
 			// process as FreeMarker template
 			Map<String, ?> mappings = getMappings(model);
-			xml = FREE_MARKER_PROCCESSOR.processTemplate(template.getFilename()
-					.replace(".docx", ".xml"), mappings);
+			xml = FREE_MARKER_PROCCESSOR.processTemplate(template.getFilename().replace(".docx", ".xml"), mappings);
 			obj = XmlUtils.unmarshalString(xml);
 		} else {
 			// simple replace mappings
@@ -132,16 +115,14 @@ public class DocxProcessor {
 		return outputfilepath;
 	}
 
-	private static void savePdf(WordprocessingMLPackage wordMLPackage,
-			String outputfilepath) throws FileNotFoundException,
-			Docx4JException {
+	private static void savePdf(WordprocessingMLPackage wordMLPackage, String outputfilepath)
+			throws FileNotFoundException, Docx4JException {
 		// the PdfConversion object
 		PdfConversion c = new Conversion(wordMLPackage);
 
 		// for demo/debugging purposes, save the intermediate XSL FO
-		((org.docx4j.convert.out.pdf.viaXSLFO.Conversion) c)
-				.setSaveFO(new java.io.File(outputfilepath.replace(".docx",
-						".fo.xml")));
+		((org.docx4j.convert.out.pdf.viaXSLFO.Conversion) c).setSaveFO(new java.io.File(outputfilepath.replace(".docx",
+				".fo.xml")));
 
 		// PdfConversion writes to an output stream
 		String pdffilepath = outputfilepath.replace(".docx", ".pdf");
@@ -158,22 +139,6 @@ public class DocxProcessor {
 			String value = "";
 			if (entry.getValue() != null) {
 				value = entry.getValue().toString();
-			}
-			mappings.put(entry.getKey().toString(), value);
-		}
-		// log.debug(mappings);
-		return mappings;
-	}
-
-	@SuppressWarnings("unchecked")
-	private static Map<String, ?> getMappings(TemplateModel model) {
-		HashMap<String, Object> mappings = new HashMap<String, Object>();
-		BeanMap beanMap = new BeanMap(model);
-		for (Object o : beanMap.entrySet()) {
-			Map.Entry<Object, Object> entry = (Map.Entry<Object, Object>) o;
-			Object value = "";
-			if (entry.getValue() != null) {
-				value = entry.getValue();
 			}
 			mappings.put(entry.getKey().toString(), value);
 		}
