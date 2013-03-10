@@ -18,6 +18,15 @@ public class TextProcessor {
 	private static final Logger log = Logger.getLogger(TextProcessor.class);
 	private static final String TEMPLATES_DIRECTORY = "C:/spdtool-data/templates/text";
 	private final FreeMarkerProccessor FREE_MARKER_PROCCESSOR = getFreeMarkerProccessor(TEMPLATES_DIRECTORY);
+	private TextTemplate textTemplate;
+
+	public TextProcessor() {
+
+	}
+
+	public TextProcessor(TextTemplate textTemplate) {
+		this.textTemplate = textTemplate;
+	}
 
 	protected static FreeMarkerProccessor getFreeMarkerProccessor(String templatesDirectory) {
 		try {
@@ -26,6 +35,10 @@ public class TextProcessor {
 			log.error(e.getMessage(), e);
 		}
 		return null;
+	}
+
+	public String processTemplateText(Map<String, Object> beans) throws TemplateException, IOException {
+		return FREE_MARKER_PROCCESSOR.processTemplate(textTemplate.getFilename(), beans);
 	}
 
 	public String processTemplateText(TextTemplate template, Map<String, Object> beans) throws TemplateException,
