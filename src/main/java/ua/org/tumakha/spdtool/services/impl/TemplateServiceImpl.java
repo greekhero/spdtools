@@ -385,6 +385,7 @@ public class TemplateServiceImpl implements TemplateService {
 		List<User> users = userService.findUsersByIds(enabledUserIds);
 		List<String> fileNames = new ArrayList<String>();
 		XlsProcessor xlsProcessor = new XlsProcessor();
+		TextProcessor textProcessor = sendEmail ? new TextProcessor(TextTemplate.PAYMENT_DETAILS_EMAIL) : null;
 		if (users != null) {
 			for (User user : users) {
 				if (user.isActive()) {
@@ -414,8 +415,8 @@ public class TemplateServiceImpl implements TemplateService {
 					i++;
 					if (sendEmail) {
 						beans.put("endDate", DAY_MONTH_EN_FORMAT.format(endDate));
-						sendEmail(TextTemplate.PAYMENT_DETAILS_EMAIL, "Payment details", beans, new File(
-								XlsProcessor.REPORTS_DIRECTORY + outputFilename));
+						sendEmail(textProcessor, "Payment details", beans, new File(XlsProcessor.REPORTS_DIRECTORY
+								+ outputFilename));
 					}
 				}
 			}
@@ -424,13 +425,13 @@ public class TemplateServiceImpl implements TemplateService {
 		return fileNames;
 	}
 
-	private void sendEmail(TextTemplate emailTemplate, String subject, Map<String, Object> beans, File attachmentFile) {
+	private void sendEmail(TextProcessor textProcessor, String subject, Map<String, Object> beans, File attachmentFile) {
 		try {
 			MimeMessage mimeMessage = mailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 			helper.setTo(new InternetAddress(adminEmail));
 			helper.setSubject(subject);
-			helper.setText(new TextProcessor().processTemplateText(emailTemplate, beans));
+			helper.setText(textProcessor.processTemplateText(beans));
 			FileSystemResource attachment = new FileSystemResource(attachmentFile);
 			helper.addAttachment(attachment.getFilename(), attachment);
 			mailSender.send(mimeMessage);
