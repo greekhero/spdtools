@@ -9,6 +9,7 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -60,9 +61,6 @@ import ua.org.tumakha.spdtool.template.model.Form20OPPModel;
 import ua.org.tumakha.spdtool.template.model.IncomeCalculationModel;
 import ua.org.tumakha.spdtool.template.model.TaxSystemStatementModel;
 import ua.org.tumakha.spdtool.template.model.UserModel;
-
-import com.ibm.icu.util.Calendar;
-
 import freemarker.template.TemplateException;
 
 /**
