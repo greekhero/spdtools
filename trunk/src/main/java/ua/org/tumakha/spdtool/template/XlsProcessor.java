@@ -35,8 +35,14 @@ public class XlsProcessor {
 		return outputFilename;
 	}
 
-	public void cleanBaseDirectory(XlsTemplate template, Integer year, Integer quarter) throws IOException {
-		String outputpath = REPORTS_DIRECTORY + String.format("/DECLARATION/%d_Q%d", year, quarter);
+	public void cleanBaseDirectory(XlsTemplate template, Integer year, Integer quarterOrMonth) throws IOException {
+		String templDirectoryFormat = null;
+		if (template == XlsTemplate.DECLARATION) {
+			templDirectoryFormat = "/DECLARATION/%d_Q%d";
+		} else if (template == XlsTemplate.PAYMENTS) {
+			templDirectoryFormat = "/Payments/%d_%02d";
+		}
+		String outputpath = REPORTS_DIRECTORY + String.format(templDirectoryFormat, year, quarterOrMonth);
 		File outputBaseDirectory = new File(outputpath);
 		// prevent delete not reports directories
 		String path = outputBaseDirectory.getAbsolutePath();
