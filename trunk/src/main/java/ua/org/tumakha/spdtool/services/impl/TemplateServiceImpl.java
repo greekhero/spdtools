@@ -370,7 +370,11 @@ public class TemplateServiceImpl implements TemplateService {
 
 		int year = 2013;
 		int month = 2;
+
 		boolean showTaxPayment = false;
+		// boolean showTaxPayment = true;
+		int quarter = 1;
+
 		String rentPeriod = "лютий 2013";
 		String esvPeriod = rentPeriod;
 		String taxPeriod = "1 кв. 2013";
@@ -381,6 +385,14 @@ public class TemplateServiceImpl implements TemplateService {
 
 		int i = 0;
 		List<User> users = userService.findUsersByIds(enabledUserIds);
+		Map<Integer, Declaration> userDeclarations = new HashMap<Integer, Declaration>();
+		if (showTaxPayment) {
+			List<Declaration> declarations = declarationService.findDeclarationsByYearAndQuarter(enabledUserIds, year,
+					quarter);
+			for (Declaration declaration : declarations) {
+				userDeclarations.put(declaration.getUser().getUserId(), declaration);
+			}
+		}
 		List<String> fileNames = new ArrayList<String>();
 		XlsProcessor xlsProcessor = new XlsProcessor();
 		TextProcessor textProcessor = sendEmail ? new TextProcessor(TextTemplate.PAYMENT_DETAILS_EMAIL) : null;
@@ -398,6 +410,11 @@ public class TemplateServiceImpl implements TemplateService {
 						beans.put("strRentEquipment", strRentEquipment);
 						beans.put("rentAmount", rentAmount);
 						beans.put("rentContractDate", UA_DATE_FORMAT.format(user.getRentContractDate()));
+					}
+					if (showTaxPayment) {
+						Declaration userDeclaration = userDeclarations.get(user.getUserId());
+						BigDecimal taxAmount = userDeclaration == null ? null : userDeclaration.getTax();
+						beans.put("taxAmount", taxAmount);
 					}
 					beans.put("user", user);
 					beans.put("showTaxPayment", showTaxPayment);
