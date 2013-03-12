@@ -61,6 +61,7 @@ import ua.org.tumakha.spdtool.template.model.Form20OPPModel;
 import ua.org.tumakha.spdtool.template.model.IncomeCalculationModel;
 import ua.org.tumakha.spdtool.template.model.TaxSystemStatementModel;
 import ua.org.tumakha.spdtool.template.model.UserModel;
+import ua.org.tumakha.util.StrUtil;
 import freemarker.template.TemplateException;
 
 /**
@@ -368,20 +369,23 @@ public class TemplateServiceImpl implements TemplateService {
 	public List<String> generatePaymentDocuments(Set<Integer> enabledUserIds, boolean sendEmail)
 			throws InvalidFormatException, IOException {
 
-		int year = 2013;
-		int month = 2;
+		Calendar calendar = Calendar.getInstance(Locale.US);
+		int year = calendar.get(Calendar.YEAR);
+		int month = calendar.get(Calendar.MONTH);
+		if (month == 0) {
+			year = year - 1;
+			month = 12;
+		}
 
-		boolean showTaxPayment = false;
-		// boolean showTaxPayment = true;
-		int quarter = 1;
-
-		String rentPeriod = "лютий 2013";
+		int quarter = month / 3;
+		String rentPeriod = StrUtil.formatUAMonth(month) + " " + year;
 		String esvPeriod = rentPeriod;
-		String taxPeriod = "1 кв. 2013";
+		String taxPeriod = quarter + " кв. " + year;
 
-		Calendar calendarEndDate = Calendar.getInstance(Locale.US);
-		calendarEndDate.set(Calendar.DAY_OF_MONTH, 19);
-		Date endDate = calendarEndDate.getTime();
+		calendar.set(Calendar.DAY_OF_MONTH, 19);
+		Date endDate = calendar.getTime();
+
+		boolean showTaxPayment = month % 3 == 0;
 
 		int i = 0;
 		List<User> users = userService.findUsersByIds(enabledUserIds);
@@ -395,6 +399,9 @@ public class TemplateServiceImpl implements TemplateService {
 		}
 		List<String> fileNames = new ArrayList<String>();
 		XlsProcessor xlsProcessor = new XlsProcessor();
+		if (users != null && users.size() > 0) {
+			xlsProcessor.cleanBaseDirectory(XlsTemplate.PAYMENTS, year, month);
+		}
 		TextProcessor textProcessor = sendEmail ? new TextProcessor(TextTemplate.PAYMENT_DETAILS_EMAIL) : null;
 		if (users != null) {
 			for (User user : users) {
@@ -415,14 +422,12 @@ public class TemplateServiceImpl implements TemplateService {
 						Declaration userDeclaration = userDeclarations.get(user.getUserId());
 						BigDecimal taxAmount = userDeclaration == null ? null : userDeclaration.getTax();
 						beans.put("taxAmount", taxAmount);
+						beans.put("taxPeriod", taxPeriod);
 					}
 					beans.put("user", user);
 					beans.put("showTaxPayment", showTaxPayment);
 					beans.put("showRentPayment", showRentPayment);
 					beans.put("esvPeriod", esvPeriod);
-					if (showTaxPayment) {
-						beans.put("taxPeriod", taxPeriod);
-					}
 					String outputFilenamePrefix = String.format("/Payments/%d_%02d/%s_%s_%d_%02d_", year, month,
 							user.getLastnameEn(), user.getFirstnameEn(), year, month);
 					String outputFilename = xlsProcessor.saveReport(XlsTemplate.PAYMENTS, outputFilenamePrefix, beans);

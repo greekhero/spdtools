@@ -1,11 +1,17 @@
 package ua.org.tumakha.util;
 
+import java.text.DateFormatSymbols;
+import java.util.Locale;
+
 import org.springframework.util.StringUtils;
 
 /**
  * @author Yuriy Tumakha
  */
 public abstract class StrUtil {
+
+	private final static String[] MONTHS = new String[] { "січень", "лютий", "березень", "квітень", "травень",
+			"червень", "липень", "серпень", "вересень", "жовтень", "листопад", "грудень" };
 
 	public static boolean isFirstCharUpperOrDigit(String str) {
 		if (!StringUtils.hasText(str)) {
@@ -35,6 +41,26 @@ public abstract class StrUtil {
 			str = "";
 		}
 		return org.apache.commons.lang.StringUtils.rightPad(str, width);
+	}
+
+	private static String formatMonth(int month, Locale locale) {
+		if (month >= 1 && month <= 12) {
+			return new DateFormatSymbols(locale).getMonths()[month - 1];
+		} else {
+			return null;
+		}
+	}
+
+	public static String formatUAMonth(int month) {
+		if (month >= 1 && month <= 12) {
+			return MONTHS[month - 1];
+		} else {
+			return null;
+		}
+	}
+
+	public static String formatUSMonth(int month) {
+		return formatMonth(month, Locale.US);
 	}
 
 }
