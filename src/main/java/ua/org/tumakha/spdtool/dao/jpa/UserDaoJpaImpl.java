@@ -58,6 +58,13 @@ public class UserDaoJpaImpl extends AbstractJpaDao<User> implements UserDao {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
+	public User findByPIN(Long pin) {
+		return entityManager.createQuery("SELECT u FROM User u WHERE u.pin = ?", User.class).setParameter(1, pin)
+				.getSingleResult();
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<User> findByGroup(Integer groupId) {
 		return entityManager
 				.createQuery("SELECT u FROM User u JOIN u.groups g WHERE u.active != NULL AND g.id = ?", User.class)

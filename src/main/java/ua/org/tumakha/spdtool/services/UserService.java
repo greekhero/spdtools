@@ -30,6 +30,8 @@ public interface UserService {
 
 	User findUserByLastFirst(String lastname, String firstname);
 
+	User findUserByPIN(Long pin);
+
 	List<User> findUsersByGroup(Integer groupId);
 
 	List<User> findUsersByGroups(List<Integer> groupIds);
