@@ -126,6 +126,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
+	public User findUserByPIN(Long pin) {
+		return userDao.findByPIN(pin);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<User> findUsersByGroup(Integer groupId) {
 		return userDao.findByGroup(groupId);
 	}

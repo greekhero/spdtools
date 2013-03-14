@@ -28,6 +28,8 @@ public interface UserDao {
 
 	User findByLastFirst(String lastname, String firstname);
 
+	User findByPIN(Long pin);
+
 	List<User> findByGroup(Integer groupId);
 
 	List<User> findByGroups(List<Integer> groupIds);
