@@ -11,6 +11,8 @@ public interface BankTransactionDao {
 
 	BankTransaction find(Object id);
 
+	BankTransaction findByUserAndId(Integer userId, Integer id);
+
 	void persist(BankTransaction transaction);
 
 	BankTransaction merge(BankTransaction transaction);

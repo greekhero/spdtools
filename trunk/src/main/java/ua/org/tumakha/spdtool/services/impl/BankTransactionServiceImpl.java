@@ -49,6 +49,12 @@ public class BankTransactionServiceImpl implements BankTransactionService {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
+	public BankTransaction findTransactionByUserAndId(Integer userId, Integer id) {
+		return bankTransactionDao.findByUserAndId(userId, id);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<BankTransaction> findAllTransactions() {
 		return bankTransactionDao.findAll();
 	}

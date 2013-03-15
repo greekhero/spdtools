@@ -17,6 +17,8 @@ public interface BankTransactionService {
 
 	BankTransaction findTransaction(Integer transactionId);
 
+	BankTransaction findTransactionByUserAndId(Integer userId, Integer id);
+
 	List<BankTransaction> findAllTransactions();
 
 }
