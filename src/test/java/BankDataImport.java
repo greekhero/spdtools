@@ -8,6 +8,8 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -22,6 +24,7 @@ public class BankDataImport {
 	private static final String CHARSET = "windows-1251";// Cp1251
 	private static final String[] EXTENSIONS = { "xml" };
 
+	private static final Log log = LogFactory.getLog(BankDataImport.class);
 	private static String[] CONFIG_LOCATIONS = { "classpath:datasource-test.xml",
 			"classpath:META-INF/spring/applicationContext.xml" };
 	private static ApplicationContext applicationContext;
@@ -41,21 +44,34 @@ public class BankDataImport {
 		Unmarshaller um = context.createUnmarshaller();
 		File directory = new File(args[0]);
 		for (Object file : FileUtils.listFiles(directory, EXTENSIONS, false)) {
+
 			System.out.println(file);
+
+			log.debug(file);
 			InputStreamReader reader = new InputStreamReader(new FileInputStream((File) file), CHARSET);
 			BankData bankData = (BankData) um.unmarshal(reader);
 			User user = null;
 			for (BankTransaction transaction : bankData.getBankTransactions()) {
-				System.out.println(transaction.getId() + "  " + transaction.getOperationId() + "  "
-						+ transaction.getCurrSymbolCode() + "  " + transaction.getDocumentTypeId() + "."
-						+ transaction.getDocSubTypesName() + "\t\t" + transaction.getCorrContragentsName() + "\t"
-						+ transaction.getPlatPurpose());
 				if (user == null) {
 					Long pin = transaction.getIdentifyCode().longValue();
-					user = userService.findUserByPIN(pin);
+					try {
+						user = userService.findUserByPIN(pin);
+					} catch (Exception e) {
+						log.error("User not found with PIN " + pin, e);
+						throw new IllegalArgumentException("User not found with PIN " + pin);
+					}
+
+					System.out.println(transaction.getId() + "  " + transaction.getOperationId() + "  "
+							+ transaction.getCurrSymbolCode() + "  " + transaction.getDocumentTypeId() + "."
+							+ transaction.getDocSubTypesName() + "\t\t" + transaction.getCorrContragentsName() + "\t"
+							+ transaction.getPlatPurpose());
 				}
 				transaction.setUser(user);
-				bankTransactionService.createTransaction(transaction);
+				BankTransaction existTransaction = bankTransactionService.findTransactionByUserAndId(user.getUserId(),
+						transaction.getId());
+				if (existTransaction == null) {
+					bankTransactionService.createTransaction(transaction);
+				}
 			}
 		}
 	}
