@@ -1,4 +1,4 @@
-﻿package ua.org.tumakha.spdtool.entity;
+package ua.org.tumakha.spdtool.entity;
 
 import java.io.Serializable;
 
