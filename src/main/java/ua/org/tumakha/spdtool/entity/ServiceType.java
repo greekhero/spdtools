@@ -48,7 +48,7 @@ public class ServiceType implements Serializable {
 	}
 
 	public String getNameVOrudnomu() {
-		return name.replace("послуги ", "послуг ")
+		return name.replace("послуги", "послуг")
 				.replace("офісні ", "офісних ")
 				.replace("адміністративні ", "адміністративних ")
 				.replace("комерційні ", "комерційних ")
