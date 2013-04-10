@@ -1,4 +1,4 @@
-package ua.org.tumakha.spdtool.entity;
+﻿package ua.org.tumakha.spdtool.entity;
 
 import java.io.Serializable;
 
@@ -49,6 +49,8 @@ public class ServiceType implements Serializable {
 
 	public String getNameVOrudnomu() {
 		return name.replace("послуги ", "послуг ")
+				.replace("офісні ", "офісних ")
+				.replace("адміністративні ", "адміністративних ")
 				.replace("комерційні ", "комерційних ")
 				.replace("секретарські ", "секретарських ");
 	}
