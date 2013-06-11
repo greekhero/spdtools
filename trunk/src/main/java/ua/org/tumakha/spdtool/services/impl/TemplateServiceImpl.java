@@ -385,9 +385,6 @@ public class TemplateServiceImpl implements TemplateService {
 		calendar.set(Calendar.DAY_OF_MONTH, 19);
 		Date endDate = calendar.getTime();
 
-		int officeAndEquipmentRentAmount = 1350;
-		int officeRentAmount = 642;
-
 		boolean showTaxPayment = month % 3 == 0;
 
 		int i = 0;
@@ -406,20 +403,24 @@ public class TemplateServiceImpl implements TemplateService {
 			xlsProcessor.cleanBaseDirectory(XlsTemplate.PAYMENTS, year, month);
 		}
 		TextProcessor textProcessor = sendEmail ? new TextProcessor(TextTemplate.PAYMENT_DETAILS_EMAIL) : null;
+		int officeAndEquipmentRentAmount = 1350;
+		int equipmentRentAmount = 708;
+		int officeRentAmount = 642;
+
 		if (users != null) {
 			for (User user : users) {
 				if (user.isActive()) {
+
 					boolean showRentPayment = false;
 					Map<String, Object> beans = new HashMap<String, Object>();
 					if (user.getRentType() != null && !user.getRentType().equals(RentType.NONE)) {
 						showRentPayment = true;
-						boolean rentEquipment = user.getRentType().equals(RentType.OFFICE_EQUIPMENT);
-						String strRentEquipment = rentEquipment ? " та обладнання" : "";
-						int rentAmount = rentEquipment ? officeAndEquipmentRentAmount : officeRentAmount;
+						String rentDetails = user.getRentType().getDescription();
+						int rentAmount = user.getRentType().getAmount();
 						String rentPDV = getMoneyFormat().format((double) rentAmount / 6);
 						beans.put("rentPeriod", rentPeriod);
-						beans.put("strRentEquipment", strRentEquipment);
 						beans.put("rentAmount", rentAmount);
+						beans.put("rentDetails", rentDetails);
 						beans.put("rentPDV", rentPDV);
 						beans.put("rentContractDate", UA_DATE_FORMAT.format(user.getRentContractDate()));
 					}
