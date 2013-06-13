@@ -8,7 +8,7 @@ public enum RentType {
 	NONE(0, ""),
 	OFFICE(642, "офісного приміщення"),
 	OFFICE_EQUIPMENT(1350, "офісного приміщення та обладнання"),
-	EQUIPMENT(708, "обладнання");
+	EQUIPMENT(708, "офісного обладнання");
 
 	private int amount;
 
