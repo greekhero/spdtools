@@ -50,7 +50,7 @@
 		    <br/>
     	</c:if>
     	<c:if test="${not empty user.address}">
-    		<field:display field="postalCodeStr" id="c_ua_org_tumakha_spdtool_Address_postalCode" object="${user.address}"/>
+    		<field:display field="postalCode" id="c_ua_org_tumakha_spdtool_Address_postalCode" object="${user.address}"/>
     		<field:display field="textUa" id="c_ua_org_tumakha_spdtool_address" object="${user.address}"/>
     		<field:display field="textEn" id="c_ua_org_tumakha_spdtool_addressen" object="${user.address}"/>
     	</c:if>

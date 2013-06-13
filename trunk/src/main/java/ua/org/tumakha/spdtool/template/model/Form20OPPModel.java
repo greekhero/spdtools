@@ -49,9 +49,7 @@ public class Form20OPPModel extends TemplateModel {
 			regDPIspace = StringUtils.repeat("_", (49 - regDPI.length()) / 2);
 		}
 		Address address = user.getAddress();
-		if (address.getPostalCode() != null) {
-			postalCode = String.format("%5d", address.getPostalCode());
-		}
+		postalCode = address.getPostalCode();
 		region = address.getRegion() != null ? address.getRegion() : "";
 		district = address.getDistrict() != null ? address.getDistrict() : "";
 		city = address.getCity();
