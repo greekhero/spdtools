@@ -50,8 +50,7 @@ public class Address implements Serializable {
 	@JoinColumn(name = "userId", unique = true, nullable = false, updatable = false, insertable = true)
 	private User user;
 
-	@Digits(integer = 5, fraction = 0)
-	private Integer postalCode;
+	private String postalCode;
 
 	private String region;
 
@@ -101,24 +100,18 @@ public class Address implements Serializable {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(getStreetLine());
 		buffer.append(DELIMITER);
-		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? CITY_PREFIX
-				+ city : city);
-		buffer.append(StringUtils.hasText(district) ? DELIMITER + district
-				+ DISTRICT_SUFFIX : "");
-		buffer.append(StringUtils.hasText(region) ? DELIMITER + region
-				+ REGION_SUFFIX : "");
+		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? CITY_PREFIX + city : city);
+		buffer.append(StringUtils.hasText(district) ? DELIMITER + district + DISTRICT_SUFFIX : "");
+		buffer.append(StringUtils.hasText(region) ? DELIMITER + region + REGION_SUFFIX : "");
 		return buffer.toString().trim();
 	}
 
 	public String getTextReversedUa() {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append(getPostalCodeStr());
-		buffer.append(StringUtils.hasText(region) ? DELIMITER + region
-				+ REGION_SUFFIX : "");
-		buffer.append(StringUtils.hasText(district) ? DELIMITER + district
-				+ DISTRICT_SUFFIX : "");
-		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? DELIMITER
-				+ CITY_PREFIX + city : city);
+		buffer.append(getPostalCode());
+		buffer.append(StringUtils.hasText(region) ? DELIMITER + region + REGION_SUFFIX : "");
+		buffer.append(StringUtils.hasText(district) ? DELIMITER + district + DISTRICT_SUFFIX : "");
+		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? DELIMITER + CITY_PREFIX + city : city);
 		buffer.append(DELIMITER);
 		buffer.append(getStreetLine());
 		return buffer.toString().trim();
@@ -127,43 +120,28 @@ public class Address implements Serializable {
 	public String getTextEn() {
 		StringBuffer buffer = new StringBuffer();
 		if (StringUtils.hasText(streetEn)) {
-			buffer.append(StrUtil.isFirstCharUpperOrDigit(streetEn) ? STREET_PREFIX_EN
-					: "");
+			buffer.append(StrUtil.isFirstCharUpperOrDigit(streetEn) ? STREET_PREFIX_EN : "");
 			buffer.append(streetEn);
 		}
 		if (house != null) {
 			buffer.append(DELIMITER + HOUSE_PREFIX_EN + house);
-			buffer.append(StringUtils.hasText(houseCharEn) ? "-" + houseCharEn
-					: "");
+			buffer.append(StringUtils.hasText(houseCharEn) ? "-" + houseCharEn : "");
 			buffer.append(slashHouse != null ? "/" + slashHouse : "");
 		}
-		buffer.append(korpus != null ? DELIMITER + KORPUS_PREFIX_EN + korpus
-				: "");
+		buffer.append(korpus != null ? DELIMITER + KORPUS_PREFIX_EN + korpus : "");
 		if (apartment != null) {
 			buffer.append(DELIMITER + APARTMENT_PREFIX_EN + apartment);
-			buffer.append(StringUtils.hasText(apartmentCharEn) ? apartmentCharEn
-					: "");
+			buffer.append(StringUtils.hasText(apartmentCharEn) ? apartmentCharEn : "");
 		}
 		buffer.append(DELIMITER);
-		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? CITY_PREFIX_EN
-				+ cityEn : cityEn);
-		buffer.append(StringUtils.hasText(districtEn) ? DELIMITER + districtEn
-				+ DISTRICT_SUFFIX_EN : "");
-		buffer.append(StringUtils.hasText(regionEn) ? DELIMITER + regionEn
-				+ REGION_SUFFIX_EN : "");
+		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? CITY_PREFIX_EN + cityEn : cityEn);
+		buffer.append(StringUtils.hasText(districtEn) ? DELIMITER + districtEn + DISTRICT_SUFFIX_EN : "");
+		buffer.append(StringUtils.hasText(regionEn) ? DELIMITER + regionEn + REGION_SUFFIX_EN : "");
 		return buffer.toString().trim();
 	}
 
-	public String getPostalCodeStr() {
-		if (postalCode != null) {
-			return String.format("%05d", postalCode);
-		} else {
-			return "     ";
-		}
-	}
-
 	public char[] getPostalCodeArray() {
-		return getPostalCodeStr().toCharArray();
+		return getPostalCode().toCharArray();
 	}
 
 	public String getRegionStr() {
@@ -226,18 +204,15 @@ public class Address implements Serializable {
 
 	public String getRegionAndCity() {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append(StringUtils.hasText(region) ? region + REGION_SUFFIX
-				+ DELIMITER : "");
-		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? CITY_PREFIX
-				+ city : city);
+		buffer.append(StringUtils.hasText(region) ? region + REGION_SUFFIX + DELIMITER : "");
+		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? CITY_PREFIX + city : city);
 		return buffer.toString().trim();
 	}
 
 	public String getStreetLine() {
 		StringBuffer buffer = new StringBuffer();
 		if (StringUtils.hasText(street)) {
-			buffer.append(StrUtil.isFirstCharUpperOrDigit(street) ? STREET_PREFIX
-					: "");
+			buffer.append(StrUtil.isFirstCharUpperOrDigit(street) ? STREET_PREFIX : "");
 			buffer.append(street);
 		}
 		if (house != null) {
@@ -248,8 +223,7 @@ public class Address implements Serializable {
 		buffer.append(korpus != null ? DELIMITER + KORPUS_PREFIX + korpus : "");
 		if (apartment != null) {
 			buffer.append(DELIMITER + APARTMENT_PREFIX + apartment);
-			buffer.append(StringUtils.hasText(apartmentChar) ? apartmentChar
-					: "");
+			buffer.append(StringUtils.hasText(apartmentChar) ? apartmentChar : "");
 		}
 		return buffer.toString().trim();
 	}
@@ -270,11 +244,11 @@ public class Address implements Serializable {
 		this.user = user;
 	}
 
-	public Integer getPostalCode() {
+	public String getPostalCode() {
 		return postalCode;
 	}
 
-	public void setPostalCode(Integer postalCode) {
+	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
 
