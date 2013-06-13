@@ -159,6 +159,7 @@
 	<entry key="label_ua_org_tumakha_spdtool_enums_RentType_NONE">Немає</entry>
 	<entry key="label_ua_org_tumakha_spdtool_enums_RentType_OFFICE">Приміщення</entry>
 	<entry key="label_ua_org_tumakha_spdtool_enums_RentType_OFFICE_EQUIPMENT">Приміщення та обладнання</entry>
+	<entry key="label_ua_org_tumakha_spdtool_enums_RentType_EQUIPMENT">Обладнання</entry>
 	
 	<!-- declaration -->
 	<entry key="declaration_state1_title">Генерування декларацій - Крок 1</entry>
