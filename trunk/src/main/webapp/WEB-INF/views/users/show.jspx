@@ -3,21 +3,41 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:show id="ps_ua_org_tumakha_spdtool_User" object="${user}" path="/users" z="BVlwe/iBuVUsECWoXy9167acbDY=">
-        <field:display field="pin" id="s_ua_org_tumakha_spdtool_User_pin" object="${user}" z="IV3de3Yfw487rTnpEok39PHLx9Y="/>
-        <field:display field="active" id="s_ua_org_tumakha_spdtool_User_active" object="${user}" z="vg8aq64SBxjaOJ1vQx9bFXrobvQ="/>
-        <field:display field="firstname" id="s_ua_org_tumakha_spdtool_User_firstname" object="${user}" z="AacWz3+738zwJD0ATbwlJpFatgE="/>
-        <field:display field="firstnameEn" id="s_ua_org_tumakha_spdtool_User_firstnameEn" object="${user}" z="7iBbf4DotqzM6TJIW9RNdOUIbLQ="/>
-        <field:display field="lastname" id="s_ua_org_tumakha_spdtool_User_lastname" object="${user}" z="wTtAdARCGbx29lKxQU/HROgQsjQ="/>
-        <field:display field="lastnameEn" id="s_ua_org_tumakha_spdtool_User_lastnameEn" object="${user}" z="aHkYSKb4lhpk94zc2K14t8DHzz0="/>
-        <field:display field="middlename" id="s_ua_org_tumakha_spdtool_User_middlename" object="${user}" z="+CLbIkUShg9lPPp+Fg9ZYSeFz9U="/>
-        <field:display field="middlenameEn" id="s_ua_org_tumakha_spdtool_User_middlenameEn" object="${user}" z="EEsbqBcysyoe2br7oGiZmam/MPs="/>
+        <table class="simpleTable">
+	    <tr>
+		    <td><field:display field="pin" id="s_ua_org_tumakha_spdtool_User_pin" object="${user}" z="IV3de3Yfw487rTnpEok39PHLx9Y="/></td>
+		    <td><field:display field="active" id="s_ua_org_tumakha_spdtool_User_active" object="${user}" z="vg8aq64SBxjaOJ1vQx9bFXrobvQ="/></td>
+	    </tr>
+	    <tr>
+		    <td><field:display field="lastname" id="s_ua_org_tumakha_spdtool_User_lastname" object="${user}" z="wTtAdARCGbx29lKxQU/HROgQsjQ="/></td>
+		    <td><field:display field="lastnameEn" id="s_ua_org_tumakha_spdtool_User_lastnameEn" object="${user}" z="aHkYSKb4lhpk94zc2K14t8DHzz0="/></td>
+	    </tr>
+	    <tr>
+		    <td><field:display field="firstname" id="s_ua_org_tumakha_spdtool_User_firstname" object="${user}" z="AacWz3+738zwJD0ATbwlJpFatgE="/></td>
+		    <td><field:display field="firstnameEn" id="s_ua_org_tumakha_spdtool_User_firstnameEn" object="${user}" z="7iBbf4DotqzM6TJIW9RNdOUIbLQ="/></td>
+	    </tr>
+	    <tr>
+		    <td><field:display field="middlename" id="s_ua_org_tumakha_spdtool_User_middlename" object="${user}" z="+CLbIkUShg9lPPp+Fg9ZYSeFz9U="/></td>
+		    <td><field:display field="middlenameEn" id="s_ua_org_tumakha_spdtool_User_middlenameEn" object="${user}" z="EEsbqBcysyoe2br7oGiZmam/MPs="/></td>
+	    </tr>
+	    <tr>
+		    <td><field:display field="email" id="s_ua_org_tumakha_spdtool_User_email" object="${user}" z="XM6ptVFyYeYHBSoA+iO/sywJu4U="/></td>
+		    <td><field:display field="phone" id="s_ua_org_tumakha_spdtool_User_phone" object="${user}"/></td>
+	    </tr>
+	    </table>
         <br/>
+
+    	<c:if test="${not empty user.passport}">
+    		<field:display field="textUa" id="c_passport" object="${user.passport}"/>
+    	</c:if>
+    	<c:if test="${not empty user.address}">
+    		<field:display field="postalCode" id="c_ua_org_tumakha_spdtool_Address_postalCode" object="${user.address}"/>
+    		<field:display field="textUa" id="c_ua_org_tumakha_spdtool_address" object="${user.address}"/>
+    		<field:display field="textEn" id="c_ua_org_tumakha_spdtool_addressen" object="${user.address}"/>
+    	</c:if>
         <field:display field="regDocumentType" id="s_ua_org_tumakha_spdtool_User_regDocumentType" object="${user}" enumClass="ua.org.tumakha.spdtool.enums.RegDocumentType"/>
         <field:display date="true" dateTimePattern="${user_regdate_date_format}" field="regDate" id="s_ua_org_tumakha_spdtool_User_regDate" object="${user}" z="B6vf8O1ih1cqm5BADGe0wkdmCGc="/>
         <field:display field="regNumber" id="s_ua_org_tumakha_spdtool_User_regNumber" object="${user}" z="Q3nuKmGuU+yKC0j/LH7yM0saWGU="/>
-        <br/>
-        <field:display field="email" id="s_ua_org_tumakha_spdtool_User_email" object="${user}" z="XM6ptVFyYeYHBSoA+iO/sywJu4U="/>
-        <field:display field="phone" id="s_ua_org_tumakha_spdtool_User_phone" object="${user}"/>
         <br/>
         <field:display field="taxOrganization" id="c_ua_org_tumakha_spdtool_TaxOrganization" object="${user}"/>
         <field:display date="true" dateTimePattern="${user_regdatedpi_date_format}" field="regDateDpi" id="s_ua_org_tumakha_spdtool_User_regDateDpi" object="${user}" z="y+itQinxLnI/nwknmdBK9P/ABjs="/>
@@ -30,13 +50,6 @@
     	<field:display field="rentContractNumber" id="s_ua_org_tumakha_spdtool_User_rentContractNumber" object="${user}"/>
     	<field:display date="true" dateTimePattern="${user_regdate_date_format}" field="rentContractDate" id="s_ua_org_tumakha_spdtool_User_rentContractDate" object="${user}"/>
         <br/>
-        <field:display field="kveds2010" id="c_ua_org_tumakha_spdtool_User_kveds2010" object="${user}"/>
-        <field:display field="kveds" id="c_ua_org_tumakha_spdtool_User_kveds" object="${user}"/>
-        <field:display field="activeKveds" id="c_ua_org_tumakha_spdtool_User_activeKveds" object="${user}"/>
-        <c:if test="${not empty user.serviceType}">
-		    <field:display field="name" id="c_ua_org_tumakha_spdtool_servicetype_name" object="${user.serviceType}"/>
-		   	<field:display field="nameEn" id="c_ua_org_tumakha_spdtool_servicetype_nameen" object="${user.serviceType}"/>
-    	</c:if>
         <c:if test="${not empty user.bank}">
 		    <field:display field="MFO" id="c_ua_org_tumakha_spdtool_Bank_mfo" object="${user.bank}"/>
 		    <field:display field="SWIFT" id="c_ua_org_tumakha_spdtool_Bank_swift" object="${user.bank}"/>
@@ -49,13 +62,11 @@
 		    <field:display field="correspondentBankEn" id="c_ua_org_tumakha_spdtool_Bank_correspondentBankEn" object="${user.bank}"/>
 		    <br/>
     	</c:if>
-    	<c:if test="${not empty user.address}">
-    		<field:display field="postalCode" id="c_ua_org_tumakha_spdtool_Address_postalCode" object="${user.address}"/>
-    		<field:display field="textUa" id="c_ua_org_tumakha_spdtool_address" object="${user.address}"/>
-    		<field:display field="textEn" id="c_ua_org_tumakha_spdtool_addressen" object="${user.address}"/>
-    	</c:if>
-    	<c:if test="${not empty user.passport}">
-    		<field:display field="textUa" id="c_passport" object="${user.passport}"/>
+        <field:display field="kveds2010" id="c_ua_org_tumakha_spdtool_User_kveds2010" object="${user}"/>
+        <field:display field="activeKveds" id="c_ua_org_tumakha_spdtool_User_activeKveds" object="${user}"/>
+        <c:if test="${not empty user.serviceType}">
+		    <field:display field="name" id="c_ua_org_tumakha_spdtool_servicetype_name" object="${user.serviceType}"/>
+		   	<field:display field="nameEn" id="c_ua_org_tumakha_spdtool_servicetype_nameen" object="${user.serviceType}"/>
     	</c:if>
     </page:show>
 </div>

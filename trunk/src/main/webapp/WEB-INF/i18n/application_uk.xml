@@ -47,6 +47,7 @@
 	<entry key="label_ua_org_tumakha_spdtool_contract_number">Number</entry>
 	<entry key="label_ua_org_tumakha_spdtool_contract_plural">Contracts</entry>
 	<entry key="label_ua_org_tumakha_spdtool_contract_userid">User Id</entry>
+	<entry key="label_ua_org_tumakha_spdtool_kved_section">КВЕД</entry>
 	<entry key="label_ua_org_tumakha_spdtool_kved">КВЕД 2005</entry>
 	<entry key="label_ua_org_tumakha_spdtool_kved_code">Код</entry>
 	<entry key="label_ua_org_tumakha_spdtool_kved_name">Назва</entry>
