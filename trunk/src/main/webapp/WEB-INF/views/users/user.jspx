@@ -22,7 +22,7 @@
 	    </tr>
 	    <tr>
 		    <td><field:input field="email" id="c_ua_org_tumakha_spdtool_User_email" validationMessageCode="field_invalid_email"/></td>
-		    <td><field:input field="phone" id="c_ua_org_tumakha_spdtool_User_phone" validationMessageCode="field_invalid_integer"/></td>
+		    <td><field:input field="phone" id="c_ua_org_tumakha_spdtool_User_phone"/></td>
 	    </tr>
     </table>
     <field:select field="groups" id="c_ua_org_tumakha_spdtool_User_userGroups" itemValue="groupId" items="${groups}" multiple="true" path="/groups"/>

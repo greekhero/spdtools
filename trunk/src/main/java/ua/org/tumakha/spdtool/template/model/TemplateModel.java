@@ -106,7 +106,7 @@ public abstract class TemplateModel {
 				apartment += "-" + address.getApartmentChar();
 			}
 		}
-		phone = user.getPhone() != null ? user.getPhone().toString() : "";
+		phone = user.getPhone() != null ? user.getPhone() : "";
 		email = user.getEmail() != null ? user.getEmail() : "";
 		PIN = user.getPin().toString();
 		bankAccount = bank.getAccountNumber() == null ? "" : bank.getAccountNumber().toString();
