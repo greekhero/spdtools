@@ -1,47 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:spring="http://www.springframework.org/tags" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <font color="red">${error}</font><br/>
-    <field:input field="pin" id="c_ua_org_tumakha_spdtool_User_pin" validationMessageCode="field_invalid_integer"/>
-    <field:checkbox field="active" id="c_ua_org_tumakha_spdtool_User_active"/>
-    <field:input field="firstname" id="c_ua_org_tumakha_spdtool_User_firstname"/>
-    <field:input field="firstnameEn" id="c_ua_org_tumakha_spdtool_User_firstnameEn"/>
-    <field:input field="lastname" id="c_ua_org_tumakha_spdtool_User_lastname"/>
-    <field:input field="lastnameEn" id="c_ua_org_tumakha_spdtool_User_lastnameEn"/>
-    <field:input field="middlename" id="c_ua_org_tumakha_spdtool_User_middlename"/>
-    <field:input field="middlenameEn" id="c_ua_org_tumakha_spdtool_User_middlenameEn"/>
-    <field:select field="regDocumentType" id="c_ua_org_tumakha_spdtool_User_regDocumentType" enumClass="ua.org.tumakha.spdtool.enums.RegDocumentType"/>
-    <field:datetime dateTimePattern="${user_regdate_date_format}" field="regDate" id="c_ua_org_tumakha_spdtool_User_regDate"/>
-    <field:input field="regNumber" id="c_ua_org_tumakha_spdtool_User_regNumber"/>
-    <field:input field="email" id="c_ua_org_tumakha_spdtool_User_email" validationMessageCode="field_invalid_email"/>
-    <field:input field="phone" id="c_ua_org_tumakha_spdtool_User_phone" validationMessageCode="field_invalid_integer"/>
-    
-    <field:select field="taxOrganization" id="c_ua_org_tumakha_spdtool_TaxOrganization" itemValue="organizationId" items="${taxOrganizations}" required="false" path="/tax_organization"/>
-    <field:datetime dateTimePattern="${user_regdatedpi_date_format}" field="regDateDpi" id="c_ua_org_tumakha_spdtool_User_regDateDpi"/>
-    <field:input field="regNumberDpi" id="c_ua_org_tumakha_spdtool_User_regNumberDpi"/>
-    
-    <field:select field="pensionOrganization" id="c_ua_org_tumakha_spdtool_PensionOrganization" itemValue="organizationId" items="${pensionOrganizations}" required="false" path="/pension_organization"/>
-    <field:input field="regNumberPF" id="c_ua_org_tumakha_spdtool_User_regNumberPF"/>
-    
-    <field:select field="rentType" id="c_ua_org_tumakha_spdtool_User_rentType" enumClass="ua.org.tumakha.spdtool.enums.RentType"/>
-    <field:input field="rentContractNumber" id="c_ua_org_tumakha_spdtool_User_rentContractNumber"/>
-    <field:datetime dateTimePattern="${user_regdate_date_format}" field="rentContractDate" id="c_ua_org_tumakha_spdtool_User_rentContractDate"/>
-    
+    <table class="simpleTable">
+	    <tr>
+		    <td><field:input field="pin" id="c_ua_org_tumakha_spdtool_User_pin" validationMessageCode="field_invalid_integer"/></td>
+		    <td><field:checkbox field="active" id="c_ua_org_tumakha_spdtool_User_active"/></td>
+	    </tr>
+	    <tr>
+		    <td><field:input field="lastname" id="c_ua_org_tumakha_spdtool_User_lastname"/></td>
+		    <td><field:input field="lastnameEn" id="c_ua_org_tumakha_spdtool_User_lastnameEn"/></td>
+	    </tr>
+	    <tr>
+		    <td><field:input field="firstname" id="c_ua_org_tumakha_spdtool_User_firstname"/></td>
+		    <td><field:input field="firstnameEn" id="c_ua_org_tumakha_spdtool_User_firstnameEn"/></td>
+	    </tr>
+	    <tr>
+		    <td><field:input field="middlename" id="c_ua_org_tumakha_spdtool_User_middlename"/></td>
+		    <td><field:input field="middlenameEn" id="c_ua_org_tumakha_spdtool_User_middlenameEn"/></td>
+	    </tr>
+	    <tr>
+		    <td><field:input field="email" id="c_ua_org_tumakha_spdtool_User_email" validationMessageCode="field_invalid_email"/></td>
+		    <td><field:input field="phone" id="c_ua_org_tumakha_spdtool_User_phone" validationMessageCode="field_invalid_integer"/></td>
+	    </tr>
+    </table>
     <field:select field="groups" id="c_ua_org_tumakha_spdtool_User_userGroups" itemValue="groupId" items="${groups}" multiple="true" path="/groups"/>
-    <field:select field="kveds2010" id="c_ua_org_tumakha_spdtool_User_kveds2010" itemValue="kvedId" items="${kveds2010}" multiple="true" path="/kveds2010"/>
-    <field:select field="kveds" id="c_ua_org_tumakha_spdtool_User_kveds" itemValue="kvedId" items="${kveds}" multiple="true" path="/kveds"/>
-    <field:select field="activeKveds" id="c_ua_org_tumakha_spdtool_User_activeKveds" itemValue="kvedId" items="${kveds2010}" multiple="true" path="/kveds"/>
-    <field:textarea field="serviceType.name" id="c_ua_org_tumakha_spdtool_servicetype_name"/>
-    <field:textarea field="serviceType.nameEn" id="c_ua_org_tumakha_spdtool_servicetype_nameen"/>
-    <field:input field="bank.MFO" id="c_ua_org_tumakha_spdtool_Bank_mfo" validationMessageCode="field_invalid_integer"/>
-    <field:input field="bank.SWIFT" id="c_ua_org_tumakha_spdtool_Bank_swift"/>
-    <field:input field="bank.accountNumber" id="c_ua_org_tumakha_spdtool_Bank_accountNumber" validationMessageCode="field_invalid_integer"/>
-    <field:input field="bank.name" id="c_ua_org_tumakha_spdtool_Bank_name"/>
-    <field:input field="bank.nameEn" id="c_ua_org_tumakha_spdtool_Bank_nameEn"/>
-    <field:checkbox field="bank.usedMiddlename" id="c_ua_org_tumakha_spdtool_Bank_usedMiddlename"/>
-    <field:textarea field="bank.correspondentBank" id="c_ua_org_tumakha_spdtool_Bank_correspondentBank"/>
-    <field:textarea field="bank.correspondentBankEn" id="c_ua_org_tumakha_spdtool_Bank_correspondentBankEn"/>
+    
+    <spring:message code="label_passport" var="titlePassport" htmlEscape="false" />
+    <util:panel id="passport" title="${titlePassport}" openPane="false">
+    <field:input field="passport.seria" id="c_passport_seria"/>
+    <field:input field="passport.number" id="c_passport_number" validationMessageCode="field_invalid_integer"/>
+    <field:textarea field="passport.organ" id="c_passport_organ"/>
+    <field:datetime dateTimePattern="${user_regdate_date_format}" field="passport.date" id="c_passport_date"/>
+    </util:panel>
+    
+    <spring:message code="label_ua_org_tumakha_spdtool_address" var="titleAddress" htmlEscape="false" />
+    <util:panel id="address" title="${titleAddress}" openPane="false">
     <field:input field="address.postalCode" id="c_ua_org_tumakha_spdtool_Address_postalCode"/>
     <field:input field="address.region" id="c_ua_org_tumakha_spdtool_Address_region"/>
     <field:input field="address.regionEn" id="c_ua_org_tumakha_spdtool_Address_regionEn"/>
@@ -59,8 +54,46 @@
     <field:input field="address.apartment" id="c_ua_org_tumakha_spdtool_Address_apartment" validationMessageCode="field_invalid_integer"/>
     <field:input field="address.apartmentChar" id="c_ua_org_tumakha_spdtool_Address_apartmentChar"/>
     <field:input field="address.apartmentCharEn" id="c_ua_org_tumakha_spdtool_Address_apartmentCharEn"/>
-    <field:input field="passport.seria" id="c_passport_seria"/>
-    <field:input field="passport.number" id="c_passport_number" validationMessageCode="field_invalid_integer"/>
-    <field:textarea field="passport.organ" id="c_passport_organ"/>
-    <field:datetime dateTimePattern="${user_regdate_date_format}" field="passport.date" id="c_passport_date"/>
+    </util:panel>
+
+    <spring:message code="label_ua_org_tumakha_spdtool_bank" var="titleBank" htmlEscape="false" />
+    <util:panel id="bank" title="${titleBank}" openPane="false">
+    <field:input field="bank.MFO" id="c_ua_org_tumakha_spdtool_Bank_mfo" validationMessageCode="field_invalid_integer"/>
+    <field:input field="bank.SWIFT" id="c_ua_org_tumakha_spdtool_Bank_swift"/>
+    <field:input field="bank.accountNumber" id="c_ua_org_tumakha_spdtool_Bank_accountNumber" validationMessageCode="field_invalid_integer"/>
+    <field:input field="bank.name" id="c_ua_org_tumakha_spdtool_Bank_name"/>
+    <field:input field="bank.nameEn" id="c_ua_org_tumakha_spdtool_Bank_nameEn"/>
+    <field:checkbox field="bank.usedMiddlename" id="c_ua_org_tumakha_spdtool_Bank_usedMiddlename"/>
+    <field:textarea field="bank.correspondentBank" id="c_ua_org_tumakha_spdtool_Bank_correspondentBank"/>
+    <field:textarea field="bank.correspondentBankEn" id="c_ua_org_tumakha_spdtool_Bank_correspondentBankEn"/>
+    </util:panel>
+    
+    <spring:message code="label_ua_org_tumakha_spdtool_kved_section" var="titleKved" htmlEscape="false" />
+    <util:panel id="kved" title="${titleKved}" openPane="false">
+    <field:select field="kveds2010" id="c_ua_org_tumakha_spdtool_User_kveds2010" itemValue="kvedId" items="${kveds2010}" multiple="true" path="/kveds2010"/>
+    <field:select field="activeKveds" id="c_ua_org_tumakha_spdtool_User_activeKveds" itemValue="kvedId" items="${kveds2010}" multiple="true" path="/kveds"/>
+    <field:textarea field="serviceType.name" id="c_ua_org_tumakha_spdtool_servicetype_name"/>
+    <field:textarea field="serviceType.nameEn" id="c_ua_org_tumakha_spdtool_servicetype_nameen"/>
+	    <spring:message code="label_ua_org_tumakha_spdtool_user_kveds" var="titleKved2005" htmlEscape="false" />
+	    <util:panel id="kved2005" title="${titleKved2005}" openPane="false">
+	    	<field:select field="kveds" id="c_ua_org_tumakha_spdtool_User_kveds" itemValue="kvedId" items="${kveds}" multiple="true" path="/kveds"/>
+	   	</util:panel>
+    </util:panel>
+    <br/>
+
+    <field:select field="regDocumentType" id="c_ua_org_tumakha_spdtool_User_regDocumentType" enumClass="ua.org.tumakha.spdtool.enums.RegDocumentType"/>
+    <field:datetime dateTimePattern="${user_regdate_date_format}" field="regDate" id="c_ua_org_tumakha_spdtool_User_regDate"/>
+    <field:input field="regNumber" id="c_ua_org_tumakha_spdtool_User_regNumber"/>
+
+    <field:select field="taxOrganization" id="c_ua_org_tumakha_spdtool_TaxOrganization" itemValue="organizationId" items="${taxOrganizations}" required="false" path="/tax_organization"/>
+    <field:datetime dateTimePattern="${user_regdatedpi_date_format}" field="regDateDpi" id="c_ua_org_tumakha_spdtool_User_regDateDpi"/>
+    <field:input field="regNumberDpi" id="c_ua_org_tumakha_spdtool_User_regNumberDpi"/>
+    
+    <field:select field="pensionOrganization" id="c_ua_org_tumakha_spdtool_PensionOrganization" itemValue="organizationId" items="${pensionOrganizations}" required="false" path="/pension_organization"/>
+    <field:input field="regNumberPF" id="c_ua_org_tumakha_spdtool_User_regNumberPF"/>
+    
+    <field:select field="rentType" id="c_ua_org_tumakha_spdtool_User_rentType" enumClass="ua.org.tumakha.spdtool.enums.RentType"/>
+    <field:input field="rentContractNumber" id="c_ua_org_tumakha_spdtool_User_rentContractNumber"/>
+    <field:datetime dateTimePattern="${user_regdate_date_format}" field="rentContractDate" id="c_ua_org_tumakha_spdtool_User_rentContractDate"/>
+    
 </div>

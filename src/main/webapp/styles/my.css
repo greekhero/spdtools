@@ -1,0 +1,15 @@
+table.simpleTable {
+	border: 0 none;
+}
+
+.simpleTable tr:nth-child(odd) {
+	background-color: #FFF;
+}
+
+.simpleTable tr:nth-child(even) {
+	background-color: #FFF;
+}
+
+.simpleTable td {
+	border: 0 none;
+}
