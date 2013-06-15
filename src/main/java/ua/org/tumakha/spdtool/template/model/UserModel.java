@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.springframework.util.StringUtils;
+
 import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.template.DocxTemplate;
 import ua.org.tumakha.util.StrUtil;
@@ -15,10 +17,8 @@ public class UserModel extends TemplateModel {
 
 	private static final DateFormat DAY_FORMAT = new SimpleDateFormat("dd");
 	private static final DateFormat YEAR_FORMAT = new SimpleDateFormat("yyyy");
-	private static final DateFormat UA_MONTH_FORMAT = new SimpleDateFormat(
-			"MMMMM", uaLocale);
-	private static final DateFormat MONTH_DIGIT_FORMAT = new SimpleDateFormat(
-			"MM", uaLocale);
+	private static final DateFormat UA_MONTH_FORMAT = new SimpleDateFormat("MMMMM", uaLocale);
+	private static final DateFormat MONTH_DIGIT_FORMAT = new SimpleDateFormat("MM", uaLocale);
 
 	private User user;
 
@@ -61,8 +61,7 @@ public class UserModel extends TemplateModel {
 		if (date != null) {
 			dateDay = DAY_FORMAT.format(date);
 			dateMonth = StrUtil.padRight(UA_MONTH_FORMAT.format(date), 15);
-			dateMonthDigit = StrUtil.padRight(MONTH_DIGIT_FORMAT.format(date),
-					2);
+			dateMonthDigit = StrUtil.padRight(MONTH_DIGIT_FORMAT.format(date), 2);
 			dateYear = YEAR_FORMAT.format(date);
 		} else {
 			dateYear = YEAR_FORMAT.format(new Date());
@@ -72,11 +71,7 @@ public class UserModel extends TemplateModel {
 
 	@Override
 	public String getPhone() {
-		String phone = user.getPhone() == null ? "0958912127" : user.getPhone()
-				.toString();
-		if (phone.length() == 9) {
-			phone = "0" + phone;
-		}
+		String phone = StringUtils.isEmpty(user.getPhone()) ? "0958912127" : user.getPhone();
 		return StrUtil.padRight(phone, 12);
 	}
 
@@ -124,8 +119,8 @@ public class UserModel extends TemplateModel {
 
 	@Override
 	public String getOutputFilename(DocxTemplate template) {
-		return String.format("/ECP/%s/%s_%s_%s", getLastname(),
-				getLastnameEn(), getFirstnameEn(), template.getFilename());
+		return String.format("/ECP/%s/%s_%s_%s", getLastname(), getLastnameEn(), getFirstnameEn(),
+				template.getFilename());
 
 	}
 

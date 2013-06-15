@@ -134,7 +134,7 @@ public class User implements Serializable {
 	@DateTimeFormat(style = "S-")
 	private Date rentContractDate;
 
-	private Long phone;
+	private String phone;
 
 	@Email
 	private String email;
@@ -402,11 +402,11 @@ public class User implements Serializable {
 		this.rentContractDate = rentContractDate;
 	}
 
-	public Long getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(Long phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
