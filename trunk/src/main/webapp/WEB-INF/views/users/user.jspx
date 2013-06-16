@@ -27,6 +27,24 @@
     </table>
     <field:select field="groups" id="c_ua_org_tumakha_spdtool_User_userGroups" itemValue="groupId" items="${groups}" multiple="true" path="/groups"/>
     
+    <spring:message code="label_tax_pf_rent" var="titleTaxPF" htmlEscape="false" />
+    <util:panel id="taxPF" title="${titleTaxPF}" openPane="true">
+    <field:select field="regDocumentType" id="c_ua_org_tumakha_spdtool_User_regDocumentType" enumClass="ua.org.tumakha.spdtool.enums.RegDocumentType"/>
+    <field:datetime dateTimePattern="${user_regdate_date_format}" field="regDate" id="c_ua_org_tumakha_spdtool_User_regDate"/>
+    <field:input field="regNumber" id="c_ua_org_tumakha_spdtool_User_regNumber"/>
+
+    <field:select field="taxOrganization" id="c_ua_org_tumakha_spdtool_TaxOrganization" itemValue="organizationId" items="${taxOrganizations}" required="false" path="/tax_organization"/>
+    <field:datetime dateTimePattern="${user_regdatedpi_date_format}" field="regDateDpi" id="c_ua_org_tumakha_spdtool_User_regDateDpi"/>
+    <field:input field="regNumberDpi" id="c_ua_org_tumakha_spdtool_User_regNumberDpi"/>
+    
+    <field:select field="pensionOrganization" id="c_ua_org_tumakha_spdtool_PensionOrganization" itemValue="organizationId" items="${pensionOrganizations}" required="false" path="/pension_organization"/>
+    <field:input field="regNumberPF" id="c_ua_org_tumakha_spdtool_User_regNumberPF"/>
+    
+    <field:select field="rentType" id="c_ua_org_tumakha_spdtool_User_rentType" enumClass="ua.org.tumakha.spdtool.enums.RentType"/>
+    <field:input field="rentContractNumber" id="c_ua_org_tumakha_spdtool_User_rentContractNumber"/>
+    <field:datetime dateTimePattern="${user_regdate_date_format}" field="rentContractDate" id="c_ua_org_tumakha_spdtool_User_rentContractDate"/>
+    </util:panel>
+    
     <spring:message code="label_passport" var="titlePassport" htmlEscape="false" />
     <util:panel id="passport" title="${titlePassport}" openPane="false">
     <field:input field="passport.seria" id="c_passport_seria"/>
@@ -103,19 +121,4 @@
     </util:panel>
     <br/>
 
-    <field:select field="regDocumentType" id="c_ua_org_tumakha_spdtool_User_regDocumentType" enumClass="ua.org.tumakha.spdtool.enums.RegDocumentType"/>
-    <field:datetime dateTimePattern="${user_regdate_date_format}" field="regDate" id="c_ua_org_tumakha_spdtool_User_regDate"/>
-    <field:input field="regNumber" id="c_ua_org_tumakha_spdtool_User_regNumber"/>
-
-    <field:select field="taxOrganization" id="c_ua_org_tumakha_spdtool_TaxOrganization" itemValue="organizationId" items="${taxOrganizations}" required="false" path="/tax_organization"/>
-    <field:datetime dateTimePattern="${user_regdatedpi_date_format}" field="regDateDpi" id="c_ua_org_tumakha_spdtool_User_regDateDpi"/>
-    <field:input field="regNumberDpi" id="c_ua_org_tumakha_spdtool_User_regNumberDpi"/>
-    
-    <field:select field="pensionOrganization" id="c_ua_org_tumakha_spdtool_PensionOrganization" itemValue="organizationId" items="${pensionOrganizations}" required="false" path="/pension_organization"/>
-    <field:input field="regNumberPF" id="c_ua_org_tumakha_spdtool_User_regNumberPF"/>
-    
-    <field:select field="rentType" id="c_ua_org_tumakha_spdtool_User_rentType" enumClass="ua.org.tumakha.spdtool.enums.RentType"/>
-    <field:input field="rentContractNumber" id="c_ua_org_tumakha_spdtool_User_rentContractNumber"/>
-    <field:datetime dateTimePattern="${user_regdate_date_format}" field="rentContractDate" id="c_ua_org_tumakha_spdtool_User_rentContractDate"/>
-    
 </div>
