@@ -88,7 +88,7 @@ public abstract class TemplateModel {
 		regDateDPI = user.getRegDateDpi() != null ? regDateDPIFormat.format(user.getRegDateDpi()) : "";
 		regAddress = address.getTextUa() + ", Україна";
 		regAddressEn = address.getTextEn() + ", Ukraine";
-		postalCode = String.format("%05d", address.getPostalCode());
+		postalCode = address.getPostalCode();
 		region = address.getRegion() != null ? address.getRegion() : "";
 		district = address.getDistrict() != null ? address.getDistrict() : "";
 		city = address.getCity();
