@@ -21,7 +21,13 @@ public class PensionOrganizationFormatter implements Formatter<PensionOrganizati
 
 	@Override
 	public String print(PensionOrganization pensionOrganization, Locale locale) {
-		return pensionOrganization.getName();
+		StringBuilder builder = new StringBuilder().append(pensionOrganization.getName());
+		if (pensionOrganization.getComment() != null) {
+			builder.append(" (");
+			builder.append(pensionOrganization.getComment());
+			builder.append(")");
+		}
+		return builder.toString();
 	}
 
 	@Override

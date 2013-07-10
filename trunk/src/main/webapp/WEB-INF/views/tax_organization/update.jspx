@@ -6,6 +6,7 @@
     	<font color="red">${error}</font><br/>
         <field:input field="code" id="c_ua_org_tumakha_spdtool_TaxOrganization_code"/>
         <field:textarea field="name" id="c_ua_org_tumakha_spdtool_TaxOrganization_name"/>
+        <field:textarea field="comment" id="c_ua_org_tumakha_spdtool_TaxOrganization_comment"/>
         <field:textarea field="account.payeeName" id="c_ua_org_tumakha_spdtool_Account_payeeName"/>
         <field:input field="account.accountNumber" id="c_ua_org_tumakha_spdtool_Account_accountNumber"/>
         <field:input field="account.codeEDRPOU" id="c_ua_org_tumakha_spdtool_Account_codeEDRPOU"/>

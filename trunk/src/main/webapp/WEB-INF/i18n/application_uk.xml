@@ -104,9 +104,11 @@
 	<entry key="label_tax_pf_rent">Податкова, ПФ, оренда</entry>
 	<entry key="label_ua_org_tumakha_spdtool_pensionorganization">Пенсійний Фонд</entry>
 	<entry key="label_ua_org_tumakha_spdtool_pensionorganization_name">Назва</entry>
+	<entry key="label_ua_org_tumakha_spdtool_pensionorganization_comment">Коментар</entry>
 	<entry key="label_ua_org_tumakha_spdtool_pensionorganization_plural"> - Пенсійні Фонди</entry>
 	<entry key="label_ua_org_tumakha_spdtool_taxorganization">Пoдаткова</entry>
 	<entry key="label_ua_org_tumakha_spdtool_taxorganization_name">Назва</entry>
+	<entry key="label_ua_org_tumakha_spdtool_taxorganization_comment">Коментар</entry>
 	<entry key="label_ua_org_tumakha_spdtool_taxorganization_code">Код</entry>
 	<entry key="label_ua_org_tumakha_spdtool_taxorganization_pensionorganization">Пенсійний Фонд</entry>
 	<entry key="label_ua_org_tumakha_spdtool_taxorganization_plural"> - Податкові</entry>
