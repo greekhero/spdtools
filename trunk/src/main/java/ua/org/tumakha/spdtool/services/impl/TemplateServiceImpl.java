@@ -390,23 +390,28 @@ public class TemplateServiceImpl implements TemplateService {
 		int i = 0;
 		List<User> users = userService.findUsersByIds(enabledUserIds);
 		Map<Integer, Declaration> userDeclarations = new HashMap<Integer, Declaration>();
+		Map<Integer, Declaration> previousDeclarations = new HashMap<Integer, Declaration>();
 		if (showTaxPayment) {
 			List<Declaration> declarations = declarationService.findDeclarationsByYearAndQuarter(enabledUserIds, year,
 					quarter);
 			for (Declaration declaration : declarations) {
 				userDeclarations.put(declaration.getUser().getUserId(), declaration);
 			}
+			if (quarter != 1) {
+				List<Declaration> prevDeclarations = declarationService.findDeclarationsByYearAndQuarter(
+						enabledUserIds, year, quarter - 1);
+				for (Declaration declaration : prevDeclarations) {
+					previousDeclarations.put(declaration.getUser().getUserId(), declaration);
+				}
+			}
 		}
+
 		List<String> fileNames = new ArrayList<String>();
 		XlsProcessor xlsProcessor = new XlsProcessor();
 		if (users != null && users.size() > 0) {
 			xlsProcessor.cleanBaseDirectory(XlsTemplate.PAYMENTS, year, month);
 		}
 		TextProcessor textProcessor = sendEmail ? new TextProcessor(TextTemplate.PAYMENT_DETAILS_EMAIL) : null;
-		int officeAndEquipmentRentAmount = 1350;
-		int equipmentRentAmount = 708;
-		int officeRentAmount = 642;
-
 		if (users != null) {
 			for (User user : users) {
 				if (user.isActive()) {
@@ -426,8 +431,18 @@ public class TemplateServiceImpl implements TemplateService {
 					}
 					if (showTaxPayment) {
 						Declaration userDeclaration = userDeclarations.get(user.getUserId());
-						BigDecimal taxAmount = userDeclaration == null ? null : userDeclaration.getTax();
-						beans.put("taxAmount", taxAmount);
+						BigDecimal taxToPay = userDeclaration == null ? null : userDeclaration.getTax();
+						BigDecimal previousTax = null;
+						if (quarter != 1 && taxToPay != null) {
+							Declaration previousDeclaration = previousDeclarations.get(user.getUserId());
+							if (previousDeclaration != null) {
+								if (previousDeclaration.getTax() != null) {
+									previousTax = previousDeclaration.getTax();
+									taxToPay = taxToPay.subtract(previousTax);
+								}
+							}
+						}
+						beans.put("taxAmount", taxToPay);
 						beans.put("taxPeriod", taxPeriod);
 					}
 					beans.put("user", user);
