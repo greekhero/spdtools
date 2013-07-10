@@ -30,12 +30,13 @@ public class TaxOrganization implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer organizationId;
 
-	@Column(unique = true, length = 255)
+	@Column(length = 255)
 	private String name;
 
 	@Column(unique = true)
 	private Integer code;
 
+	@Column(length = 255)
 	private String comment;
 
 	@OneToOne(cascade = CascadeType.ALL)
