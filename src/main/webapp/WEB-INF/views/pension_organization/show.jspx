@@ -8,7 +8,7 @@
 	    <br/>
         <field:display field="accountNumber" id="c_ua_org_tumakha_spdtool_Account_accountNumber" object="${organization.account}"/>
         <field:display field="codeEDRPOU" id="c_ua_org_tumakha_spdtool_Account_codeEDRPOU" object="${organization.account}"/>
-        <field:display field="mFO" id="c_ua_org_tumakha_spdtool_Account_MFO" object="${organization.account}"/>
+        <!-- field:display field="mFO" id="c_ua_org_tumakha_spdtool_Account_MFO" object="${organization.account}"/ -->
         <field:display field="bankName" id="c_ua_org_tumakha_spdtool_Account_bankName" object="${organization.account}"/>
         <c:if test="${not empty organization.users}">
         	<label><spring:message code="label_ua_org_tumakha_spdtool_user_plural" htmlEscape="false" />: </label>
