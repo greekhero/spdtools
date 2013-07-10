@@ -36,6 +36,8 @@ public class TaxOrganization implements Serializable {
 	@Column(unique = true)
 	private Integer code;
 
+	private String comment;
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "accountId", unique = true, nullable = false, updatable = false)
 	private Account account;
@@ -70,6 +72,14 @@ public class TaxOrganization implements Serializable {
 
 	public void setCode(Integer code) {
 		this.code = code;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	public Account getAccount() {

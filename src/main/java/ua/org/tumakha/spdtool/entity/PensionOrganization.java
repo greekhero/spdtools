@@ -32,6 +32,8 @@ public class PensionOrganization implements Serializable {
 	@Column(unique = true, length = 255)
 	private String name;
 
+	private String comment;
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "accountId", unique = true, nullable = false, updatable = false)
 	private Account account;
@@ -54,6 +56,14 @@ public class PensionOrganization implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	public Account getAccount() {

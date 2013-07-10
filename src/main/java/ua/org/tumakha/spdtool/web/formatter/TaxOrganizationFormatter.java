@@ -23,7 +23,10 @@ public class TaxOrganizationFormatter implements Formatter<TaxOrganization> {
 	public String print(TaxOrganization taxOrganization, Locale locale) {
 		StringBuilder builder = new StringBuilder().append(taxOrganization.getName());
 		if (taxOrganization.getCode() != null) {
-			builder.append(" (").append(taxOrganization.getCode()).append(")");
+			builder.append(" (").append(taxOrganization.getCode()).append(") ");
+			if (taxOrganization.getComment() != null) {
+				builder.append(taxOrganization.getComment());
+			}
 		}
 		return builder.toString();
 	}

@@ -5,6 +5,7 @@
     <page:show id="ps_ua_org_tumakha_spdtool_TaxOrganization" object="${organization}" path="/tax_organization">
     	<field:display field="code" id="c_ua_org_tumakha_spdtool_TaxOrganization_code" object="${organization}"/>
     	<field:display field="name" id="c_ua_org_tumakha_spdtool_TaxOrganization_name" object="${organization}"/>
+    	<field:display field="comment" id="c_ua_org_tumakha_spdtool_TaxOrganization_comment" object="${organization}"/>
 	    <field:display field="payeeName" id="c_ua_org_tumakha_spdtool_Account_payeeName" object="${organization.account}"/>
 	    <br/>
         <field:display field="accountNumber" id="c_ua_org_tumakha_spdtool_Account_accountNumber" object="${organization.account}"/>
