@@ -6,6 +6,7 @@
         <table:table data="${organizations}" id="l_ua_org_tumakha_spdtool_TaxOrganization" path="/tax_organization" typeIdFieldName="organizationId">
             <table:column id="c_ua_org_tumakha_spdtool_TaxOrganization_code" property="code" maxLength="200"/>
             <table:column id="c_ua_org_tumakha_spdtool_TaxOrganization_name" property="name" maxLength="200"/>
+            <table:column id="c_ua_org_tumakha_spdtool_TaxOrganization_comment" property="comment" maxLength="200"/>
             <table:column id="c_ua_org_tumakha_spdtool_Account_payeeName" property="payeeName" maxLength="200"/>
             <table:column id="c_ua_org_tumakha_spdtool_Account_accountNumber" property="accountNumber" maxLength="200"/>
         </table:table>
