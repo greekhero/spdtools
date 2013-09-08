@@ -44,8 +44,7 @@ import ua.org.tumakha.spdtool.web.model.DeclarationModel;
 @Controller
 public class DeclarationController {
 
-	private static final Log log = LogFactory
-			.getLog(DeclarationController.class);
+	private static final Log log = LogFactory.getLog(DeclarationController.class);
 
 	protected static final String BASE_PATH = "/declarations";
 
@@ -65,8 +64,7 @@ public class DeclarationController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String initData(Model uiModel) {
-		Set<Integer> defaultGroupIds = new HashSet<Integer>(
-				Arrays.asList(DEFAULT_GROUP_ID));
+		Set<Integer> defaultGroupIds = new HashSet<Integer>(Arrays.asList(DEFAULT_GROUP_ID));
 		Calendar calendar = Calendar.getInstance();
 		int defaultYear = calendar.get(Calendar.YEAR);
 		int month = calendar.get(Calendar.MONTH);
@@ -108,8 +106,7 @@ public class DeclarationController {
 	}
 
 	@RequestMapping(value = "/{vievName}", method = RequestMethod.GET)
-	public String displayView(@PathVariable("vievName") String vievName,
-			Model uiModel) {
+	public String displayView(@PathVariable("vievName") String vievName, Model uiModel) {
 		if (!uiModel.containsAttribute("declarationModel")) {
 			return redirect("");
 		}
@@ -117,8 +114,7 @@ public class DeclarationController {
 	}
 
 	@RequestMapping(value = "/readData", method = RequestMethod.POST)
-	public String readData(@Valid DeclarationModel declarationModel,
-			Model uiModel, BindingResult bindingResult) {
+	public String readData(@Valid DeclarationModel declarationModel, Model uiModel, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			uiModel.addAttribute("declarationModel", declarationModel);
 			return view("initData");
@@ -130,14 +126,12 @@ public class DeclarationController {
 			log.error(e.getMessage(), e);
 			throw new IllegalArgumentException(e);
 		}
-		Map<Integer, DeclarationReaderModel> fileDeclarations = getFileDeclarations(
-				xlsDeclarations, bindingResult);
+		Map<Integer, DeclarationReaderModel> fileDeclarations = getFileDeclarations(xlsDeclarations, bindingResult);
 		if (bindingResult.hasErrors()) {
 			return view("initData");
 		}
 
-		List<User> activeUsers = userService
-				.findActiveUsersByGroups(declarationModel.getGroupIds());
+		List<User> activeUsers = userService.findActiveUsersByGroups(declarationModel.getGroupIds());
 		List<Declaration> declarations = new ArrayList<Declaration>();
 		declarationModel.getEnabledUserIds().clear();
 		if (activeUsers != null) {
@@ -150,8 +144,7 @@ public class DeclarationController {
 					declaration = createDeclaration(user, declarationModel);
 				}
 				if (fileDeclarations != null) {
-					DeclarationReaderModel fileDeclaration = fileDeclarations
-							.get(user.getUserId());
+					DeclarationReaderModel fileDeclaration = fileDeclarations.get(user.getUserId());
 					if (fileDeclaration != null) {
 						declaration.setIncome(fileDeclaration.getIncome());
 						declaration.setTax(fileDeclaration.getTax());
@@ -166,8 +159,7 @@ public class DeclarationController {
 		return redirect("usersDeclarations");
 	}
 
-	private Map<Integer, DeclarationReaderModel> getFileDeclarations(
-			List<DeclarationReaderModel> xlsDeclarations,
+	private Map<Integer, DeclarationReaderModel> getFileDeclarations(List<DeclarationReaderModel> xlsDeclarations,
 			BindingResult bindingResult) {
 		if (xlsDeclarations == null) {
 			return null;
@@ -175,33 +167,37 @@ public class DeclarationController {
 		Map<Integer, DeclarationReaderModel> fileDeclarations = new HashMap<Integer, DeclarationReaderModel>();
 		log.debug(xlsDeclarations.size() + " rows in xls file.");
 		for (DeclarationReaderModel declaration : xlsDeclarations) {
+			User user = null;
 			try {
-				User user = userService.findUserByLastname(declaration
-						.getLastname());
-				fileDeclarations.put(user.getUserId(), declaration);
+				user = userService.findUserByLastname(declaration.getLastname());
 			} catch (Exception e) {
-				bindingResult.reject("error_declaration_user_not_found",
-						new Object[] { declaration.getLastname() },
-						"User not found.");
+				try {
+					user = userService.findUserByLastFirst(declaration.getLastname(), declaration.getFirstname());
+				} catch (Exception ex) {
+					String username = declaration.getLastname() + " " + declaration.getFirstname();
+					log.error("User not found" + username, ex);
+					bindingResult.reject("error_declaration_user_not_found", new Object[] { username },
+							"User not found.");
+				}
+			}
+			if (user != null) {
+				fileDeclarations.put(user.getUserId(), declaration);
 			}
 		}
 		return fileDeclarations;
 	}
 
-	private Map<Integer, Declaration> getDbDeclarations(
-			DeclarationModel declarationModel) {
+	private Map<Integer, Declaration> getDbDeclarations(DeclarationModel declarationModel) {
 		Map<Integer, Declaration> declarationsMap = new HashMap<Integer, Declaration>();
-		List<Declaration> dbDeclarations = declarationService
-				.findDeclarationsByYearAndQuarter(declarationModel.getYear(),
-						declarationModel.getQuarter());
+		List<Declaration> dbDeclarations = declarationService.findDeclarationsByYearAndQuarter(
+				declarationModel.getYear(), declarationModel.getQuarter());
 		for (Declaration declaration : dbDeclarations) {
 			declarationsMap.put(declaration.getUser().getUserId(), declaration);
 		}
 		return declarationsMap;
 	}
 
-	private Declaration createDeclaration(User user,
-			DeclarationModel declarationModel) {
+	private Declaration createDeclaration(User user, DeclarationModel declarationModel) {
 		Declaration declaration = new Declaration();
 		declaration.setUser(user);
 		declaration.setYear(declarationModel.getYear());
@@ -211,8 +207,8 @@ public class DeclarationController {
 
 	@RequestMapping(value = "/saveDeclarations", method = RequestMethod.POST)
 	public String saveDeclarations(@Valid DeclarationModel declarationModel,
-			@RequestParam(value = "cancel", required = false) String cancel,
-			Model uiModel, BindingResult bindingResult) throws Exception {
+			@RequestParam(value = "cancel", required = false) String cancel, Model uiModel, BindingResult bindingResult)
+			throws Exception {
 		if (cancel != null) {
 			return redirect("initData");
 		}
@@ -222,21 +218,17 @@ public class DeclarationController {
 		if (bindingResult.hasErrors()) {
 			return redirect("usersDeclarations");
 		}
-		declarationService.saveDeclarations(
-				declarationModel.getEnabledUserIds(),
-				declarationModel.getDeclarations());
+		declarationService.saveDeclarations(declarationModel.getEnabledUserIds(), declarationModel.getDeclarations());
 
 		return redirect("generateDocuments");
 	}
 
 	@RequestMapping(value = "/generateDocuments", method = RequestMethod.GET)
-	public String generateDocuments(@Valid DeclarationModel declarationModel,
-			RedirectAttributes redirectAttrs) throws Exception {
+	public String generateDocuments(@Valid DeclarationModel declarationModel, RedirectAttributes redirectAttrs)
+			throws Exception {
 
-		List<String> fileNames = templateService.generateDeclarations(
-				declarationModel.getEnabledUserIds(),
-				declarationModel.getGroupIds(), declarationModel.getYear(),
-				declarationModel.getQuarter());
+		List<String> fileNames = templateService.generateDeclarations(declarationModel.getEnabledUserIds(),
+				declarationModel.getGroupIds(), declarationModel.getYear(), declarationModel.getQuarter());
 
 		redirectAttrs.addFlashAttribute("fileNames", fileNames);
 
@@ -244,8 +236,7 @@ public class DeclarationController {
 	}
 
 	private String view(String viewName) {
-		return BASE_PATH.substring(1) + "/"
-				+ (viewName == null ? "" : viewName);
+		return BASE_PATH.substring(1) + "/" + (viewName == null ? "" : viewName);
 	}
 
 	private String redirect(String viewName) {

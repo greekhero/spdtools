@@ -4,8 +4,9 @@
         <loop startRow="1" endRow="1" items="declarations" var="declaration" varType="ua.org.tumakha.spdtool.reader.model.DeclarationReaderModel">
             <section startRow="1" endRow="1">
                 <mapping row="2" col="0">declaration.lastname</mapping>
-                <mapping row="2" col="2">declaration.income</mapping>
-                <mapping row="2" col="3">declaration.tax</mapping>
+                <mapping row="2" col="1">declaration.firstname</mapping>
+                <mapping row="2" col="3">declaration.income</mapping>
+                <mapping row="2" col="4">declaration.tax</mapping>
             </section>
             <loopbreakcondition>
                 <rowcheck offset="1">
