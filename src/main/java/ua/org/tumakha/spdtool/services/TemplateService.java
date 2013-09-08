@@ -42,7 +42,7 @@ public interface TemplateService {
 			TransformerException, FOPException;
 
 	List<String> generateEcpDocuments(Set<Integer> enabledUserIds, Set<Integer> groupIds, Date date)
-			throws JAXBException, Docx4JException, TemplateException, IOException;
+			throws JAXBException, Docx4JException, TemplateException, IOException, InvalidFormatException;
 
 	List<String> generatePaymentDocuments(Set<Integer> enabledUserIds, boolean sendEmail)
 			throws InvalidFormatException, IOException;

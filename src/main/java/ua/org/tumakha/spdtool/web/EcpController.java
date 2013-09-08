@@ -126,6 +126,7 @@ public class EcpController {
 
 		List<String> fileNames = templateService.generateEcpDocuments(ecpModel.getEnabledUserIds(),
 				ecpModel.getGroupIds(), ecpModel.getDate());
+		log.debug("Generated files: " + fileNames.size());
 
 		redirectAttrs.addFlashAttribute("fileNames", fileNames);
 
