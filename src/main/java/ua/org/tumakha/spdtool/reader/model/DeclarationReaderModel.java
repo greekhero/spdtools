@@ -9,6 +9,8 @@ public class DeclarationReaderModel {
 
 	private String lastname;
 
+	private String firstname;
+
 	private BigDecimal income;
 
 	private BigDecimal tax;
@@ -19,6 +21,14 @@ public class DeclarationReaderModel {
 
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
 	public BigDecimal getIncome() {
@@ -39,9 +49,7 @@ public class DeclarationReaderModel {
 
 	@Override
 	public String toString() {
-		return String.format(
-				"DeclarationReaderModel [lastname=%s, income=%s, tax=%s]",
-				lastname, income, tax);
+		return String.format("DeclarationReaderModel [lastname=%s, income=%s, tax=%s]", lastname, income, tax);
 	}
 
 }
