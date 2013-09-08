@@ -10,6 +10,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -72,9 +73,15 @@ import freemarker.template.TemplateException;
 public class TemplateServiceImpl implements TemplateService {
 
 	private static final Log log = LogFactory.getLog(TemplateServiceImpl.class);
+	private static final Locale UA_LOCALE = new Locale("uk", "UA");
+
 	private static final NumberFormat MONEY_FORMAT = getMoneyFormat();
 	private static final DateFormat UA_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 	private static final DateFormat DAY_MONTH_EN_FORMAT = new SimpleDateFormat("d'th of 'MMMMM", Locale.US);
+
+	private static final DateFormat DAY_FORMAT = new SimpleDateFormat("dd");
+	private static final DateFormat YEAR_FORMAT = new SimpleDateFormat("yyyy");
+	private static final DateFormat UA_MONTH_FORMAT = new SimpleDateFormat("MMMMM", UA_LOCALE);
 
 	@Autowired
 	private UserService userService;
@@ -350,19 +357,49 @@ public class TemplateServiceImpl implements TemplateService {
 
 	@Override
 	public List<String> generateEcpDocuments(Set<Integer> enabledUserIds, Set<Integer> groupIds, Date date)
-			throws JAXBException, Docx4JException, TemplateException, IOException {
-		List<User> ecpUsers = userService.findUsersByIds(enabledUserIds);
-		List<UserModel> userModelList = getUserModelList(ecpUsers, date);
-		DocxProcessor docxProcessor = new DocxProcessor();
-
-		if (userModelList != null && userModelList.size() > 0) {
-			docxProcessor.cleanBaseDirectory(DocxTemplate.ECP_REGISTRATION, userModelList.get(0));
+			throws JAXBException, Docx4JException, TemplateException, IOException, InvalidFormatException {
+		List<User> users = userService.findUsersByIds(enabledUserIds);
+		if (users == null || users.size() == 0) {
+			return Collections.emptyList();
 		}
 
+		XlsProcessor xlsProcessor = new XlsProcessor();
+		xlsProcessor.cleanBaseDirectory(XlsTemplate.ECP_REGISTRATION);
+
 		List<String> fileNames = new ArrayList<String>();
-		fileNames.addAll(docxProcessor.saveReports(DocxTemplate.ECP_REGISTRATION, userModelList));
-		fileNames.addAll(docxProcessor.saveReports(DocxTemplate.ECP_JOIN, userModelList));
+		Map<String, Object> beans = new HashMap<String, Object>();
+		if (date != null) {
+			beans.put("dateDay", DAY_FORMAT.format(date));
+			beans.put("dateMonth", UA_MONTH_FORMAT.format(date));
+			beans.put("dateYear", YEAR_FORMAT.format(date));
+		} else {
+			beans.put("dateDay", "   ");
+			beans.put("dateMonth", "_______________");
+			beans.put("dateYear", YEAR_FORMAT.format(new Date()));
+		}
+		for (User user : users) {
+			beans.put("user", user);
+			String outputFilenamePrefix = String.format("/ECP/%s_%s_", user.getLastnameEn(), user.getFirstnameEn());
+			String outputFilename = xlsProcessor.saveReport(XlsTemplate.ECP_REGISTRATION, outputFilenamePrefix, beans);
+			fileNames.add(outputFilename);
+		}
 		return fileNames;
+
+		// List<User> ecpUsers = userService.findUsersByIds(enabledUserIds);
+		// List<UserModel> userModelList = getUserModelList(ecpUsers, date);
+		// DocxProcessor docxProcessor = new DocxProcessor();
+		//
+		// if (userModelList != null && userModelList.size() > 0) {
+		// docxProcessor.cleanBaseDirectory(DocxTemplate.ECP_REGISTRATION,
+		// userModelList.get(0));
+		// }
+		//
+		// List<String> fileNames = new ArrayList<String>();
+		// fileNames.addAll(docxProcessor.saveReports(DocxTemplate.ECP_REGISTRATION,
+		// userModelList));
+		// fileNames.addAll(docxProcessor.saveReports(DocxTemplate.ECP_JOIN,
+		// userModelList));
+		// return fileNames;
 	}
 
 	@Override

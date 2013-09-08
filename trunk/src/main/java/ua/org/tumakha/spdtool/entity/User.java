@@ -209,8 +209,8 @@ public class User implements Serializable {
 	}
 
 	public String getFirstMiddleLastname() {
-		return StrUtil.padRight(String.format("%s.%s.  %s", getFirstname().substring(0, 1),
-				getMiddlename().substring(0, 1), getLastname()), 72);
+		return String.format("%s.%s.  %s", getFirstname().substring(0, 1), getMiddlename().substring(0, 1),
+				getLastname());
 	}
 
 	public Integer getUserId() {
