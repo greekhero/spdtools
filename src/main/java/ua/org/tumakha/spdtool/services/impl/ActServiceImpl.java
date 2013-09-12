@@ -4,6 +4,8 @@ import static org.springframework.util.Assert.notNull;
 
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.org.tumakha.spdtool.dao.ActDao;
 import ua.org.tumakha.spdtool.dao.ContractDao;
 import ua.org.tumakha.spdtool.entity.Act;
+import ua.org.tumakha.spdtool.entity.Contract;
 import ua.org.tumakha.spdtool.services.ActService;
 
 /**
@@ -72,15 +75,25 @@ public class ActServiceImpl implements ActService {
 		notNull(acts, "acts must not be null.");
 		notNull(enabledUserIds, "enabledUserIds must not be null.");
 		for (Act act : acts) {
-			if (enabledUserIds.contains(act.getUser().getUserId())
-					&& act.getAmount() != null && !act.getAmount().equals(0)) {
+			if (enabledUserIds.contains(act.getUser().getUserId()) && act.getAmount() != null
+					&& !act.getAmount().equals(0)) {
+
+				Contract contract = act.getContract();
+				if (!act.getNumber().startsWith(contract.getNumber())) {
+					Matcher matcher = Pattern.compile("(\\d+)$").matcher(act.getNumber());
+					if (matcher.find()) {
+						int actNum = Integer.parseInt(matcher.group(1));
+						act.setNumber(contract.getNumber() + "-" + String.format("%02d", actNum));
+					}
+				}
+
 				if (act.getActId() == null) {
-					if (act.getContract().getContractId() == null) {
-						contractDao.persist(act.getContract());
+					if (contract.getContractId() == null) {
+						contractDao.persist(contract);
 					}
 					actDao.persist(act);
 				} else {
-					contractDao.merge(act.getContract());
+					contractDao.merge(contract);
 					actDao.merge(act);
 				}
 			}
