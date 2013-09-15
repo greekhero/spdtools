@@ -53,7 +53,7 @@ public class BankDataImport {
 			User user = null;
 			for (BankTransaction transaction : bankData.getBankTransactions()) {
 				if (user == null) {
-					Long pin = transaction.getIdentifyCode().longValue();
+					Long pin = transaction.getIdentifyCode();
 					try {
 						user = userService.findUserByPIN(pin);
 					} catch (Exception e) {
