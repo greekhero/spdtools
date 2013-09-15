@@ -1,7 +1,6 @@
 package ua.org.tumakha.spdtool.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -97,26 +96,26 @@ public class BankTransaction implements Serializable {
 	private String corrContragentsName;
 
 	@XmlAttribute(name = "CORRACCOUNTNO")
-	private BigDecimal corrAccountNo;
+	private Long corrAccountNo;
 
 	@XmlAttribute(name = "CORRBANKID")
 	private Integer corrBankId;
 
 	@XmlAttribute(name = "CORRIDENTIFYCODE")
-	private BigDecimal corrIdentifyCode;
+	private Long corrIdentifyCode;
 
 	@XmlAttribute(name = "BANKID")
 	private Integer bankId;
 
 	@XmlAttribute(name = "ACCOUNTNO")
-	private BigDecimal accountNo;
+	private Long accountNo;
 
 	@Column(length = 255)
 	@XmlAttribute(name = "BANKNAME")
 	private String bankName;
 
 	@XmlAttribute(name = "IDENTIFYCODE")
-	private BigDecimal identifyCode;
+	private Long identifyCode;
 
 	@Column(length = 100)
 	@XmlAttribute(name = "ACCDESCR")
@@ -273,11 +272,11 @@ public class BankTransaction implements Serializable {
 		this.corrContragentsName = corrContragentsName;
 	}
 
-	public BigDecimal getCorrAccountNo() {
+	public Long getCorrAccountNo() {
 		return corrAccountNo;
 	}
 
-	public void setCorrAccountNo(final BigDecimal corrAccountNo) {
+	public void setCorrAccountNo(final Long corrAccountNo) {
 		this.corrAccountNo = corrAccountNo;
 	}
 
@@ -289,11 +288,11 @@ public class BankTransaction implements Serializable {
 		this.corrBankId = corrBankId;
 	}
 
-	public BigDecimal getCorrIdentifyCode() {
+	public Long getCorrIdentifyCode() {
 		return corrIdentifyCode;
 	}
 
-	public void setCorrIdentifyCode(final BigDecimal corrIdentifyCode) {
+	public void setCorrIdentifyCode(final Long corrIdentifyCode) {
 		this.corrIdentifyCode = corrIdentifyCode;
 	}
 
@@ -305,11 +304,11 @@ public class BankTransaction implements Serializable {
 		this.bankId = bankId;
 	}
 
-	public BigDecimal getAccountNo() {
+	public Long getAccountNo() {
 		return accountNo;
 	}
 
-	public void setAccountNo(final BigDecimal accountNo) {
+	public void setAccountNo(final Long accountNo) {
 		this.accountNo = accountNo;
 	}
 
@@ -321,11 +320,11 @@ public class BankTransaction implements Serializable {
 		this.bankName = bankName;
 	}
 
-	public BigDecimal getIdentifyCode() {
+	public Long getIdentifyCode() {
 		return identifyCode;
 	}
 
-	public void setIdentifyCode(final BigDecimal identifyCode) {
+	public void setIdentifyCode(final Long identifyCode) {
 		this.identifyCode = identifyCode;
 	}
 
