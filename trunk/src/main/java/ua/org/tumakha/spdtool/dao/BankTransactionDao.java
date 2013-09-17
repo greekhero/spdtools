@@ -9,9 +9,9 @@ import ua.org.tumakha.spdtool.entity.BankTransaction;
  */
 public interface BankTransactionDao {
 
-	BankTransaction find(Object id);
+	BankTransaction find(Object bankTransactionId);
 
-	BankTransaction findByUserAndId(Integer userId, Integer id);
+	BankTransaction findByUserAndId(Integer userId, Long id);
 
 	void persist(BankTransaction transaction);
 

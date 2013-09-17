@@ -38,8 +38,8 @@ public class BankTransaction implements Serializable {
 	@XmlTransient
 	private User user;
 
-	@XmlAttribute(name = "ID")
-	private Integer id;
+	@XmlAttribute(name = "DATAVERSION")
+	private Long id;
 
 	@XmlAttribute(name = "ARCDATE")
 	private Integer arcDate;
@@ -59,18 +59,12 @@ public class BankTransaction implements Serializable {
 	@XmlAttribute(name = "DOCUMENTDATE")
 	private String documentDate;
 
-	@XmlAttribute(name = "SUMMA")
-	private Integer summa;
-
 	@Column(length = 100)
 	@XmlAttribute(name = "BOOKEDDATE")
 	private String bookedDate;
 
 	@XmlAttribute(name = "CURRENCYID")
 	private Integer currencyId;
-
-	@XmlAttribute(name = "IsDeleted")
-	private Boolean isDeleted;
 
 	@Column(length = 100)
 	@XmlAttribute(name = "DOCSUBTYPESNAME")
@@ -128,7 +122,27 @@ public class BankTransaction implements Serializable {
 	@XmlAttribute(name = "ACCOUNTID")
 	private Integer accountId;
 
-	public Integer getBankTransactionId() {
+    @Column(length = 100)
+    @XmlAttribute(name = "ACC_OPERATOR")
+    private String accOperator;
+
+    @Column(length = 255)
+    @XmlAttribute(name = "ACC_OPERATOR_FIO")
+    private String accOperatorFio;
+
+    @XmlAttribute(name = "SUMMAEQ")
+    private Integer summaEq;
+
+    @XmlAttribute(name = "COMMISSION")
+    private Integer commission;
+
+    @XmlAttribute(name = "AMOUNTEQ")
+    private Integer amountEq;
+
+    @XmlAttribute(name = "SUMMA")
+    private Integer summa;
+
+    public Integer getBankTransactionId() {
 		return bankTransactionId;
 	}
 
@@ -144,11 +158,11 @@ public class BankTransaction implements Serializable {
 		this.user = user;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(final Integer id) {
+	public void setId(final Long id) {
 		this.id = id;
 	}
 
@@ -214,14 +228,6 @@ public class BankTransaction implements Serializable {
 
 	public void setCurrencyId(final Integer currencyId) {
 		this.currencyId = currencyId;
-	}
-
-	public Boolean getIsDeleted() {
-		return isDeleted;
-	}
-
-	public void setIsDeleted(final Boolean isDeleted) {
-		this.isDeleted = isDeleted;
 	}
 
 	public String getDocSubTypesName() {
