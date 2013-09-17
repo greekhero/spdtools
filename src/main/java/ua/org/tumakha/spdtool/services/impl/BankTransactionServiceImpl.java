@@ -49,7 +49,7 @@ public class BankTransactionServiceImpl implements BankTransactionService {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public BankTransaction findTransactionByUserAndId(Integer userId, Integer id) {
+	public BankTransaction findTransactionByUserAndId(Integer userId, Long id) {
 		return bankTransactionDao.findByUserAndId(userId, id);
 	}
 

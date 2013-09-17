@@ -71,7 +71,10 @@ public class BankDataImport {
 						transaction.getId());
 				if (existTransaction == null) {
 					bankTransactionService.createTransaction(transaction);
-				}
+				} else if (!existTransaction.getCurrSymbolCode().equals(transaction.getCurrSymbolCode())
+                        || !existTransaction.getSumma().equals(transaction.getSumma())) {
+                    log.error(String.format("Incorrect transaction(id=%s) exists in DB.", transaction.getId()));
+                }
 			}
 		}
 	}

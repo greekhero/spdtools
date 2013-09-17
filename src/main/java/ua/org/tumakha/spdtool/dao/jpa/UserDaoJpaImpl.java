@@ -59,7 +59,7 @@ public class UserDaoJpaImpl extends AbstractJpaDao<User> implements UserDao {
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public User findByPIN(Long pin) {
-		return entityManager.createQuery("SELECT u FROM User u WHERE u.pin = ?", User.class).setParameter(1, pin)
+		return entityManager.createQuery("SELECT u FROM User u WHERE u.pin = ?1", User.class).setParameter(1, pin)
 				.getSingleResult();
 	}
 
