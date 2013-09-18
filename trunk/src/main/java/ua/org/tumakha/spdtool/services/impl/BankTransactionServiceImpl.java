@@ -1,16 +1,16 @@
 package ua.org.tumakha.spdtool.services.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import ua.org.tumakha.spdtool.dao.BankTransactionDao;
 import ua.org.tumakha.spdtool.entity.BankTransaction;
+import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.services.BankTransactionService;
+
+import java.util.List;
 
 /**
  * @author Yuriy Tumakha
@@ -58,5 +58,10 @@ public class BankTransactionServiceImpl implements BankTransactionService {
 	public List<BankTransaction> findAllTransactions() {
 		return bankTransactionDao.findAll();
 	}
+
+    @Override
+    public List<BankTransaction> findUserTransactions(User user, Integer year) {
+        return bankTransactionDao.findUserTransactions(user, year);
+    }
 
 }

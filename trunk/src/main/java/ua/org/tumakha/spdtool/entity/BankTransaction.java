@@ -79,7 +79,7 @@ public class BankTransaction implements Serializable {
 
 	@Column(length = 100)
 	@XmlAttribute(name = "BANKDATE")
-	private String bankDate;
+	private Integer bankDate;
 
 	@Column(length = 255)
 	@XmlAttribute(name = "CORRBANKNAME")
@@ -254,11 +254,11 @@ public class BankTransaction implements Serializable {
 		this.documentTypeId = documentTypeId;
 	}
 
-	public String getBankDate() {
+	public Integer getBankDate() {
 		return bankDate;
 	}
 
-	public void setBankDate(final String bankDate) {
+	public void setBankDate(final Integer bankDate) {
 		this.bankDate = bankDate;
 	}
 
@@ -358,4 +358,43 @@ public class BankTransaction implements Serializable {
 		this.accountId = accountId;
 	}
 
+    public String getAccOperator() {
+        return accOperator;
+    }
+
+    public void setAccOperator(String accOperator) {
+        this.accOperator = accOperator;
+    }
+
+    public String getAccOperatorFio() {
+        return accOperatorFio;
+    }
+
+    public void setAccOperatorFio(String accOperatorFio) {
+        this.accOperatorFio = accOperatorFio;
+    }
+
+    public Integer getSummaEq() {
+        return summaEq;
+    }
+
+    public void setSummaEq(Integer summaEq) {
+        this.summaEq = summaEq;
+    }
+
+    public Integer getCommission() {
+        return commission;
+    }
+
+    public void setCommission(Integer commission) {
+        this.commission = commission;
+    }
+
+    public Integer getAmountEq() {
+        return amountEq;
+    }
+
+    public void setAmountEq(Integer amountEq) {
+        this.amountEq = amountEq;
+    }
 }

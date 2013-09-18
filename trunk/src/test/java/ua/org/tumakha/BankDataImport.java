@@ -1,24 +1,27 @@
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+package ua.org.tumakha;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import ua.org.tumakha.spdtool.entity.BankTransaction;
 import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.services.BankTransactionService;
 import ua.org.tumakha.spdtool.services.UserService;
 import ua.org.tumakha.spdtool.xml.BankData;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+/**
+ * @author Yuriy Tumakha
+ */
 public class BankDataImport {
 
 	private static final String CHARSET = "windows-1251";// Cp1251
