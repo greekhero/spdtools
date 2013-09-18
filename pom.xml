@@ -140,12 +140,12 @@
   	<dependency>
   		<groupId>net.sf.jxls</groupId>
   		<artifactId>jxls-core</artifactId>
-  		<version>1.0</version>
+  		<version>1.0.3</version>
   	</dependency>
   	<dependency>
   		<groupId>net.sf.jxls</groupId>
   		<artifactId>jxls-reader</artifactId>
-  		<version>1.0</version>
+  		<version>1.0.3</version>
   	</dependency>
 	<dependency>
 	  <groupId>org.freemarker</groupId>

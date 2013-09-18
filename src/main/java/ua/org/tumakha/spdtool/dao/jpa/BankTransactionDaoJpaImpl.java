@@ -1,13 +1,13 @@
 package ua.org.tumakha.spdtool.dao.jpa;
 
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import ua.org.tumakha.spdtool.dao.BankTransactionDao;
 import ua.org.tumakha.spdtool.entity.BankTransaction;
+import ua.org.tumakha.spdtool.entity.User;
+
+import java.util.List;
 
 /**
  * @author Yuriy Tumakha
@@ -27,5 +27,15 @@ public class BankTransactionDaoJpaImpl extends AbstractJpaDao<BankTransaction> i
 			return null;
 		}
 	}
+
+    @Override
+    public List<BankTransaction> findUserTransactions(User user, Integer year) {
+        int from = year * 10000;
+        int to = from + 10000;
+        return entityManager.createQuery("SELECT bt FROM BankTransaction bt " +
+            " WHERE bt.user.userId = ?1 AND bt.bankDate > ?2 AND bt.bankDate < ?3 ORDER BY bt.id",
+            BankTransaction.class).setParameter(1, user.getUserId()).setParameter(2, from).setParameter(3, to)
+            .getResultList();
+    }
 
 }

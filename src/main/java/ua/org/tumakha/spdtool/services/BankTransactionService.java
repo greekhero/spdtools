@@ -1,8 +1,9 @@
 package ua.org.tumakha.spdtool.services;
 
-import java.util.List;
-
 import ua.org.tumakha.spdtool.entity.BankTransaction;
+import ua.org.tumakha.spdtool.entity.User;
+
+import java.util.List;
 
 /**
  * @author Yuriy Tumakha
@@ -19,6 +20,8 @@ public interface BankTransactionService {
 
 	BankTransaction findTransactionByUserAndId(Integer userId, Long id);
 
-	List<BankTransaction> findAllTransactions();
+    List<BankTransaction> findAllTransactions();
+
+    List<BankTransaction> findUserTransactions(User user, Integer year);
 
 }

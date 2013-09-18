@@ -1,28 +1,6 @@
 package ua.org.tumakha.spdtool.services.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.xml.bind.JAXBException;
-import javax.xml.transform.TransformerException;
-
+import freemarker.template.TemplateException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.fop.apps.FOPException;
@@ -37,33 +15,23 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import ua.org.tumakha.spdtool.entity.Act;
-import ua.org.tumakha.spdtool.entity.Declaration;
-import ua.org.tumakha.spdtool.entity.Kved2010;
-import ua.org.tumakha.spdtool.entity.User;
+import org.springframework.util.CollectionUtils;
+import ua.org.tumakha.spdtool.entity.*;
 import ua.org.tumakha.spdtool.enums.RentType;
-import ua.org.tumakha.spdtool.services.ActService;
-import ua.org.tumakha.spdtool.services.DeclarationService;
-import ua.org.tumakha.spdtool.services.TemplateService;
-import ua.org.tumakha.spdtool.services.UserService;
-import ua.org.tumakha.spdtool.template.DocxProcessor;
-import ua.org.tumakha.spdtool.template.DocxTemplate;
-import ua.org.tumakha.spdtool.template.FOProcessor;
-import ua.org.tumakha.spdtool.template.FOTemplate;
-import ua.org.tumakha.spdtool.template.FOType;
-import ua.org.tumakha.spdtool.template.TextProcessor;
-import ua.org.tumakha.spdtool.template.TextTemplate;
-import ua.org.tumakha.spdtool.template.XlsProcessor;
-import ua.org.tumakha.spdtool.template.XlsTemplate;
-import ua.org.tumakha.spdtool.template.model.ActModel;
-import ua.org.tumakha.spdtool.template.model.Form11KvedModel;
-import ua.org.tumakha.spdtool.template.model.Form20OPPModel;
-import ua.org.tumakha.spdtool.template.model.IncomeCalculationModel;
-import ua.org.tumakha.spdtool.template.model.TaxSystemStatementModel;
-import ua.org.tumakha.spdtool.template.model.UserModel;
+import ua.org.tumakha.spdtool.services.*;
+import ua.org.tumakha.spdtool.template.*;
+import ua.org.tumakha.spdtool.template.model.*;
 import ua.org.tumakha.util.StrUtil;
-import freemarker.template.TemplateException;
+
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.xml.bind.JAXBException;
+import javax.xml.transform.TransformerException;
+import java.io.File;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.*;
+import java.util.*;
 
 /**
  * @author Yuriy Tumakha
@@ -83,7 +51,9 @@ public class TemplateServiceImpl implements TemplateService {
 	private static final DateFormat YEAR_FORMAT = new SimpleDateFormat("yyyy");
 	private static final DateFormat UA_MONTH_FORMAT = new SimpleDateFormat("MMMMM", UA_LOCALE);
 
-	@Autowired
+    private static final String USD_CURRENCY = "USD";
+
+    @Autowired
 	private UserService userService;
 
 	@Autowired
@@ -91,6 +61,9 @@ public class TemplateServiceImpl implements TemplateService {
 
 	@Autowired
 	private ActService actService;
+
+    @Autowired
+    private BankTransactionService bankTransactionService;
 
 	@Autowired
 	private JavaMailSender mailSender;
@@ -357,7 +330,7 @@ public class TemplateServiceImpl implements TemplateService {
 
 	@Override
 	public List<String> generateEcpDocuments(Set<Integer> enabledUserIds, Set<Integer> groupIds, Date date)
-			throws JAXBException, Docx4JException, TemplateException, IOException, InvalidFormatException {
+			throws IOException, InvalidFormatException {
 		List<User> users = userService.findUsersByIds(enabledUserIds);
 		if (users == null || users.size() == 0) {
 			return Collections.emptyList();
@@ -499,11 +472,65 @@ public class TemplateServiceImpl implements TemplateService {
 				}
 			}
 		}
-		System.out.println("Generated user Payment files: " + i);
 		return fileNames;
 	}
 
-	private void sendEmail(TextProcessor textProcessor, String subject, Map<String, Object> beans, File attachmentFile) {
+    @Override
+    public List<String> generateBankExtract(Set<Integer> enabledUserIds, Integer year)throws IOException, InvalidFormatException {
+        List<User> users = userService.findUsersByIds(enabledUserIds);
+        if (users == null || users.size() == 0) {
+            return Collections.emptyList();
+        }
+
+        XlsProcessor xlsProcessor = new XlsProcessor();
+        xlsProcessor.cleanBaseDirectory(XlsTemplate.BANK_DATA);
+
+        List<String> fileNames = new ArrayList<String>();
+        Map<String, Object> beans = new HashMap<String, Object>();
+        beans.put("year", year);
+        for (User user : users) {
+            List<BankTransaction> transactions = bankTransactionService.findUserTransactions(user, year);
+            if (CollectionUtils.isEmpty(transactions)) {
+                continue;
+            }
+
+            log.info(user.getLastname() + " transactions:" + transactions.size());
+
+            Map<Integer, BankDayUSD> usdAccountDays = new LinkedHashMap<Integer, BankDayUSD>();
+            for(BankTransaction transaction : transactions) {
+                if (USD_CURRENCY.equals(transaction.getCurrSymbolCode())) {
+                    if (usdAccountDays.get(transaction.getBankDate()) == null) {
+                        usdAccountDays.put(transaction.getBankDate(), new BankDayUSD(transaction.getBankDate(), transaction));
+                    } else {
+                        usdAccountDays.get(transaction.getBankDate()).addTransaction(transaction);
+                    }
+                }
+            }
+            List<BankQuarterUSD> usdAccount = new ArrayList<BankQuarterUSD>();
+            usdAccount.add(new BankQuarterUSD(1));
+            BankQuarterUSD lastQuarter = usdAccount.get(0);
+            Calendar calendar = Calendar.getInstance();
+            for (BankDayUSD bankDay : usdAccountDays.values()) {
+                calendar.setTime(bankDay.getDate());
+                if (calendar.get(Calendar.MONTH) + 1 > lastQuarter.getNumber() * 3) {
+                    lastQuarter = new BankQuarterUSD(lastQuarter.getNumber() + 1);
+                    usdAccount.add(lastQuarter);
+                }
+                for (BankTransactionUSD bankTransaction : bankDay.getTransactions()) {
+                    lastQuarter.addDay(bankTransaction);
+                }
+            }
+
+            beans.put("user", user);
+            beans.put("usdAccount", usdAccount);
+            String outputFilenamePrefix = String.format("/BankData/%s_%s_%d", user.getLastnameEn(), user.getFirstnameEn(), year);
+            String outputFilename = xlsProcessor.saveReport(XlsTemplate.BANK_DATA, outputFilenamePrefix, beans);
+            fileNames.add(outputFilename);
+        }
+        return fileNames;
+    }
+
+    private void sendEmail(TextProcessor textProcessor, String subject, Map<String, Object> beans, File attachmentFile) {
 		try {
 			MimeMessage mimeMessage = mailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);

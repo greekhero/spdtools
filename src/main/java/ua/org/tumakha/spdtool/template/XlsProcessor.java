@@ -1,15 +1,14 @@
 package ua.org.tumakha.spdtool.template;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
-
 import net.sf.jxls.transformer.XLSTransformer;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * @author Yuriy Tumakha
@@ -23,7 +22,7 @@ public class XlsProcessor {
 
 	public String saveReport(XlsTemplate template, String outputFilenamePrefix, Map<String, Object> beans)
 			throws InvalidFormatException, IOException {
-		String outputFilename = outputFilenamePrefix + template.getFilename();
+		String outputFilename = outputFilenamePrefix + template.getOutputFilenameSuffix();
 		File outputFile = new File(REPORTS_DIRECTORY + outputFilename);
 		if (outputFile.getParentFile().mkdirs()) {
 			log.debug("Created directory: " + outputFile.getParentFile());
@@ -40,19 +39,7 @@ public class XlsProcessor {
 	}
 
 	public void cleanBaseDirectory(XlsTemplate template, Integer year, Integer quarterOrMonth) throws IOException {
-		String templDirectoryFormat = null;
-		switch (template) {
-		case DECLARATION:
-			templDirectoryFormat = "/DECLARATION/%d_Q%d";
-			break;
-		case PAYMENTS:
-			templDirectoryFormat = "/Payments/%d_%02d";
-			break;
-		case ECP_REGISTRATION:
-			templDirectoryFormat = "/ECP";
-			break;
-		}
-		String outputpath = REPORTS_DIRECTORY + String.format(templDirectoryFormat, year, quarterOrMonth);
+		String outputpath = REPORTS_DIRECTORY + String.format(template.getTemplDirectoryFormat(), year, quarterOrMonth);
 		File outputDirectory = new File(outputpath);
 		// prevent delete not reports directories
 		String path = outputDirectory.getAbsolutePath();
