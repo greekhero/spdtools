@@ -21,6 +21,7 @@ import ua.org.tumakha.spdtool.enums.RentType;
 import ua.org.tumakha.spdtool.services.*;
 import ua.org.tumakha.spdtool.template.*;
 import ua.org.tumakha.spdtool.template.model.*;
+import ua.org.tumakha.spdtool.template.model.BankOperationRow;
 import ua.org.tumakha.util.StrUtil;
 
 import javax.mail.internet.InternetAddress;
@@ -50,8 +51,6 @@ public class TemplateServiceImpl implements TemplateService {
 	private static final DateFormat DAY_FORMAT = new SimpleDateFormat("dd");
 	private static final DateFormat YEAR_FORMAT = new SimpleDateFormat("yyyy");
 	private static final DateFormat UA_MONTH_FORMAT = new SimpleDateFormat("MMMMM", UA_LOCALE);
-
-    private static final String USD_CURRENCY = "USD";
 
     @Autowired
 	private UserService userService;
@@ -496,33 +495,32 @@ public class TemplateServiceImpl implements TemplateService {
 
             log.info(user.getLastname() + " transactions:" + transactions.size());
 
-            Map<Integer, BankDayUSD> usdAccountDays = new LinkedHashMap<Integer, BankDayUSD>();
+            Map<Integer, BankDay> bankDataDays = new LinkedHashMap<Integer, BankDay>();
             for(BankTransaction transaction : transactions) {
-                if (USD_CURRENCY.equals(transaction.getCurrSymbolCode())) {
-                    if (usdAccountDays.get(transaction.getBankDate()) == null) {
-                        usdAccountDays.put(transaction.getBankDate(), new BankDayUSD(transaction.getBankDate(), transaction));
-                    } else {
-                        usdAccountDays.get(transaction.getBankDate()).addTransaction(transaction);
-                    }
+                if (bankDataDays.get(transaction.getBankDate()) == null) {
+                    bankDataDays.put(transaction.getBankDate(), new BankDay(transaction.getBankDate(), transaction));
+                } else {
+                    bankDataDays.get(transaction.getBankDate()).addTransaction(transaction);
                 }
             }
-            List<BankQuarterUSD> usdAccount = new ArrayList<BankQuarterUSD>();
-            usdAccount.add(new BankQuarterUSD(1));
-            BankQuarterUSD lastQuarter = usdAccount.get(0);
+            List<BankQuarter> bankData = new ArrayList<BankQuarter>();
+            BankQuarter lastQuarter = null;
             Calendar calendar = Calendar.getInstance();
-            for (BankDayUSD bankDay : usdAccountDays.values()) {
+            for (BankDay bankDay : bankDataDays.values()) {
                 calendar.setTime(bankDay.getDate());
-                if (calendar.get(Calendar.MONTH) + 1 > lastQuarter.getNumber() * 3) {
-                    lastQuarter = new BankQuarterUSD(lastQuarter.getNumber() + 1);
-                    usdAccount.add(lastQuarter);
+                int month = calendar.get(Calendar.MONTH) + 1;
+                int lastQuarterNumber = lastQuarter == null ? (int) Math.ceil((double) month / 3) - 1 : lastQuarter.getNumber();
+                if (month > lastQuarterNumber * 3) {
+                    lastQuarter = new BankQuarter(lastQuarterNumber + 1);
+                    bankData.add(lastQuarter);
                 }
-                for (BankTransactionUSD bankTransaction : bankDay.getTransactions()) {
-                    lastQuarter.addDay(bankTransaction);
+                for (BankOperationRow bankTransaction : bankDay.getTransactions()) {
+                    lastQuarter.addTransaction(bankTransaction);
                 }
             }
 
             beans.put("user", user);
-            beans.put("usdAccount", usdAccount);
+            beans.put("bankData", bankData);
             String outputFilenamePrefix = String.format("/BankData/%s_%s_%d", user.getLastnameEn(), user.getFirstnameEn(), year);
             String outputFilename = xlsProcessor.saveReport(XlsTemplate.BANK_DATA, outputFilenamePrefix, beans);
             fileNames.add(outputFilename);
