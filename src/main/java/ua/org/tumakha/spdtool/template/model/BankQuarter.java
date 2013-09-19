@@ -8,16 +8,16 @@ import java.util.List;
 /**
  * @author Yuriy Tumakha
  */
-public class BankQuarterUSD {
+public class BankQuarter {
 
     private Integer number;
-    private List<BankTransactionUSD> transactions = new ArrayList<BankTransactionUSD>();
+    private List<BankOperationRow> transactions = new ArrayList<BankOperationRow>();
 
-    public BankQuarterUSD(int number) {
+    public BankQuarter(int number) {
         this.number = number;
     }
 
-    public void addDay(BankTransactionUSD transaction) {
+    public void addTransaction(BankOperationRow transaction) {
         transactions.add(transaction);
     }
 
@@ -29,7 +29,7 @@ public class BankQuarterUSD {
         return number == 4 ? "IV" : StringUtils.repeat("I", number);
     }
 
-    public List<BankTransactionUSD> getTransactions() {
+    public List<BankOperationRow> getTransactions() {
         return transactions;
     }
 
