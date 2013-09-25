@@ -21,8 +21,8 @@ public class BankOperationRow {
     private String purpose;
     private String originalPurpose;
     private Integer income;
-    private Integer expense;
     private Integer commission;
+    private Integer expense;
 
     public BankOperationRow(Date date) {
         this.date = date;
@@ -30,6 +30,14 @@ public class BankOperationRow {
 
     public Date getDate() {
         return date;
+    }
+
+    public Object getDateUSD() {
+        return isAccountUSD() ? getDate() : "";
+    }
+
+    public Object getDateUAH() {
+        return isAccountUAH() ? getDate() : "";
     }
 
     public boolean isIncomeUSD() {
@@ -44,18 +52,22 @@ public class BankOperationRow {
         return isIncomeUSD() && isExpenseUSD();
     }
 
+    public boolean isAccountUSD() {
+        return isIncomeUSD() || isExpenseUSD();
+    }
+
     public boolean isAccountUAH() {
         return purpose != null;
     }
 
-    public Double getCurrencyRate() {
-        Double rate = 0d;
+    public Object getCurrencyRate() {
+        Double rate = null;
         if (isIncomeUSD()) {
             rate = (double) incomeAmountUAH / incomeAmountUSD;
         } else if (isExpenseUSD()) {
             rate = (double) expenseAmountUAH / expenseAmountUSD;
         }
-        return (double) (int) (rate * 10000) / 10000;
+        return rate == null ? "" : (double) (int) (rate * 10000) / 10000;
     }
 
     public String getDescr() {
@@ -82,19 +94,19 @@ public class BankOperationRow {
         this.expenseAmountUAH = expenseAmountUAH;
     }
 
-    public Double getIncomeAmountUSD() {
+    public Object getIncomeAmountUSD() {
         return getMoneyValue(incomeAmountUSD);
     }
 
-    public Double getIncomeAmountUAH() {
+    public Object getIncomeAmountUAH() {
         return getMoneyValue(incomeAmountUAH);
     }
 
-    public Double getExpenseAmountUSD() {
+    public Object getExpenseAmountUSD() {
         return getMoneyValue(expenseAmountUSD);
     }
 
-    public Double getExpenseAmountUAH() {
+    public Object getExpenseAmountUAH() {
         return getMoneyValue(expenseAmountUAH);
     }
 
@@ -109,7 +121,6 @@ public class BankOperationRow {
         originalPurpose = transPurpose;
         purpose = PaymentPurposeUtil.simplifyExpensePaymentPurpose(transPurpose);
         this.expense = expense;
-        commission = 0;
     }
 
     public String getPurpose() {
@@ -120,20 +131,20 @@ public class BankOperationRow {
         return originalPurpose == null ? "" : originalPurpose;
     }
 
-    public Double getIncome() {
+    public Object getIncome() {
         return getMoneyValue(income);
     }
 
-    public Double getExpense() {
+    public Object getExpense() {
         return getMoneyValue(expense);
     }
 
-    public Double getCommission() {
+    public Object getCommission() {
         return getMoneyValue(commission);
     }
 
-    private Double getMoneyValue(Integer moneyValue) {
-        return moneyValue == null ? null : (double) moneyValue / 100;
+    private Object getMoneyValue(Integer moneyValue) {
+        return moneyValue == null ? "" : (double) moneyValue / 100;
     }
 
 }
