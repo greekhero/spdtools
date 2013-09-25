@@ -10,10 +10,12 @@ import static org.junit.Assert.assertEquals;
 public class PaymentPurposeUtilTest {
 
     private static String UNKNOWN_PURPOSE = "Оплата за консультаційні послуги, рах. 1 від 22.01.13, Без ПДВ.";
+    private static String SIMPLE_PURPOSE = "Оренда";
 
     @Test
     public void testSimplifyIncomePaymentPurpose() {
-        assertEquals(UNKNOWN_PURPOSE, PaymentPurposeUtil.simplifyIncomePaymentPurpose(UNKNOWN_PURPOSE));
+        assertEquals("Додатковий дохід", PaymentPurposeUtil.simplifyIncomePaymentPurpose(UNKNOWN_PURPOSE));
+        assertEquals(SIMPLE_PURPOSE, PaymentPurposeUtil.simplifyIncomePaymentPurpose(SIMPLE_PURPOSE));
         assertEquals("прод. 1000,20 USD к. 8,137", PaymentPurposeUtil.simplifyIncomePaymentPurpose("Кошти від продажу 1000.20 USD згідно заяви № 5 від 15/01/2013 курс 8.137000000000 Комісія 20.19"));
         assertEquals(new Integer(2019), PaymentPurposeUtil.getIncomeCommissionUSD("Кошти від продажу 1000.20 USD згідно заяви № 5 від 15/01/2013 курс 8.137000000000 Комісія 20.19"));
     }
@@ -21,6 +23,7 @@ public class PaymentPurposeUtilTest {
     @Test
     public void testSimplifyExpensePaymentPurpose() {
         assertEquals("особисті витрати", PaymentPurposeUtil.simplifyExpensePaymentPurpose(UNKNOWN_PURPOSE));
+        assertEquals(SIMPLE_PURPOSE, PaymentPurposeUtil.simplifyExpensePaymentPurpose(SIMPLE_PURPOSE));
         assertEquals("б.о.", PaymentPurposeUtil.simplifyExpensePaymentPurpose("Комісія банку за ведення рахунків ..."));
         assertEquals("Оренда", PaymentPurposeUtil.simplifyExpensePaymentPurpose("Оплата за оренду приміщення та офісного обладнання ..."));
         assertEquals("ЄСВ", PaymentPurposeUtil.simplifyExpensePaymentPurpose("1234567890; ЄСВ 34,7% Реєстр.№ 123456789 ФОП ..."));

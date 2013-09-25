@@ -13,6 +13,7 @@ public abstract class PaymentPurposeUtil {
 
     private static Pattern ALL_NUMBERS_PATTERN = Pattern.compile("\\d+");
     private static Pattern ALL_MONEYS_PATTERN = Pattern.compile("\\d+\\.\\d+");
+    private static int SIMPLE_PURPOSE_MAX_LENGTH = 30;
 
     public static String simplifyIncomePaymentPurpose(String transPurpose) {
         if (transPurpose.contains("продаж") && transPurpose.contains("USD")) {
@@ -29,6 +30,8 @@ public abstract class PaymentPurposeUtil {
                 }
             }
             return String.format("прод. %s USD к. %s", getMoneyFormat().format(amount), getRateFormat().format(rate));
+        } else if (transPurpose.length() > SIMPLE_PURPOSE_MAX_LENGTH) {
+            return "Додатковий дохід";
         } else {
             return transPurpose;
         }
@@ -43,7 +46,7 @@ public abstract class PaymentPurposeUtil {
             }
             return Integer.parseInt(money.replace(".", ""));
         } else {
-            return 0;
+            return null;
         }
     }
 
@@ -77,8 +80,11 @@ public abstract class PaymentPurposeUtil {
                 previous = number;
             }
             return String.format("ЄП за %s кв. %s", quarter, year);
-        } else {
+        } else if (transPurpose.length() > SIMPLE_PURPOSE_MAX_LENGTH) {
             return "особисті витрати";
+
+        } else {
+            return transPurpose;
         }
     }
 
