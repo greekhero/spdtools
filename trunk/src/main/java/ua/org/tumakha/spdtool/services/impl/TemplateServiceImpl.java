@@ -497,10 +497,11 @@ public class TemplateServiceImpl implements TemplateService {
 
             Map<Integer, BankDay> bankDataDays = new LinkedHashMap<Integer, BankDay>();
             for(BankTransaction transaction : transactions) {
-                if (bankDataDays.get(transaction.getBankDate()) == null) {
-                    bankDataDays.put(transaction.getBankDate(), new BankDay(transaction.getBankDate(), transaction));
+                Integer transactionDate = transaction.getArcDate();
+                if (bankDataDays.get(transactionDate) == null) {
+                    bankDataDays.put(transactionDate, new BankDay(transactionDate, transaction));
                 } else {
-                    bankDataDays.get(transaction.getBankDate()).addTransaction(transaction);
+                    bankDataDays.get(transactionDate).addTransaction(transaction);
                 }
             }
             List<BankQuarter> bankData = new ArrayList<BankQuarter>();
