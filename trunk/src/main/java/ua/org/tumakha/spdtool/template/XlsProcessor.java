@@ -6,6 +6,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import ua.org.tumakha.spdtool.template.xls.row.BankDataRowProcessor;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +32,9 @@ public class XlsProcessor {
         XLSTransformer transformer = new XLSTransformer();
         RowProcessor rowProcessor = template.getRowProcessor();
         if (rowProcessor != null) {
+            if (rowProcessor instanceof BankDataRowProcessor) {
+                ((BankDataRowProcessor)rowProcessor).init((Map<Integer, Object>) beans.get("metaData"));
+            }
             transformer.registerRowProcessor(rowProcessor);
         }
 		transformer.transformXLS(TEMPLATES_DIRECTORY + "/" + template.getFilename(), beans, outputFile.getAbsolutePath());

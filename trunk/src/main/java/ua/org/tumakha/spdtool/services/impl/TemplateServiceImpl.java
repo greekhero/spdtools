@@ -21,7 +21,8 @@ import ua.org.tumakha.spdtool.enums.RentType;
 import ua.org.tumakha.spdtool.services.*;
 import ua.org.tumakha.spdtool.template.*;
 import ua.org.tumakha.spdtool.template.model.*;
-import ua.org.tumakha.spdtool.template.model.BankOperationRow;
+import ua.org.tumakha.spdtool.template.xls.row.OperationRowMetaData;
+import ua.org.tumakha.util.PaymentPurposeUtil;
 import ua.org.tumakha.util.StrUtil;
 
 import javax.mail.internet.InternetAddress;
@@ -497,6 +498,11 @@ public class TemplateServiceImpl implements TemplateService {
 
             Map<Integer, BankDay> bankDataDays = new LinkedHashMap<Integer, BankDay>();
             for(BankTransaction transaction : transactions) {
+                String purpose = transaction.getPlatPurpose();
+                if (purpose != null && purpose.length() < 20 && purpose.startsWith("RBU")) {
+                    // ignore transaction
+                    continue;
+                }
                 Integer transactionDate = transaction.getArcDate();
                 if (bankDataDays.get(transactionDate) == null) {
                     bankDataDays.put(transactionDate, new BankDay(transactionDate, transaction));
@@ -507,6 +513,11 @@ public class TemplateServiceImpl implements TemplateService {
             List<BankQuarter> bankData = new ArrayList<BankQuarter>();
             BankQuarter lastQuarter = null;
             Calendar calendar = Calendar.getInstance();
+
+            Map<Integer, Object> metaDataMap = new LinkedHashMap<Integer, Object>();
+            Map<String, Integer> sellsUSD = new HashMap<String, Integer>();
+            Map<String, Integer> incomeFromUSD = new HashMap<String, Integer>();
+            int rowNum = 9;
             for (BankDay bankDay : bankDataDays.values()) {
                 calendar.setTime(bankDay.getDate());
                 int month = calendar.get(Calendar.MONTH) + 1;
@@ -514,14 +525,50 @@ public class TemplateServiceImpl implements TemplateService {
                 if (month > lastQuarterNumber * 3) {
                     lastQuarter = new BankQuarter(lastQuarterNumber + 1);
                     bankData.add(lastQuarter);
+                    if (bankData.size() > 1) {
+                        rowNum += lastQuarter.getNumber() > 2 ? 8 : 7;
+                    }
                 }
                 for (BankOperationRow bankTransaction : bankDay.getTransactions()) {
                     lastQuarter.addTransaction(bankTransaction);
+                    if (bankTransaction.isIncomeUAH() || bankTransaction.isAccountUSD()) {
+                        OperationRowMetaData rowMetaData = new OperationRowMetaData();
+                        rowMetaData.setIncomeUSD(bankTransaction.isIncomeUSD());
+                        rowMetaData.setExpenseUSD(bankTransaction.isExpenseUSD());
+                        rowMetaData.setIncomeUAH(bankTransaction.isIncomeUAH());
+                        rowMetaData.setCommission(bankTransaction.getCommission() instanceof Double);
+                        if (bankTransaction.isExpenseUSD()) {
+                            String dateAmountKey = PaymentPurposeUtil.getDateAmountKey(bankTransaction.getDate(), bankTransaction.getSellAmountUSD());
+                            if (incomeFromUSD.get(dateAmountKey) != null) {
+                                Integer row = incomeFromUSD.get(dateAmountKey);
+                                OperationRowMetaData rowData = (OperationRowMetaData) metaDataMap.get(row);
+                                if (rowData != null) {
+                                    rowData.setUsdRowNum(rowNum);
+                                }
+                                incomeFromUSD.remove(dateAmountKey);
+                            } else {
+                                sellsUSD.put(dateAmountKey, rowNum);
+                            }
+                        }
+                        if (rowMetaData.isCommission()) {
+                            String dateAndAmountUSD = PaymentPurposeUtil.getIncomeDateAndAmountUSD(bankTransaction.getOriginalPurpose());
+                            Integer usdRowNum = sellsUSD.get(dateAndAmountUSD);
+                            if (usdRowNum != null) {
+                                rowMetaData.setUsdRowNum(usdRowNum);
+                                sellsUSD.remove(dateAndAmountUSD);
+                            } else {
+                                incomeFromUSD.put(dateAndAmountUSD, rowNum);
+                            }
+                        }
+                        metaDataMap.put(rowNum, rowMetaData);
+                    }
+                    rowNum++;
                 }
             }
 
             beans.put("user", user);
             beans.put("bankData", bankData);
+            beans.put("metaData", metaDataMap);
             String outputFilenamePrefix = String.format("/BankData/%s_%s_%d", user.getLastnameEn(), user.getFirstnameEn(), year);
             String outputFilename = xlsProcessor.saveReport(XlsTemplate.BANK_DATA, outputFilenamePrefix, beans);
             fileNames.add(outputFilename);

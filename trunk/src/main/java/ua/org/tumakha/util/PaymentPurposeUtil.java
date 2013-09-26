@@ -3,6 +3,7 @@ package ua.org.tumakha.util;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,9 +12,11 @@ import java.util.regex.Pattern;
  */
 public abstract class PaymentPurposeUtil {
 
+    private static int SIMPLE_PURPOSE_MAX_LENGTH = 30;
     private static Pattern ALL_NUMBERS_PATTERN = Pattern.compile("\\d+");
     private static Pattern ALL_MONEYS_PATTERN = Pattern.compile("\\d+\\.\\d+");
-    private static int SIMPLE_PURPOSE_MAX_LENGTH = 30;
+    private static Pattern USD_AMOUNT_PATTERN = Pattern.compile("\\d+\\.\\d+ USD");
+    private static Pattern SELL_DATE_PATTERN = Pattern.compile("\\d{2}/\\d{2}/\\d{4}");
 
     public static String simplifyIncomePaymentPurpose(String transPurpose) {
         if (transPurpose.contains("продаж") && transPurpose.contains("USD")) {
@@ -50,6 +53,21 @@ public abstract class PaymentPurposeUtil {
         }
     }
 
+    public static String getIncomeDateAndAmountUSD(String transPurpose) {
+        if (transPurpose.contains("продаж") && transPurpose.contains("USD")) {
+            Matcher matcher = USD_AMOUNT_PATTERN.matcher(transPurpose);
+            String usdAmount = matcher.find() ? matcher.group() : null;
+            matcher = SELL_DATE_PATTERN.matcher(transPurpose);
+            String date = matcher.find() ? matcher.group() : null;
+            return date + " " + usdAmount;
+        } else {
+            return "";
+        }
+    }
+
+    public static String getDateAmountKey(Date date, Double amount) {
+        return String.format("%1$td/%1$tm/%1$tY %2$.2f USD", date, amount).replace(",", ".");
+    }
 
     public static String simplifyExpensePaymentPurpose(String transPurpose) {
         if (transPurpose.startsWith("Комісія банку за ведення рахунків")) {

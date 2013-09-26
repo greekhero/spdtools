@@ -33,11 +33,15 @@ public class BankOperationRow {
     }
 
     public Object getDateUSD() {
-        return isAccountUSD() ? getDate() : "";
+        return getDateValue(isAccountUSD());
     }
 
     public Object getDateUAH() {
-        return isAccountUAH() ? getDate() : "";
+        return getDateValue(isAccountUAH());
+    }
+
+    public Object getDateFinRes() {
+        return getDateValue(isIncomeUAH());
     }
 
     public boolean isIncomeUSD() {
@@ -60,6 +64,10 @@ public class BankOperationRow {
         return purpose != null;
     }
 
+    public boolean isIncomeUAH() {
+        return income != null;
+    }
+
     public Object getCurrencyRate() {
         Double rate = null;
         if (isIncomeUSD()) {
@@ -67,7 +75,7 @@ public class BankOperationRow {
         } else if (isExpenseUSD()) {
             rate = (double) expenseAmountUAH / expenseAmountUSD;
         }
-        return rate == null ? "" : (double) (int) (rate * 10000) / 10000;
+        return rate == null ? "" : (double) Math.round(rate * 10000) / 10000;
     }
 
     public String getDescr() {
@@ -110,6 +118,10 @@ public class BankOperationRow {
         return getMoneyValue(expenseAmountUAH);
     }
 
+    public Double getSellAmountUSD() {
+        return expenseAmountUSD == null ? 0d : (double) expenseAmountUSD / 100;
+    }
+
     public void setIncomeUAH(String transPurpose, Integer income) {
         originalPurpose = transPurpose;
         purpose = PaymentPurposeUtil.simplifyIncomePaymentPurpose(transPurpose);
@@ -145,6 +157,10 @@ public class BankOperationRow {
 
     private Object getMoneyValue(Integer moneyValue) {
         return moneyValue == null ? "" : (double) moneyValue / 100;
+    }
+
+    private Object getDateValue(boolean show) {
+        return show ? getDate() : "";
     }
 
 }
