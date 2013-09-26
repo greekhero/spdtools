@@ -2,6 +2,8 @@ package ua.org.tumakha.util;
 
 import org.junit.Test;
 
+import java.util.Calendar;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -17,7 +19,25 @@ public class PaymentPurposeUtilTest {
         assertEquals("Додатковий дохід", PaymentPurposeUtil.simplifyIncomePaymentPurpose(UNKNOWN_PURPOSE));
         assertEquals(SIMPLE_PURPOSE, PaymentPurposeUtil.simplifyIncomePaymentPurpose(SIMPLE_PURPOSE));
         assertEquals("прод. 1000,20 USD к. 8,137", PaymentPurposeUtil.simplifyIncomePaymentPurpose("Кошти від продажу 1000.20 USD згідно заяви № 5 від 15/01/2013 курс 8.137000000000 Комісія 20.19"));
+    }
+
+    @Test
+    public void testIncomeCommissionUSD() {
         assertEquals(new Integer(2019), PaymentPurposeUtil.getIncomeCommissionUSD("Кошти від продажу 1000.20 USD згідно заяви № 5 від 15/01/2013 курс 8.137000000000 Комісія 20.19"));
+    }
+
+    @Test
+    public void testIncomeDateAndAmountUSD() {
+        assertEquals("15/01/2013 1000.20 USD", PaymentPurposeUtil.getIncomeDateAndAmountUSD("Кошти від продажу 1000.20 USD згідно заяви № 5 від 15/01/2013 курс 8.137000000000 Комісія 20.19"));
+    }
+
+    @Test
+    public void testDateAmountKey() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 15);
+        calendar.set(Calendar.MONTH, 0);
+        calendar.set(Calendar.YEAR, 2013);
+        assertEquals("15/01/2013 1000.20 USD", PaymentPurposeUtil.getDateAmountKey(calendar.getTime(), 1000.20));
     }
 
     @Test
