@@ -65,7 +65,7 @@ public class BankDataBuilder {
         Map<Integer, BankDay> bankDataDays = new LinkedHashMap<Integer, BankDay>();
         for (BankTransaction transaction : transactions) {
             String purpose = transaction.getPlatPurpose();
-            if (transaction.getAccountId().equals(usdTransitAccount)
+            if ((usdTransitAccount != null && usdTransitAccount.equals(transaction.getAccountId()))
                     || (purpose != null && purpose.length() < 20 && purpose.startsWith("RBU"))) {
                 continue; // ignore transaction
             }
