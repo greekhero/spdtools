@@ -14,6 +14,7 @@ import java.util.Map;
 public class BankDataRowProcessor implements RowProcessor {
 
     private static final String FIRST_TRANSACTION_CELL_VALUE = "${trans.dateUSD}";
+    private static final String USD_BALANCE_CELL_VALUE = "${initBalanceUSD}";
     private ThreadLocal<Map<Integer, Object>> metaData = new ThreadLocal<Map<Integer, Object>>();
     private ThreadLocal<List<Integer>> totalRowNumbers = new ThreadLocal<List<Integer>>();
 
@@ -53,11 +54,9 @@ public class BankDataRowProcessor implements RowProcessor {
                     setIncomeUAH(poiRow, rowNum, rowMetaData.getUsdRowNum(), rowMetaData.isCommission());
                 }
             }
-        }
-        if (firstCell != null && firstCell.getStringCellValue().startsWith("Всього")) {
+        } else if (firstCell != null && firstCell.getStringCellValue().startsWith("Всього")) {
             getTotalRowNumbers().add(rowNum);
-        }
-        if (getTotalRowNumbers().size() > 1 && getTotalRowNumbers().contains(rowNum - 2)) {
+        } else if (getTotalRowNumbers().size() > 1 && getTotalRowNumbers().contains(rowNum - 2)) {
             StringBuffer formula = new StringBuffer();
             for (Integer totalRowNum : getTotalRowNumbers()) {
                 formula.append("G");
@@ -66,6 +65,11 @@ public class BankDataRowProcessor implements RowProcessor {
             }
             String formulaStr = formula.toString().substring(0, formula.length() - 1);
             setCellFormula(poiRow, 6, formulaStr);
+        } else if (getTotalRowNumbers().size() > 0 && poiRow.getCell(3) != null && USD_BALANCE_CELL_VALUE.equals(poiRow.getCell(3).getStringCellValue())) {
+            Integer lastOperationRow = getTotalRowNumbers().get(getTotalRowNumbers().size() - 1) - 1;
+            setCellFormula(poiRow, 3, "D" + lastOperationRow);
+            setCellFormula(poiRow, 4, "E" + lastOperationRow);
+            setCellFormula(poiRow, 16, "Q" + lastOperationRow);
         }
     }
 
