@@ -4,6 +4,8 @@ import net.sf.jxls.processor.RowProcessor;
 import net.sf.jxls.transformer.Row;
 import org.apache.poi.ss.usermodel.Cell;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,21 +15,27 @@ public class BankDataRowProcessor implements RowProcessor {
 
     private static final String FIRST_TRANSACTION_CELL_VALUE = "${trans.dateUSD}";
     private ThreadLocal<Map<Integer, Object>> metaData = new ThreadLocal<Map<Integer, Object>>();
+    private ThreadLocal<List<Integer>> totalRowNumbers = new ThreadLocal<List<Integer>>();
 
     public void init(Map<Integer, Object> metaDataMap) {
         metaData.set(metaDataMap);
+        totalRowNumbers.set(new ArrayList<Integer>());
     }
 
     private OperationRowMetaData getMetaData(int rowNum) {
         return (OperationRowMetaData) metaData.get().get(rowNum);
     }
 
+    private List<Integer> getTotalRowNumbers() {
+        return totalRowNumbers.get();
+    }
+
     @Override
     public void processRow(Row row, Map map) {
         org.apache.poi.ss.usermodel.Row poiRow = row.getPoiRow();
         Cell firstCell = poiRow.getCell(0);
+        int rowNum = poiRow.getRowNum() + 1;
         if (firstCell != null && FIRST_TRANSACTION_CELL_VALUE.equals(firstCell.getStringCellValue())) {
-            int rowNum = poiRow.getRowNum() + 1;
             // Balance calculation
             setCellFormula(poiRow, 3, "D" + (rowNum - 1) + "+F" + rowNum + "-H" + rowNum);
             setCellFormula(poiRow, 4, "E" + (rowNum - 1) + "+G" + rowNum + "-I" + rowNum);
@@ -45,6 +53,19 @@ public class BankDataRowProcessor implements RowProcessor {
                     setIncomeUAH(poiRow, rowNum, rowMetaData.getUsdRowNum(), rowMetaData.isCommission());
                 }
             }
+        }
+        if (firstCell != null && firstCell.getStringCellValue().startsWith("Всього")) {
+            getTotalRowNumbers().add(rowNum);
+        }
+        if (getTotalRowNumbers().size() > 1 && getTotalRowNumbers().contains(rowNum - 2)) {
+            StringBuffer formula = new StringBuffer();
+            for (Integer totalRowNum : getTotalRowNumbers()) {
+                formula.append("G");
+                formula.append(totalRowNum + 1);
+                formula.append("+");
+            }
+            String formulaStr = formula.toString().substring(0, formula.length() - 1);
+            setCellFormula(poiRow, 6, formulaStr);
         }
     }
 
