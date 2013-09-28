@@ -1,9 +1,13 @@
 package ua.org.tumakha.spdtool.template.xls.row;
 
+import java.util.Date;
+
 /**
  * @author Yuriy Tumakha
  */
 public class OperationRowMetaData {
+
+    private Date date;
 
     private boolean incomeUSD;
 
@@ -14,6 +18,22 @@ public class OperationRowMetaData {
     private int usdRowNum;
 
     private boolean commission;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public boolean isFinRes() {
+        return usdRowNum != 0;
+    }
+
+    public boolean isOtherIncome() {
+        return isIncomeUAH() && !isFinRes();
+    }
 
     public boolean isIncomeUSD() {
         return incomeUSD;
