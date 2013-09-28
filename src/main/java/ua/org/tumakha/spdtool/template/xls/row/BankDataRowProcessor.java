@@ -13,6 +13,7 @@ import java.util.Map;
  */
 public class BankDataRowProcessor implements RowProcessor {
 
+    public static final String BANK_STATEMENT_SHEET_NAME = "Виписка";
     private static final String FIRST_TRANSACTION_CELL_VALUE = "${trans.dateUSD}";
     private static final String USD_BALANCE_CELL_VALUE = "${initBalanceUSD}";
     private ThreadLocal<Map<Integer, Object>> metaData = new ThreadLocal<Map<Integer, Object>>();
@@ -33,6 +34,9 @@ public class BankDataRowProcessor implements RowProcessor {
 
     @Override
     public void processRow(Row row, Map map) {
+        if (!BANK_STATEMENT_SHEET_NAME.equals(row.getSheet().getSheetName())) {
+            return;
+        }
         org.apache.poi.ss.usermodel.Row poiRow = row.getPoiRow();
         Cell firstCell = poiRow.getCell(0);
         int rowNum = poiRow.getRowNum() + 1;

@@ -4,6 +4,7 @@ import ua.org.tumakha.spdtool.entity.BankTransaction;
 import ua.org.tumakha.spdtool.template.model.BankDay;
 import ua.org.tumakha.spdtool.template.model.BankOperationRow;
 import ua.org.tumakha.spdtool.template.model.BankQuarter;
+import ua.org.tumakha.spdtool.template.model.SpdBookDay;
 import ua.org.tumakha.util.PaymentPurposeUtil;
 
 import java.util.*;
@@ -44,6 +45,7 @@ public class BankDataBuilder {
 
         beans.put("bankData", bankData);
         beans.put("metaData", metaDataMap);
+        beans.put("spdBook", getSpdBook());
     }
 
     private Integer getUSDTransitAccount(List<BankTransaction> transactions) {
@@ -83,6 +85,7 @@ public class BankDataBuilder {
     private void saveMetaData(int rowNum, BankOperationRow bankTransaction) {
         if (bankTransaction.isIncomeUAH() || bankTransaction.isAccountUSD()) {
             OperationRowMetaData rowMetaData = new OperationRowMetaData();
+            rowMetaData.setDate(bankTransaction.getDate());
             rowMetaData.setIncomeUSD(bankTransaction.isIncomeUSD());
             rowMetaData.setExpenseUSD(bankTransaction.isExpenseUSD());
             rowMetaData.setIncomeUAH(bankTransaction.isIncomeUAH());
@@ -112,6 +115,31 @@ public class BankDataBuilder {
             }
             metaDataMap.put(rowNum, rowMetaData);
         }
+    }
+
+    private List<SpdBookDay> getSpdBook() {
+        List<SpdBookDay> spdBookDays = new ArrayList<SpdBookDay>();
+        SpdBookDay spdBookDay = null;
+        for (Map.Entry<Integer, Object> metaEntry : metaDataMap.entrySet()) {
+            Integer rowNum = metaEntry.getKey();
+            OperationRowMetaData rowMetaData = (OperationRowMetaData) metaEntry.getValue();
+            if (rowMetaData.isIncomeUSD() || rowMetaData.isIncomeUAH()) {
+                if (spdBookDay == null || !spdBookDay.getDate().equals(rowMetaData.getDate())) {
+                    spdBookDay = new SpdBookDay(rowMetaData.getDate());
+                    spdBookDays.add(spdBookDay);
+                }
+
+                if (rowMetaData.isIncomeUSD()) {
+                    spdBookDay.addCellRef("G", rowNum);
+                }
+                if (rowMetaData.isFinRes()) {
+                    spdBookDay.addCellRef("L", rowNum);
+                } else if (rowMetaData.isOtherIncome()) {
+                    spdBookDay.addCellRef("M", rowNum);
+                }
+            }
+        }
+        return spdBookDays;
     }
 
 }
