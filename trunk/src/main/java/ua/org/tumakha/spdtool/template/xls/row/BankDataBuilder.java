@@ -1,10 +1,7 @@
 package ua.org.tumakha.spdtool.template.xls.row;
 
 import ua.org.tumakha.spdtool.entity.BankTransaction;
-import ua.org.tumakha.spdtool.template.model.BankDay;
-import ua.org.tumakha.spdtool.template.model.BankOperationRow;
-import ua.org.tumakha.spdtool.template.model.BankQuarter;
-import ua.org.tumakha.spdtool.template.model.SpdBookDay;
+import ua.org.tumakha.spdtool.template.model.*;
 import ua.org.tumakha.util.PaymentPurposeUtil;
 
 import java.util.*;
@@ -117,8 +114,8 @@ public class BankDataBuilder {
         }
     }
 
-    private List<SpdBookDay> getSpdBook() {
-        List<SpdBookDay> spdBookDays = new ArrayList<SpdBookDay>();
+    private SpdBook getSpdBook() {
+        SpdBook spdBook = new SpdBook();
         SpdBookDay spdBookDay = null;
         for (Map.Entry<Integer, Object> metaEntry : metaDataMap.entrySet()) {
             Integer rowNum = metaEntry.getKey();
@@ -126,7 +123,7 @@ public class BankDataBuilder {
             if (rowMetaData.isIncomeUSD() || rowMetaData.isIncomeUAH()) {
                 if (spdBookDay == null || !spdBookDay.getDate().equals(rowMetaData.getDate())) {
                     spdBookDay = new SpdBookDay(rowMetaData.getDate());
-                    spdBookDays.add(spdBookDay);
+                    spdBook.addDay(spdBookDay);
                 }
 
                 if (rowMetaData.isIncomeUSD()) {
@@ -139,7 +136,7 @@ public class BankDataBuilder {
                 }
             }
         }
-        return spdBookDays;
+        return spdBook;
     }
 
 }

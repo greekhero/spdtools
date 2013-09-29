@@ -72,7 +72,7 @@ public abstract class PaymentPurposeUtil {
     public static String simplifyExpensePaymentPurpose(String transPurpose) {
         if (transPurpose.startsWith("Комісія банку за ведення рахунків")) {
             return "б.о.";
-        } else if (transPurpose.startsWith("Оплата за оренду")) {
+        } else if (transPurpose.contains("за оренду") || transPurpose.contains("за аренду")) {
             return "Оренда";
         } else if (transPurpose.contains("ЄСВ")) {
             return "ЄСВ";
