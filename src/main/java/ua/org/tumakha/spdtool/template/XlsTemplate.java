@@ -10,7 +10,7 @@ public enum XlsTemplate {
 
     BANK_DATA("BankData.xlsx", "/BankData", false, new BankDataRowProcessor()),
 	ECP_REGISTRATION("ECP_Registration.xlsx", "/ECP"),
-	PAYMENTS("Payments.xlsx","/Payments/%d_%02d"),
+	PAYMENTS("Payments.xls","/Payments/%d_%02d"),
 	ESV_D5("ESV_d5.xls", "ESV_d5"),
 	DECLARATION("Declaration.xls", "/DECLARATION/%d_Q%d");
 
