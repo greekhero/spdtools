@@ -30,4 +30,8 @@ public enum RegDocumentType {
 		return descriptionEn;
 	}
 
+    public String getLabel() {
+        return null;
+    }
+
 }

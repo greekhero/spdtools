@@ -55,11 +55,16 @@
     
     <spring:message code="label_ua_org_tumakha_spdtool_address" var="titleAddress" htmlEscape="false" />
     <util:panel id="address" title="${titleAddress}" openPane="false">
-    <field:input field="address.postalCode" id="c_ua_org_tumakha_spdtool_Address_postalCode"/>
+
     <table class="simpleTable">
+    <!--<tr>-->
+        <!--<td><field:input field="address.region" id="c_ua_org_tumakha_spdtool_Address_region"/></td>-->
+        <!--<td><field:input field="address.regionEn" id="c_ua_org_tumakha_spdtool_Address_regionEn"/></td>-->
+    <!--</tr>-->
     <tr>
-	    <td><field:input field="address.region" id="c_ua_org_tumakha_spdtool_Address_region"/></td>
-	    <td><field:input field="address.regionEn" id="c_ua_org_tumakha_spdtool_Address_regionEn"/></td>
+        <td><field:input field="address.postalCode" id="c_ua_org_tumakha_spdtool_Address_postalCode"/></td>
+        <td><field:select field="address.uaRegion" id="c_ua_org_tumakha_spdtool_Address_region"
+                    enumClass="ua.org.tumakha.spdtool.enums.UARegion"/></td>
     </tr>
     <tr>
 	    <td><field:input field="address.district" id="c_ua_org_tumakha_spdtool_Address_district"/></td>
