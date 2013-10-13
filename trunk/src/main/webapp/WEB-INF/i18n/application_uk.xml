@@ -102,7 +102,7 @@
 	<entry key="label_ua_org_tumakha_spdtool_usergroup_users">Users</entry>
 	
 	<entry key="label_tax_pf_rent">Податкова, ПФ, оренда</entry>
-	<entry key="label_ua_org_tumakha_spdtool_pensionorganization">Пенсійний Фонд</entry>
+	<entry key="label_ua_org_tumakha_spdtool_pensionorganization">Податкова (ЄСВ)</entry>
 	<entry key="label_ua_org_tumakha_spdtool_pensionorganization_name">Назва</entry>
 	<entry key="label_ua_org_tumakha_spdtool_pensionorganization_comment">Коментар</entry>
 	<entry key="label_ua_org_tumakha_spdtool_pensionorganization_plural"> - Пенсійні Фонди</entry>
@@ -110,7 +110,7 @@
 	<entry key="label_ua_org_tumakha_spdtool_taxorganization_name">Назва</entry>
 	<entry key="label_ua_org_tumakha_spdtool_taxorganization_comment">Коментар</entry>
 	<entry key="label_ua_org_tumakha_spdtool_taxorganization_code">Код</entry>
-	<entry key="label_ua_org_tumakha_spdtool_taxorganization_pensionorganization">Пенсійний Фонд</entry>
+	<entry key="label_ua_org_tumakha_spdtool_taxorganization_pensionorganization">Податкова (ЄСВ)</entry>
 	<entry key="label_ua_org_tumakha_spdtool_taxorganization_plural"> - Податкові</entry>
 	<entry key="label_ua_org_tumakha_spdtool_account_payeename">Отримувач платежу</entry>
 	<entry key="label_ua_org_tumakha_spdtool_account_accountnumber">Рахунок</entry>
@@ -153,8 +153,8 @@
 	<entry key="menu_item_usergroup_new_label">Група</entry>
 	<entry key="menu_item_taxorganization_list_label">Податкова</entry>
 	<entry key="menu_item_taxorganization_new_label">Податкова</entry>
-	<entry key="menu_item_pensionorganization_list_label">Пенсійний Фонд</entry>
-	<entry key="menu_item_pensionorganization_new_label">Пенсійний Фонд</entry>
+	<entry key="menu_item_pensionorganization_list_label">Податкова (ЄСВ)</entry>
+	<entry key="menu_item_pensionorganization_new_label">Податкова (ЄСВ)</entry>
 	
 	<!-- Enums -->
 	<entry key="label_ua_org_tumakha_spdtool_enums_RegDocumentType_SVIDOCTVO">Свідоцтво</entry>
