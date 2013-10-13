@@ -1,21 +1,13 @@
 package ua.org.tumakha.spdtool.entity;
 
-import java.io.Serializable;
+import org.springframework.util.StringUtils;
+import ua.org.tumakha.spdtool.enums.UARegion;
+import ua.org.tumakha.util.StrUtil;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
-
-import org.springframework.util.StringUtils;
-
-import ua.org.tumakha.util.StrUtil;
+import java.io.Serializable;
 
 /**
  * @author Yuriy Tumakha
@@ -27,8 +19,6 @@ public class Address implements Serializable {
 	private static final long serialVersionUID = 1308742308113894965L;
 
 	private static final String DELIMITER = ", ";
-	private static final String REGION_SUFFIX = " oбл.";
-	private static final String REGION_SUFFIX_EN = " region";
 	private static final String STREET_PREFIX = "вул. ";
 	private static final String STREET_PREFIX_EN = "str. ";
 	private static final String HOUSE_PREFIX = "б. ";
@@ -102,14 +92,20 @@ public class Address implements Serializable {
 		buffer.append(DELIMITER);
 		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? CITY_PREFIX + city : city);
 		buffer.append(StringUtils.hasText(district) ? DELIMITER + district + DISTRICT_SUFFIX : "");
-		buffer.append(StringUtils.hasText(region) ? DELIMITER + region + REGION_SUFFIX : "");
+        if (StringUtils.hasText(region)) {
+            buffer.append(DELIMITER);
+            buffer.append(UARegion.valueOf(region, regionEn).getRegion());
+        }
 		return buffer.toString().trim();
 	}
 
 	public String getTextReversedUa() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(getPostalCode());
-		buffer.append(StringUtils.hasText(region) ? DELIMITER + region + REGION_SUFFIX : "");
+        if (StringUtils.hasText(region)) {
+            buffer.append(DELIMITER);
+            buffer.append(UARegion.valueOf(region, regionEn).getRegion());
+        }
 		buffer.append(StringUtils.hasText(district) ? DELIMITER + district + DISTRICT_SUFFIX : "");
 		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? DELIMITER + CITY_PREFIX + city : city);
 		buffer.append(DELIMITER);
@@ -136,8 +132,11 @@ public class Address implements Serializable {
 		buffer.append(DELIMITER);
 		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? CITY_PREFIX_EN + cityEn : cityEn);
 		buffer.append(StringUtils.hasText(districtEn) ? DELIMITER + districtEn + DISTRICT_SUFFIX_EN : "");
-		buffer.append(StringUtils.hasText(regionEn) ? DELIMITER + regionEn + REGION_SUFFIX_EN : "");
-		return buffer.toString().trim();
+        if (StringUtils.hasText(regionEn)) {
+            buffer.append(DELIMITER);
+            buffer.append(UARegion.valueOf(region, regionEn).getRegionEn());
+        }
+        return buffer.toString().trim();
 	}
 
 	public char[] getPostalCodeArray() {
@@ -204,7 +203,10 @@ public class Address implements Serializable {
 
 	public String getRegionAndCity() {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append(StringUtils.hasText(region) ? region + REGION_SUFFIX + DELIMITER : "");
+        if (StringUtils.hasText(region)) {
+            buffer.append(UARegion.valueOf(region, regionEn).getRegion());
+            buffer.append(DELIMITER);
+        }
 		buffer.append(StrUtil.isFirstCharUpperOrDigit(city) ? CITY_PREFIX + city : city);
 		return buffer.toString().trim();
 	}
@@ -379,5 +381,19 @@ public class Address implements Serializable {
 	public void setApartmentCharEn(String apartmentCharEn) {
 		this.apartmentCharEn = apartmentCharEn;
 	}
+
+    public UARegion getUaRegion() {
+        return UARegion.valueOf(region, regionEn);
+    }
+
+    public void setUaRegion(UARegion uaRegion) {
+        if (uaRegion == null) {
+            region = "";
+            regionEn = "";
+        } else {
+            region = uaRegion.getName();
+            regionEn = uaRegion.getNameEn();
+        }
+    }
 
 }

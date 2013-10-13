@@ -27,4 +27,8 @@ public enum RentType {
 		return description;
 	}
 
+    public String getLabel() {
+        return null;
+    }
+
 }

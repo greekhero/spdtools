@@ -47,7 +47,11 @@
     	<jsp:scriptlet>items.clear();</jsp:scriptlet>
 	    <spring:eval expression="T(${enumClass}).values()" var="values"/>
 	    <c:forEach items="${values}" var="value">
-	    	<c:set target="${items}" property="${value}"><spring:message code="label_${fn:replace(enumClass,'.','_')}_${value}" htmlEscape="false" /></c:set>
+            <c:set var="defaultLabel" value=""/>
+            <c:if test="${value.label != null}">
+                <c:set var="defaultLabel" value="${value.label}"/>
+            </c:if>
+	    	<c:set target="${items}" property="${value}"><spring:message code="label_${fn:replace(enumClass,'.','_')}_${value}" htmlEscape="false" text="${defaultLabel}" /></c:set>
 	    </c:forEach>
     </c:if>
 
@@ -69,8 +73,12 @@
                         <option value="${item}">
                         <c:choose>
                           <c:when test="${not empty enumClass}">
-                            <spring:message code="label_${fn:replace(enumClass,'.','_')}_${item}" htmlEscape="false" />
-                          </c:when>
+                              <c:set var="defaultLabel" value=""/>
+                              <c:if test="${value.label != null}">
+                                  <c:set var="defaultLabel" value="${value.label}"/>
+                              </c:if>
+                              <spring:message code="label_${fn:replace(enumClass,'.','_')}_${value}" htmlEscape="false" text="${defaultLabel}" />
+                        </c:when>
                           <c:when test="${empty itemLabel}">
                             <spring:eval expression="item" />
                           </c:when>
