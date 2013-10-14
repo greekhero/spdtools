@@ -392,6 +392,10 @@ public class TemplateServiceImpl implements TemplateService {
 		String taxPeriod = quarter + " кв. " + year;
 
 		calendar.set(Calendar.DAY_OF_MONTH, 19);
+        int weeekDay = calendar.get(Calendar.DAY_OF_WEEK);
+        if (weeekDay == Calendar.SATURDAY) {
+            calendar.add(Calendar.DAY_OF_MONTH, -1);
+        }
 		Date endDate = calendar.getTime();
 
 		boolean showTaxPayment = month % 3 == 0;
