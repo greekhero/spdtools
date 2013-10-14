@@ -61,6 +61,9 @@ public enum UARegion {
     }
 
     public String getRegion() {
+        if (name.length() == 0) {
+            return name;
+        }
         StringBuilder sb = new StringBuilder(name);
         if (!this.equals(AR_CRIMEA)) {
             sb.append(REGION_SUFFIX);
@@ -69,6 +72,9 @@ public enum UARegion {
     }
 
     public String getRegionEn() {
+        if (name.length() == 0) {
+            return name;
+        }
         StringBuilder sb = new StringBuilder(nameEn);
         if (!this.equals(AR_CRIMEA)) {
             sb.append(REGION_SUFFIX_EN);
