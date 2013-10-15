@@ -20,7 +20,7 @@ public class Address implements Serializable {
 
 	private static final String DELIMITER = ", ";
 	private static final String STREET_PREFIX = "вул. ";
-	private static final String STREET_PREFIX_EN = "str. ";
+	private static final String STREET_SUFFIX_EN = " str.";
 	private static final String HOUSE_PREFIX = "б. ";
 	private static final String HOUSE_PREFIX_EN = "";
 	private static final String CITY_PREFIX = "м. ";
@@ -96,6 +96,10 @@ public class Address implements Serializable {
             buffer.append(DELIMITER);
             buffer.append(UARegion.valueOf(region, regionEn).getRegion());
         }
+        if (StringUtils.hasText(getPostalCode())) {
+            buffer.append(DELIMITER);
+            buffer.append(getPostalCode());
+        }
 		return buffer.toString().trim();
 	}
 
@@ -116,8 +120,8 @@ public class Address implements Serializable {
 	public String getTextEn() {
 		StringBuffer buffer = new StringBuffer();
 		if (StringUtils.hasText(streetEn)) {
-			buffer.append(StrUtil.isFirstCharUpperOrDigit(streetEn) ? STREET_PREFIX_EN : "");
 			buffer.append(streetEn);
+            buffer.append(!streetEn.endsWith(".") && !streetEn.contains(STREET_SUFFIX_EN) ? STREET_SUFFIX_EN : "");
 		}
 		if (house != null) {
 			buffer.append(DELIMITER + HOUSE_PREFIX_EN + house);
@@ -135,6 +139,10 @@ public class Address implements Serializable {
         if (StringUtils.hasText(regionEn)) {
             buffer.append(DELIMITER);
             buffer.append(UARegion.valueOf(region, regionEn).getRegionEn());
+        }
+        if (StringUtils.hasText(getPostalCode())) {
+            buffer.append(DELIMITER);
+            buffer.append(getPostalCode());
         }
         return buffer.toString().trim();
 	}
