@@ -30,6 +30,7 @@
         <intercept-url pattern="/payments/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/tax_organization/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/pension_organization/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/reports/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/**" access="permitAll" />
     </http>
 

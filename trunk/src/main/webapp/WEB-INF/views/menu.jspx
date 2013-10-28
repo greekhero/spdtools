@@ -9,6 +9,9 @@
             <menu:item id="i_documents_payment" url="/payments"/>
             <menu:item id="i_documents_ecp" url="/ecp"/>
         </menu:category>
+        <menu:category id="c_export">
+            <menu:item id="i_export_reports" url="/reports"/>
+        </menu:category>
         <menu:category id="c_user">
             <menu:item id="i_user_list" messageCode="global_menu_list" url="/users?page=1&amp;size=200"/>
             <menu:item id="i_user_new" messageCode="global_menu_new" url="/users?form"/>

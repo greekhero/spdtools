@@ -6,10 +6,11 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Workbook;
+import ua.org.tumakha.spdtool.entity.Report;
 import ua.org.tumakha.spdtool.template.xls.row.BankDataRowProcessor;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Map;
 
 /**
@@ -20,6 +21,17 @@ public class XlsProcessor {
 	private static final Log log = LogFactory.getLog(XlsProcessor.class);
 	private static final String TEMPLATES_DIRECTORY = "C:/spdtool-data/templates/xls";
 	public static final String REPORTS_DIRECTORY = "C:/Reports/xls";
+
+    public void generateReport(Report report, Map<String, Object> beans, OutputStream os) throws InvalidFormatException, IOException {
+        String srcFilePath = TEMPLATES_DIRECTORY + "/" + report.getTemplate();
+        XLSTransformer transformer = new XLSTransformer();
+        InputStream is = new BufferedInputStream(new FileInputStream(srcFilePath));
+        Workbook workbook = transformer.transformXLS(is, beans);
+        workbook.write(os);
+        is.close();
+        os.flush();
+        os.close();
+    }
 
 	public String saveReport(XlsTemplate template, String outputFilenamePrefix, Map<String, Object> beans)
 			throws InvalidFormatException, IOException {
