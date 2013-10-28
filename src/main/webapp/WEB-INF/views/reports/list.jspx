@@ -1,0 +1,25 @@
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:spring="http://www.springframework.org/tags" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8" />
+    <jsp:output omit-xml-declaration="yes" />
+    <spring:message var="title" code="reports_title" htmlEscape="false" />
+    <spring:url value="reports/generateReport" var="generate_url" />
+    <util:panel id="title" title="${title}">
+        <h1>${title}</h1>
+        <table>
+            <thead>
+            <tr>
+                <th width="50%"><spring:message code="reports_file"/></th>
+                <th width="50%"><spring:message code="reports_description"/></th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${reports}" var="report">
+                <tr>
+                    <td><a href="${generate_url}?reportId=${report.reportId}">${report.template}</a></td>
+                    <td>${report.name}</td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </util:panel>
+</div>

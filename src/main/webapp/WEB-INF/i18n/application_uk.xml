@@ -117,7 +117,7 @@
 	<entry key="label_ua_org_tumakha_spdtool_account_codeedrpou">Код ЄДРПОУ</entry>
 	<entry key="label_ua_org_tumakha_spdtool_account_mfo">МФО Банку</entry>
 	<entry key="label_ua_org_tumakha_spdtool_account_bankname">Назва банку</entry>
-	
+
 	<entry key="menu_category_act_label">Act</entry>
 	<entry key="menu_category_address_label">Address</entry>
 	<entry key="menu_category_bank_label">Bank</entry>
@@ -129,6 +129,7 @@
 	<entry key="menu_category_user_label">ФОП</entry>
 	<entry key="menu_category_usergroup_label">Група</entry>
 	<entry key="menu_category_organization_label">Організації</entry>
+    <entry key="menu_category_export_label">Експорт</entry>
 	<entry key="menu_item_act_list_label">Acts</entry>
 	<entry key="menu_item_act_new_label">Act</entry>
 	<entry key="menu_item_address_list_label">Addresses</entry>
@@ -155,7 +156,8 @@
 	<entry key="menu_item_taxorganization_new_label">Податкова</entry>
 	<entry key="menu_item_pensionorganization_list_label">Податкова (ЄСВ)</entry>
 	<entry key="menu_item_pensionorganization_new_label">Податкова (ЄСВ)</entry>
-	
+    <entry key="menu_item_export_reports_label">Звіти</entry>
+
 	<!-- Enums -->
 	<entry key="label_ua_org_tumakha_spdtool_enums_RegDocumentType_SVIDOCTVO">Свідоцтво</entry>
 	<entry key="label_ua_org_tumakha_spdtool_enums_RegDocumentType_VYPYSKA">Виписка</entry>
@@ -215,5 +217,10 @@
 	<entry key="payments_state2_title">Генерування платежів - Крок 2</entry>
 	<entry key="payments_endstate_title">Генерування платежів - Фініш</entry>
 	<entry key="label_payments_send_emails">Відправити емейли</entry>
+
+    <!-- reports -->
+    <entry key="reports_title">Звіти</entry>
+    <entry key="reports_description">Опис</entry>
+    <entry key="reports_file">Звіт</entry>
 
 </properties>

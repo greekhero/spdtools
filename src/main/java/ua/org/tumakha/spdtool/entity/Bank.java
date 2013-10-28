@@ -1,18 +1,12 @@
 package ua.org.tumakha.spdtool.entity;
 
-import java.io.Serializable;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import java.io.Serializable;
 
 /**
  * @author Yuriy Tumakha
@@ -51,6 +45,8 @@ public class Bank implements Serializable {
 	@Column(length = 1024)
 	private String correspondentBankEn;
 
+    @Column(columnDefinition = "bit")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean usedMiddlename;
 
 	public Integer getBankId() {
