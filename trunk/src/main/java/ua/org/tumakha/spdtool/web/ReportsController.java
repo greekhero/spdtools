@@ -20,7 +20,9 @@ import ua.org.tumakha.spdtool.template.xls.row.ResultSetDynaExtractor;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +36,7 @@ public class ReportsController {
 	private static final Log log = LogFactory.getLog(ReportsController.class);
 
 	protected static final String BASE_PATH = "/reports";
+    private static final String REPORT_DATE_FORMAT = "yyyy-MM-dd";
 
     @Autowired
     private ReportService reportService;
@@ -59,12 +62,15 @@ public class ReportsController {
     @RequestMapping(value = "/generateReport", method = RequestMethod.GET)
     public void generateReport(HttpServletResponse response, @RequestParam(value = "reportId") Integer reportId) throws InvalidFormatException, IOException, SQLException {
         Report report = reportService.findReport(reportId);
+        Date date = new Date();
 
         Map<String, Object> beans = new HashMap<String, Object>();
         RowSetDynaClass rowSet = jdbcTemplate.query(report.getSql(), new ResultSetDynaExtractor());
         beans.put("rs", rowSet.getRows());
+        beans.put("date", date);
 
-        response.setHeader("Content-Disposition", "attachment; filename=" + report.getTemplate());
+        String filename = report.getTemplate().replace(".xlsx", "_" + new SimpleDateFormat(REPORT_DATE_FORMAT).format(date) + ".xlsx");
+        response.setHeader("Content-Disposition", "attachment; filename=" + filename);
         xlsProcessor.generateReport(report, beans, response.getOutputStream());
     }
 
