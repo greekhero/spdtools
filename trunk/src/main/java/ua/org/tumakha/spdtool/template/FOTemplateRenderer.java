@@ -3,23 +3,6 @@
  */
 package ua.org.tumakha.spdtool.template;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.StringReader;
-import java.util.Date;
-
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.sax.SAXResult;
-import javax.xml.transform.stream.StreamSource;
-
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.fop.apps.FOPException;
@@ -29,6 +12,15 @@ import org.apache.fop.apps.FopFactory;
 import org.apache.log4j.Logger;
 import org.apache.xmlgraphics.util.MimeConstants;
 
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.sax.SAXResult;
+import javax.xml.transform.stream.StreamSource;
+import java.io.*;
+import java.util.Date;
+
 /**
  * @author Yura
  * 
@@ -37,7 +29,7 @@ public class FOTemplateRenderer {
 
 	private static final Logger log = Logger
 			.getLogger(FOTemplateRenderer.class);
-	public static final String TEMPLATES_DIRECTORY = "C:/spdtool-data/templates/fo";
+	public static final String TEMPLATES_DIRECTORY = "/usr/share/spdtool-data/templates/fo";
 
 	private final FopFactory fopFactory = FopFactory.newInstance();
 	private final TransformerFactory tFactory = TransformerFactory

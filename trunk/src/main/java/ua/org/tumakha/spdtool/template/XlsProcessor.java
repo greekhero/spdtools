@@ -19,8 +19,8 @@ import java.util.Map;
 public class XlsProcessor {
 
 	private static final Log log = LogFactory.getLog(XlsProcessor.class);
-	private static final String TEMPLATES_DIRECTORY = "C:/spdtool-data/templates/xls";
-	public static final String REPORTS_DIRECTORY = "C:/Reports/xls";
+	private static final String TEMPLATES_DIRECTORY = "/usr/share/spdtool-data/templates/xls";
+	public static final String REPORTS_DIRECTORY = "/usr/share/Reports/xls";
 
     public void generateReport(Report report, Map<String, Object> beans, OutputStream os) throws InvalidFormatException, IOException {
         String srcFilePath = TEMPLATES_DIRECTORY + "/" + report.getTemplate();

@@ -1,17 +1,6 @@
 package ua.org.tumakha.spdtool.template;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-
+import freemarker.template.TemplateException;
 import org.apache.commons.beanutils.BeanMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -24,9 +13,18 @@ import org.docx4j.openpackaging.io.SaveToZipFile;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
 import org.docx4j.wml.Document;
-
 import ua.org.tumakha.spdtool.template.model.TemplateModel;
-import freemarker.template.TemplateException;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Yuriy Tumakha
@@ -35,8 +33,8 @@ public class DocxProcessor extends TextProcessor {
 
 	public static JAXBContext context = org.docx4j.jaxb.Context.jc;
 	private static final Logger log = Logger.getLogger(DocxProcessor.class);
-	private static final String TEMPLATES_DIRECTORY = "C:/spdtool-data/templates/docx";
-	private static final String REPORTS_DIRECTORY = "C:/Reports/docx";
+	private static final String TEMPLATES_DIRECTORY = "/usr/share/spdtool-data/templates/docx";
+	private static final String REPORTS_DIRECTORY = "/usr/share/Reports/docx";
 	private static final FreeMarkerProccessor FREE_MARKER_PROCCESSOR = getFreeMarkerProccessor(TEMPLATES_DIRECTORY);
 
 	public void saveReport(TemplateModel model) {
