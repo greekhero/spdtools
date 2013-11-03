@@ -1,17 +1,15 @@
 package ua.org.tumakha.spdtool.template;
 
+import freemarker.template.TemplateException;
+import org.apache.fop.apps.FOPException;
+import org.apache.log4j.Logger;
+import ua.org.tumakha.spdtool.template.model.TemplateModel;
+
+import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.transform.TransformerException;
-
-import org.apache.fop.apps.FOPException;
-import org.apache.log4j.Logger;
-
-import ua.org.tumakha.spdtool.template.model.TemplateModel;
-import freemarker.template.TemplateException;
 
 /**
  * @author Yuriy Tumakha
@@ -19,8 +17,8 @@ import freemarker.template.TemplateException;
 public class FOProcessor extends TextProcessor {
 
 	private static final Logger log = Logger.getLogger(FOProcessor.class);
-	private static final String TEMPLATES_DIRECTORY = "C:/spdtool-data/templates/fo";
-	private static final String REPORTS_DIRECTORY = "C:/Reports/docx";
+	private static final String TEMPLATES_DIRECTORY = "/usr/share/spdtool-data/templates/fo";
+	private static final String REPORTS_DIRECTORY = "/usr/share/Reports/docx";
 	private final FreeMarkerProccessor FREE_MARKER_PROCCESSOR = getFreeMarkerProccessor(TEMPLATES_DIRECTORY);
 
 	public List<String> saveReports(FOTemplate template, List<? extends TemplateModel> listModel, FOType... types)

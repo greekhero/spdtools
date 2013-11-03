@@ -1,14 +1,13 @@
 package ua.org.tumakha.spdtool.template;
 
+import freemarker.template.TemplateException;
+import org.apache.commons.beanutils.BeanMap;
+import org.apache.log4j.Logger;
+import ua.org.tumakha.spdtool.template.model.TemplateModel;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.commons.beanutils.BeanMap;
-import org.apache.log4j.Logger;
-
-import ua.org.tumakha.spdtool.template.model.TemplateModel;
-import freemarker.template.TemplateException;
 
 /**
  * @author Yuriy Tumakha
@@ -16,7 +15,7 @@ import freemarker.template.TemplateException;
 public class TextProcessor {
 
 	private static final Logger log = Logger.getLogger(TextProcessor.class);
-	private static final String TEMPLATES_DIRECTORY = "C:/spdtool-data/templates/text";
+	private static final String TEMPLATES_DIRECTORY = "/usr/share/spdtool-data/templates/text";
 	private final FreeMarkerProccessor FREE_MARKER_PROCCESSOR = getFreeMarkerProccessor(TEMPLATES_DIRECTORY);
 	private TextTemplate textTemplate;
 
