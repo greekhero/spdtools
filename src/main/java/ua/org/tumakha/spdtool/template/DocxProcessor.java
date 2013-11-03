@@ -29,12 +29,12 @@ import java.util.Map;
 /**
  * @author Yuriy Tumakha
  */
-public class DocxProcessor extends TextProcessor {
+public class DocxProcessor extends TextProcessor implements BaseConfig {
 
 	public static JAXBContext context = org.docx4j.jaxb.Context.jc;
 	private static final Logger log = Logger.getLogger(DocxProcessor.class);
-	private static final String TEMPLATES_DIRECTORY = "/usr/share/spdtool-data/templates/docx";
-	private static final String REPORTS_DIRECTORY = "/usr/share/Reports/docx";
+	private static final String TEMPLATES_DIRECTORY = TEMPLATES_BASE + "docx";
+	private static final String REPORTS_DIRECTORY = REPORTS_BASE + "docx";
 	private static final FreeMarkerProccessor FREE_MARKER_PROCCESSOR = getFreeMarkerProccessor(TEMPLATES_DIRECTORY);
 
 	public void saveReport(TemplateModel model) {

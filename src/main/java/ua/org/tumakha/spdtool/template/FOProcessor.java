@@ -14,11 +14,11 @@ import java.util.List;
 /**
  * @author Yuriy Tumakha
  */
-public class FOProcessor extends TextProcessor {
+public class FOProcessor extends TextProcessor implements BaseConfig {
 
 	private static final Logger log = Logger.getLogger(FOProcessor.class);
-	private static final String TEMPLATES_DIRECTORY = "/usr/share/spdtool-data/templates/fo";
-	private static final String REPORTS_DIRECTORY = "/usr/share/Reports/docx";
+	private static final String TEMPLATES_DIRECTORY = TEMPLATES_BASE + "fo";
+	private static final String REPORTS_DIRECTORY = REPORTS_BASE + "docx";
 	private final FreeMarkerProccessor FREE_MARKER_PROCCESSOR = getFreeMarkerProccessor(TEMPLATES_DIRECTORY);
 
 	public List<String> saveReports(FOTemplate template, List<? extends TemplateModel> listModel, FOType... types)

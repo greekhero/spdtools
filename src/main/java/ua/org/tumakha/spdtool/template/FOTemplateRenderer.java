@@ -25,11 +25,11 @@ import java.util.Date;
  * @author Yura
  * 
  */
-public class FOTemplateRenderer {
+public class FOTemplateRenderer implements BaseConfig {
 
 	private static final Logger log = Logger
 			.getLogger(FOTemplateRenderer.class);
-	public static final String TEMPLATES_DIRECTORY = "/usr/share/spdtool-data/templates/fo";
+	public static final String TEMPLATES_DIRECTORY = TEMPLATES_BASE + "fo";
 
 	private final FopFactory fopFactory = FopFactory.newInstance();
 	private final TransformerFactory tFactory = TransformerFactory
