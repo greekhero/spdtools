@@ -60,11 +60,13 @@ public class BankDataBuilder {
     }
 
     private Map<Integer, BankDay> getBankDataDays(List<BankTransaction> transactions) {
-        Integer usdTransitAccount = getUSDTransitAccount(transactions);
+        //Integer usdTransitAccount = getUSDTransitAccount(transactions);
         Map<Integer, BankDay> bankDataDays = new LinkedHashMap<Integer, BankDay>();
         for (BankTransaction transaction : transactions) {
             String purpose = transaction.getPlatPurpose();
-            if ((usdTransitAccount != null && usdTransitAccount.equals(transaction.getAccountId()))
+            //if ((usdTransitAccount != null && usdTransitAccount.equals(transaction.getAccountId()))
+            String account = transaction.getAccountNo() != null ? transaction.getAccountNo().toString() : "";
+            if (account.startsWith("2603") || account.startsWith("2605")
                     || (purpose != null && purpose.length() < 20 && purpose.startsWith("RBU"))) {
                 continue; // ignore transaction
             }
