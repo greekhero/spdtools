@@ -13,7 +13,7 @@
           class="org.springframework.jdbc.datasource.DriverManagerDataSource"
           p:driverClassName="com.mysql.jdbc.Driver"
           p:url="jdbc:mysql://localhost/spd"
-          p:username="root"
+          p:username="spd_test"
           p:password="pass"/>
           
     
