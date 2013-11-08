@@ -80,7 +80,7 @@ public class TemplateServiceImpl implements TemplateService {
 			User lastUser = null;
 			try {
 				for (User user : users) {
-					if (!user.getUserId().equals(93)) {
+					if (!user.getUserId().equals(93) && user.getLastContract() != null) {
 						lastUser = user;
 						ActModel actModel = new ActModel(user);
 						listModel.add(actModel);
