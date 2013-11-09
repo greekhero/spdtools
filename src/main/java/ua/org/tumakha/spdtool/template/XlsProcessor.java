@@ -59,7 +59,7 @@ public class XlsProcessor {
             transformer.registerRowProcessor(rowProcessor);
         }
 		transformer.transformXLS(TEMPLATES_DIRECTORY + "/" + template.getFilename(), beans, outputFile.getAbsolutePath());
-		log.debug("Saved XLS output to: " + outputFile.getAbsolutePath());
+		//log.debug("Saved XLS output to: " + outputFile.getAbsolutePath());
 		return outputFilename;
 	}
 
