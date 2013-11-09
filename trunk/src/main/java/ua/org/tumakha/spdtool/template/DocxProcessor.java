@@ -179,7 +179,7 @@ public class DocxProcessor extends TextProcessor {
 
                 SaveToZipFile saver = new SaveToZipFile(wordMLPackage);
                 saver.save(outputfilepath);
-                log.debug("Saved output to: " + outputFile.getAbsolutePath());
+                //log.debug("Saved output to: " + outputFile.getAbsolutePath());
             }
 
             // savePdf(wordMLPackage, outputfilepath);

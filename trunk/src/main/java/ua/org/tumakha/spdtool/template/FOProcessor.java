@@ -94,7 +94,7 @@ public class FOProcessor extends TextProcessor {
                     foTemplateRenderer.saveRtf(outputFile);
                 }
                 filenames.add(outputfilepath);
-                log.debug("Saved output to: " + outputFile.getAbsolutePath());
+                //log.debug("Saved output to: " + outputFile.getAbsolutePath());
             }
             return filenames;
         }
