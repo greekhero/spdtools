@@ -8,27 +8,40 @@ import ua.org.tumakha.spdtool.template.model.TemplateModel;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Yuriy Tumakha
  */
-public class TextProcessor implements BaseConfig {
+public class TextProcessor {
 
     private static final Logger log = Logger.getLogger(TextProcessor.class);
-	private static final String TEMPLATES_DIRECTORY = TEMPLATES_BASE + "text";
-	private final FreeMarkerProccessor FREE_MARKER_PROCCESSOR = getFreeMarkerProccessor(TEMPLATES_DIRECTORY);
+	private static String TEMPLATES_DIRECTORY;
+	private static FreeMarkerProccessor FREE_MARKER_PROCCESSOR;
 	private TextTemplate textTemplate;
-    protected Integer threadsNumber;
+    private ExecutorService executorService;
 
-	public TextProcessor() {
-
+    public TextProcessor() {
 	}
 
 	public TextProcessor(TextTemplate textTemplate) {
 		this.textTemplate = textTemplate;
 	}
 
-	protected static FreeMarkerProccessor getFreeMarkerProccessor(String templatesDirectory) {
+    public static void init(String templatesBaseDir) {
+        TEMPLATES_DIRECTORY = templatesBaseDir + "text";
+        FREE_MARKER_PROCCESSOR = getFreeMarkerProccessor(TEMPLATES_DIRECTORY);
+    }
+
+    public ExecutorService getExecutorService() {
+        return executorService;
+    }
+
+    public void setExecutorService(ExecutorService executorService) {
+        this.executorService = executorService;
+    }
+
+    protected static FreeMarkerProccessor getFreeMarkerProccessor(String templatesDirectory) {
 		try {
 			return FreeMarkerProccessor.getInstance(templatesDirectory);
 		} catch (IOException e) {
@@ -61,5 +74,9 @@ public class TextProcessor implements BaseConfig {
 		// log.debug(mappings);
 		return mappings;
 	}
+
+    public void shutdown() {
+        executorService.shutdown();
+    }
 
 }

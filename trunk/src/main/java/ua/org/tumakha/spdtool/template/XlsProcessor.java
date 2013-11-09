@@ -16,11 +16,20 @@ import java.util.Map;
 /**
  * @author Yuriy Tumakha
  */
-public class XlsProcessor implements BaseConfig {
+public class XlsProcessor {
 
 	private static final Log log = LogFactory.getLog(XlsProcessor.class);
-	private static final String TEMPLATES_DIRECTORY = TEMPLATES_BASE + "xls";
-	public static final String REPORTS_DIRECTORY = REPORTS_BASE + "xls";
+	private static String TEMPLATES_DIRECTORY;
+	public static String REPORTS_DIRECTORY;
+
+    public static void init(String templatesBaseDir, String reportsBaseDir) {
+        TEMPLATES_DIRECTORY = templatesBaseDir + "xls";
+        REPORTS_DIRECTORY = reportsBaseDir + "xls";
+    }
+
+    public static void setReportsDirectory(String reportsDirectory) {
+        REPORTS_DIRECTORY = reportsDirectory;
+    }
 
     public void generateReport(Report report, Map<String, Object> beans, OutputStream os) throws InvalidFormatException, IOException {
         String srcFilePath = TEMPLATES_DIRECTORY + "/" + report.getTemplate();
@@ -50,7 +59,7 @@ public class XlsProcessor implements BaseConfig {
             transformer.registerRowProcessor(rowProcessor);
         }
 		transformer.transformXLS(TEMPLATES_DIRECTORY + "/" + template.getFilename(), beans, outputFile.getAbsolutePath());
-		log.debug("Saved XLS output to: " + outputFilename);
+		log.debug("Saved XLS output to: " + outputFile.getAbsolutePath());
 		return outputFilename;
 	}
 

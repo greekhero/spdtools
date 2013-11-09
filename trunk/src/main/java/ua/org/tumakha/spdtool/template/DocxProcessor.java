@@ -27,16 +27,26 @@ import java.util.concurrent.*;
 /**
  * @author Yuriy Tumakha
  */
-public class DocxProcessor extends TextProcessor implements BaseConfig {
+public class DocxProcessor extends TextProcessor {
 
     public static JAXBContext context = org.docx4j.jaxb.Context.jc;
 	private static final Logger log = Logger.getLogger(DocxProcessor.class);
-	private static final String TEMPLATES_DIRECTORY = TEMPLATES_BASE + "docx";
-	private static final String REPORTS_DIRECTORY = REPORTS_BASE + "docx";
-	private static final FreeMarkerProccessor FREE_MARKER_PROCCESSOR = getFreeMarkerProccessor(TEMPLATES_DIRECTORY);
+	private static String TEMPLATES_DIRECTORY;
+	private static String REPORTS_DIRECTORY;
+	private static FreeMarkerProccessor FREE_MARKER_PROCCESSOR;
 
-    public DocxProcessor(Integer threadsNumber) {
-        this.threadsNumber = threadsNumber;
+    public DocxProcessor(ExecutorService executorService) {
+        setExecutorService(executorService);
+    }
+
+    public static void init(String templatesBaseDir, String reportsBaseDir) {
+        TEMPLATES_DIRECTORY = templatesBaseDir + "docx";
+        REPORTS_DIRECTORY = reportsBaseDir + "docx";
+        FREE_MARKER_PROCCESSOR = getFreeMarkerProccessor(TEMPLATES_DIRECTORY);
+    }
+
+    public static void setReportsDirectory(String reportsDirectory) {
+        REPORTS_DIRECTORY = reportsDirectory;
     }
 
     public void saveReport(TemplateModel model) {
@@ -48,10 +58,14 @@ public class DocxProcessor extends TextProcessor implements BaseConfig {
 		File outputFile = new File(outputfilepath);
 		File outputBaseDirectory = outputFile.getParentFile().getParentFile();
 		// prevent delete not reports directories
-		String path = outputBaseDirectory.getAbsolutePath();
-		if (path.contains("docx") && path.length() > 16) {
-			FileUtils.deleteDirectory(outputBaseDirectory);
-		}
+        if (outputBaseDirectory.mkdirs()) {
+            log.debug("Created directory: " + outputBaseDirectory);
+        } else {
+            String path = outputBaseDirectory.getAbsolutePath();
+            if (path.contains("docx") && path.length() > 16) {
+                FileUtils.deleteDirectory(outputBaseDirectory);
+            }
+        }
 	}
 
 	public List<String> saveReports(DocxTemplate template, List<? extends TemplateModel> listModel)
@@ -65,8 +79,8 @@ public class DocxProcessor extends TextProcessor implements BaseConfig {
 		}
 		// Open a document from the file system
 		// 1. Load the Package
-		WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(new java.io.File(TEMPLATES_DIRECTORY + "/"
-				+ template.getFilename()));
+        File templateFile = new File(TEMPLATES_DIRECTORY + "/" + template.getFilename());
+        WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(templateFile);
 
 		// 2. Fetch the document part
 		MainDocumentPart documentPart = wordMLPackage.getMainDocumentPart();
@@ -76,15 +90,20 @@ public class DocxProcessor extends TextProcessor implements BaseConfig {
 		// xml --> string
 		String xml = XmlUtils.marshaltoString(wmlDocumentEl, true);
 
-        ExecutorService executorService = Executors.newFixedThreadPool(threadsNumber);
+        // Create directory
+        String outputfilepath = REPORTS_DIRECTORY + listModel.get(0).getOutputFilename(template);
+        File outputDirectory = new File(outputfilepath).getParentFile();
+        if (outputDirectory.mkdirs()) {
+            log.debug("Created directory: " + outputDirectory);
+        }
+
         Set<Future<String>> results = new HashSet<Future<String>>();
         for (TemplateModel model : listModel) {
-            results.add(executorService.submit(new SaveDocumentCallable(wordMLPackage, model, template, xml)));
+            results.add(getExecutorService().submit(new SaveDocumentCallable(wordMLPackage, model, template, xml)));
         }
         for (Future<String> result : results) {
             fileNames.add(result.get());
         }
-        executorService.shutdown();
 
 		return fileNames;
 	}
@@ -148,18 +167,20 @@ public class DocxProcessor extends TextProcessor implements BaseConfig {
                 obj = XmlUtils.unmarshallFromTemplate(xml, mappings);
             }
 
-            // change JaxbElement
-            wordMLPackage.getMainDocumentPart().setJaxbElement((Document) obj);
-
             File outputFile = new File(outputfilepath);
             File outputDirectory = outputFile.getParentFile();
             if (outputDirectory.mkdirs()) {
                 log.debug("Created directory: " + outputDirectory);
             }
 
-            SaveToZipFile saver = new SaveToZipFile(wordMLPackage);
-            saver.save(outputfilepath);
-            log.debug("Saved output to: " + outputfilepath);
+            synchronized (log) {
+                // change JaxbElement
+                wordMLPackage.getMainDocumentPart().setJaxbElement((Document) obj);
+
+                SaveToZipFile saver = new SaveToZipFile(wordMLPackage);
+                saver.save(outputfilepath);
+                log.debug("Saved output to: " + outputFile.getAbsolutePath());
+            }
 
             // savePdf(wordMLPackage, outputfilepath);
 

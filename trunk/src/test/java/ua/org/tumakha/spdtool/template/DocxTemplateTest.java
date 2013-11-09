@@ -1,18 +1,33 @@
 package ua.org.tumakha.spdtool.template;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.junit.BeforeClass;
 import org.junit.Test;
-
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ua.org.tumakha.spdtool.template.model.ActModel;
 import ua.org.tumakha.util.NumberUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Executors;
+
 public class DocxTemplateTest {
 
-	DocxProcessor docxTemplate = new DocxProcessor(4);
+	private static DocxProcessor docxProcessor;
+    private static String[] CONFIG_LOCATIONS = {
+            "classpath:datasource-test.xml",
+            "classpath:META-INF/spring/applicationContext.xml" };
+    private static ApplicationContext applicationContext;
 
-	@Test
+    @BeforeClass
+    public static void init() {
+        applicationContext = new ClassPathXmlApplicationContext(
+                CONFIG_LOCATIONS);
+        docxProcessor = new DocxProcessor(Executors.newFixedThreadPool(4));
+        DocxProcessor.setReportsDirectory("./target");
+    }
+
+    @Test
 	public void test() throws Exception {
 		ActModel actModel = new ActModel();
 		actModel.setActNo("YVT/2011-05-08");
@@ -46,7 +61,8 @@ public class DocxTemplateTest {
 		actModel.setBankSWIFT("AVALAUK");
 		List<ActModel> listModel = new ArrayList<ActModel>(100);
 		listModel.add(actModel);
-		// docxTemplate.saveReports(DocxTemplate.ACT, listModel);
+		docxProcessor.saveReports(DocxTemplate.ACT, listModel);
+        docxProcessor.shutdown();
 	}
 
 }

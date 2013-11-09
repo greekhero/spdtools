@@ -1,20 +1,19 @@
 package ua.org.tumakha.spdtool.template;
 
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ua.org.tumakha.spdtool.entity.User;
+import ua.org.tumakha.spdtool.enums.RentType;
+import ua.org.tumakha.spdtool.services.TemplateService;
+import ua.org.tumakha.spdtool.services.UserService;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import ua.org.tumakha.spdtool.entity.User;
-import ua.org.tumakha.spdtool.enums.RentType;
-import ua.org.tumakha.spdtool.services.TemplateService;
-import ua.org.tumakha.spdtool.services.UserService;
 
 /**
  * @author Yuriy Tumakha
@@ -35,7 +34,7 @@ public class XlsProcessorTest {
 		applicationContext = new ClassPathXmlApplicationContext(CONFIG_LOCATIONS);
 		userService = (UserService) applicationContext.getBean("userService");
 		templateService = (TemplateService) applicationContext.getBean("templateService");
-
+        XlsProcessor.setReportsDirectory("./target");
 	}
 
 	@Test

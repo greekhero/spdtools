@@ -1,3 +1,4 @@
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -10,6 +11,7 @@ import ua.org.tumakha.spdtool.template.XlsProcessor;
 import ua.org.tumakha.spdtool.template.model.*;
 
 import java.util.List;
+import java.util.concurrent.Executors;
 
 /**
  * @author Yuriy Tumakha
@@ -22,7 +24,7 @@ public class GenerateReportsTest {
 	private static ApplicationContext applicationContext;
 	private static UserService userService;
 	private static TemplateService templateService;
-	private final DocxProcessor docxProcessor = new DocxProcessor(4);
+	private static DocxProcessor docxProcessor;
 	private final XlsProcessor xlsProcessor = new XlsProcessor();
 
 	@BeforeClass
@@ -32,6 +34,8 @@ public class GenerateReportsTest {
 		userService = (UserService) applicationContext.getBean("userService");
 		templateService = (TemplateService) applicationContext
 				.getBean("templateService");
+        docxProcessor = new DocxProcessor(Executors.newFixedThreadPool(4));
+        DocxProcessor.setReportsDirectory("./target");
 	}
 
 	@Test
@@ -82,5 +86,10 @@ public class GenerateReportsTest {
 					+ models.size());
 		}
 	}
+
+    @AfterClass
+    public static void shutdown() {
+        docxProcessor.shutdown();
+    }
 
 }

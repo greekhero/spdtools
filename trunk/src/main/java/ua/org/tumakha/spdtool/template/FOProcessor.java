@@ -17,15 +17,25 @@ import java.util.concurrent.*;
 /**
  * @author Yuriy Tumakha
  */
-public class FOProcessor extends TextProcessor implements BaseConfig {
+public class FOProcessor extends TextProcessor {
 
 	private static final Logger log = Logger.getLogger(FOProcessor.class);
-	private static final String TEMPLATES_DIRECTORY = TEMPLATES_BASE + "fo";
-	private static final String REPORTS_DIRECTORY = REPORTS_BASE + "docx";
-	private static final FreeMarkerProccessor FREE_MARKER_PROCCESSOR = getFreeMarkerProccessor(TEMPLATES_DIRECTORY);
+	private static String TEMPLATES_DIRECTORY;
+	private static String REPORTS_DIRECTORY;
+	private static FreeMarkerProccessor FREE_MARKER_PROCCESSOR;
 
-    public FOProcessor(Integer threadsNumber) {
-        this.threadsNumber = threadsNumber;
+    public FOProcessor(ExecutorService executorService) {
+        setExecutorService(executorService);
+    }
+
+    public static void init(String templatesBaseDir, String reportsBaseDir) {
+        TEMPLATES_DIRECTORY = templatesBaseDir + "fo";
+        REPORTS_DIRECTORY = reportsBaseDir + "docx";
+        FREE_MARKER_PROCCESSOR = getFreeMarkerProccessor(TEMPLATES_DIRECTORY);
+    }
+
+    public static void setReportsDirectory(String reportsDirectory) {
+        REPORTS_DIRECTORY = reportsDirectory;
     }
 
     public List<String> saveReports(FOTemplate template, List<? extends TemplateModel> listModel, FOType... types)
@@ -34,15 +44,13 @@ public class FOProcessor extends TextProcessor implements BaseConfig {
 		if (listModel == null || listModel.size() == 0) {
 			log.debug("listModel is empty");
 		} else {
-            ExecutorService executorService = Executors.newFixedThreadPool(threadsNumber);
             Set<Future<Set<String>>> results = new HashSet<Future<Set<String>>>();
             for (TemplateModel model : listModel) {
-                results.add(executorService.submit(new SaveDocumentCallable(template, model, types)));
+                results.add(getExecutorService().submit(new SaveDocumentCallable(template, model, types)));
             }
             for (Future<Set<String>> result : results) {
                 fileNames.addAll(result.get());
             }
-            executorService.shutdown();
 		}
 		return fileNames;
 	}
@@ -65,7 +73,7 @@ public class FOProcessor extends TextProcessor implements BaseConfig {
 
             FOTemplateRenderer foTemplateRenderer = new FOTemplateRenderer(foXml);
 
-            Set<String> filenames = new HashSet<String>();
+            Set<String> filenames = new HashSet<String>(types.length);
             for (FOType type : types) {
                 String tempateFilename = model.getOutputFilename(template);
                 String outputFilename = null;
@@ -86,7 +94,7 @@ public class FOProcessor extends TextProcessor implements BaseConfig {
                     foTemplateRenderer.saveRtf(outputFile);
                 }
                 filenames.add(outputfilepath);
-                log.debug("Saved output to: " + outputfilepath);
+                log.debug("Saved output to: " + outputFile.getAbsolutePath());
             }
             return filenames;
         }
