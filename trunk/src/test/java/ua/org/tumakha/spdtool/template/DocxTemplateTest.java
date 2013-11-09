@@ -10,7 +10,7 @@ import ua.org.tumakha.util.NumberUtil;
 
 public class DocxTemplateTest {
 
-	DocxProcessor docxTemplate = new DocxProcessor();
+	DocxProcessor docxTemplate = new DocxProcessor(4);
 
 	@Test
 	public void test() throws Exception {

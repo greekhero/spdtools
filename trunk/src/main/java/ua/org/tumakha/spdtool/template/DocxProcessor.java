@@ -21,23 +21,25 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.*;
 
 /**
  * @author Yuriy Tumakha
  */
 public class DocxProcessor extends TextProcessor implements BaseConfig {
 
-	public static JAXBContext context = org.docx4j.jaxb.Context.jc;
+    public static JAXBContext context = org.docx4j.jaxb.Context.jc;
 	private static final Logger log = Logger.getLogger(DocxProcessor.class);
 	private static final String TEMPLATES_DIRECTORY = TEMPLATES_BASE + "docx";
 	private static final String REPORTS_DIRECTORY = REPORTS_BASE + "docx";
 	private static final FreeMarkerProccessor FREE_MARKER_PROCCESSOR = getFreeMarkerProccessor(TEMPLATES_DIRECTORY);
 
-	public void saveReport(TemplateModel model) {
+    public DocxProcessor(Integer threadsNumber) {
+        this.threadsNumber = threadsNumber;
+    }
+
+    public void saveReport(TemplateModel model) {
 		log.debug(model.getClass());// TODO:
 	}
 
@@ -53,7 +55,7 @@ public class DocxProcessor extends TextProcessor implements BaseConfig {
 	}
 
 	public List<String> saveReports(DocxTemplate template, List<? extends TemplateModel> listModel)
-			throws JAXBException, Docx4JException, TemplateException, IOException {
+            throws JAXBException, Docx4JException, TemplateException, IOException, ExecutionException, InterruptedException {
 
 		List<String> fileNames = new ArrayList<String>();
 
@@ -74,43 +76,17 @@ public class DocxProcessor extends TextProcessor implements BaseConfig {
 		// xml --> string
 		String xml = XmlUtils.marshaltoString(wmlDocumentEl, true);
 
-		for (TemplateModel model : listModel) {
-			fileNames.add(saveDocument(wordMLPackage, xml, model, template));
-		}
+        ExecutorService executorService = Executors.newFixedThreadPool(threadsNumber);
+        Set<Future<String>> results = new HashSet<Future<String>>();
+        for (TemplateModel model : listModel) {
+            results.add(executorService.submit(new SaveDocumentCallable(wordMLPackage, model, template, xml)));
+        }
+        for (Future<String> result : results) {
+            fileNames.add(result.get());
+        }
+        executorService.shutdown();
+
 		return fileNames;
-	}
-
-	private static String saveDocument(WordprocessingMLPackage wordMLPackage, String xml, TemplateModel model,
-			DocxTemplate template) throws JAXBException, Docx4JException, TemplateException, IOException {
-		String outputfilepath = REPORTS_DIRECTORY + model.getOutputFilename(template);
-		Object obj = null;
-		if (template.isFreemarker()) {
-			// process as FreeMarker template
-			Map<String, ?> mappings = getMappings(model);
-			xml = FREE_MARKER_PROCCESSOR.processTemplate(template.getFilename().replace(".docx", ".xml"), mappings);
-			obj = XmlUtils.unmarshalString(xml);
-		} else {
-			// simple replace mappings
-			HashMap<String, String> mappings = getStringMappings(model);
-			obj = XmlUtils.unmarshallFromTemplate(xml, mappings);
-		}
-
-		// change JaxbElement
-		wordMLPackage.getMainDocumentPart().setJaxbElement((Document) obj);
-
-		File outputFile = new File(outputfilepath);
-		File outputDirectory = outputFile.getParentFile();
-		if (outputDirectory.mkdirs()) {
-			log.debug("Created directory: " + outputDirectory);
-		}
-
-		SaveToZipFile saver = new SaveToZipFile(wordMLPackage);
-		saver.save(outputfilepath);
-		log.debug("Saved output to: " + outputfilepath);
-
-		// savePdf(wordMLPackage, outputfilepath);
-
-		return outputfilepath;
 	}
 
 	private static void savePdf(WordprocessingMLPackage wordMLPackage, String outputfilepath)
@@ -143,5 +119,53 @@ public class DocxProcessor extends TextProcessor implements BaseConfig {
 		// log.debug(mappings);
 		return mappings;
 	}
+
+    private static class SaveDocumentCallable implements Callable {
+
+        private WordprocessingMLPackage wordMLPackage;
+        private TemplateModel model;
+        private DocxTemplate template;
+        private String xml;
+
+        public SaveDocumentCallable(WordprocessingMLPackage wordMLPackage, TemplateModel model, DocxTemplate template, String xml) {
+            this.wordMLPackage = wordMLPackage;
+            this.model = model;
+            this.template = template;
+            this.xml = xml;
+        }
+
+        public String call() throws IOException, TemplateException, JAXBException, Docx4JException {
+            String outputfilepath = REPORTS_DIRECTORY + model.getOutputFilename(template);
+            Object obj = null;
+            if (template.isFreemarker()) {
+                // process as FreeMarker template
+                Map<String, ?> mappings = getMappings(model);
+                xml = FREE_MARKER_PROCCESSOR.processTemplate(template.getFilename().replace(".docx", ".xml"), mappings);
+                obj = XmlUtils.unmarshalString(xml);
+            } else {
+                // simple replace mappings
+                HashMap<String, String> mappings = getStringMappings(model);
+                obj = XmlUtils.unmarshallFromTemplate(xml, mappings);
+            }
+
+            // change JaxbElement
+            wordMLPackage.getMainDocumentPart().setJaxbElement((Document) obj);
+
+            File outputFile = new File(outputfilepath);
+            File outputDirectory = outputFile.getParentFile();
+            if (outputDirectory.mkdirs()) {
+                log.debug("Created directory: " + outputDirectory);
+            }
+
+            SaveToZipFile saver = new SaveToZipFile(wordMLPackage);
+            saver.save(outputfilepath);
+            log.debug("Saved output to: " + outputfilepath);
+
+            // savePdf(wordMLPackage, outputfilepath);
+
+            return outputfilepath;
+        }
+
+    }
 
 }

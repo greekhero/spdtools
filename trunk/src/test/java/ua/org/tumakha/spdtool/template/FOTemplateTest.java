@@ -1,16 +1,15 @@
 package ua.org.tumakha.spdtool.template;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
-
 import ua.org.tumakha.spdtool.template.model.ActModel;
 import ua.org.tumakha.util.NumberUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FOTemplateTest {
 
-	FOProcessor foProcessor = new FOProcessor();
+	FOProcessor foProcessor = new FOProcessor(4);
 
 	@Test
 	public void test() throws Exception {

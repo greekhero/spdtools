@@ -14,10 +14,11 @@ import java.util.Map;
  */
 public class TextProcessor implements BaseConfig {
 
-	private static final Logger log = Logger.getLogger(TextProcessor.class);
+    private static final Logger log = Logger.getLogger(TextProcessor.class);
 	private static final String TEMPLATES_DIRECTORY = TEMPLATES_BASE + "text";
 	private final FreeMarkerProccessor FREE_MARKER_PROCCESSOR = getFreeMarkerProccessor(TEMPLATES_DIRECTORY);
 	private TextTemplate textTemplate;
+    protected Integer threadsNumber;
 
 	public TextProcessor() {
 

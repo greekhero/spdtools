@@ -1,20 +1,15 @@
-import java.util.List;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import ua.org.tumakha.spdtool.services.TemplateService;
 import ua.org.tumakha.spdtool.services.UserService;
 import ua.org.tumakha.spdtool.template.DocxProcessor;
 import ua.org.tumakha.spdtool.template.DocxTemplate;
 import ua.org.tumakha.spdtool.template.XlsProcessor;
-import ua.org.tumakha.spdtool.template.model.ActModel;
-import ua.org.tumakha.spdtool.template.model.Form11KvedModel;
-import ua.org.tumakha.spdtool.template.model.Form20OPPModel;
-import ua.org.tumakha.spdtool.template.model.IncomeCalculationModel;
-import ua.org.tumakha.spdtool.template.model.TaxSystemStatementModel;
+import ua.org.tumakha.spdtool.template.model.*;
+
+import java.util.List;
 
 /**
  * @author Yuriy Tumakha
@@ -27,7 +22,7 @@ public class GenerateReportsTest {
 	private static ApplicationContext applicationContext;
 	private static UserService userService;
 	private static TemplateService templateService;
-	private final DocxProcessor docxProcessor = new DocxProcessor();
+	private final DocxProcessor docxProcessor = new DocxProcessor(4);
 	private final XlsProcessor xlsProcessor = new XlsProcessor();
 
 	@BeforeClass
