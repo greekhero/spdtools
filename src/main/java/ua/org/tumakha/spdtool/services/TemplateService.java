@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Yuriy Tumakha
@@ -33,7 +34,7 @@ public interface TemplateService {
 
 	List<String> generateActs(Set<Integer> enabledUserIds, Integer year, Integer month, boolean generateContracts,
 			boolean generateActs) throws JAXBException, Docx4JException, TemplateException, IOException,
-			TransformerException, FOPException;
+            TransformerException, FOPException, ExecutionException, InterruptedException;
 
 	List<String> generateEcpDocuments(Set<Integer> enabledUserIds, Set<Integer> groupIds, Date date)
 			throws JAXBException, Docx4JException, TemplateException, IOException, InvalidFormatException;

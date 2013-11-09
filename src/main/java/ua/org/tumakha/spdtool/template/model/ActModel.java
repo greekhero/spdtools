@@ -1,10 +1,5 @@
 package ua.org.tumakha.spdtool.template.model;
 
-import java.text.DateFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 import ua.org.tumakha.spdtool.entity.Act;
 import ua.org.tumakha.spdtool.entity.Contract;
 import ua.org.tumakha.spdtool.entity.User;
@@ -12,13 +7,18 @@ import ua.org.tumakha.spdtool.template.DocxTemplate;
 import ua.org.tumakha.spdtool.template.FOTemplate;
 import ua.org.tumakha.util.NumberUtil;
 
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 /**
  * @author Yuriy Tumakha
  */
 public class ActModel extends TemplateModel {
 
-	private static final DateFormat yearMonthFormat = new SimpleDateFormat(
-			"yyyy-MM");
+    private static final String YEAR_MONTH_FORMAT = "yyyy-MM";
+    private static final String ACT_PERIOD_FORMAT_EN = "dd 'of' MMMMM yyyy";
 	private static final DateFormat contractDateFormat = new SimpleDateFormat(
 			"dd MMMMM yyyy", uaLocale);
 	private static final DateFormat contractDateFormatEn = new SimpleDateFormat(
@@ -29,8 +29,6 @@ public class ActModel extends TemplateModel {
 			"«dd»  MMMMM  yyyy", enLocale);
 	private static final DateFormat actPeriodFormat = new SimpleDateFormat(
 			"dd MMMMM yyyy", uaLocale);
-	private static final DateFormat actPeriodFormatEn = new SimpleDateFormat(
-			"dd 'of' MMMMM yyyy", enLocale);
 	private static final NumberFormat amountFormat = NumberFormat
 			.getNumberInstance(enLocale);
 
@@ -72,6 +70,7 @@ public class ActModel extends TemplateModel {
 	}
 
 	private void copyProperties(User user, Act act) {
+        DateFormat actPeriodFormatEn = new SimpleDateFormat(ACT_PERIOD_FORMAT_EN, enLocale);
 		newContract = user.getLastContract().getDate().getTime() + 2160000000L > act
 				.getDateFrom().getTime();
 		serviceType = user.getServiceType().getName();
@@ -296,8 +295,8 @@ public class ActModel extends TemplateModel {
 		String month = "";
 		try {
 			if (dateToEn != null) {
-				month = yearMonthFormat.format(actPeriodFormatEn
-						.parse(dateToEn));
+				month = new SimpleDateFormat(YEAR_MONTH_FORMAT).format(
+                        new SimpleDateFormat(ACT_PERIOD_FORMAT_EN, enLocale).parse(dateToEn));
 			}
 		} catch (ParseException e) {
 			throw new IllegalStateException(e);
@@ -314,8 +313,8 @@ public class ActModel extends TemplateModel {
 		String month = "";
 		try {
 			if (dateToEn != null) {
-				month = yearMonthFormat.format(actPeriodFormatEn
-						.parse(dateToEn));
+				month = new SimpleDateFormat(YEAR_MONTH_FORMAT).format(
+                        new SimpleDateFormat(ACT_PERIOD_FORMAT_EN, enLocale).parse(dateToEn));
 			}
 		} catch (ParseException e) {
 			throw new IllegalStateException(e);

@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.*;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Yuriy Tumakha
@@ -67,8 +68,11 @@ public class TemplateServiceImpl implements TemplateService {
 	@Autowired
 	private JavaMailSender mailSender;
 
-	@Value("${admin.email}")
-	private String adminEmail;
+    @Value("${admin.email}")
+    private String adminEmail;
+
+    @Value("${template.service.threads.number:4}")
+    private Integer threadsNumber;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
@@ -238,7 +242,7 @@ public class TemplateServiceImpl implements TemplateService {
 	@Override
 	public List<String> generateActs(Set<Integer> enabledUserIds, Integer year, Integer month,
 			boolean generateContracts, boolean generateActs) throws JAXBException, Docx4JException, TemplateException,
-			IOException, TransformerException, FOPException {
+            IOException, TransformerException, FOPException, ExecutionException, InterruptedException {
 		List<String> fileNames = new ArrayList<String>();
 		List<Act> acts = actService.findActsByYearAndMonth(year, month);
 		List<ActModel> listModel = getActModelList(acts, enabledUserIds);
@@ -252,8 +256,8 @@ public class TemplateServiceImpl implements TemplateService {
 	}
 
 	private void generateActsDocx(List<String> fileNames, List<ActModel> listModel, boolean generateContracts,
-			boolean generateActs) throws JAXBException, Docx4JException, TemplateException, IOException {
-		DocxProcessor docxProcessor = new DocxProcessor();
+			boolean generateActs) throws JAXBException, Docx4JException, TemplateException, IOException, ExecutionException, InterruptedException {
+		DocxProcessor docxProcessor = new DocxProcessor(threadsNumber);
 		if (listModel != null && listModel.size() > 0) {
 			docxProcessor.cleanBaseDirectory(DocxTemplate.ACT, listModel.get(0));
 		}
@@ -277,8 +281,8 @@ public class TemplateServiceImpl implements TemplateService {
 	}
 
 	private void generateActsPdf(List<String> fileNames, List<ActModel> listModel, boolean generateContracts,
-			boolean generateActs) throws TemplateException, IOException, TransformerException, FOPException {
-		FOProcessor foProcessor = new FOProcessor();
+			boolean generateActs) throws TemplateException, IOException, TransformerException, FOPException, ExecutionException, InterruptedException {
+		FOProcessor foProcessor = new FOProcessor(threadsNumber);
 		if (generateActs) {
 			fileNames.addAll(foProcessor.saveReports(FOTemplate.ACT, listModel, FOType.PDF));
 			fileNames.addAll(foProcessor.saveReports(FOTemplate.CONTRACT_ANNEX, listModel, FOType.PDF));
