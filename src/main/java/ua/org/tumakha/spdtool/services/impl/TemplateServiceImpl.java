@@ -24,6 +24,7 @@ import ua.org.tumakha.spdtool.template.model.*;
 import ua.org.tumakha.spdtool.template.xls.row.BankDataBuilder;
 import ua.org.tumakha.util.StrUtil;
 
+import javax.annotation.PostConstruct;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.xml.bind.JAXBException;
@@ -34,6 +35,7 @@ import java.math.BigDecimal;
 import java.text.*;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
 
 /**
  * @author Yuriy Tumakha
@@ -74,7 +76,21 @@ public class TemplateServiceImpl implements TemplateService {
     @Value("${template.service.threads.number:4}")
     private Integer threadsNumber;
 
-	@Override
+    @Value("${templates.base.directory}")
+    private String templatesBaseDir;
+
+    @Value("${reports.base.directory}")
+    private String reportsBaseDir;
+
+    @PostConstruct
+    public void init() {
+        DocxProcessor.init(templatesBaseDir, reportsBaseDir);
+        FOProcessor.init(templatesBaseDir, reportsBaseDir);
+        XlsProcessor.init(templatesBaseDir, reportsBaseDir);
+        TextProcessor.init(templatesBaseDir);
+    }
+
+    @Override
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Deprecated
 	public List<ActModel> getActModelList() {
@@ -257,7 +273,7 @@ public class TemplateServiceImpl implements TemplateService {
 
 	private void generateActsDocx(List<String> fileNames, List<ActModel> listModel, boolean generateContracts,
 			boolean generateActs) throws JAXBException, Docx4JException, TemplateException, IOException, ExecutionException, InterruptedException {
-		DocxProcessor docxProcessor = new DocxProcessor(threadsNumber);
+        DocxProcessor docxProcessor = new DocxProcessor(Executors.newFixedThreadPool(threadsNumber));
 		if (listModel != null && listModel.size() > 0) {
 			docxProcessor.cleanBaseDirectory(DocxTemplate.ACT, listModel.get(0));
 		}
@@ -278,11 +294,12 @@ public class TemplateServiceImpl implements TemplateService {
 		}
 		// docxProcessor.saveReports(DocxTemplate.CONTRACT_ADITIONAL_AGREEMENT,
 		// listModel);
+        docxProcessor.shutdown();
 	}
 
 	private void generateActsPdf(List<String> fileNames, List<ActModel> listModel, boolean generateContracts,
 			boolean generateActs) throws TemplateException, IOException, TransformerException, FOPException, ExecutionException, InterruptedException {
-		FOProcessor foProcessor = new FOProcessor(threadsNumber);
+		FOProcessor foProcessor = new FOProcessor(Executors.newFixedThreadPool(threadsNumber));
 		if (generateActs) {
 			fileNames.addAll(foProcessor.saveReports(FOTemplate.ACT, listModel, FOType.PDF));
 			fileNames.addAll(foProcessor.saveReports(FOTemplate.CONTRACT_ANNEX, listModel, FOType.PDF));
@@ -298,6 +315,7 @@ public class TemplateServiceImpl implements TemplateService {
 			}
 			fileNames.addAll(foProcessor.saveReports(FOTemplate.CONTRACT, newActModels, FOType.PDF));
 		}
+        foProcessor.shutdown();
 	}
 
 	public List<ActModel> getActModelList(List<Act> acts, Set<Integer> enabledUserIds) {

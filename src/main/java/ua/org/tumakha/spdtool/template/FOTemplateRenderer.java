@@ -25,12 +25,10 @@ import java.util.Date;
  * @author Yura
  * 
  */
-public class FOTemplateRenderer implements BaseConfig {
+public class FOTemplateRenderer {
 
 	private static final Logger log = Logger
 			.getLogger(FOTemplateRenderer.class);
-	public static final String TEMPLATES_DIRECTORY = TEMPLATES_BASE + "fo";
-
 	private final FopFactory fopFactory = FopFactory.newInstance();
 	private final TransformerFactory tFactory = TransformerFactory
 			.newInstance();
