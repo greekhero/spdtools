@@ -1,31 +1,13 @@
 package ua.org.tumakha.spdtool.web;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.validation.Valid;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import ua.org.tumakha.spdtool.entity.Act;
 import ua.org.tumakha.spdtool.entity.Contract;
 import ua.org.tumakha.spdtool.entity.User;
@@ -34,6 +16,11 @@ import ua.org.tumakha.spdtool.services.ActService;
 import ua.org.tumakha.spdtool.services.TemplateService;
 import ua.org.tumakha.spdtool.services.UserService;
 import ua.org.tumakha.spdtool.web.model.ActModel;
+
+import javax.validation.Valid;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Yuriy Tumakha
@@ -261,10 +248,12 @@ public class ActController {
 	@RequestMapping(value = "/generateDocuments", method = RequestMethod.GET)
 	public String generateDocuments(@Valid ActModel actModel, RedirectAttributes redirectAttrs) throws Exception {
 
-		List<String> fileNames = templateService.generateActs(actModel.getEnabledUserIds(), actModel.getYear(),
+        long time = System.currentTimeMillis();
+        List<String> fileNames = templateService.generateActs(actModel.getEnabledUserIds(), actModel.getYear(),
 				actModel.getMonth(), actModel.isGenerateContracts(), actModel.isGenerateActs());
 
 		redirectAttrs.addFlashAttribute("fileNames", fileNames);
+        redirectAttrs.addFlashAttribute("generationTime", (System.currentTimeMillis() - time) / 1000 );
 
 		return redirect("downloadDocuments");
 	}
