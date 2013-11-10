@@ -4,8 +4,9 @@
     <jsp:output omit-xml-declaration="yes"/>
     <page:list id="pl_ua_org_tumakha_spdtool_User" items="${users}">
         <table:table data="${users}" id="l_ua_org_tumakha_spdtool_User" path="/users" typeIdFieldName="userId">
+            <table:column id="c_ua_org_tumakha_spdtool_User_id" property="userId" sort="0"/>
             <table:column id="c_ua_org_tumakha_spdtool_User_pin" property="pin"/>
-            <table:column id="c_ua_org_tumakha_spdtool_User_lastname" property="lastname"/>
+            <table:column id="c_ua_org_tumakha_spdtool_User_lastname" property="lastname" sort="2"/>
             <table:column id="c_ua_org_tumakha_spdtool_User_firstname" property="firstname"/>
             <table:column id="c_ua_org_tumakha_spdtool_User_firstnameEn" property="firstnameEn"/>
             <table:column id="c_ua_org_tumakha_spdtool_User_lastnameEn" property="lastnameEn"/>
