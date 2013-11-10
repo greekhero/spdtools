@@ -78,7 +78,8 @@
 	<entry key="label_ua_org_tumakha_spdtool_user_middlename">По-батькові</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_middlenameen">Middlename</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_phone">Телефон</entry>
-	<entry key="label_ua_org_tumakha_spdtool_user_pin">ІПН</entry>
+    <entry key="label_ua_org_tumakha_spdtool_user_id">ID</entry>
+    <entry key="label_ua_org_tumakha_spdtool_user_pin">ІПН</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_plural">ФОП</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_regdate">Дата реєстрації</entry>
 	<entry key="label_ua_org_tumakha_spdtool_user_regdatedpi">Дата в ДПІ</entry>

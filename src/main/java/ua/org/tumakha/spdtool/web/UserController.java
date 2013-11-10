@@ -1,41 +1,30 @@
 package ua.org.tumakha.spdtool.web;
 
-import java.util.Collection;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PropertyComparator;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.*;
 import ua.org.tumakha.spdtool.AppConfig;
-import ua.org.tumakha.spdtool.entity.Group;
-import ua.org.tumakha.spdtool.entity.Kved;
-import ua.org.tumakha.spdtool.entity.Kved2010;
-import ua.org.tumakha.spdtool.entity.PensionOrganization;
-import ua.org.tumakha.spdtool.entity.TaxOrganization;
-import ua.org.tumakha.spdtool.entity.User;
-import ua.org.tumakha.spdtool.services.GroupService;
-import ua.org.tumakha.spdtool.services.Kved2010Service;
-import ua.org.tumakha.spdtool.services.KvedService;
-import ua.org.tumakha.spdtool.services.PensionOrganizationService;
-import ua.org.tumakha.spdtool.services.TaxOrganizationService;
-import ua.org.tumakha.spdtool.services.UserService;
+import ua.org.tumakha.spdtool.entity.*;
+import ua.org.tumakha.spdtool.services.*;
 import ua.org.tumakha.spdtool.web.util.WebUtil;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * @author Yuriy Tumakha
  */
 @RequestMapping("/users")
+@SessionAttributes("sortMode")
 @Controller
 public class UserController implements AppConfig {
 
@@ -93,17 +82,31 @@ public class UserController implements AppConfig {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(@RequestParam(value = "page", required = false) Integer page,
-			@RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-		if (page != null || size != null) {
+			@RequestParam(value = "size", required = false) Integer size,
+            @RequestParam(value = "sortMode", required = false) Integer sortMode, Model uiModel) {
+        if (sortMode != null) {
+            uiModel.addAttribute("sortMode", sortMode);
+        } else {
+            sortMode = uiModel.containsAttribute("sortMode") ? (Integer) uiModel.asMap().get("sortMode") : 0;
+        }
+        List<User> users = null;
+        if (page != null || size != null) {
 			int sizeNo = size == null ? DEFAULT_PAGE_SIZE : size.intValue();
-			uiModel.addAttribute("users",
-					userService.findUserEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+			users = userService.findUserEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo);
 			float nrOfPages = (float) userService.countUsers() / sizeNo;
 			uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1
 					: nrOfPages));
 		} else {
-			uiModel.addAttribute("users", userService.findAllUsers());
+            users = userService.findAllUsers();
 		}
+
+        // Sorting
+        String sortProperty = sortMode < 2 ? "userId" : "lastname";
+        boolean ascending = sortMode % 2 == 0;
+        Comparator<User> comparator = new PropertyComparator(sortProperty, true, ascending);
+        Collections.sort(users, comparator);
+        uiModel.addAttribute("users", users);
+
 		addDateTimeFormatPatterns(uiModel);
 		return "users/list";
 	}
