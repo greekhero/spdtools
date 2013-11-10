@@ -35,7 +35,7 @@ public class GenerateReportsTest {
 		templateService = (TemplateService) applicationContext
 				.getBean("templateService");
         docxProcessor = new DocxProcessor(Executors.newFixedThreadPool(4));
-        DocxProcessor.setReportsDirectory("./target");
+        DocxProcessor.setReportsDirectory("target");
 	}
 
 	@Test

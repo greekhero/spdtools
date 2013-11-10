@@ -34,7 +34,7 @@ public class XlsProcessorTest {
 		applicationContext = new ClassPathXmlApplicationContext(CONFIG_LOCATIONS);
 		userService = (UserService) applicationContext.getBean("userService");
 		templateService = (TemplateService) applicationContext.getBean("templateService");
-        XlsProcessor.setReportsDirectory("./target");
+        XlsProcessor.setReportsDirectory("target");
 	}
 
 	@Test
