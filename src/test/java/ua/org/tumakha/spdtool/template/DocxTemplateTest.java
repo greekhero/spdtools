@@ -24,7 +24,7 @@ public class DocxTemplateTest {
         applicationContext = new ClassPathXmlApplicationContext(
                 CONFIG_LOCATIONS);
         docxProcessor = new DocxProcessor(Executors.newFixedThreadPool(4));
-        DocxProcessor.setReportsDirectory("./target");
+        DocxProcessor.setReportsDirectory("target");
     }
 
     @Test

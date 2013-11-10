@@ -24,7 +24,7 @@ public class FOTemplateTest {
         applicationContext = new ClassPathXmlApplicationContext(
                 CONFIG_LOCATIONS);
         foProcessor = new FOProcessor(Executors.newFixedThreadPool(4));
-        FOProcessor.setReportsDirectory("./target");
+        FOProcessor.setReportsDirectory("target");
     }
 
 	@Test
