@@ -9,6 +9,7 @@ import ua.org.tumakha.spdtool.template.model.*;
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -42,5 +43,5 @@ public interface TemplateService {
 	List<String> generatePaymentDocuments(Set<Integer> enabledUserIds, boolean sendEmail)
 			throws InvalidFormatException, IOException;
 
-    List<String> generateBankExtract(Set<Integer> enabledUserIds, Integer year) throws IOException, InvalidFormatException;
+    List<String> generateBankExtract(Set<Integer> enabledUserIds, Integer year) throws IOException, InvalidFormatException, ParseException;
 }
