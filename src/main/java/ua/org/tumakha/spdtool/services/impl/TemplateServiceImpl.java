@@ -501,7 +501,7 @@ public class TemplateServiceImpl implements TemplateService {
 	}
 
     @Override
-    public List<String> generateBankExtract(Set<Integer> enabledUserIds, Integer year)throws IOException, InvalidFormatException {
+    public List<String> generateBankExtract(Set<Integer> enabledUserIds, Integer year) throws IOException, InvalidFormatException, ParseException {
         List<User> users = userService.findUsersByIds(enabledUserIds);
         if (users == null || users.size() == 0) {
             return Collections.emptyList();

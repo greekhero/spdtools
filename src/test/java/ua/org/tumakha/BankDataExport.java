@@ -12,6 +12,7 @@ import ua.org.tumakha.spdtool.services.UserService;
 import ua.org.tumakha.spdtool.template.XlsProcessor;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -37,7 +38,7 @@ public class BankDataExport {
         templateService = (TemplateService) applicationContext.getBean("templateService");
     }
 
-    public static void main(final String[] args) throws IOException, InvalidFormatException {
+    public static void main(final String[] args) throws IOException, InvalidFormatException, ParseException {
         init();
 
         int year = 2013;

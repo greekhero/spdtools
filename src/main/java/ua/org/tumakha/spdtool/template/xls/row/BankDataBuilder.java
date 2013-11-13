@@ -4,6 +4,9 @@ import ua.org.tumakha.spdtool.entity.BankTransaction;
 import ua.org.tumakha.spdtool.template.model.*;
 import ua.org.tumakha.util.PaymentPurposeUtil;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -14,8 +17,9 @@ public class BankDataBuilder {
     private Map<Integer, Object> metaDataMap = new LinkedHashMap<Integer, Object>();
     private Map<String, Integer> sellsUSD = new HashMap<String, Integer>();
     private Map<String, Integer> incomeFromUSD = new HashMap<String, Integer>();
+    private static final String SELL_DATE_FORMAT = "dd/MM/yyyy";
 
-    public void prepareTemplateModel(Map<String, Object> beans, List<BankTransaction> transactions) {
+    public void prepareTemplateModel(Map<String, Object> beans, List<BankTransaction> transactions) throws ParseException {
         Map<Integer, BankDay> bankDataDays = getBankDataDays(transactions);
         List<BankQuarter> bankData = new ArrayList<BankQuarter>();
         BankQuarter lastQuarter = null;
@@ -81,7 +85,7 @@ public class BankDataBuilder {
         return bankDataDays;
     }
 
-    private void saveMetaData(int rowNum, BankOperationRow bankTransaction) {
+    private void saveMetaData(int rowNum, BankOperationRow bankTransaction) throws ParseException {
         if (bankTransaction.isIncomeUAH() || bankTransaction.isAccountUSD()) {
             OperationRowMetaData rowMetaData = new OperationRowMetaData();
             rowMetaData.setDate(bankTransaction.getDate());
@@ -105,15 +109,40 @@ public class BankDataBuilder {
             if (rowMetaData.isCommission()) {
                 String dateAndAmountUSD = PaymentPurposeUtil.getIncomeDateAndAmountUSD(bankTransaction.getOriginalPurpose());
                 Integer usdRowNum = sellsUSD.get(dateAndAmountUSD);
+                if (usdRowNum == null) {
+                    usdRowNum = searchSellUSD(dateAndAmountUSD, rowMetaData.getDate());
+                } else {
+                    sellsUSD.remove(dateAndAmountUSD);
+                }
                 if (usdRowNum != null) {
                     rowMetaData.setUsdRowNum(usdRowNum);
-                    sellsUSD.remove(dateAndAmountUSD);
                 } else {
                     incomeFromUSD.put(dateAndAmountUSD, rowNum);
                 }
             }
             metaDataMap.put(rowNum, rowMetaData);
         }
+    }
+
+    /**
+     * Search USD sell with other date.
+     */
+    private Integer searchSellUSD(String dateAndAmountUSD, Date endDate) throws ParseException {
+        DateFormat dateFormat = new SimpleDateFormat(SELL_DATE_FORMAT);
+        Date startDate = dateFormat.parse(dateAndAmountUSD.substring(0, 10));
+        String keySuffix = dateAndAmountUSD.substring(10);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startDate);
+        do {
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            String key = dateFormat.format(calendar.getTime()) + keySuffix;
+            Integer usdRowNum = sellsUSD.get(key);
+            if (usdRowNum != null) {
+                sellsUSD.remove(dateAndAmountUSD);
+                return usdRowNum;
+            }
+        } while (calendar.getTime().getTime() <= endDate.getTime());
+        return null;
     }
 
     private SpdBook getSpdBook() {

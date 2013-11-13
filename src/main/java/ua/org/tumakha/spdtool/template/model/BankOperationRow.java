@@ -163,4 +163,20 @@ public class BankOperationRow {
         return show ? getDate() : "";
     }
 
+    @Override
+    public String toString() {
+        return "BankOperationRow{" +
+                "date=" + date +
+                ", incomeAmountUSD=" + incomeAmountUSD +
+                ", incomeAmountUAH=" + incomeAmountUAH +
+                ", expenseAmountUSD=" + expenseAmountUSD +
+                ", expenseAmountUAH=" + expenseAmountUAH +
+                ", purpose='" + purpose + '\'' +
+                ", originalPurpose='" + originalPurpose + '\'' +
+                ", income=" + income +
+                ", commission=" + commission +
+                ", expense=" + expense +
+                '}';
+    }
+
 }
