@@ -9,7 +9,6 @@ import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -22,11 +21,11 @@ import ua.org.tumakha.spdtool.services.*;
 import ua.org.tumakha.spdtool.template.*;
 import ua.org.tumakha.spdtool.template.model.*;
 import ua.org.tumakha.spdtool.template.xls.row.BankDataBuilder;
+import ua.org.tumakha.util.ScheduledMailSender;
 import ua.org.tumakha.util.StrUtil;
 
 import javax.annotation.PostConstruct;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
 import java.io.File;
@@ -68,7 +67,7 @@ public class TemplateServiceImpl implements TemplateService {
     private BankTransactionService bankTransactionService;
 
 	@Autowired
-	private JavaMailSender mailSender;
+    private ScheduledMailSender mailSender;
 
     @Value("${admin.email}")
     private String adminEmail;
@@ -538,14 +537,13 @@ public class TemplateServiceImpl implements TemplateService {
 
     private void sendEmail(TextProcessor textProcessor, String subject, Map<String, Object> beans, File attachmentFile) {
 		try {
-			MimeMessage mimeMessage = mailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+			MimeMessageHelper helper = mailSender.newMessageHelper();
 			helper.setTo(new InternetAddress(adminEmail));
 			helper.setSubject(subject);
 			helper.setText(textProcessor.processTemplateText(beans));
 			FileSystemResource attachment = new FileSystemResource(attachmentFile);
 			helper.addAttachment(attachment.getFilename(), attachment);
-			mailSender.send(mimeMessage);
+			mailSender.send(helper.getMimeMessage());
 		} catch (Exception ex) {
 			log.error("Send email failed.", ex);
 		}
