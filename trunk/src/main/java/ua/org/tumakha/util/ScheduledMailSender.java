@@ -45,7 +45,7 @@ public class ScheduledMailSender {
         if (executorService == null || executorService.isShutdown()) {
             log.debug("Start Mail Service");
             executorService = Executors.newSingleThreadScheduledExecutor();
-            executorService.scheduleWithFixedDelay(new SendMessageTask(mailSender), 0, 50, TimeUnit.MILLISECONDS);
+            executorService.scheduleWithFixedDelay(new SendMessageTask(), 0, 50, TimeUnit.MILLISECONDS);
         }
     }
 
@@ -57,12 +57,6 @@ public class ScheduledMailSender {
     }
 
     private class SendMessageTask implements Runnable {
-
-        private JavaMailSender mailSender;
-
-        public SendMessageTask(JavaMailSender mailSender) {
-            this.mailSender = mailSender;
-        }
 
         @Override
         public void run() {
@@ -79,7 +73,7 @@ public class ScheduledMailSender {
                 if (MESSAGE_QUEUE.isEmpty()) {
                     TimeUnit.SECONDS.sleep(10);
                     if (MESSAGE_QUEUE.isEmpty()) {
-                        ScheduledMailSender.this.shutdown();
+                        shutdown();
                     }
                 }
             } catch (InterruptedException e) {
