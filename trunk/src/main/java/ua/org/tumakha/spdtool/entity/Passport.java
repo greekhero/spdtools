@@ -108,7 +108,7 @@ public class Passport implements Serializable {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(seria);
 		buffer.append(" ");
-		buffer.append(number == null ? "" : number);
+		buffer.append(number == null ? "" : getNumber());
 		buffer.append(", ");
 		buffer.append(organ);
 		if (date != null) {
@@ -142,12 +142,12 @@ public class Passport implements Serializable {
 		this.seria = seria;
 	}
 
-	public Integer getNumber() {
-		return number;
-	}
+    public String getNumber() {
+        return number == null ? null : String.format("%06d", number);
+    }
 
-	public void setNumber(Integer number) {
-		this.number = number;
+	public void setNumber(String number) {
+		this.number = Integer.valueOf(number);
 	}
 
 	public String getOrgan() {
