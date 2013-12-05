@@ -7,7 +7,7 @@ public enum RegDocumentType {
 
 	SVIDOCTVO("Свідоцтво про державну реєстрацію фізичної особи - підприємця",
 			"Certificate of state registration Private Entrepreneur"), 
-	VYPYSKA("Виписка з єдиного державного реєстру юридичних осіб та фізичних осіб-підприємців",
+	VYPYSKA("Виписка з Єдиного державного реєстру юридичних осіб та фізичних осіб-підприємців",
 			"Excerpt from the Unified State Register of Legal Entities and Private Entrepreneurs");
 
 	private String description;
