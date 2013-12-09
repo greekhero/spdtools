@@ -409,8 +409,12 @@ public class TemplateServiceImpl implements TemplateService {
 
 		int quarter = month / 3;
 		String rentPeriod = StrUtil.formatUAMonth(month) + " " + year;
-		String esvPeriod = rentPeriod;
+        // Temporary fix for December 2013
+        String esvPeriod = StrUtil.formatUAMonth(11) + " - "+ StrUtil.formatUAMonth(12) + " 2013";
+		//String esvPeriod = rentPeriod;
 		String taxPeriod = quarter + " кв. " + year;
+
+        Double esvToPay = 820.66;
 
 		calendar.set(Calendar.DAY_OF_MONTH, 19);
         int weeekDay = calendar.get(Calendar.DAY_OF_WEEK);
@@ -483,6 +487,7 @@ public class TemplateServiceImpl implements TemplateService {
 					beans.put("showTaxPayment", showTaxPayment);
 					beans.put("showRentPayment", showRentPayment);
 					beans.put("esvPeriod", esvPeriod);
+                    beans.put("esvToPay", esvToPay);
 					String outputFilenamePrefix = String.format("/Payments/%d_%02d/%s_%s_%d_%02d_", year, month,
 							user.getLastnameEn(), user.getFirstnameEn(), year, month);
 					String outputFilename = xlsProcessor.saveReport(XlsTemplate.PAYMENTS, outputFilenamePrefix, beans);
