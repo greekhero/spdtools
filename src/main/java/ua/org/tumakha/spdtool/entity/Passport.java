@@ -21,6 +21,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import org.springframework.util.StringUtils;
 import ua.org.tumakha.util.StrUtil;
 
 /**
@@ -147,7 +148,7 @@ public class Passport implements Serializable {
     }
 
 	public void setNumber(String number) {
-		this.number = Integer.valueOf(number);
+		this.number = StringUtils.isEmpty(number) ? null : Integer.valueOf(number);
 	}
 
 	public String getOrgan() {

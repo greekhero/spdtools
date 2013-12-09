@@ -3,6 +3,7 @@ package ua.org.tumakha.spdtool.entity;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -25,6 +26,15 @@ public class PassportTest {
         passport.setNumber(PASSPORT_NUMBER);
         assertEquals("Passport numbers not equals", PASSPORT_NUMBER, passport.getNumber());
         assertTrue(passport.getTextUa().contains(PASSPORT_NUMBER));
+    }
+
+    @Test
+    public void testEmptyPassportNumber() {
+        passport.setNumber(null);
+        assertNull(passport.getNumber());
+
+        passport.setNumber("");
+        assertNull(passport.getNumber());
     }
 
 }
