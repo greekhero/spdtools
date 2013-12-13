@@ -7,8 +7,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ua.org.tumakha.spdtool.template.model.ActModel;
 import ua.org.tumakha.util.NumberUtil;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 
 public class DocxTemplateTest {
@@ -18,6 +22,11 @@ public class DocxTemplateTest {
             "classpath:datasource-test.xml",
             "classpath:META-INF/spring/applicationContext.xml" };
     private static ApplicationContext applicationContext;
+
+    private static final Locale UA_LOCALE = new Locale("uk", "UA");
+    private static final Locale EN_LOCALE = Locale.ENGLISH;
+    private static final DateFormat ACT_DATE_FORMAT = new SimpleDateFormat("«dd»  MMMMM  yyyy р", UA_LOCALE);
+    private static final DateFormat ACT_DATE_FORMAT_EN = new SimpleDateFormat("«dd»  MMMMM  yyyy", EN_LOCALE);
 
     @BeforeClass
     public static void init() {
@@ -30,6 +39,8 @@ public class DocxTemplateTest {
     @Test
 	public void test() throws Exception {
 		ActModel actModel = new ActModel();
+        actModel.setStartContractDate(ACT_DATE_FORMAT.format(new Date()));
+        actModel.setStartContractDateEn(ACT_DATE_FORMAT_EN.format(new Date()));
 		actModel.setActNo("YVT/2011-05-08");
 		actModel.setContractNo("YVT/2011-05");
 		actModel.setContractDate("18 травня 2011");
@@ -65,7 +76,9 @@ public class DocxTemplateTest {
                 "Correspondent account of OTHER BANK");
 		List<ActModel> listModel = new ArrayList<ActModel>(100);
 		listModel.add(actModel);
-		docxProcessor.saveReports(DocxTemplate.ACT, listModel);
+        docxProcessor.saveReports(DocxTemplate.ACT, listModel);
+        docxProcessor.saveReports(DocxTemplate.CONTRACT, listModel);
+        docxProcessor.saveReports(DocxTemplate.CONTRACT_ANNEX, listModel);
         docxProcessor.shutdown();
 	}
 
