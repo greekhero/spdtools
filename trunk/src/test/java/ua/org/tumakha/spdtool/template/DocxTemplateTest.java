@@ -59,6 +59,10 @@ public class DocxTemplateTest {
 		actModel.setBankNameEn("Aval, Branch, Kyiv, Ukraine");
 		actModel.setBankMFO("300235");
 		actModel.setBankSWIFT("AVALAUK");
+        actModel.setCorrespondentBank("Bank Trust Company Americas, NY\n" +
+                "SWIFT CODE: ZZZZZ\n" +
+                "ROUTING NUMBER: 111111\n" +
+                "Correspondent account of OTHER BANK");
 		List<ActModel> listModel = new ArrayList<ActModel>(100);
 		listModel.add(actModel);
 		docxProcessor.saveReports(DocxTemplate.ACT, listModel);

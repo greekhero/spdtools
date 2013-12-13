@@ -1,17 +1,18 @@
 package ua.org.tumakha.spdtool.template.model;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-
+import org.springframework.util.StringUtils;
 import ua.org.tumakha.spdtool.entity.Address;
 import ua.org.tumakha.spdtool.entity.Bank;
 import ua.org.tumakha.spdtool.entity.User;
 import ua.org.tumakha.spdtool.template.DocxTemplate;
 import ua.org.tumakha.spdtool.template.FOTemplate;
 import ua.org.tumakha.util.StrUtil;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Yuriy Tumakha
@@ -78,8 +79,7 @@ public abstract class TemplateModel {
 			regDocumentNameVOrudnomu = user.getRegDocumentType().getDescriptionVOrudnomu();
 			regDocumentNameEn = user.getRegDocumentType().getDescriptionEn();
 		}
-		regNumber = user.getRegNumber();
-		regNumberEn = regNumber != null ? regNumber.replace("з", "z") : "";
+		setRegNumber(user.getRegNumber());
 		regDate = user.getRegDate() != null ? uaDateFormat.format(user.getRegDate()) : "";
 		if (user.getTaxOrganization() != null && user.getTaxOrganization().getName() != null) {
 			regDPI = user.getTaxOrganization().getName();
@@ -226,6 +226,7 @@ public abstract class TemplateModel {
 
 	public void setRegNumber(String regNumber) {
 		this.regNumber = regNumber;
+        regNumberEn = regNumber != null ? regNumber.replace("з", "z") : "";
 	}
 
 	public String getRegNumberEn() {
@@ -340,27 +341,21 @@ public abstract class TemplateModel {
 		this.correspondentBank = correspondentBank;
 	}
 
-	public List<String> getCorrespondentBankLines() {
-		if (correspondentBank != null) {
-			return Arrays.asList(correspondentBank.split("\n"));
-		}
-		return null;
-	}
+    public List<String> getCorrespondentBankLines() {
+        return StringUtils.isEmpty(correspondentBank) ? null : Arrays.asList(correspondentBank.split("\n"));
+    }
 
 	public String getCorrespondentBankEn() {
 		return correspondentBankEn;
 	}
 
-	public void setCorrespondentBankEn(String correspondentBankEn) {
-		this.correspondentBankEn = correspondentBankEn;
-	}
+    public void setCorrespondentBankEn(String correspondentBankEn) {
+        this.correspondentBankEn = correspondentBankEn;
+    }
 
-	public List<String> getCorrespondentBankEnLines() {
-		if (correspondentBankEn != null) {
-			return Arrays.asList(correspondentBankEn.split("\n"));
-		}
-		return null;
-	}
+    public List<String> getCorrespondentBankEnLines() {
+        return StringUtils.isEmpty(correspondentBankEn) ? null : Arrays.asList(correspondentBankEn.split("\n"));
+    }
 
 	public String getPin0() {
 		return pinAt(0);

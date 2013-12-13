@@ -60,7 +60,7 @@ public class TextProcessor {
 	}
 
 	@SuppressWarnings("unchecked")
-	protected static Map<String, ?> getMappings(TemplateModel model) {
+	protected static Map<String, Object> getMappings(TemplateModel model) {
 		HashMap<String, Object> mappings = new HashMap<String, Object>();
 		BeanMap beanMap = new BeanMap(model);
 		for (Object o : beanMap.entrySet()) {
