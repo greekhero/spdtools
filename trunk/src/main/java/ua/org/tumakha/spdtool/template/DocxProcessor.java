@@ -69,7 +69,9 @@ public class DocxProcessor extends TextProcessor {
 
         File templateFile = new File(TEMPLATES_DIRECTORY + "/" + template.getFilename());
         InputStream in = new FileInputStream(templateFile);
-        IXDocReport report = XDocReportRegistry.getRegistry().loadReport(in, template.name(), TemplateEngineKind.Freemarker);
+        if (!XDocReportRegistry.getRegistry().existsReport(template.name())) {
+            XDocReportRegistry.getRegistry().loadReport(in, template.name(), TemplateEngineKind.Freemarker);
+        }
 
         // Create directory
         String outputfilepath = REPORTS_DIRECTORY + listModel.get(0).getOutputFilename(template);
