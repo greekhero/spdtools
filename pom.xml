@@ -138,16 +138,19 @@
       <groupId>fr.opensagres.xdocreport</groupId>
       <artifactId>core</artifactId>
       <version>${xdocreport.version}</version>
+      <type>pom</type>
     </dependency>
     <dependency>
       <groupId>fr.opensagres.xdocreport</groupId>
       <artifactId>document</artifactId>
       <version>${xdocreport.version}</version>
+      <type>pom</type>
     </dependency>
     <dependency>
       <groupId>fr.opensagres.xdocreport</groupId>
       <artifactId>template</artifactId>
       <version>${xdocreport.version}</version>
+      <type>pom</type>
     </dependency>
     <dependency>
       <groupId>fr.opensagres.xdocreport</groupId>
