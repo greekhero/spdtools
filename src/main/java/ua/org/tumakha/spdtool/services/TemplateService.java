@@ -1,9 +1,9 @@
 package ua.org.tumakha.spdtool.services;
 
+import fr.opensagres.xdocreport.core.XDocReportException;
 import freemarker.template.TemplateException;
 import org.apache.fop.apps.FOPException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.docx4j.openpackaging.exceptions.Docx4JException;
 import ua.org.tumakha.spdtool.template.model.*;
 
 import javax.xml.bind.JAXBException;
@@ -34,11 +34,11 @@ public interface TemplateService {
 			throws InvalidFormatException, IOException;
 
 	List<String> generateActs(Set<Integer> enabledUserIds, Integer year, Integer month, boolean generateContracts,
-			boolean generateActs) throws JAXBException, Docx4JException, TemplateException, IOException,
-            TransformerException, FOPException, ExecutionException, InterruptedException;
+			boolean generateActs) throws JAXBException, TemplateException, IOException,
+            TransformerException, FOPException, ExecutionException, InterruptedException, XDocReportException;
 
 	List<String> generateEcpDocuments(Set<Integer> enabledUserIds, Set<Integer> groupIds, Date date)
-			throws JAXBException, Docx4JException, TemplateException, IOException, InvalidFormatException;
+			throws JAXBException, TemplateException, IOException, InvalidFormatException;
 
 	List<String> generatePaymentDocuments(Set<Integer> enabledUserIds, boolean sendEmail)
 			throws InvalidFormatException, IOException;

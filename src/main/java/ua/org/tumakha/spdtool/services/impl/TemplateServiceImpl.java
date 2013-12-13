@@ -1,11 +1,11 @@
 package ua.org.tumakha.spdtool.services.impl;
 
+import fr.opensagres.xdocreport.core.XDocReportException;
 import freemarker.template.TemplateException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.fop.apps.FOPException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -26,7 +26,6 @@ import ua.org.tumakha.util.StrUtil;
 
 import javax.annotation.PostConstruct;
 import javax.mail.internet.InternetAddress;
-import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
@@ -256,8 +255,8 @@ public class TemplateServiceImpl implements TemplateService {
 
 	@Override
 	public List<String> generateActs(Set<Integer> enabledUserIds, Integer year, Integer month,
-			boolean generateContracts, boolean generateActs) throws JAXBException, Docx4JException, TemplateException,
-            IOException, TransformerException, FOPException, ExecutionException, InterruptedException {
+			boolean generateContracts, boolean generateActs) throws TemplateException, IOException, TransformerException,
+            FOPException, ExecutionException, InterruptedException, XDocReportException {
 		List<String> fileNames = new ArrayList<String>();
 		List<Act> acts = actService.findActsByYearAndMonth(year, month);
 		List<ActModel> listModel = getActModelList(acts, enabledUserIds);
@@ -271,7 +270,7 @@ public class TemplateServiceImpl implements TemplateService {
 	}
 
 	private void generateActsDocx(List<String> fileNames, List<ActModel> listModel, boolean generateContracts,
-			boolean generateActs) throws JAXBException, Docx4JException, TemplateException, IOException, ExecutionException, InterruptedException {
+			boolean generateActs) throws IOException, ExecutionException, InterruptedException, XDocReportException {
         DocxProcessor docxProcessor = new DocxProcessor(Executors.newFixedThreadPool(threadsNumber));
 		if (listModel != null && listModel.size() > 0) {
 			docxProcessor.cleanBaseDirectory(DocxTemplate.ACT, listModel.get(0));
