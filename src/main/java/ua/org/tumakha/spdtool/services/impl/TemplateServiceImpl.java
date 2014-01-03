@@ -105,7 +105,9 @@ public class TemplateServiceImpl implements TemplateService {
 					}
 				}
 			} finally {
-				log.debug("Last User: " + lastUser.getUserId() + " " + lastUser.getLastnameEn());
+                if (lastUser != null) {
+				    log.debug("Last User: " + lastUser.getUserId() + " " + lastUser.getLastnameEn());
+                }
 			}
 
 			return listModel;
@@ -328,7 +330,9 @@ public class TemplateServiceImpl implements TemplateService {
 				}
 			}
 		} finally {
-			log.error("ActModel error: Last User - " + lastUser.getUserId() + " " + lastUser.getLastnameEn());
+            if (lastUser != null) {
+			    log.debug("ActModel: Last User - " + lastUser.getUserId() + " " + lastUser.getLastnameEn());
+            }
 		}
 		return listModel;
 	}
